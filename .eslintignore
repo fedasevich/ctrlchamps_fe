@@ -1,0 +1,14 @@
+// .eslintignore
+**/node_modules/*
+**/out/*
+**/.next/*
+next.config.js
+**/src/pages/_document.tsx
+**/src/hooks/*
+**/src/components/*
+**/src/utils
+**/src/theme
+**/src/assets
+**/src/redux/store.ts
+**/src/pages/_app.tsx
+

@@ -11,7 +11,7 @@ export default function HomePage(): JSX.Element {
       <Head>
         <title>{translate('app_title')}</title>
       </Head>
-      <Link href="example">go to example page</Link>
+      <Link href="page-example">go to example page</Link>
     </>
   );
 }

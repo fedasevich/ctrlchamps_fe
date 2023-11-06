@@ -1,6 +1,6 @@
 import React from 'react';
 import Head from 'next/head';
-import ExampleContent from 'src/sections/example/ExampleContent';
+import ExampleForm from '../../components/example-form';
 
 export default function ExamplePage(): JSX.Element {
   return (
@@ -8,7 +8,7 @@ export default function ExamplePage(): JSX.Element {
       <Head>
         <title> Example page title</title>
       </Head>
-      <ExampleContent />
+      <ExampleForm text="example" />
     </>
   );
 }

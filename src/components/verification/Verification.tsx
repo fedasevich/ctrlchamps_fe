@@ -17,8 +17,8 @@ type VerificationProps = { text: string };
 export default function Verification({ text }: VerificationProps): JSX.Element {
   const { translate } = useLocales();
   const [code, setCode] = useState('');
+  const [submitDisabled, setSubmitDisabled] = useState(true);
   const length = 4;
-  const submitDisabled = code.split(' ').length < length;
 
   return (
     <Container>
@@ -27,7 +27,7 @@ export default function Verification({ text }: VerificationProps): JSX.Element {
       </IconWrapper>
       <Text>{text}</Text>
       <CodeInputContainer>
-        <OTPInput length={length} setCode={setCode} />
+        <OTPInput length={length} setCode={setCode} disallowSubmit={setSubmitDisabled} />
       </CodeInputContainer>
       <BtnContainer>
         <TextBtn disableRipple>{translate('request_code')}</TextBtn>

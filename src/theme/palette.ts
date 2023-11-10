@@ -88,7 +88,7 @@ const ERROR = {
 };
 
 const COMMON = {
-  common: { black: '#000000', white: '#FFFFFF', signup: '#08BCB8', selected: '#b8ffef63' },
+  common: { black: '#000000', white: '#FFFFFF' },
   primary: PRIMARY,
   secondary: SECONDARY,
   info: INFO,

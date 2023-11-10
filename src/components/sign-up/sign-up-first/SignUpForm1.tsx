@@ -4,7 +4,7 @@ import { FormControlLabel, Radio, FormLabel, FormHelperText } from '@mui/materia
 import { Box, Container } from '@mui/system';
 
 import { useTranslation } from 'react-i18next';
-import { BoxWrapper, NextButton, StyledParagraph, selectedItemColorLigthTheme, signupColorInLightTheme } from './styles';
+import { BoxWrapper, NextButton, StyledParagraph, StyledParagraphMain, selectedItemColorLigthTheme, signupColorInLightTheme } from './styles';
 
 interface Step1FormProps {
   onNext: () => void;
@@ -99,7 +99,7 @@ const CustomRadio: React.FC<CustomRadioProps> = ({
         label={
           <div>
             <FormLabel>
-              <strong>{label}</strong>
+              <StyledParagraphMain>{label}</StyledParagraphMain>
             </FormLabel>
             <FormHelperText>{description}</FormHelperText>
           </div>

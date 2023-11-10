@@ -1,6 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState , useMemo } from 'react';
+
 import { FormControlLabel, Radio, FormLabel, FormHelperText } from '@mui/material';
 import { Box, Container } from '@mui/system';
+
 import { useTranslation } from 'react-i18next';
 import { BoxWrapper, NextButton, StyledParagraph, selectedItemColorLigthTheme, signupColorInLightTheme } from './styles';
 
@@ -70,7 +72,7 @@ const CustomRadio: React.FC<CustomRadioProps> = ({
   selectedOption,
   handleOptionChange,
 }) => {
-  const backgroundColor = selectedOption === value ? selectedItemColorLigthTheme : 'transparent';
+  const backgroundColor = useMemo(() => selectedOption === value ? selectedItemColorLigthTheme : 'transparent', [selectedOption, value]);
 
   return (
     <Box

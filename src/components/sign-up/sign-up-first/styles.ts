@@ -1,5 +1,6 @@
 import { Box } from '@mui/system';
 import { Button } from '@mui/material';
+
 import palette from 'src/theme/palette';
 import typography from 'src/theme/typography';
 import styled from '@emotion/styled';

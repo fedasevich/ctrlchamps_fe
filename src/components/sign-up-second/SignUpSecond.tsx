@@ -66,7 +66,7 @@ function SignUpSecond({ role }: IProps): JSX.Element {
 
         <FormControl sx={{ width: '100%' }} variant="standard">
           <InputLabel htmlFor="email">{translate('signUpSecondForm.placeholderEmail')}</InputLabel>
-          <Input {...register('email')} id="email" error={!!errors.email} type="text" />
+          <Input {...register('email')} id="email" error={!!errors.email} type="email" />
         </FormControl>
         {errors?.email && <ErrorMessage variant="caption">{errors.email?.message}</ErrorMessage>}
 

@@ -5,7 +5,7 @@ export const AuthFormWrapper = styled('div')`
 `;
 
 export const StyledForm = styled('form')`
-  height: 100vh;
+  height: calc(100vh - 48px);
   display: flex;
   flex-direction: column;
   gap: 16px;

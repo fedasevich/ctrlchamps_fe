@@ -13,13 +13,11 @@ const en = {
     phoneInvalid: 'Phone should begin from +1 and contain 11 numbers',
     phoneRequired: 'Phone is required',
     birthDateRequired: 'Birth date is required',
-    languageRequired: 'Language is required',
     placeholderFirstName: 'First Name',
     placeholderLastName: 'Last Name',
     placeholderEmail: 'E-mail Address',
     placeholderPhone: 'Phone Number',
     placeholderBirthDate: 'Date of Birth',
-    placeholderLanguage: 'Preferred Language',
   },
 };
 

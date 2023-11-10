@@ -1,22 +1,28 @@
 import { Button, Typography, styled } from '@mui/material';
+import { TYPOGRAPHY } from 'src/theme/fonts';
 import DatePicker from 'react-datepicker';
 
 export const Wrapper = styled('div')`
-  height: 100vh;
+  height: calc(100vh - 72px);
 `;
 
 export const StyledForm = styled('form')`
-  height: 100vh;
+  height: 100%;
   display: flex;
   flex-direction: column;
   gap: 16px;
   width: 480px;
   margin: 0 auto;
   padding: 24px 0;
-  font-size: 16px;
+  font-size: ${TYPOGRAPHY.base}px;
   font-weight: 500;
   line-height: 1.5;
   letter-spacing: 0.15px;
+`;
+
+export const InputWrapper = styled('div')`
+  display: flex;
+  flex-direction: column;
 `;
 
 export const NextButton = styled(Button)`
@@ -31,5 +37,6 @@ export const StyledDatePicker = styled(DatePicker)`
 
 export const ErrorMessage = styled(Typography)`
   color: ${({ theme }): string => theme.palette.error.main};
-  font-size: 12px;
+  font-size: ${TYPOGRAPHY.xss}px;
+  font-weight: 500;
 `;

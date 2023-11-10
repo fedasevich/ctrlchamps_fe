@@ -75,7 +75,7 @@ const WARNING = {
   main: '#FFAB00',
   dark: '#B76E00',
   darker: '#7A4100',
-  contrastText: GREY[800],
+  contrastText: GREY[ 800 ],
 };
 
 const ERROR = {
@@ -88,7 +88,7 @@ const ERROR = {
 };
 
 const COMMON = {
-  common: { black: '#000000', white: '#FFFFFF' },
+  common: { black: '#000000', white: '#FFFFFF', signup: '#08BCB8', selected: '#b8ffef63' },
   primary: PRIMARY,
   secondary: SECONDARY,
   info: INFO,
@@ -96,13 +96,13 @@ const COMMON = {
   warning: WARNING,
   error: ERROR,
   grey: GREY,
-  divider: alpha(GREY[500], 0.24),
+  divider: alpha(GREY[ 500 ], 0.24),
   action: {
-    hover: alpha(GREY[500], 0.08),
-    selected: alpha(GREY[500], 0.16),
-    disabled: alpha(GREY[500], 0.8),
-    disabledBackground: alpha(GREY[500], 0.24),
-    focus: alpha(GREY[500], 0.24),
+    hover: alpha(GREY[ 500 ], 0.08),
+    selected: alpha(GREY[ 500 ], 0.16),
+    disabled: alpha(GREY[ 500 ], 0.8),
+    disabledBackground: alpha(GREY[ 500 ], 0.24),
+    focus: alpha(GREY[ 500 ], 0.24),
     hoverOpacity: 0.08,
     disabledOpacity: 0.48,
   },
@@ -113,14 +113,14 @@ export default function palette(themeMode: 'light' | 'dark') {
     ...COMMON,
     mode: 'light',
     text: {
-      primary: GREY[800],
-      secondary: GREY[600],
-      disabled: GREY[500],
+      primary: GREY[ 800 ],
+      secondary: GREY[ 600 ],
+      disabled: GREY[ 500 ],
     },
-    background: { paper: '#FFFFFF', default: '#FFFFFF', neutral: GREY[200] },
+    background: { paper: '#FFFFFF', default: '#FFFFFF', neutral: GREY[ 200 ] },
     action: {
       ...COMMON.action,
-      active: GREY[600],
+      active: GREY[ 600 ],
     },
   } as const;
 
@@ -129,17 +129,17 @@ export default function palette(themeMode: 'light' | 'dark') {
     mode: 'dark',
     text: {
       primary: '#FFFFFF',
-      secondary: GREY[500],
-      disabled: GREY[600],
+      secondary: GREY[ 500 ],
+      disabled: GREY[ 600 ],
     },
     background: {
-      paper: GREY[800],
-      default: GREY[900],
-      neutral: alpha(GREY[500], 0.16),
+      paper: GREY[ 800 ],
+      default: GREY[ 900 ],
+      neutral: alpha(GREY[ 500 ], 0.16),
     },
     action: {
       ...COMMON.action,
-      active: GREY[500],
+      active: GREY[ 500 ],
     },
   } as const;
 

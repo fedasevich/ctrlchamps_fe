@@ -23,12 +23,14 @@ export const useSignUpSecondSchema = (): ObjectSchema<
 > => {
   const { translate } = useLocales();
   const emailRegExp = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/;
+  const phoneRegExp = /^\+?1[1-9](\d{9})/;
 
   const firstNameInvalid: string = translate('signUpSecondForm.firstNameInvalid');
   const lastNameInvalid: string = translate('signUpSecondForm.lastNameInvalid');
   const emailLengthInvalid: string = translate('signUpSecondForm.emailLengthInvalid');
   const emailInvalid: string = translate('signUpSecondForm.emailInvalid');
   const phoneLengthInvalid: string = translate('signUpSecondForm.phoneLengthInvalid');
+  const phoneInvalid: string = translate('signUpSecondForm.phoneInvalid');
   const firstNameRequired: string = translate('signUpSecondForm.firstNameRequired');
   const lastNameRequired: string = translate('signUpSecondForm.lastNameRequired');
   const emailRequired: string = translate('signUpSecondForm.emailRequired');
@@ -42,7 +44,10 @@ export const useSignUpSecondSchema = (): ObjectSchema<
       .matches(emailRegExp, emailInvalid)
       .max(100, emailLengthInvalid)
       .required(emailRequired),
-    phone: string().length(13, phoneLengthInvalid).required(phoneRequired),
+    phone: string()
+      .length(12, phoneLengthInvalid)
+      .matches(phoneRegExp, phoneInvalid)
+      .required(phoneRequired),
     birthDate: date().required(birthDateRequired),
     isOpen: boolean(),
   });

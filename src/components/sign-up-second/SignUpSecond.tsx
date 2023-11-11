@@ -94,8 +94,8 @@ function SignUpSecond({ role }: IProps): JSX.Element {
                   defaultCountry="US"
                   focusOnSelectCountry
                   disableFormatting
-                  preferredCountries={['US', 'CA']}
-                  continents={['EU', 'SA', 'NA']}
+                  forceCallingCode
+                  onlyCountries={['US', 'CA']}
                   error={fieldState.invalid}
                   inputRef={Input}
                   label={translate('signUpSecondForm.placeholderPhone')}

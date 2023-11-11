@@ -1,6 +1,7 @@
 // @mui
+import { MuiTelInput } from 'mui-tel-input';
 import { Switch, FormControlLabel, FormControl, InputLabel, Input } from '@mui/material';
-
+//
 import React, { memo } from 'react';
 import { useLocales } from 'src/locales';
 import { useForm, Controller } from 'react-hook-form';
@@ -8,7 +9,6 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { InferType } from 'yup';
 import { useSignUpSecondSchema } from './validation';
 import 'react-datepicker/dist/react-datepicker.css';
-
 //
 import {
   NextButton,
@@ -18,7 +18,10 @@ import {
   Wrapper,
   InputWrapper,
 } from './styles';
-import { IProps } from './types';
+
+interface IProps {
+  role: 'caregiver' | 'seeker';
+}
 
 function SignUpSecond({ role }: IProps): JSX.Element {
   const { translate } = useLocales();
@@ -81,13 +84,28 @@ function SignUpSecond({ role }: IProps): JSX.Element {
         </InputWrapper>
         <InputWrapper>
           <FormControl sx={{ width: '100%' }} variant="standard">
-            <InputLabel htmlFor="phone">
-              {translate('signUpSecondForm.placeholderPhone')}
-            </InputLabel>
-            <Input {...register('phone')} id="phone" error={!!errors.phone} type="text" />
+            <Controller
+              name="phone"
+              control={control}
+              render={({ field, fieldState }): JSX.Element => (
+                <MuiTelInput
+                  {...field}
+                  variant="standard"
+                  defaultCountry="US"
+                  focusOnSelectCountry
+                  disableFormatting
+                  preferredCountries={['US', 'CA']}
+                  continents={['EU', 'SA', 'NA']}
+                  error={fieldState.invalid}
+                  inputRef={Input}
+                  label={translate('signUpSecondForm.placeholderPhone')}
+                />
+              )}
+            />
           </FormControl>
           {errors?.phone && <ErrorMessage variant="caption">{errors.phone?.message}</ErrorMessage>}
         </InputWrapper>
+
         <InputWrapper>
           <FormControl sx={{ width: '100%', height: 48 }} variant="standard">
             <Controller
@@ -112,7 +130,7 @@ function SignUpSecond({ role }: IProps): JSX.Element {
         {role === 'caregiver' && (
           <FormControlLabel
             control={<Switch {...register('isOpen')} id="isOpen" />}
-            label="I'm open to living in clients' houses"
+            label={translate('signUpSecondForm.placeholderIsOpen')}
           />
         )}
 

@@ -10,7 +10,7 @@ const en = {
     emailLengthInvalid: 'Email maximum length is 100',
     emailInvalid: 'Please enter valid email',
     emailRequired: 'Email is required',
-    phoneInvalid: 'Phone should begin from +1 and contain 11 numbers',
+    phoneLengthInvalid: 'Phone length must be 11 numbers',
     phoneRequired: 'Phone is required',
     birthDateRequired: 'Birth date is required',
     placeholderFirstName: 'First Name',
@@ -18,6 +18,7 @@ const en = {
     placeholderEmail: 'E-mail Address',
     placeholderPhone: 'Phone Number',
     placeholderBirthDate: 'Date of Birth',
+    placeholderIsOpen: 'I`m open to living in clients` houses',
   },
 };
 

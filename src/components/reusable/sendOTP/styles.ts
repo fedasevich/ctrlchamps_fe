@@ -62,11 +62,25 @@ export const DigitInput = styled(TextField)`
   width: 5em;
   margin-right: 10px;
   text-align: center;
-  &.active {
-    border: 2px solid orange;
-  }
+
   input {
     font-size: ${ typography.h4.fontSize };
-    text-align: center; 
+    text-align: center;
+    border: none; 
+    &:focus {
+      border: none;
+    }
+  }
+
+  &.error {
+    input {
+      border-bottom: 1px solid red;
+    }
+  }
+
+  &:hover {
+    input {
+      border: none;
+    }
   }
 `;

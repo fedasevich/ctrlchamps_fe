@@ -6,9 +6,10 @@ interface DigitTextFieldProps {
   value: string;
   onChange: (value: string) => void;
   placeholder: string;
+  className: string;
 }
 
-const DigitTextField: FC<DigitTextFieldProps> = ({ value, onChange, placeholder }) => {
+const DigitTextField: FC<DigitTextFieldProps> = ({ value, onChange, placeholder, className }) => {
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     const digitValue = event.target.value.replace(/\D/g, '').slice(0, 1);
     onChange(digitValue);
@@ -18,6 +19,7 @@ const DigitTextField: FC<DigitTextFieldProps> = ({ value, onChange, placeholder 
     <DigitInput
       variant="standard"
       margin="normal"
+      className={className}
       value={value}
       onChange={handleInputChange}
       placeholder={placeholder}

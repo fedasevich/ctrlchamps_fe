@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 
 import { Container } from '@mui/system';
 import { useTranslation } from 'react-i18next';
@@ -9,17 +9,32 @@ import DigitTextField from './digiticTextField';
 import { AccountVerificationContainer, IconContainer, NextButton, StyledParagraph, StyledParagraphMain } from './styles';
 
 
-export default function OTPMessageField(): JSX.Element {
-  const [code1, setCode1] = useState('');
-  const [code2, setCode2] = useState('');
-  const [code3, setCode3] = useState('');
-  const [code4, setCode4] = useState('');
+interface OTPMessageFieldProps {
+  onSubmit: () => void;
+}
 
+const OTPMessageField: React.FC<OTPMessageFieldProps> = ({ onSubmit }): JSX.Element => {
   const { t } = useTranslation();
+  const expectedCode = process.env.NEXT_PUBLIC_OTP_CODE_EXAMPLE;
 
-  const handleSubmit = () => {
-    const verificationCode = `${code1}${code2}${code3}${code4}`;
-  };
+  const [code, setCode] = useState(['', '', '', '']);
+
+  const verificationCode = code.join('');
+  const codeDoesNotMatch = verificationCode.length > 0 && verificationCode.length <= 4 && verificationCode !== expectedCode;
+
+  const handleInputChange = useCallback((index: number) => (value: string) => {
+    setCode((prevCode) => {
+      const newCode = [...prevCode];
+      newCode[index] = value;
+      return newCode;
+    });
+  }, []);
+
+
+  const handleSubmit = ():void => {
+    onSubmit()
+  }
+
 
   return (
     <Container component="main" maxWidth="sm">
@@ -27,25 +42,32 @@ export default function OTPMessageField(): JSX.Element {
         <IconContainer>
           <EmailInboxIcon />
         </IconContainer>
-        <StyledParagraph>{t("EmailSent")}</StyledParagraph>
+        <StyledParagraph>{t('EmailSent')}</StyledParagraph>
         <form>
           <div style={{ display: 'flex' }}>
-            <DigitTextField placeholder="0" value={code1} onChange={setCode1} />
-            <DigitTextField placeholder="1" value={code2} onChange={setCode2} />
-            <DigitTextField placeholder="2" value={code3} onChange={setCode3} />
-            <DigitTextField placeholder="3" value={code4} onChange={setCode4} />
+            {[0, 1, 2, 3].map((index) => (
+              <DigitTextField
+                key={index}
+                placeholder={index.toString()}
+                value={code[index]}
+                onChange={handleInputChange(index)}
+                className={codeDoesNotMatch ? 'error' : ''}
+              />
+            ))}
           </div>
         </form>
-        <StyledParagraphMain href='#'>{t("RequestCode")}</StyledParagraphMain>
+        <StyledParagraphMain href='#'>{t('RequestCode')}</StyledParagraphMain>
         <div>
-          <NextButton 
-            disabled={!code1 || !code2 || !code3 || !code4}
-            onSubmit={handleSubmit}
+          <NextButton
+            disabled={verificationCode.length !== 4 || codeDoesNotMatch}
+            onClick={handleSubmit}
           >
-            {t("Submit")}
+            {t('Submit')}
           </NextButton>
         </div>
       </AccountVerificationContainer>
     </Container>
   );
 }
+
+export default OTPMessageField;

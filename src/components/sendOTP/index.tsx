@@ -6,7 +6,8 @@ import { useTranslation } from 'react-i18next';
 import EmailInboxIcon from 'src/assets/icons/EmailInboxIcon';
 import DigitTextField from './digiticTextField';
 
-import { AccountVerificationContainer, IconContainer, NextButton, StyledParagraph, StyledParagraphMain } from './styles';
+import { AccountVerificationContainer, IconContainer, StyledParagraph, StyledParagraphMain, SubmitButtonContainer } from './styles';
+import { FilledButton } from '../reusable/FilledButton';
 
 
 interface OTPMessageFieldProps {
@@ -57,14 +58,15 @@ const OTPMessageField: React.FC<OTPMessageFieldProps> = ({ onSubmit }): JSX.Elem
           </div>
         </form>
         <StyledParagraphMain href='#'>{t('RequestCode')}</StyledParagraphMain>
-        <div>
-          <NextButton
+        <SubmitButtonContainer>
+          <FilledButton
+            fullWidth
             disabled={verificationCode.length !== 4 || codeDoesNotMatch}
             onClick={handleSubmit}
           >
             {t('Submit')}
-          </NextButton>
-        </div>
+          </FilledButton>
+        </SubmitButtonContainer>
       </AccountVerificationContainer>
     </Container>
   );

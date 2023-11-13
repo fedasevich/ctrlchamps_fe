@@ -1,5 +1,5 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import { FormControl, Input, InputLabel, MenuItem, Select } from '@mui/material';
+import { FilledInput, FormControl, InputLabel, MenuItem, Select } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { useLocales } from 'src/locales';
 import { InferType } from 'yup';
@@ -34,52 +34,56 @@ export default function SignUpThirdForm({ onNext }: SignUpThirdFormProps): JSX.E
   return (
     <AuthFormWrapper>
       <StyledForm onSubmit={onSubmit}>
-        <FormControl variant="standard">
+        <FormControl variant="filled">
           <InputLabel htmlFor="country">
             {translate('signUpThirdForm.placeholderCountry')}
           </InputLabel>
           <Select
+            defaultValue=""
             {...register('country')}
             label={translate('signUpThirdForm.placeholderCountry')}
             id="country"
           >
             {countries.map((country) => (
-              <MenuItem value={country.value}>{country.label}</MenuItem>
+              <MenuItem value={country.value} key={country.value}>
+                {country.label}
+              </MenuItem>
             ))}
           </Select>
+          {errors?.country && <ErrorMessage>{errors.country?.message}</ErrorMessage>}
         </FormControl>
 
-        <FormControl sx={{ width: '100%' }} variant="standard">
+        <FormControl sx={{ width: '100%' }} variant="filled">
           <InputLabel htmlFor="state">{translate('signUpThirdForm.placeholderState')}</InputLabel>
-          <Input {...register('state')} id="state" error={!!errors.state} />
+          <FilledInput {...register('state')} id="state" error={!!errors.state} />
+          {errors?.state && <ErrorMessage>{errors.state?.message}</ErrorMessage>}
         </FormControl>
-        {errors?.state && <ErrorMessage>{errors.state?.message}</ErrorMessage>}
 
-        <FormControl sx={{ width: '100%' }} variant="standard">
+        <FormControl sx={{ width: '100%' }} variant="filled">
           <InputLabel htmlFor="city">{translate('signUpThirdForm.placeholderCity')}</InputLabel>
-          <Input {...register('city')} id="city" error={!!errors.city} />
+          <FilledInput {...register('city')} id="city" error={!!errors.city} />
+          {errors?.city && <ErrorMessage variant="caption">{errors.city?.message}</ErrorMessage>}
         </FormControl>
-        {errors?.city && <ErrorMessage variant="caption">{errors.city?.message}</ErrorMessage>}
 
-        <FormControl sx={{ width: '100%' }} variant="standard">
+        <FormControl sx={{ width: '100%' }} variant="filled">
           <InputLabel htmlFor="zipCode">
             {translate('signUpThirdForm.placeholderZipCode')}
           </InputLabel>
-          <Input {...register('zipCode')} id="zipCode" error={!!errors.zipCode} />
+          <FilledInput {...register('zipCode')} id="zipCode" error={!!errors.zipCode} />
+          {errors?.zipCode && (
+            <ErrorMessage variant="caption">{errors.zipCode?.message}</ErrorMessage>
+          )}
         </FormControl>
-        {errors?.zipCode && (
-          <ErrorMessage variant="caption">{errors.zipCode?.message}</ErrorMessage>
-        )}
 
-        <FormControl sx={{ width: '100%' }} variant="standard">
+        <FormControl sx={{ width: '100%' }} variant="filled">
           <InputLabel htmlFor="address">
             {translate('signUpThirdForm.placeholderAddress')}
           </InputLabel>
-          <Input {...register('address')} id="address" error={!!errors.address} />
+          <FilledInput {...register('address')} id="address" error={!!errors.address} />
+          {errors?.address && (
+            <ErrorMessage variant="caption">{errors.address?.message}</ErrorMessage>
+          )}
         </FormControl>
-        {errors?.address && (
-          <ErrorMessage variant="caption">{errors.address?.message}</ErrorMessage>
-        )}
 
         <NextButton variant="contained" disabled={!isValid} type="submit">
           Next

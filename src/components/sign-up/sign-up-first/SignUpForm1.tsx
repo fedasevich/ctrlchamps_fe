@@ -36,15 +36,15 @@ const Step1Form: React.FC<Step1FormProps> = ({ onNext }) => {
     <Container component="main" maxWidth="sm">
       <BoxWrapper>
         <CustomRadio
-          label="Seeker"
-          description={t("seeker")}
+          label={t("Seeker.Title")}
+          description={t("Seeker.Description")}
           value="seeker"
           selectedOption={selectedOption}
           handleOptionChange={handleOptionChange}
         />
         <CustomRadio
-          label="Caregiver"
-          description={t("caregiver")}
+          label={t("Caregiver.Title")}
+          description={t("Caregiver.Description")}
           value="caregiver"
           selectedOption={selectedOption}
           handleOptionChange={handleOptionChange}

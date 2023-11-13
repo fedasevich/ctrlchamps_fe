@@ -22,7 +22,7 @@ const OTPMessageField: React.FC<OTPMessageFieldProps> = ({ onSubmit }): JSX.Elem
   const [code, setCode] = useState(['', '', '', '']);
 
   const verificationCode = code.join('');
-  const codeDoesNotMatch = verificationCode.length && verificationCode !== expectedCode;
+  const codeDoesNotMatch = Boolean(verificationCode.length) && verificationCode !== expectedCode;
 
   const handleInputChange = useCallback((index: number) => (value: string) => {
     setCode((prevCode) => {

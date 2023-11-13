@@ -1,5 +1,5 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import { FormControl, IconButton, Input, InputAdornment, InputLabel } from '@mui/material';
+import { FilledInput, FormControl, IconButton, InputAdornment, InputLabel } from '@mui/material';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import Visibility from 'src/assets/icons/Visibility';
@@ -38,11 +38,11 @@ export default function SignUpFourthForm({ onNext }: SignUpFourthFormProps): JSX
   return (
     <AuthFormWrapper>
       <StyledForm onSubmit={onSubmit}>
-        <FormControl sx={{ width: '100%' }} variant="standard">
+        <FormControl sx={{ width: '100%' }} variant="filled">
           <InputLabel htmlFor="password">
             {translate('signUpFourthForm.placeholderPassword')}
           </InputLabel>
-          <Input
+          <FilledInput
             {...register('password')}
             id="password"
             error={!!errors.password}
@@ -58,13 +58,13 @@ export default function SignUpFourthForm({ onNext }: SignUpFourthFormProps): JSX
               </InputAdornment>
             }
           />
+          {errors?.password && <ErrorMessage>{errors.password?.message}</ErrorMessage>}
         </FormControl>
-        {errors?.password && <ErrorMessage>{errors.password?.message}</ErrorMessage>}
-        <FormControl sx={{ width: '100%' }} variant="standard">
+        <FormControl sx={{ width: '100%' }} variant="filled">
           <InputLabel htmlFor="confirmPassword">
             {translate('signUpFourthForm.placeholderConfirmPassword')}
           </InputLabel>
-          <Input
+          <FilledInput
             {...register('confirmPassword')}
             id="confirmPassword"
             error={!!errors.confirmPassword}
@@ -80,11 +80,10 @@ export default function SignUpFourthForm({ onNext }: SignUpFourthFormProps): JSX
               </InputAdornment>
             }
           />
+          {errors?.confirmPassword && (
+            <ErrorMessage variant="caption">{errors.confirmPassword?.message}</ErrorMessage>
+          )}
         </FormControl>
-
-        {errors?.confirmPassword && (
-          <ErrorMessage variant="caption">{errors.confirmPassword?.message}</ErrorMessage>
-        )}
 
         <NextButton variant="contained" disabled={!isValid} type="submit">
           Next

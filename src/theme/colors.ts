@@ -10,6 +10,7 @@ export const PRIMARY = {
 export const SECONDARY = {
   light_gray: 'rgba(0, 0, 0, 0.12)',
   md_gray: '#555555',
+  selected: '#b8ffef63'
 };
 
 export const TEXT_COLOR = {

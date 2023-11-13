@@ -1,75 +1,30 @@
-import React, { useState, useCallback } from 'react';
-
-import { Container } from '@mui/system';
+import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next';
 
-import EmailInboxIcon from 'src/assets/icons/EmailInboxIcon';
-import DigitTextField from './digiticTextField';
+import SignUpHeader from 'src/components/reusable/header';
+import OTPMessageField from 'src/components/sendOTP/OTPMessageField';
+import SuccessfulVerification from 'src/components/sendOTP/SuccessfulVerification';
 
-import { AccountVerificationContainer, IconContainer, StyledParagraph, StyledParagraphMain, SubmitButtonContainer } from './styles';
-import { FilledButton } from '../reusable/FilledButton';
+const AccountVerification = () :JSX.Element => {
+    const { t } = useTranslation();
+    const [isSubmitted, setIsSubmitted] = useState(false); 
+    const profile = process.env.NEXT_PUBLIC_PROFILE || '';
 
+    const onSubmit = (): void => {
+      setIsSubmitted(true);
+    }
 
-interface OTPMessageFieldProps {
-  onSubmit: () => void;
-}
+    return (
+      <>
+        <SignUpHeader text={t('AccountVerification')} />
+        {
+        isSubmitted ? 
+        <SuccessfulVerification
+          profile={profile}
+        /> : 
+        <OTPMessageField onSubmit={onSubmit}/> }
+      </>
+    );
+  };
 
-const OTPMessageField: React.FC<OTPMessageFieldProps> = ({ onSubmit }): JSX.Element => {
-  const { t } = useTranslation();
-  const expectedCode = process.env.NEXT_PUBLIC_OTP_CODE_EXAMPLE;
-
-  const [code, setCode] = useState(['', '', '', '']);
-
-  const verificationCode = code.join('');
-  const codeDoesNotMatch = verificationCode.length > 0 && verificationCode.length <= 4 && verificationCode !== expectedCode;
-
-  const handleInputChange = useCallback((index: number) => (value: string) => {
-    setCode((prevCode) => {
-      const newCode = [...prevCode];
-      newCode[index] = value;
-      return newCode;
-    });
-  }, []);
-
-
-  const handleSubmit = ():void => {
-    onSubmit()
-  }
-
-
-  return (
-    <Container component="main" maxWidth="sm">
-      <AccountVerificationContainer>
-        <IconContainer>
-          <EmailInboxIcon />
-        </IconContainer>
-        <StyledParagraph>{t('EmailSent')}</StyledParagraph>
-        <form>
-          <div style={{ display: 'flex' }}>
-            {[0, 1, 2, 3].map((index) => (
-              <DigitTextField
-                key={index}
-                placeholder={index.toString()}
-                value={code[index]}
-                onChange={handleInputChange(index)}
-                className={codeDoesNotMatch ? 'error' : ''}
-              />
-            ))}
-          </div>
-        </form>
-        <StyledParagraphMain href='#'>{t('RequestCode')}</StyledParagraphMain>
-        <SubmitButtonContainer>
-          <FilledButton
-            fullWidth
-            disabled={verificationCode.length !== 4 || codeDoesNotMatch}
-            onClick={handleSubmit}
-          >
-            {t('Submit')}
-          </FilledButton>
-        </SubmitButtonContainer>
-      </AccountVerificationContainer>
-    </Container>
-  );
-}
-
-export default OTPMessageField;
+export default AccountVerification

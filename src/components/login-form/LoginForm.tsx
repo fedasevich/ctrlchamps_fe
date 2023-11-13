@@ -1,5 +1,5 @@
 // @mui
-import { FormControl, InputLabel, Input, InputAdornment, IconButton } from '@mui/material';
+import { FormControl, InputLabel, InputAdornment, IconButton, FilledInput } from '@mui/material';
 import Visibility from 'src/assets/icons/Visibility';
 import VisibilityOff from 'src/assets/icons/VisibilityOff';
 
@@ -52,16 +52,16 @@ function LoginForm(): JSX.Element {
         })}
       >
         <InputWrapper>
-          <FormControl sx={{ width: '100%' }} variant="standard">
+          <FormControl sx={{ width: '100%' }} variant="filled">
             <InputLabel htmlFor="email">{translate('loginForm.emailPlaceholder')}</InputLabel>
-            <Input {...register('email')} id="email" error={!!errors.email} type="email" />
+            <FilledInput {...register('email')} id="email" error={!!errors.email} type="email" />
           </FormControl>
           {errors?.email && <ErrorMessage variant="caption">{errors.email?.message}</ErrorMessage>}
         </InputWrapper>
         <InputWrapper>
-          <FormControl sx={{ width: '100%' }} variant="standard">
+          <FormControl sx={{ width: '100%' }} variant="filled">
             <InputLabel htmlFor="password">{translate('loginForm.passwordPlaceholder')}</InputLabel>
-            <Input
+            <FilledInput
               {...register('password')}
               id="password"
               error={!!errors.password}

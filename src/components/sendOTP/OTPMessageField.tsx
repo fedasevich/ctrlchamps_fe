@@ -14,6 +14,7 @@ interface OTPMessageFieldProps {
   onSubmit: () => void;
 }
 
+
 const OTPMessageField: React.FC<OTPMessageFieldProps> = ({ onSubmit }): JSX.Element => {
   const { t } = useTranslation();
   const expectedCode = process.env.NEXT_PUBLIC_OTP_CODE_EXAMPLE;
@@ -21,7 +22,7 @@ const OTPMessageField: React.FC<OTPMessageFieldProps> = ({ onSubmit }): JSX.Elem
   const [code, setCode] = useState(['', '', '', '']);
 
   const verificationCode = code.join('');
-  const codeDoesNotMatch = verificationCode.length > 0 && verificationCode.length <= 4 && verificationCode !== expectedCode;
+  const codeDoesNotMatch = verificationCode.length && verificationCode !== expectedCode;
 
   const handleInputChange = useCallback((index: number) => (value: string) => {
     setCode((prevCode) => {
@@ -33,7 +34,7 @@ const OTPMessageField: React.FC<OTPMessageFieldProps> = ({ onSubmit }): JSX.Elem
 
 
   const handleSubmit = ():void => {
-    onSubmit()
+    onSubmit();
   }
 
 

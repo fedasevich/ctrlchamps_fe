@@ -12,6 +12,11 @@ const SuccessfulVerification = ({ profile }:  {profile: string}): JSX.Element  =
 
     const { t } = useTranslation();
 
+    const roles = {
+        SEEKER: 'Seeker',
+        CAREGIVER: 'Caregiver'
+      };
+
     return (
         <Container component="main" maxWidth="sm">
         <SuccessAccountVerificationContainer>
@@ -23,14 +28,14 @@ const SuccessfulVerification = ({ profile }:  {profile: string}): JSX.Element  =
                 {t("Successfully_Verified")}
                 </StyledParagraphSuccess>
                 <p>
-                    {profile === "Seeker" ? t("Seeker.Successfully_Verified_Text") : t("Caregiver.Successfully_Verified_Text")}
+                    {profile === roles.SEEKER ? t("Seeker.Successfully_Verified_Text") : t("Caregiver.Successfully_Verified_Text")}
                 </p>
                </TextBlock>
 
                 <SubmitButtonContainer>
                     <FilledButton
                         fullWidth>
-                    {profile === "Seeker" ? t("Seeker.Successfully_Verified_Button") : t("Caregiver.Successfully_Verified_Button")}
+                    {profile === roles.SEEKER ? t("Seeker.Successfully_Verified_Button") : t("Caregiver.Successfully_Verified_Button")}
                     </FilledButton>
                 </SubmitButtonContainer>
             </SuccessAccountVerificationContainer>

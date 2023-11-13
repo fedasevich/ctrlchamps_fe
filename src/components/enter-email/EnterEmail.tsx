@@ -1,14 +1,11 @@
 import { Container, TextField, Typography } from '@mui/material';
 import { FilledButton } from 'src/components/reusable/FilledButton';
 import { SECONDARY } from 'src/theme/colors';
-import { useLocales } from 'src/locales';
 import { ErrorText } from '../reusable/ErrorText';
 import { useEnterEmail } from './hooks';
 
 export default function EnterEmail(): JSX.Element {
-  const { translate } = useLocales();
-
-  const { email, onChange, onSubmit, emailNotExists, isDisabled } = useEnterEmail();
+  const { email, onChange, onSubmit, emailNotExists, isDisabled, translate } = useEnterEmail();
 
   return (
     <Container sx={{ mt: 3 }} maxWidth="xs">
@@ -20,7 +17,7 @@ export default function EnterEmail(): JSX.Element {
           fullWidth
           sx={{ color: SECONDARY.md_gray, mt: 6 }}
           label={translate('reset_password.input_label')}
-          variant="standard"
+          variant="filled"
         />
         {emailNotExists && <ErrorText>{translate('reset_password.errors.email')}</ErrorText>}
         <FilledButton type="submit" fullWidth disabled={isDisabled} sx={{ mt: 2 }}>

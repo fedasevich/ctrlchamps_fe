@@ -1,4 +1,5 @@
 import { Dispatch, SetStateAction, useState } from 'react';
+import { useLocales } from 'src/locales';
 import { checkIsEmail } from 'src/utils/checkEmail';
 
 type ReturnType = {
@@ -10,14 +11,21 @@ type ReturnType = {
   checkEmail: (e: React.FormEvent<HTMLFormElement>) => void;
   onChange: (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => void;
   onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
+  translate: (text: string) => string;
 };
 
 export function useEnterEmail(): ReturnType {
-  const [email, setEmail] = useState('');
-  const isDisabled = email.trim().length < 1;
-  const [emailNotExists, setEmailNotExists] = useState(false);
+  const { translate } = useLocales();
+  const [email, setEmail] = useState<string>('');
+  const [isDisabled, setIsDisabled] = useState<boolean>(true);
+  const [emailNotExists, setEmailNotExists] = useState<boolean>(false);
 
   const onChange = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>): void => {
+    if (email.trim().length > 1) {
+      setIsDisabled(false);
+    } else {
+      setIsDisabled(true);
+    }
     setEmail(e.target.value);
   };
 
@@ -25,7 +33,7 @@ export function useEnterEmail(): ReturnType {
     e.preventDefault();
     const isValid = checkIsEmail(email);
     if (!isValid) {
-      alert('Enter valid email');
+      alert(translate('reset_password.errors.invalid'));
       return;
     }
     try {
@@ -49,5 +57,6 @@ export function useEnterEmail(): ReturnType {
     checkEmail,
     onChange,
     onSubmit,
+    translate,
   };
 }

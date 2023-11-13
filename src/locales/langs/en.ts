@@ -19,6 +19,7 @@ const en = {
     errors: {
       pass: "Passwords don't match",
       email: "An account matching that email doesn't exist",
+      invalid: 'Enter valid email',
     },
   },
 };

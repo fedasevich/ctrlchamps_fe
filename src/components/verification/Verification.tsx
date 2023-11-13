@@ -11,14 +11,15 @@ import {
   TextBtn,
 } from './styles';
 import OTPInput from './OTPInput';
+import { OTP_LENGTH } from './constants';
 
 type VerificationProps = { text: string };
 
 export default function Verification({ text }: VerificationProps): JSX.Element {
   const { translate } = useLocales();
-  const [code, setCode] = useState('');
-  const [submitDisabled, setSubmitDisabled] = useState(true);
-  const length = 4;
+  const [code, setCode] = useState<string>('');
+  const [submitDisabled, setSubmitDisabled] = useState<boolean>(true);
+  const [length, setLength] = useState<number>(OTP_LENGTH);
 
   return (
     <Container>

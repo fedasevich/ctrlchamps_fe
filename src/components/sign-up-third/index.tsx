@@ -1,18 +1,25 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { FilledInput, FormControl, InputLabel, MenuItem, Select } from '@mui/material';
+
 import { useForm } from 'react-hook-form';
+import { useDispatch } from 'react-redux';
+import { saveAddressData } from 'src/redux/addressReducer';
+
 import { useLocales } from 'src/locales';
 import { InferType } from 'yup';
 import { useSignUpThirdCountrySelectOptions } from './select-options';
-import { AuthFormWrapper, ErrorMessage, NextButton, StyledForm } from './style';
+
 import { useSignUpThirdSchema } from './validation';
+import { AuthFormWrapper, ErrorMessage, NextButton, StyledForm } from './style';
+
 
 interface SignUpThirdFormProps {
-  onNext?: unknown;
+  onNext: unknown;
 }
 
 export default function SignUpThirdForm({ onNext }: SignUpThirdFormProps): JSX.Element {
   const { translate } = useLocales();
+  const dispatch = useDispatch();
 
   const signUpThirdSchema = useSignUpThirdSchema();
 
@@ -29,7 +36,10 @@ export default function SignUpThirdForm({ onNext }: SignUpThirdFormProps): JSX.E
     mode: 'onBlur',
   });
 
-  const onSubmit = handleSubmit((data) => alert(JSON.stringify(data)));
+  const onSubmit = handleSubmit((data) => {
+    dispatch(saveAddressData(data))
+    alert(JSON.stringify(data))
+  });
 
   return (
     <AuthFormWrapper>

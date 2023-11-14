@@ -1,33 +1,35 @@
-import { configureStore } from '@reduxjs/toolkit';
-import {
-  TypedUseSelectorHook,
-  useDispatch as useAppDispatch,
-  useSelector as useAppSelector,
-} from 'react-redux';
+import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
+import { useDispatch, useSelector, TypedUseSelectorHook } from 'react-redux';
 import { persistStore, persistReducer } from 'redux-persist';
-import rootReducer, { rootPersistConfig } from './rootReducer';
+import storage from 'redux-persist/lib/storage';
+import rootReducer from './rootReducer';
+import addressReducer from './addressReducer';
 
-// ----------------------------------------------------------------------
+const persistConfig = {
+  key: 'root',
+  storage,
+};
 
-export type RootState = ReturnType<typeof rootReducer>;
-
-export type AppDispatch = typeof store.dispatch;
+const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 const store = configureStore({
-  reducer: persistReducer(rootPersistConfig, rootReducer),
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware({
-      serializableCheck: false,
-      immutableCheck: false,
-    }),
+  reducer: {
+    persistedReducer,
+    address: addressReducer,
+  },
+  middleware: getDefaultMiddleware({
+    serializableCheck: false,
+    immutableCheck: false,
+  }),
 });
 
 const persistor = persistStore(store);
 
-const { dispatch } = store;
+export type RootState = ReturnType<typeof rootReducer>;
+export const useTypedSelector: TypedUseSelectorHook<RootState> = useSelector;
 
-const useSelector: TypedUseSelectorHook<RootState> = useAppSelector;
 
-const useDispatch = () => useAppDispatch<AppDispatch>();
+export { store, persistor };
 
-export { store, persistor, dispatch, useSelector, useDispatch };
+export type AppDispatch = typeof store.dispatch;
+export const useAppDispatch = () => useDispatch<AppDispatch>();

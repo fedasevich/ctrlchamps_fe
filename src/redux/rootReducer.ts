@@ -1,5 +1,6 @@
 import { combineReducers } from 'redux';
 import createWebStorage from 'redux-persist/lib/storage/createWebStorage';
+import addressReducer from './addressReducer';
 // ----------------------------------------------------------------------
 
 export const createNoopStorage = () => ({
@@ -25,6 +26,8 @@ export const rootPersistConfig = {
   whitelist: [],
 };
 
-const rootReducer = combineReducers({});
+const rootReducer = combineReducers({
+  address: addressReducer
+});
 
 export default rootReducer;

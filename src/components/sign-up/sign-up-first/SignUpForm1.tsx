@@ -1,9 +1,11 @@
 import React, { useState , useMemo } from 'react';
+import { useDispatch } from 'react-redux';
 
 import { FormControlLabel, Radio, FormLabel, FormHelperText } from '@mui/material';
 import { Box, Container } from '@mui/system';
 
 import { useTranslation } from 'react-i18next';
+import { setSelectedOptionReducer } from 'src/redux/authReducer';
 import { BoxWrapper, NextButton, StyledParagraph, StyledParagraphMain, selectedItemColorLigthTheme, signupColorInLightTheme } from './styles';
 
 interface Step1FormProps {
@@ -19,10 +21,13 @@ interface CustomRadioProps {
 }
 
 const Step1Form: React.FC<Step1FormProps> = ({ onNext }) => {
+  const dispatch = useDispatch();
+
   const [selectedOption, setSelectedOption] = useState<string>('');
 
   const handleOptionChange = (event: React.ChangeEvent<HTMLInputElement>):void => {
     setSelectedOption(event.target.value);
+    dispatch(setSelectedOptionReducer(event.target.value));
   };
 
   const handleNext = ():void => {
@@ -30,6 +35,7 @@ const Step1Form: React.FC<Step1FormProps> = ({ onNext }) => {
       onNext();
     }
   };
+
   const { t } = useTranslation();
 
   return (

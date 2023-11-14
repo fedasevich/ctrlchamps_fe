@@ -3,7 +3,7 @@ import { PRIMARY, SECONDARY } from 'src/theme/colors';
 import { TYPOGRAPHY } from 'src/theme/fonts';
 
 const Header = styled.header`
-  padding: 20px 15px;
+  padding: 8px 12px;
   border-bottom: 1px solid ${SECONDARY.light_gray};
   display: flex;
   align-items: center;
@@ -13,7 +13,7 @@ const Header = styled.header`
 const Container = styled.div`
   display: flex;
   align-items: center;
-  gap: 28px;
+  gap: 16px;
 `;
 
 const Text = styled.p`
@@ -26,9 +26,23 @@ const Text = styled.p`
 const Link = styled.button`
   border: none;
   background: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px;
   &:hover {
     cursor: pointer;
   }
 `;
 
-export { Header, Container, Text, Link };
+const InfoButton = styled.button`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: transparent;
+  border: none;
+  padding: 12px;
+  cursor: pointer;
+`;
+
+export { Header, Container, Text, Link, InfoButton };

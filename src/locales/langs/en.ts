@@ -14,7 +14,15 @@ const en = {
     title: 'Need Help',
     text: 'Reach out to us via email and we`ll get back to you as soon as possible:',
     email: 'support@afyanexcare.com',
-    },
+  },
+  signUpFourthForm: {
+    passwordInvalid: 'Password needs to be at least 8 characters',
+    passwordsNotMatching: 'Passwords field and Confirm password field must match',
+    passwordRequired: 'Password is required',
+    confirmPasswordRequired: 'Confirm password is required',
+    placeholderPassword: 'Password',
+    placeholderConfirmPassword: 'Confirm Password',
+  },
   SignUp: 'Sign Up',
   seeker:
     'Find the perfect caregiver for you or your loved one to get reliable and personalized care',
@@ -40,7 +48,7 @@ const en = {
       pass: "Passwords don't match",
       email: "An account matching that email doesn't exist",
       invalid: 'Enter valid email',
-    }, 
+    },
   },
 };
 

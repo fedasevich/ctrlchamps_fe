@@ -8,7 +8,7 @@ type ReturnType = {
   isDisabled: boolean;
   emailNotExists: boolean;
   setEmailNotExists: Dispatch<SetStateAction<boolean>>;
-  checkEmail: (e: React.FormEvent<HTMLFormElement>) => void;
+  sendCode: (e: React.FormEvent<HTMLFormElement>) => void;
   onChange: (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => void;
   onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
   translate: (text: string) => string;
@@ -37,15 +37,14 @@ export function useEnterEmail(): ReturnType {
       return;
     }
     try {
-      await checkEmail();
+      await sendCode();
     } catch (err) {
       alert(err);
     }
   };
 
-  async function checkEmail(): Promise<unknown> {
-    // check if email exists in db
-    return true;
+  async function sendCode(): Promise<void> {
+    // check if email exists in db (if it does, send code to this email)
   }
 
   return {
@@ -54,7 +53,7 @@ export function useEnterEmail(): ReturnType {
     isDisabled,
     emailNotExists,
     setEmailNotExists,
-    checkEmail,
+    sendCode,
     onChange,
     onSubmit,
     translate,

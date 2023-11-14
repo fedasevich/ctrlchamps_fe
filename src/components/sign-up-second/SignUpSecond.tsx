@@ -1,6 +1,13 @@
 // @mui
 import { MuiTelInput } from 'mui-tel-input';
-import { Switch, FormControlLabel, FormControl, InputLabel, Input } from '@mui/material';
+import {
+  Switch,
+  FormControlLabel,
+  FormControl,
+  InputLabel,
+  Input,
+  FilledInput,
+} from '@mui/material';
 //
 import React, { memo } from 'react';
 import { useLocales } from 'src/locales';
@@ -33,6 +40,8 @@ function SignUpSecond({ role }: IProps): JSX.Element {
     register,
     control,
     handleSubmit,
+    setError,
+    clearErrors,
     formState: { errors, isValid },
   } = useForm<FormValues>({
     resolver: yupResolver(signUpSecondSchema),
@@ -47,11 +56,11 @@ function SignUpSecond({ role }: IProps): JSX.Element {
         })}
       >
         <InputWrapper>
-          <FormControl sx={{ width: '100%' }} variant="standard">
+          <FormControl sx={{ width: '100%' }} variant="filled">
             <InputLabel htmlFor="firstName">
               {translate('signUpSecondForm.placeholderFirstName')}
             </InputLabel>
-            <Input
+            <FilledInput
               {...register('firstName')}
               id="firstName"
               error={!!errors.firstName}
@@ -63,34 +72,51 @@ function SignUpSecond({ role }: IProps): JSX.Element {
           )}
         </InputWrapper>
         <InputWrapper>
-          <FormControl sx={{ width: '100%' }} variant="standard">
+          <FormControl sx={{ width: '100%' }} variant="filled">
             <InputLabel htmlFor="lastName">
               {translate('signUpSecondForm.placeholderLastName')}
             </InputLabel>
-            <Input {...register('lastName')} id="lastName" error={!!errors.lastName} type="text" />
+            <FilledInput
+              {...register('lastName')}
+              id="lastName"
+              error={!!errors.lastName}
+              type="text"
+            />
           </FormControl>
           {errors?.lastName && (
             <ErrorMessage variant="caption">{errors.lastName?.message}</ErrorMessage>
           )}
         </InputWrapper>
         <InputWrapper>
-          <FormControl sx={{ width: '100%' }} variant="standard">
+          <FormControl sx={{ width: '100%' }} variant="filled">
             <InputLabel htmlFor="email">
               {translate('signUpSecondForm.placeholderEmail')}
             </InputLabel>
-            <Input {...register('email')} id="email" error={!!errors.email} type="email" />
+            <FilledInput {...register('email')} id="email" error={!!errors.email} type="email" />
           </FormControl>
           {errors?.email && <ErrorMessage variant="caption">{errors.email?.message}</ErrorMessage>}
         </InputWrapper>
         <InputWrapper>
-          <FormControl sx={{ width: '100%' }} variant="standard">
+          <FormControl sx={{ width: '100%' }} variant="filled">
             <Controller
               name="phone"
               control={control}
               render={({ field, fieldState }): JSX.Element => (
                 <MuiTelInput
                   {...field}
-                  variant="standard"
+                  onChange={(value: string): void => {
+                    field.onChange(value);
+                    if (value.slice(2, 3) === '0') {
+                      field.onChange('');
+                      setError('phone', {
+                        type: 'manual',
+                        message: 'Phone can`t starts with 0',
+                      });
+                    } else {
+                      clearErrors('phone');
+                    }
+                  }}
+                  variant="filled"
                   defaultCountry="US"
                   focusOnSelectCountry
                   disableFormatting
@@ -107,7 +133,7 @@ function SignUpSecond({ role }: IProps): JSX.Element {
         </InputWrapper>
 
         <InputWrapper>
-          <FormControl sx={{ width: '100%', height: 48 }} variant="standard">
+          <FormControl sx={{ width: '100%', height: 48 }} variant="filled">
             <Controller
               control={control}
               name="birthDate"
@@ -116,7 +142,7 @@ function SignUpSecond({ role }: IProps): JSX.Element {
                   placeholderText={translate('signUpSecondForm.placeholderBirthDate')}
                   onChange={(date): void => field.onChange(date)}
                   selected={field.value}
-                  customInput={<Input fullWidth error={!!errors.birthDate} />}
+                  customInput={<FilledInput fullWidth error={!!errors.birthDate} />}
                   maxDate={new Date()}
                 />
               )}

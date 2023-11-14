@@ -1,16 +1,13 @@
-// @mui
 import { FormControl, InputLabel, InputAdornment, IconButton, FilledInput } from '@mui/material';
-import Visibility from 'src/assets/icons/Visibility';
-import VisibilityOff from 'src/assets/icons/VisibilityOff';
-
 import React, { memo, useState } from 'react';
-import { useRouter } from 'next/router';
-import { useLocales } from 'src/locales';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { InferType } from 'yup';
+import { useRouter } from 'next/router';
+import Visibility from 'src/assets/icons/Visibility';
+import VisibilityOff from 'src/assets/icons/VisibilityOff';
+import { useLocales } from 'src/locales';
 import { useLoginSchema } from './validation';
-//
 import {
   Wrapper,
   StyledForm,

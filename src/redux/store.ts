@@ -1,9 +1,12 @@
 import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
 import { useDispatch, useSelector, TypedUseSelectorHook } from 'react-redux';
 import { persistStore, persistReducer } from 'redux-persist';
+import rootReducer, { rootPersistConfig } from './rootReducer';
 import storage from 'redux-persist/lib/storage';
-import rootReducer from './rootReducer';
+import authReducer from 'src/redux/authReducer';
 import addressReducer from './addressReducer';
+import api from 'src/redux/api/userAPI';
+
 
 const persistConfig = {
   key: 'root',
@@ -15,14 +18,16 @@ const persistedReducer = persistReducer(persistConfig, rootReducer);
 const store = configureStore({
   reducer: {
     persistedReducer,
+    auth: authReducer,
     address: addressReducer,
+    [ api.reducerPath ]: api.reducer
   },
-  middleware: getDefaultMiddleware({
-    serializableCheck: false,
-    immutableCheck: false,
-  }),
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: false,
+      immutableCheck: false,
+    }),
 });
-
 const persistor = persistStore(store);
 
 export type RootState = ReturnType<typeof rootReducer>;

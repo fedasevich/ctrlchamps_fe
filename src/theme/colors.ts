@@ -13,6 +13,7 @@ export const SECONDARY = {
   gray_semi_transparent: 'rgba(0, 0, 0, 0.60)',
   backdrop_background: 'rgba(0, 0, 0, 0.20)',
   gray_shadow: 'rgba(0, 0, 0, 0.1)',
+  selected: '#b8ffef63'
 };
 
 export const TEXT_COLOR = {

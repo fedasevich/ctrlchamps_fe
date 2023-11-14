@@ -21,6 +21,11 @@ const en = {
     fifthItem:
       'Caregiver-Seeker Engagements: a. Caregiver and seeker interactions facilitated through the app are solely between the parties involved. The Caregiver App does not act as an employer or agent for caregivers. b. Caregivers are responsible for setting their own rates, availability, and service terms. c. Seekers are responsible for reviewing and assessing caregivers` qualifications and references. d. The Caregiver App is not liable for any disputes, damages, or claims arising from caregiver-seeker engagements.',
   },
+  SignUp: "Sign Up",
+  seeker: 'Find the perfect caregiver for you or your loved one to get reliable and personalized care',
+  caregiver: 'Connect with clients seeking your expertise and provide compassionate care for those in need',
+  BySigningUp: "By signing up you agree to the ",
+  terms_conditions: "Terms and Conditions",
 };
 
 export default en;

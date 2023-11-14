@@ -1,4 +1,3 @@
-// @mui
 import { MuiTelInput } from 'mui-tel-input';
 import {
   Switch,
@@ -8,15 +7,13 @@ import {
   Input,
   FilledInput,
 } from '@mui/material';
-//
 import React, { memo } from 'react';
-import { useLocales } from 'src/locales';
+import { InferType } from 'yup';
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { InferType } from 'yup';
-import { useSignUpSecondSchema } from './validation';
 import 'react-datepicker/dist/react-datepicker.css';
-//
+import { useLocales } from 'src/locales';
+import { useSignUpSecondSchema } from './validation';
 import {
   NextButton,
   StyledForm,

@@ -4,8 +4,8 @@ import { SECONDARY } from 'src/theme/colors';
 import { ErrorText } from '../reusable/ErrorText';
 import { useEnterEmail } from './hooks';
 
-export default function EnterEmail(): JSX.Element {
-  const { email, onChange, onSubmit, emailNotExists, isDisabled, translate } = useEnterEmail();
+export default function EnterEmail({ next }: { next: () => void }): JSX.Element {
+  const { email, onChange, onSubmit, emailNotExists, isDisabled, translate } = useEnterEmail(next);
 
   return (
     <Container sx={{ mt: 3 }} maxWidth="xs">

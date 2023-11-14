@@ -16,10 +16,19 @@ const en = {
     confirm: 'Confirm Password',
     success: 'Your Password is Updated!',
     instructions: 'Now you can go back to login to authenticate with new credentials',
+    placeholder: {
+      pass: 'Password',
+      confirm_pass: 'Confirm Password',
+    },
+    aria: {
+      toggle: 'toggle password visibility',
+    },
     errors: {
       pass: "Passwords don't match",
+      pass_required: 'This field is required',
       email: "An account matching that email doesn't exist",
       invalid: 'Enter valid email',
+      invalid_pass: 'Password should contain at least {{num}} characters',
     },
   },
 };

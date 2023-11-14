@@ -14,7 +14,7 @@ type ReturnType = {
   translate: (text: string) => string;
 };
 
-export function useEnterEmail(): ReturnType {
+export function useEnterEmail(next: (email?: string) => void): ReturnType {
   const { translate } = useLocales();
   const [email, setEmail] = useState<string>('');
   const [isDisabled, setIsDisabled] = useState<boolean>(true);
@@ -38,6 +38,7 @@ export function useEnterEmail(): ReturnType {
     }
     try {
       await sendCode();
+      next(email);
     } catch (err) {
       alert(err);
     }

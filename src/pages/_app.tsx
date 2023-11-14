@@ -23,12 +23,11 @@ import createEmotionCache from '../utils/createEmotionCache';
 // locales
 import ThemeLocalization from '../locales';
 // styles
-import 'reset-css';
 import 'normalize.css';
+import 'reset-css';
 // components
+import ThemeProvider from 'src/theme';
 import { SettingsProvider } from '../components/settings';
-import { ConfigProvider } from 'antd';
-import theme from 'src/theme/themeConfig';
 
 // ----------------------------------------------------------------------
 
@@ -56,9 +55,9 @@ export default function MyApp(props: MyAppProps) {
       <ReduxProvider store={store}>
         <LocalizationProvider dateAdapter={AdapterDateFns}>
           <SettingsProvider>
-            <ConfigProvider theme={theme}>
+            <ThemeProvider>
               <ThemeLocalization>{getLayout(<Component {...pageProps} />)}</ThemeLocalization>
-            </ConfigProvider>
+            </ThemeProvider>
           </SettingsProvider>
         </LocalizationProvider>
       </ReduxProvider>

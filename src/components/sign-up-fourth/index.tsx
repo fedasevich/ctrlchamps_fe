@@ -16,7 +16,7 @@ interface SignUpFourthFormProps {
 export default function SignUpFourthForm({ onNext }: SignUpFourthFormProps): JSX.Element {
   const { translate } = useLocales();
 
-  const [showPassword, setShowPassword] = useState(false);
+  const [showPassword, setShowPassword] = useState<boolean>(false);
 
   const handleClickShowPassword = (): void => setShowPassword((show) => !show);
   const signUpFourthSchema = useSignUpFourthSchema();

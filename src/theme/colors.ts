@@ -3,6 +3,7 @@ export const PRIMARY = {
   info: '#0DE1DD',
   main: '#08BCB8',
   dark_main: '#089C99',
+  light_main: 'rgba(8, 188, 184, 0.12)',
   white: '#fff',
   black: '#000',
 };

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import { useTranslation } from 'react-i18next';
 
 import SuccessfulValidationIcon from 'src/assets/icons/SuccessfulValidationIcon';
@@ -12,10 +12,13 @@ const SuccessfulVerification = ({ profile }:  {profile: string}): JSX.Element  =
 
     const { t } = useTranslation();
 
-    const roles = {
-        SEEKER: 'Seeker',
-        CAREGIVER: 'Caregiver'
-      };
+    const roles = useMemo(
+        () => ({
+          SEEKER: 'Seeker',
+          CAREGIVER: 'Caregiver'
+        }),
+        [] 
+      );
 
     return (
         <Container component="main" maxWidth="sm">

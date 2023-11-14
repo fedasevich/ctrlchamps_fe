@@ -17,7 +17,7 @@ interface OTPMessageFieldProps {
 
 const OTPMessageField: React.FC<OTPMessageFieldProps> = ({ onSubmit }): JSX.Element => {
   const { t } = useTranslation();
-  const expectedCode = process.env.NEXT_PUBLIC_OTP_CODE_EXAMPLE;
+  const expectedCode: string | undefined = process.env.NEXT_PUBLIC_OTP_CODE_EXAMPLE;
 
   const [code, setCode] = useState(['', '', '', '']);
 

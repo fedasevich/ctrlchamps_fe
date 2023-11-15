@@ -9,12 +9,11 @@ import { useLocales } from 'src/locales';
 import { InferType } from 'yup';
 import { useSignUpThirdCountrySelectOptions } from './select-options';
 
-import { useSignUpThirdSchema } from './validation';
 import { AuthFormWrapper, ErrorMessage, NextButton, StyledForm } from './style';
-
+import { useSignUpThirdSchema } from './validation';
 
 interface SignUpThirdFormProps {
-  onNext: unknown;
+  onNext: () => void;
 }
 
 export default function SignUpThirdForm({ onNext }: SignUpThirdFormProps): JSX.Element {
@@ -37,8 +36,7 @@ export default function SignUpThirdForm({ onNext }: SignUpThirdFormProps): JSX.E
   });
 
   const onSubmit = handleSubmit((data) => {
-    dispatch(saveAddressData(data))
-    alert(JSON.stringify(data))
+    dispatch(saveAddressData(data));
   });
 
   return (

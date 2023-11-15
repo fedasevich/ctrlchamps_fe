@@ -3,18 +3,30 @@ import { TextInput } from './styles';
 
 type Props = {
   length: number;
+  error: boolean;
+  setError: Dispatch<SetStateAction<boolean>>;
   setCode: Dispatch<SetStateAction<string>>;
   disallowSubmit: Dispatch<SetStateAction<boolean>>;
 };
 
-export default function OTPInput({ length, setCode, disallowSubmit }: Props): JSX.Element {
+export default function OTPInput({
+  length,
+  error,
+  setError,
+  setCode,
+  disallowSubmit,
+}: Props): JSX.Element {
   const [otpValues, setOtpValues] = useState<Array<string>>(Array<string>(length).fill(''));
-  const [error, setError] = useState<boolean>(false);
 
   function onChange(
     e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>,
     index: number
   ): void {
+    const isNumber = (value: string): boolean => !Number.isNaN(Number(value));
+    if (!isNumber(e.target.value)) return;
+
+    setError(false);
+
     const newOtpValues = [...otpValues];
     newOtpValues[index] = e.target.value;
     setOtpValues(newOtpValues);
@@ -29,10 +41,8 @@ export default function OTPInput({ length, setCode, disallowSubmit }: Props): JS
 
   function validate(codeLength: number, totalLength: number): void {
     if (codeLength < totalLength) {
-      setError(true);
       disallowSubmit(true);
     } else {
-      setError(false);
       disallowSubmit(false);
     }
   }
@@ -44,6 +54,7 @@ export default function OTPInput({ length, setCode, disallowSubmit }: Props): JS
           key={index}
           variant="standard"
           maxRows={1}
+          value={otpValues[index]}
           error={error}
           onChange={(e): void => onChange(e, index)}
           inputProps={{ maxLength: 1, style: { textAlign: 'center' } }}

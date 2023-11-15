@@ -5,7 +5,8 @@ import { ErrorText } from '../reusable/ErrorText';
 import { useEnterEmail } from './hooks';
 
 export default function EnterEmail({ next }: { next: () => void }): JSX.Element {
-  const { email, onChange, onSubmit, emailNotExists, isDisabled, translate } = useEnterEmail(next);
+  const { email, showError, onChange, onSubmit, emailNotExists, isDisabled, translate } =
+    useEnterEmail(next);
 
   return (
     <Container sx={{ mt: 3 }} maxWidth="xs">
@@ -20,6 +21,7 @@ export default function EnterEmail({ next }: { next: () => void }): JSX.Element 
           variant="filled"
           inputProps={{ 'data-testid': 'enter-email' }}
         />
+        {showError && <ErrorText>{translate('reset_password.errors.invalid')}</ErrorText>}
         {emailNotExists && <ErrorText>{translate('reset_password.errors.email')}</ErrorText>}
         <FilledButton
           data-testid="btn"

@@ -21,16 +21,18 @@ export default function Verification({ userEmail, next, back }: VerificationProp
   const [code, setCode] = useState<string>('');
   const [submitDisabled, setSubmitDisabled] = useState<boolean>(true);
   const [length, setLength] = useState<number>(OTP_LENGTH);
+  const [error, setError] = useState<boolean>(false);
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    alert(code);
-    alert(userEmail);
+    alert(`${code} for ${userEmail}`);
     try {
       const valid = await checkCodeValidity(code);
-      if (valid) {
-        next();
+      if (!valid) {
+        setError(true);
+        return;
       }
+      next();
     } catch (err) {
       alert(err);
     }
@@ -53,7 +55,13 @@ export default function Verification({ userEmail, next, back }: VerificationProp
       <Text>{translate('reset_password.sent_code')}</Text>
       <FormWrapper onSubmit={onSubmit}>
         <CodeInputWrapper>
-          <OTPInput length={length} setCode={setCode} disallowSubmit={setSubmitDisabled} />
+          <OTPInput
+            length={length}
+            setCode={setCode}
+            disallowSubmit={setSubmitDisabled}
+            error={error}
+            setError={setError}
+          />
         </CodeInputWrapper>
         <BtnContainer>
           <TextBtn onClick={(): Promise<void> => requestNewCode(userEmail)} disableRipple>

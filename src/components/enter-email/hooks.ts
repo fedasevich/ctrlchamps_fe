@@ -1,12 +1,14 @@
 import { Dispatch, SetStateAction, useState } from 'react';
 import { useLocales } from 'src/locales';
 import { checkIsEmail } from 'src/utils/checkEmail';
+import { MIN_EMAIL_LENGTH } from './constants';
 
 type ReturnType = {
   email: string;
   setEmail: Dispatch<SetStateAction<string>>;
   isDisabled: boolean;
   emailNotExists: boolean;
+  showError: boolean;
   setEmailNotExists: Dispatch<SetStateAction<boolean>>;
   sendCode: (e: React.FormEvent<HTMLFormElement>) => void;
   onChange: (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => void;
@@ -19,23 +21,24 @@ export function useEnterEmail(next: (email?: string) => void): ReturnType {
   const [email, setEmail] = useState<string>('');
   const [isDisabled, setIsDisabled] = useState<boolean>(true);
   const [emailNotExists, setEmailNotExists] = useState<boolean>(false);
+  const [showError, setShowError] = useState<boolean>(false);
 
   const onChange = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>): void => {
-    if (email.trim().length > 1) {
-      setIsDisabled(false);
-    } else {
-      setIsDisabled(true);
-    }
     setEmail(e.target.value);
+
+    if (!checkIsEmail(email)) {
+      setIsDisabled(true);
+      if (email.length > MIN_EMAIL_LENGTH) setShowError(true);
+    } else {
+      setIsDisabled(false);
+      setShowError(false);
+    }
   };
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();
-    const isValid = checkIsEmail(email);
-    if (!isValid) {
-      alert(translate('reset_password.errors.invalid'));
-      return;
-    }
+    if (!checkIsEmail(email)) return;
+
     try {
       await sendCode();
       next(email);
@@ -58,5 +61,6 @@ export function useEnterEmail(next: (email?: string) => void): ReturnType {
     onChange,
     onSubmit,
     translate,
+    showError,
   };
 }

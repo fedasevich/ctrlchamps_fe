@@ -38,17 +38,17 @@ export default function ResetPasswordForm({
 
   const onSubmit = handleSubmit(async (data) => {
     alert(`${data.password} ${data.confirmPassword}`);
-    alert(email);
     // reset password by email
     next();
   });
 
   return (
     <Container>
-      <StyledForm onSubmit={onSubmit}>
+      <StyledForm onSubmit={onSubmit} data-testid="reset-form">
         <FormControl variant="outlined">
           <OutlinedInput
             size="small"
+            data-testid="password"
             placeholder={translate('reset_password.placeholder.pass')}
             {...register('password')}
             id="password"
@@ -73,6 +73,7 @@ export default function ResetPasswordForm({
             size="small"
             {...register('confirmPassword')}
             id="confirmPassword"
+            data-testid="confirmPass"
             placeholder={translate('reset_password.placeholder.confirm_pass')}
             error={!!errors.confirmPassword}
             type={isVisible ? 'text' : 'password'}
@@ -90,7 +91,7 @@ export default function ResetPasswordForm({
           {errors?.confirmPassword && (
             <ErrorMessage variant="caption">{errors.confirmPassword?.message}</ErrorMessage>
           )}
-          <FilledButton type="submit" disabled={!isValid} sx={{ mt: 2 }}>
+          <FilledButton type="submit" disabled={!isValid} sx={{ mt: 2 }} data-testid="reset btn">
             {translate('reset_password.title')}
           </FilledButton>
         </FormControl>

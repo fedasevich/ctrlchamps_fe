@@ -3,9 +3,9 @@ import { useState } from 'react';
 import { useLocales } from 'src/locales';
 
 import EnterEmail from 'src/components/enter-email/EnterEmail';
-import ResetPasswordForm from 'src/components/reset-password-form';
 import SignUpHeader from 'src/components/reusable/header';
 import { Verification, VerificationSuccess } from 'src/components/verification';
+import ResetPasswordForm from 'src/components/reset-password-form/ResetPasswordForm';
 
 export default function ResetPassword(): JSX.Element {
   const { translate } = useLocales();

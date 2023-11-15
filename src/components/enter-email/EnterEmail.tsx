@@ -10,7 +10,7 @@ export default function EnterEmail({ next }: { next: () => void }): JSX.Element 
   return (
     <Container sx={{ mt: 3 }} maxWidth="xs">
       <Typography color={SECONDARY.md_gray}>{translate('reset_password.enter_email')}</Typography>
-      <form onSubmit={onSubmit}>
+      <form onSubmit={onSubmit} data-testid="form">
         <TextField
           value={email}
           onChange={onChange}
@@ -18,9 +18,16 @@ export default function EnterEmail({ next }: { next: () => void }): JSX.Element 
           sx={{ color: SECONDARY.md_gray, mt: 6 }}
           label={translate('reset_password.input_label')}
           variant="filled"
+          inputProps={{ 'data-testid': 'enter-email' }}
         />
         {emailNotExists && <ErrorText>{translate('reset_password.errors.email')}</ErrorText>}
-        <FilledButton type="submit" fullWidth disabled={isDisabled} sx={{ mt: 2 }}>
+        <FilledButton
+          data-testid="btn"
+          type="submit"
+          fullWidth
+          disabled={isDisabled}
+          sx={{ mt: 2 }}
+        >
           {translate('reset_password.btn_reset')}
         </FilledButton>
       </form>

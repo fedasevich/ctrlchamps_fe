@@ -7,22 +7,19 @@ import EmailInboxIcon from 'src/assets/icons/EmailInboxIcon';
 import { FilledButton } from 'src/components/reusable/FilledButton';
 import DigitTextField from 'src/components/sendOTP/digiticTextField';
 
-import { AccountVerificationContainer, IconContainer, StyledParagraph, StyledParagraphMain, SubmitButtonContainer } from './styles';
+import { AccountVerificationContainer, IconContainer, StyledParagraph, StyledParagraphMain, SubmitButtonContainer } from 'src/components/sendOTP/styles';
 
 
 interface OTPMessageFieldProps { 
   onSubmit: () => void;
 }
 
-
 const OTPMessageField: React.FC<OTPMessageFieldProps> = ({ onSubmit }): JSX.Element => {
   const { t } = useTranslation();
   const expectedCode: string = process.env.NEXT_PUBLIC_OTP_CODE_EXAMPLE || ' ';
 
   const [code, setCode] = useState(['', '', '', '']);
-
-  const verificationCode = code.join('');
-  const codeDoesNotMatch: boolean = Boolean(verificationCode.length) && verificationCode !== expectedCode;
+  const [codeDoesNotMatch, setCodeDoesNotMatch] = useState(false);
 
   const handleInputChange = useCallback((index: number) => (value: string) => {
     setCode((prevCode) => {
@@ -30,11 +27,18 @@ const OTPMessageField: React.FC<OTPMessageFieldProps> = ({ onSubmit }): JSX.Elem
       newCode[index] = value;
       return newCode;
     });
+    setCodeDoesNotMatch(false); 
   }, []);
 
 
   const handleSubmit = ():void => {
-    onSubmit();
+    const verificationCode = code.join('');
+    if (verificationCode !== expectedCode) {
+      setCodeDoesNotMatch(true);
+      setCode(['', '', '', '']);
+    } else {
+      onSubmit();
+    }
   }
 
 
@@ -62,7 +66,7 @@ const OTPMessageField: React.FC<OTPMessageFieldProps> = ({ onSubmit }): JSX.Elem
         <SubmitButtonContainer>
           <FilledButton
             fullWidth
-            disabled={verificationCode.length !== 4}
+            disabled={code.join('').length !== code.length}
             onClick={handleSubmit}
           >
             {t('account_verification.btn_submit')}

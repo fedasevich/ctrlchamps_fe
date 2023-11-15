@@ -9,6 +9,11 @@ const en = {
     passwordRequired: 'Password is required',
     emailPlaceholder: 'E-mail Address',
     passwordPlaceholder: 'Password',
+    title: 'Sign In',
+    formTitle: 'Sign in to get access to your appointments',
+    link: 'Don`t have an account?',
+    resetPassword: 'Reset Password',
+    signUp: 'Sign Up',
   },
   footer: {
     termsText: 'By signing up you agree to our',

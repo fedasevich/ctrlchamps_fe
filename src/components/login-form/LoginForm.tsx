@@ -38,15 +38,15 @@ function LoginForm(): JSX.Element {
     mode: 'onBlur',
   });
 
+  const onSubmit = handleSubmit((data) => {
+    alert(JSON.stringify(data));
+    router.push('/schedule');
+  });
+
   return (
     <>
-      <Title>Sign in to get access to your appointments</Title>
-      <StyledForm
-        onSubmit={handleSubmit((data) => {
-          alert(JSON.stringify(data));
-          router.push('/schedule');
-        })}
-      >
+      <Title>{translate('loginForm.formTitle')}</Title>
+      <StyledForm onSubmit={onSubmit}>
         <InputWrapper>
           <FormControl sx={{ width: '100%' }} variant="filled">
             <InputLabel htmlFor="email">{translate('loginForm.emailPlaceholder')}</InputLabel>
@@ -77,12 +77,14 @@ function LoginForm(): JSX.Element {
         </InputWrapper>
 
         <SignInButton variant="contained" type="submit" disabled={!isValid}>
-          Sign In
+          {translate('loginForm.title')}
         </SignInButton>
-        <ResetPasswordLink href="/reset-password">Reset Password</ResetPasswordLink>
+        <ResetPasswordLink href="/reset-password">
+          {translate('loginForm.resetPassword')}
+        </ResetPasswordLink>
         <BottomText>
-          Don`t have an account?
-          <SignUpLink href="/signup">Sign Up</SignUpLink>
+          {translate('loginForm.link')}
+          <SignUpLink href="/signup">{translate('loginForm.signUp')}</SignUpLink>
         </BottomText>
       </StyledForm>
     </>

@@ -5,7 +5,7 @@ import SuccessfulValidationIcon from 'src/assets/icons/SuccessfulValidationIcon'
 import { Container } from '@mui/system';
 import { FilledButton } from 'src/components/reusable/FilledButton'
 
-import { SuccessAccountVerificationContainer, IconContainer, StyledParagraphSuccess, SubmitButtonContainer, TextBlock } from './styles';
+import { SuccessAccountVerificationContainer, IconContainer, StyledParagraphSuccess, SubmitButtonContainer, TextBlock } from 'src/components/sendOTP/styles';
 
 
 const SuccessfulVerification = ({ profile }:  {profile: string}): JSX.Element  => {
@@ -28,17 +28,17 @@ const SuccessfulVerification = ({ profile }:  {profile: string}): JSX.Element  =
                 </IconContainer>
                <TextBlock>
                <StyledParagraphSuccess>
-                {t("Successfully_Verified")}
+                {t("account_verification.successfully_verified")}
                 </StyledParagraphSuccess>
                 <p>
-                    {profile === roles.SEEKER ? t("Seeker.Successfully_Verified_Text") : t("Caregiver.Successfully_Verified_Text")}
+                    {profile === roles.SEEKER ? t("account_verification.successfully_seeker") : t("account_verification.successfully_caregiver")}
                 </p>
                </TextBlock>
 
                 <SubmitButtonContainer>
                     <FilledButton
                         fullWidth>
-                    {profile === roles.SEEKER ? t("Seeker.Successfully_Verified_Button") : t("Caregiver.Successfully_Verified_Button")}
+                    {profile === roles.SEEKER ? t("account_verification.successfully_seeker_btn") : t("account_verification.successfully_caregiver_btn")}
                     </FilledButton>
                 </SubmitButtonContainer>
             </SuccessAccountVerificationContainer>

@@ -4,13 +4,13 @@ import { Container } from '@mui/system';
 import { useTranslation } from 'react-i18next';
 
 import EmailInboxIcon from 'src/assets/icons/EmailInboxIcon';
-import DigitTextField from './digiticTextField';
+import { FilledButton } from 'src/components/reusable/FilledButton';
+import DigitTextField from 'src/components/sendOTP/digiticTextField';
 
 import { AccountVerificationContainer, IconContainer, StyledParagraph, StyledParagraphMain, SubmitButtonContainer } from './styles';
-import { FilledButton } from '../reusable/FilledButton';
 
 
-interface OTPMessageFieldProps {
+interface OTPMessageFieldProps { 
   onSubmit: () => void;
 }
 
@@ -44,7 +44,7 @@ const OTPMessageField: React.FC<OTPMessageFieldProps> = ({ onSubmit }): JSX.Elem
         <IconContainer>
           <EmailInboxIcon />
         </IconContainer>
-        <StyledParagraph>{t('EmailSent')}</StyledParagraph>
+        <StyledParagraph>{t('account_verification.sent_code')}</StyledParagraph>
         <form>
           <div style={{ display: 'flex' }}>
             {[0, 1, 2, 3].map((index) => (
@@ -58,14 +58,14 @@ const OTPMessageField: React.FC<OTPMessageFieldProps> = ({ onSubmit }): JSX.Elem
             ))}
           </div>
         </form>
-        <StyledParagraphMain href='#'>{t('RequestCode')}</StyledParagraphMain>
+        <StyledParagraphMain href='#'>{t('account_verification.request_code')}</StyledParagraphMain>
         <SubmitButtonContainer>
           <FilledButton
             fullWidth
-            disabled={verificationCode.length !== 4 || codeDoesNotMatch}
+            disabled={verificationCode.length !== 4}
             onClick={handleSubmit}
           >
-            {t('Submit')}
+            {t('account_verification.btn_submit')}
           </FilledButton>
         </SubmitButtonContainer>
       </AccountVerificationContainer>

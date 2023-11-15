@@ -1,3 +1,4 @@
+import React, { memo } from 'react';
 import { MuiTelInput } from 'mui-tel-input';
 import {
   Switch,
@@ -7,11 +8,12 @@ import {
   Input,
   FilledInput,
 } from '@mui/material';
-import React, { memo } from 'react';
 import { InferType } from 'yup';
+import { useDispatch } from 'react-redux';
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import 'react-datepicker/dist/react-datepicker.css';
+import { savePersonalDetails } from 'src/redux/slices/personalDetailsSlice';
 import { useLocales } from 'src/locales';
 import { useSignUpSecondSchema } from './validation';
 import {
@@ -28,6 +30,7 @@ interface IProps {
 }
 
 function SignUpSecond({ role }: IProps): JSX.Element {
+  const dispatch = useDispatch();
   const { translate } = useLocales();
   const signUpSecondSchema = useSignUpSecondSchema();
 
@@ -45,13 +48,17 @@ function SignUpSecond({ role }: IProps): JSX.Element {
     mode: 'onBlur',
   });
 
+  const onSubmit = handleSubmit(({ firstName, lastName, email, phone, birthDate, isOpen }) => {
+    const dateToString = birthDate.toLocaleDateString().padStart(10, '0');
+    dispatch(
+      savePersonalDetails({ firstName, lastName, email, phone, birthDate: dateToString, isOpen })
+    );
+    alert(JSON.stringify({ firstName, lastName, email, phone, birthDate: dateToString, isOpen }));
+  });
+
   return (
     <Wrapper>
-      <StyledForm
-        onSubmit={handleSubmit((data) => {
-          alert(JSON.stringify(data));
-        })}
-      >
+      <StyledForm onSubmit={onSubmit}>
         <InputWrapper>
           <FormControl sx={{ width: '100%' }} variant="filled">
             <InputLabel htmlFor="firstName">

@@ -7,6 +7,7 @@ import {
 import { persistStore, persistReducer } from 'redux-persist';
 import rootReducer, { rootPersistConfig } from './rootReducer';
 import authReducer from 'src/redux/authReducer';
+import { personalDetailsReducer } from './slices/personalDetailsSlice';
 import api from 'src/redux/api/userAPI';
 
 // ----------------------------------------------------------------------
@@ -18,7 +19,8 @@ export type AppDispatch = typeof store.dispatch;
 const store = configureStore({
   reducer: {
     auth: authReducer,
-    [ api.reducerPath ]: api.reducer,
+    personalDetails: personalDetailsReducer,
+    [api.reducerPath]: api.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

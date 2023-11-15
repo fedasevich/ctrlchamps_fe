@@ -1,12 +1,10 @@
-import { fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import user from '@testing-library/user-event';
 import EnterEmail from 'src/components/enter-email/EnterEmail';
 
 describe('EnterEmail component validation', () => {
   it('should show invalid error message if value does not match email regex', async () => {
     render(<EnterEmail next={(): void => {}} />);
-
-    jest.spyOn(window, 'alert').mockImplementation(() => {});
 
     const input = screen.getByTestId('enter-email');
     const form = screen.getByTestId('form');

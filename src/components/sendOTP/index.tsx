@@ -11,7 +11,7 @@ interface AccountVerificationProps {
 
 const AccountVerification: React.FC<AccountVerificationProps> = () :JSX.Element => {
     const { t } = useTranslation();
-    const [isSubmitted, setIsSubmitted] = useState(false); 
+    const [isSubmitted, setIsSubmitted] = useState<boolean>(false); 
     const profile :string = useMemo(() => process.env.NEXT_PUBLIC_PROFILE || '', []);
 
     const onSubmit = (): void => {

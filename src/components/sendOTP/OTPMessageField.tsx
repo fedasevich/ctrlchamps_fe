@@ -18,8 +18,8 @@ const OTPMessageField: React.FC<OTPMessageFieldProps> = ({ onSubmit }): JSX.Elem
   const { t } = useTranslation();
   const expectedCode: string = process.env.NEXT_PUBLIC_OTP_CODE_EXAMPLE || ' ';
 
-  const [code, setCode] = useState(['', '', '', '']);
-  const [codeDoesNotMatch, setCodeDoesNotMatch] = useState(false);
+  const [code, setCode] = useState<string[]>(['', '', '', '']);
+  const [codeDoesNotMatch, setCodeDoesNotMatch] = useState<boolean>(false);
 
   const handleInputChange = useCallback((index: number) => (value: string) => {
     setCode((prevCode) => {

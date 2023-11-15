@@ -7,9 +7,9 @@ import { useRouter } from 'next/router';
 import Visibility from 'src/assets/icons/Visibility';
 import VisibilityOff from 'src/assets/icons/VisibilityOff';
 import { useLocales } from 'src/locales';
+// import LoginWrapper from './LoginWrapper';
 import { useLoginSchema } from './validation';
 import {
-  Wrapper,
   StyledForm,
   Title,
   ErrorMessage,
@@ -40,7 +40,7 @@ function LoginForm(): JSX.Element {
   });
 
   return (
-    <Wrapper>
+    <>
       <Title>Sign in to get access to your appointments</Title>
       <StyledForm
         onSubmit={handleSubmit((data) => {
@@ -86,7 +86,7 @@ function LoginForm(): JSX.Element {
           <SignUpLink href="/signup">Sign Up</SignUpLink>
         </BottomText>
       </StyledForm>
-    </Wrapper>
+    </>
   );
 }
 

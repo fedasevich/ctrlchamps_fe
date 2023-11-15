@@ -1,17 +1,19 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
+interface Address {
+    country: string;
+    state: string;
+    city: string;
+    zipCode: string;
+    address: string;
+}
+
 interface AddressState {
-    formValues: {
-        country: string;
-        state: string;
-        city: string;
-        zipCode: string;
-        address: string;
-    };
+    addressData: Address;
 }
 
 const initialState: AddressState = {
-    formValues: {
+    addressData: {
         country: '',
         state: '',
         city: '',
@@ -20,15 +22,17 @@ const initialState: AddressState = {
     },
 };
 
-const adressState = createSlice({
-    name: 'user',
+const addressSlice = createSlice({
+    name: 'address',
     initialState,
     reducers: {
-        saveFormValues: (state, action: PayloadAction<AddressState[ 'formValues' ]>) => {
-            state.formValues = { ...state.formValues, ...action.payload };
+        saveAddressData: (state, action: PayloadAction<Address>) => {
+            state.addressData = { ...action.payload };
         },
     },
 });
 
-export const { saveFormValues } = adressState.actions;
-export default adressState.reducer;
+export const { saveAddressData } = addressSlice.actions;
+export const addressReducer = addressSlice.reducer;
+
+export default addressSlice.reducer;

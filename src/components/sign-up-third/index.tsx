@@ -3,7 +3,7 @@ import { FilledInput, FormControl, InputLabel, MenuItem, Select } from '@mui/mat
 
 import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
-import { saveAddressData } from 'src/redux/addressReducer';
+import { saveAddressData } from 'src/redux/slices/addressSlice';
 
 import { useLocales } from 'src/locales';
 import { InferType } from 'yup';

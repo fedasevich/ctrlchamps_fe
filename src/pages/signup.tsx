@@ -22,12 +22,12 @@ const SignUp = (): JSX.Element => {
   
   const handleSignUp = async (): Promise<void> => {
     const userInfo = {
-      "email": "user@gmail.com",
-      "password": "A234567!",
-      "firstName": "Max",
-      "lastName": "Volovo",
-      "phoneNumber": "+15551234567",
-      "dateOfBirth": "11/11/1960",
+      "email": "",
+      "password": "",
+      "firstName": "",
+      "lastName": "",
+      "phoneNumber": "",
+      "dateOfBirth": "",
       "isOpenToClientHomeLiving": true,
       "role": capitalize(role),
       ...addressData

@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 
 import SuccessfulValidationIcon from 'src/assets/icons/SuccessfulValidationIcon';
 import { Container } from '@mui/system';
-import { FilledButton } from '../reusable/FilledButton';
+import { FilledButton } from 'src/components/reusable/FilledButton'
 
 import { SuccessAccountVerificationContainer, IconContainer, StyledParagraphSuccess, SubmitButtonContainer, TextBlock } from './styles';
 

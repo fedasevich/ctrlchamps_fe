@@ -17,12 +17,12 @@ interface OTPMessageFieldProps {
 
 const OTPMessageField: React.FC<OTPMessageFieldProps> = ({ onSubmit }): JSX.Element => {
   const { t } = useTranslation();
-  const expectedCode: string | undefined = process.env.NEXT_PUBLIC_OTP_CODE_EXAMPLE;
+  const expectedCode: string = process.env.NEXT_PUBLIC_OTP_CODE_EXAMPLE || ' ';
 
   const [code, setCode] = useState(['', '', '', '']);
 
   const verificationCode = code.join('');
-  const codeDoesNotMatch = Boolean(verificationCode.length) && verificationCode !== expectedCode;
+  const codeDoesNotMatch: boolean = Boolean(verificationCode.length) && verificationCode !== expectedCode;
 
   const handleInputChange = useCallback((index: number) => (value: string) => {
     setCode((prevCode) => {

@@ -5,8 +5,9 @@ import { FormControlLabel, Radio, FormLabel, FormHelperText } from '@mui/materia
 import { Box, Container } from '@mui/system';
 
 import { useTranslation } from 'react-i18next';
-import { setSelectedOptionReducer } from 'src/redux/authReducer';
+import { setRole } from 'src/redux/slices/roleSlice';
 import { BoxWrapper, NextButton, StyledParagraph, StyledParagraphMain, selectedItemColorLigthTheme, signupColorInLightTheme } from './styles';
+
 
 interface Step1FormProps {
   onNext: () => void;
@@ -27,7 +28,7 @@ const Step1Form: React.FC<Step1FormProps> = ({ onNext }) => {
 
   const handleOptionChange = (event: React.ChangeEvent<HTMLInputElement>):void => {
     setSelectedOption(event.target.value);
-    dispatch(setSelectedOptionReducer(event.target.value));
+    dispatch(setRole(event.target.value));
   };
 
   const handleNext = ():void => {

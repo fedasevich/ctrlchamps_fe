@@ -14,7 +14,7 @@ import { AuthFormWrapper, ErrorMessage, NextButton, StyledForm } from './style';
 
 
 interface SignUpThirdFormProps {
-  onNext: unknown;
+  onNext: () => void;
 }
 
 export default function SignUpThirdForm({ onNext }: SignUpThirdFormProps): JSX.Element {
@@ -38,7 +38,7 @@ export default function SignUpThirdForm({ onNext }: SignUpThirdFormProps): JSX.E
 
   const onSubmit = handleSubmit((data) => {
     dispatch(saveAddressData(data))
-    alert(JSON.stringify(data))
+    onNext()
   });
 
   return (

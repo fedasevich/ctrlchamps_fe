@@ -1,15 +1,15 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-interface UserState {
+interface RoleState {
     role: string;
 }
 
-const initialState: UserState = {
+const initialState: RoleState = {
     role: '',
 };
 
-const userSlice = createSlice({
-    name: 'user',
+const roleSlice = createSlice({
+    name: 'role',
     initialState,
     reducers: {
         setRole(state, action: PayloadAction<string>) {
@@ -18,5 +18,6 @@ const userSlice = createSlice({
     },
 });
 
-export const { setRole } = userSlice.actions;
-export default userSlice.reducer;
+export const { setRole } = roleSlice.actions;
+export const roleReducer = roleSlice.reducer;
+export default roleSlice.reducer;

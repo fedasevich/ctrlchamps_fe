@@ -5,10 +5,11 @@ interface IPersonalDetails {
     firstName: string;
     lastName: string;
     email: string;
-    phone: string;
-    birthDate: string;
-    isOpen?: boolean;
+    phoneNumber: string;
+    dateOfBirth: string;
+    isOpenToClientHomeLiving?: boolean;
   };
+  error: string;
 }
 
 const initialState: IPersonalDetails = {
@@ -16,10 +17,11 @@ const initialState: IPersonalDetails = {
     firstName: '',
     lastName: '',
     email: '',
-    phone: '',
-    birthDate: '',
-    isOpen: false,
+    phoneNumber: '',
+    dateOfBirth: '',
+    isOpenToClientHomeLiving: false,
   },
+  error: '',
 };
 
 const personalDetailsSlice = createSlice({

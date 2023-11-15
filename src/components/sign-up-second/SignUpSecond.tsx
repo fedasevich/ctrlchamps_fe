@@ -33,6 +33,7 @@ function SignUpSecond({ role }: IProps): JSX.Element {
   const dispatch = useDispatch();
   const { translate } = useLocales();
   const signUpSecondSchema = useSignUpSecondSchema();
+  const dateLength = 10;
 
   type FormValues = InferType<typeof signUpSecondSchema>;
 
@@ -48,13 +49,31 @@ function SignUpSecond({ role }: IProps): JSX.Element {
     mode: 'onBlur',
   });
 
-  const onSubmit = handleSubmit(({ firstName, lastName, email, phone, birthDate, isOpen }) => {
-    const dateToString = birthDate.toLocaleDateString().padStart(10, '0');
-    dispatch(
-      savePersonalDetails({ firstName, lastName, email, phone, birthDate: dateToString, isOpen })
-    );
-    alert(JSON.stringify({ firstName, lastName, email, phone, birthDate: dateToString, isOpen }));
-  });
+  const onSubmit = handleSubmit(
+    ({ firstName, lastName, email, phoneNumber, dateOfBirth, isOpenToClientHomeLiving }) => {
+      const dateToString = dateOfBirth.toLocaleDateString().padStart(dateLength);
+      dispatch(
+        savePersonalDetails({
+          firstName,
+          lastName,
+          email,
+          phoneNumber,
+          dateOfBirth: dateToString,
+          isOpenToClientHomeLiving,
+        })
+      );
+      alert(
+        JSON.stringify({
+          firstName,
+          lastName,
+          email,
+          phoneNumber,
+          dateOfBirth: dateToString,
+          isOpenToClientHomeLiving,
+        })
+      );
+    }
+  );
 
   return (
     <Wrapper>
@@ -103,7 +122,7 @@ function SignUpSecond({ role }: IProps): JSX.Element {
         <InputWrapper>
           <FormControl sx={{ width: '100%' }} variant="filled">
             <Controller
-              name="phone"
+              name="phoneNumber"
               control={control}
               render={({ field, fieldState }): JSX.Element => (
                 <MuiTelInput
@@ -112,12 +131,12 @@ function SignUpSecond({ role }: IProps): JSX.Element {
                     field.onChange(value);
                     if (value.slice(2, 3) === '0') {
                       field.onChange('');
-                      setError('phone', {
+                      setError('phoneNumber', {
                         type: 'manual',
                         message: 'Phone can`t starts with 0',
                       });
                     } else {
-                      clearErrors('phone');
+                      clearErrors('phoneNumber');
                     }
                   }}
                   variant="filled"
@@ -128,38 +147,42 @@ function SignUpSecond({ role }: IProps): JSX.Element {
                   onlyCountries={['US', 'CA']}
                   error={fieldState.invalid}
                   inputRef={Input}
-                  label={translate('signUpSecondForm.placeholderPhone')}
+                  label={translate('signUpSecondForm.phoneNumber')}
                 />
               )}
             />
           </FormControl>
-          {errors?.phone && <ErrorMessage variant="caption">{errors.phone?.message}</ErrorMessage>}
+          {errors?.phoneNumber && (
+            <ErrorMessage variant="caption">{errors.phoneNumber?.message}</ErrorMessage>
+          )}
         </InputWrapper>
 
         <InputWrapper>
           <FormControl sx={{ width: '100%', height: 48 }} variant="filled">
             <Controller
               control={control}
-              name="birthDate"
+              name="dateOfBirth"
               render={({ field }): JSX.Element => (
                 <StyledDatePicker
                   placeholderText={translate('signUpSecondForm.placeholderBirthDate')}
                   onChange={(date): void => field.onChange(date)}
                   selected={field.value}
-                  customInput={<FilledInput fullWidth error={!!errors.birthDate} />}
+                  customInput={<FilledInput fullWidth error={!!errors.dateOfBirth} />}
                   maxDate={new Date()}
                 />
               )}
             />
           </FormControl>
-          {errors?.birthDate && (
-            <ErrorMessage variant="caption">{errors.birthDate?.message}</ErrorMessage>
+          {errors?.dateOfBirth && (
+            <ErrorMessage variant="caption">{errors.dateOfBirth?.message}</ErrorMessage>
           )}
         </InputWrapper>
 
         {role === 'caregiver' && (
           <FormControlLabel
-            control={<Switch {...register('isOpen')} id="isOpen" />}
+            control={
+              <Switch {...register('isOpenToClientHomeLiving')} id="isOpenToClientHomeLiving" />
+            }
             label={translate('signUpSecondForm.placeholderIsOpen')}
           />
         )}

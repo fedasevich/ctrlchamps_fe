@@ -1,10 +1,10 @@
-import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
+import { configureStore } from '@reduxjs/toolkit';
 import { useDispatch, useSelector, TypedUseSelectorHook } from 'react-redux';
 import { persistStore, persistReducer } from 'redux-persist';
-import rootReducer, { rootPersistConfig } from './rootReducer';
+import rootReducer from 'src/redux/rootReducer';
 import storage from 'redux-persist/lib/storage';
 import authReducer from 'src/redux/authReducer';
-import addressReducer from './addressReducer';
+import addressReducer from 'src/redux/addressReducer';
 import api from 'src/redux/api/userAPI';
 
 

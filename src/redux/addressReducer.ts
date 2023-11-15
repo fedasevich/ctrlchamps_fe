@@ -27,7 +27,7 @@ const addressSlice = createSlice({
     initialState,
     reducers: {
         saveAddressData: (state, action: PayloadAction<Address>) => {
-            state.addressData = { ...action.payload }; // Update the addressData immutably
+            state.addressData = { ...action.payload };
         },
     },
 });

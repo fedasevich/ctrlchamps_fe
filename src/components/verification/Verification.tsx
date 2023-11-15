@@ -30,6 +30,7 @@ export default function Verification({ userEmail, next, back }: VerificationProp
       const valid = await checkCodeValidity(code);
       if (!valid) {
         setError(true);
+        setSubmitDisabled(true);
         return;
       }
       next();

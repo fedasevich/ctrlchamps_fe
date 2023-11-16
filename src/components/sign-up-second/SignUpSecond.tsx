@@ -27,9 +27,10 @@ import {
 
 interface IProps {
   role: 'caregiver' | 'seeker';
+  onNext: () => void;
 }
 
-function SignUpSecond({ role }: IProps): JSX.Element {
+function SignUpSecond({ role, onNext }: IProps): JSX.Element {
   const dispatch = useDispatch();
   const { translate } = useLocales();
   const signUpSecondSchema = useSignUpSecondSchema();
@@ -62,16 +63,7 @@ function SignUpSecond({ role }: IProps): JSX.Element {
           isOpenToClientHomeLiving,
         })
       );
-      alert(
-        JSON.stringify({
-          firstName,
-          lastName,
-          email,
-          phoneNumber,
-          dateOfBirth: dateToString,
-          isOpenToClientHomeLiving,
-        })
-      );
+      onNext();
     }
   );
 
@@ -147,7 +139,7 @@ function SignUpSecond({ role }: IProps): JSX.Element {
                   onlyCountries={['US', 'CA']}
                   error={fieldState.invalid}
                   inputRef={Input}
-                  label={translate('signUpSecondForm.phoneNumber')}
+                  label={translate('signUpSecondForm.placeholderPhone')}
                 />
               )}
             />

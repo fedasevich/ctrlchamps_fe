@@ -15,23 +15,18 @@ import SignUpHeader from 'src/components/reusable/header';
 function SignUp():JSX.Element {
     const { t } = useTranslation();
 
-    const [step, setStep] = useState<number>(1);
-
-    const role: string = useSelector((state: RootState) => state.role.role);
-    const address = useSelector((state: RootState) => state.address.addressData)
-
-    const [signUp] = useSignUpMutation();
+  const [step, setStep] = useState<number>(1);
+  const role = useSelector((state: RootState) => state.role.role);
+  const addressData = useSelector((state: RootState) => state.address.addressData);
+  const personalDetails = useSelector((state: RootState)=> state.personalDetails.personalDetails)
+  
+  const [signUp] = useSignUpMutation();
 
     const userInfo = {
-      "email": "user@gmail.com",
-      "password": "A234567!",
-      "firstName": "Max",
-      "lastName": "Volovo",
-      "phoneNumber": "+15551234567",
-      "dateOfBirth": "11/11/1960",
-      "isOpenToSeekerHomeLiving": true,
+      "password": "",
+      ...personalDetails,
       "role": role,
-      ...address
+      ...addressData
     }
 
     const handleSignUp = async (): Promise<void> => {

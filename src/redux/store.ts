@@ -4,7 +4,7 @@ import { TypedUseSelectorHook, useDispatch as useAppDispatch, useSelector as use
 
 import rootReducer from 'src/redux/rootReducer';
 import authReducer from 'src/redux/authReducer';
-
+import { personalDetailsReducer } from './slices/personalDetailsSlice';
 import api from 'src/redux/api/userAPI';
 import { accountVerificationApi } from 'src/redux/api/accountVerificationAPI';
 
@@ -17,6 +17,7 @@ export type AppDispatch = typeof store.dispatch;
 const store = configureStore({
   reducer: {
     auth: authReducer,
+    personalDetails: personalDetailsReducer,
     [ api.reducerPath ]: api.reducer,
     [ accountVerificationApi.reducerPath ]: accountVerificationApi.reducer,
   },

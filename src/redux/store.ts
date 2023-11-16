@@ -5,6 +5,7 @@ import rootReducer from 'src/redux/rootReducer';
 import storage from 'redux-persist/lib/storage';
 import { roleReducer } from 'src/redux/slices/roleSlice';
 import { addressReducer } from 'src/redux/slices/addressSlice';
+import { personalDetailsReducer } from './slices/personalDetailsSlice';
 import api from 'src/redux/api/authAPI';
 
 
@@ -20,6 +21,7 @@ const store = configureStore({
     persistedReducer,
     role: roleReducer,
     address: addressReducer,
+    personalDetails: personalDetailsReducer,
     [ api.reducerPath ]: api.reducer
   },
   middleware: (getDefaultMiddleware) =>

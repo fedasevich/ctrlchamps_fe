@@ -1,13 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit';
-import {
-  TypedUseSelectorHook,
-  useDispatch as useAppDispatch,
-  useSelector as useAppSelector,
-} from 'react-redux';
-import { persistStore, persistReducer } from 'redux-persist';
-import rootReducer, { rootPersistConfig } from './rootReducer';
+import { persistStore } from 'redux-persist';
+import { TypedUseSelectorHook, useDispatch as useAppDispatch, useSelector as useAppSelector } from 'react-redux';
+
+import rootReducer from 'src/redux/rootReducer';
 import authReducer from 'src/redux/authReducer';
+
 import api from 'src/redux/api/userAPI';
+import { accountVerificationApi } from 'src/redux/api/accountVerificationAPI';
 
 // ----------------------------------------------------------------------
 
@@ -19,12 +18,13 @@ const store = configureStore({
   reducer: {
     auth: authReducer,
     [ api.reducerPath ]: api.reducer,
+    [ accountVerificationApi.reducerPath ]: accountVerificationApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: false,
       immutableCheck: false,
-    }).concat(api.middleware),
+    }).concat([ api.middleware, accountVerificationApi.middleware ]),
 });
 const persistor = persistStore(store);
 

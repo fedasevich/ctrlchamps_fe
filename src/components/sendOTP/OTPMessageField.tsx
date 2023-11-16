@@ -2,13 +2,14 @@ import React, { useState, useCallback } from 'react';
 
 import { Container } from '@mui/system';
 import { useTranslation } from 'react-i18next';
+import { useSubmitVerificationCodeMutation } from 'src/redux/api/accountVerificationAPI';
 
 import EmailInboxIcon from 'src/assets/icons/EmailInboxIcon';
+
 import { FilledButton } from 'src/components/reusable/FilledButton';
 import DigitTextField from 'src/components/sendOTP/digiticTextField';
 
 import { AccountVerificationContainer, IconContainer, StyledParagraph, StyledParagraphMain, SubmitButtonContainer } from 'src/components/sendOTP/styles';
-
 
 interface OTPMessageFieldProps { 
   onSubmit: () => void;
@@ -16,7 +17,7 @@ interface OTPMessageFieldProps {
 
 const OTPMessageField: React.FC<OTPMessageFieldProps> = ({ onSubmit }): JSX.Element => {
   const { t } = useTranslation();
-  const expectedCode: string = process.env.NEXT_PUBLIC_OTP_CODE_EXAMPLE || ' ';
+  const [submitCode] = useSubmitVerificationCodeMutation();
 
   const [code, setCode] = useState<string[]>(['', '', '', '']);
   const [codeDoesNotMatch, setCodeDoesNotMatch] = useState<boolean>(false);
@@ -31,15 +32,21 @@ const OTPMessageField: React.FC<OTPMessageFieldProps> = ({ onSubmit }): JSX.Elem
   }, []);
 
 
-  const handleSubmit = ():void => {
-    const verificationCode = code.join('');
-    if (verificationCode !== expectedCode) {
-      setCodeDoesNotMatch(true);
-      setCode(['', '', '', '']);
-    } else {
-      onSubmit();
+  const handleSubmit = async (): Promise<void> => {
+    try {
+      const verificationCode = code.join('');
+      const response = await submitCode({ code: verificationCode });
+      if ("error" in response) {
+        setCodeDoesNotMatch(true);
+        setCode(['', '', '', '']);
+      } else {
+        onSubmit();
+      }
+    } catch (error) {
+      throw new Error(error);
     }
-  }
+  };
+  
 
 
   return (

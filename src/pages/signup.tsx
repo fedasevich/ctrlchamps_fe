@@ -1,21 +1,24 @@
-import React, { useState } from 'react'
+import React, { useMemo, useState } from 'react'
 import { useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
+
+import { RootState } from 'src/redux/store';
+import { useSignUpMutation } from 'src/redux/api/userAPI';
 
 import Step1Form from "src/components/sign-up/sign-up-first/SignUpForm1";
 import SignUpHeader from "src/components/reusable/header";
 
-import { useTranslation } from 'react-i18next';
-import { RootState } from 'src/redux/store';
-import { useSignUpMutation } from 'src/redux/api/userAPI';
 
 
 function SignUp():JSX.Element {
-    const [step, setStep] = useState(1);
+    const { t } = useTranslation();
+    const [step, setStep] = useState<number>(1);
     const selectedOption = useSelector((state: RootState) => state.auth.selectedOption);
     const [signUp] = useSignUpMutation();
-    const userInfo = {
-      role: selectedOption
-    }
+    
+    const userInfo = useMemo(() => ({
+        role: selectedOption
+      }), [selectedOption]);
 
     const handleSignUp = async (): Promise<void> => {
       try {
@@ -34,8 +37,6 @@ function SignUp():JSX.Element {
           throw new Error(error)
         });
     };
-    
-    const { t } = useTranslation();
 
   return (
     <>

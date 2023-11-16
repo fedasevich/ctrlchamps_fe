@@ -1,11 +1,9 @@
-import React, { useState, useCallback } from 'react';
-
-import { Container } from '@mui/system';
+import React, { useState, useCallback, useEffect } from 'react';
+import { Container } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { useSubmitVerificationCodeMutation } from 'src/redux/api/accountVerificationAPI';
 
+import { useRequestNewVerificationCodeMutation, useSubmitVerificationCodeMutation } from 'src/redux/api/accountVerificationAPI';
 import EmailInboxIcon from 'src/assets/icons/EmailInboxIcon';
-
 import { FilledButton } from 'src/components/reusable/FilledButton';
 import DigitTextField from 'src/components/sendOTP/digiticTextField';
 
@@ -17,10 +15,25 @@ interface OTPMessageFieldProps {
 
 const OTPMessageField: React.FC<OTPMessageFieldProps> = ({ onSubmit }): JSX.Element => {
   const { t } = useTranslation();
+
   const [submitCode] = useSubmitVerificationCodeMutation();
+  const [requestNewCode] = useRequestNewVerificationCodeMutation();
 
   const [code, setCode] = useState<string[]>(['', '', '', '']);
   const [codeDoesNotMatch, setCodeDoesNotMatch] = useState<boolean>(false);
+  const userId: string = '';
+
+  const fetchNewCode = useCallback(async () => {
+    try {
+      await requestNewCode({ userId });
+    } catch (error) {
+      throw new Error(error);
+    }
+  }, [requestNewCode, userId]);
+
+  useEffect(() => {
+    fetchNewCode();
+  }, [fetchNewCode]);
 
   const handleInputChange = useCallback((index: number) => (value: string) => {
     setCode((prevCode) => {
@@ -31,12 +44,11 @@ const OTPMessageField: React.FC<OTPMessageFieldProps> = ({ onSubmit }): JSX.Elem
     setCodeDoesNotMatch(false); 
   }, []);
 
-
   const handleSubmit = async (): Promise<void> => {
     try {
-      const verificationCode = code.join('');
-      const response = await submitCode({ code: verificationCode });
-      if ("error" in response) {
+      const verificationCode: string = code.join('');
+      const response = await submitCode({ code: verificationCode, userId });
+      if ('error' in response) {
         setCodeDoesNotMatch(true);
         setCode(['', '', '', '']);
       } else {
@@ -46,8 +58,6 @@ const OTPMessageField: React.FC<OTPMessageFieldProps> = ({ onSubmit }): JSX.Elem
       throw new Error(error);
     }
   };
-  
-
 
   return (
     <Container component="main" maxWidth="sm">
@@ -69,7 +79,7 @@ const OTPMessageField: React.FC<OTPMessageFieldProps> = ({ onSubmit }): JSX.Elem
             ))}
           </div>
         </form>
-        <StyledParagraphMain href='#'>{t('account_verification.request_code')}</StyledParagraphMain>
+        <StyledParagraphMain onClick={fetchNewCode}>{t('account_verification.request_code')}</StyledParagraphMain>
         <SubmitButtonContainer>
           <FilledButton
             fullWidth

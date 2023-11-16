@@ -1,10 +1,11 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
-interface VerificationCode {
+interface ResponseData {
     code: string;
 }
 
-interface ResponseData {
+interface SubmitVerificationCodeProps {
+    userId: string;
     code: string;
 }
 
@@ -12,14 +13,20 @@ export const accountVerificationApi = createApi({
     reducerPath: 'accountVerificationApi',
     baseQuery: fetchBaseQuery({ baseUrl: process.env.NEXT_PUBLIC_BACKEND_URL }),
     endpoints: (builder) => ({
-        submitVerificationCode: builder.mutation<ResponseData, VerificationCode>({
-            query: ({ code }) => ({
-                url: '/account-verification',
+        submitVerificationCode: builder.mutation<ResponseData, SubmitVerificationCodeProps>({
+            query: ({ userId, code }) => ({
+                url: `/auth/verify-account/${ userId }`,
                 method: 'POST',
                 body: { code },
+            }),
+        }),
+        requestNewVerificationCode: builder.mutation<ResponseData, { userId: string; }>({
+            query: ({ userId }) => ({
+                url: `/auth/request-new-verification-code/${ userId }`,
+                method: 'POST',
             }),
         }),
     }),
 });
 
-export const { useSubmitVerificationCodeMutation } = accountVerificationApi;
+export const { useSubmitVerificationCodeMutation, useRequestNewVerificationCodeMutation } = accountVerificationApi;

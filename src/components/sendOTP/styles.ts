@@ -60,6 +60,7 @@ export const StyledParagraphMain = styled.a`
   text-align: center;
   line-height: 1.8;
   padding: 0 4em;
+  cursor: pointer;
 `;
 
 export const StyledParagraphSuccess = styled.p`

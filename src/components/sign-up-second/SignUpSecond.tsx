@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import React, { memo, useEffect } from 'react';
 import { MuiTelInput } from 'mui-tel-input';
 import {
   Switch,
@@ -10,11 +10,12 @@ import {
 } from '@mui/material';
 import { InferType } from 'yup';
 import { useDispatch } from 'react-redux';
-import { useForm, Controller } from 'react-hook-form';
+import { useForm, Controller, SubmitHandler } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import 'react-datepicker/dist/react-datepicker.css';
 import { savePersonalDetails } from 'src/redux/slices/personalDetailsSlice';
 import { useLocales } from 'src/locales';
+import { useAccountCheckMutation } from 'src/redux/api/authAPI';
 import { useSignUpSecondSchema } from './validation';
 import {
   NextButton,
@@ -27,10 +28,13 @@ import {
 
 interface IProps {
   role: 'caregiver' | 'seeker';
+  onNext: () => void;
 }
 
-function SignUpSecond({ role }: IProps): JSX.Element {
+function SignUpSecond({ role, onNext }: IProps): JSX.Element {
   const dispatch = useDispatch();
+  const [accountCheck, { isError: isCheckError, isSuccess: isCheckSuccess, error: checkError }] =
+    useAccountCheckMutation();
   const { translate } = useLocales();
   const signUpSecondSchema = useSignUpSecondSchema();
   const dateLength = 10;
@@ -49,35 +53,57 @@ function SignUpSecond({ role }: IProps): JSX.Element {
     mode: 'onBlur',
   });
 
-  const onSubmit = handleSubmit(
-    ({ firstName, lastName, email, phoneNumber, dateOfBirth, isOpenToClientHomeLiving }) => {
-      const dateToString = dateOfBirth.toLocaleDateString().padStart(dateLength);
-      dispatch(
-        savePersonalDetails({
-          firstName,
-          lastName,
-          email,
-          phoneNumber,
-          dateOfBirth: dateToString,
-          isOpenToClientHomeLiving,
-        })
-      );
-      alert(
-        JSON.stringify({
-          firstName,
-          lastName,
-          email,
-          phoneNumber,
-          dateOfBirth: dateToString,
-          isOpenToClientHomeLiving,
-        })
-      );
+  const onSubmit: SubmitHandler<FormValues> = async (data): Promise<void> => {
+    const { firstName, lastName, email, phoneNumber, dateOfBirth, isOpenToClientHomeLiving } = data;
+    const dateToString = dateOfBirth.toLocaleDateString().padStart(dateLength);
+    dispatch(
+      savePersonalDetails({
+        firstName,
+        lastName,
+        email,
+        phoneNumber,
+        dateOfBirth: dateToString,
+        isOpenToClientHomeLiving,
+      })
+    );
+    try {
+      await accountCheck({ email, phoneNumber });
+    } catch (error) {
+      throw new Error(error);
     }
-  );
+  };
+
+  useEffect(() => {
+    if (isCheckSuccess) {
+      onNext();
+    }
+  }, [isCheckSuccess]);
+
+  useEffect(() => {
+    if (isCheckError) {
+      const errorMessage = checkError?.data.message;
+      const isEmailError = errorMessage.includes('email');
+      const isPhoneError = errorMessage.includes('phone');
+      if (isEmailError) {
+        setError('email', {
+          type: 'manual',
+          message: `${errorMessage}`,
+        });
+      } else if (isPhoneError) {
+        setError('phoneNumber', {
+          type: 'manual',
+          message: `${errorMessage}`,
+        });
+      }
+    } else {
+      clearErrors('email');
+      clearErrors('phoneNumber');
+    }
+  }, [isCheckError, checkError]);
 
   return (
     <Wrapper>
-      <StyledForm onSubmit={onSubmit}>
+      <StyledForm onSubmit={handleSubmit(onSubmit)}>
         <InputWrapper>
           <FormControl sx={{ width: '100%' }} variant="filled">
             <InputLabel htmlFor="firstName">
@@ -147,7 +173,7 @@ function SignUpSecond({ role }: IProps): JSX.Element {
                   onlyCountries={['US', 'CA']}
                   error={fieldState.invalid}
                   inputRef={Input}
-                  label={translate('signUpSecondForm.phoneNumber')}
+                  label={translate('signUpSecondForm.placeholderPhone')}
                 />
               )}
             />

@@ -48,4 +48,4 @@ export const authApi = createApi({
 
 export const { useSignUpMutation } = authApi;
 
-export default authApi;
+export default authApi; 

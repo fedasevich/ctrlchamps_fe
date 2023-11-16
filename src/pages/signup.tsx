@@ -23,9 +23,9 @@ function SignUp():JSX.Element {
   const [signUp] = useSignUpMutation();
 
     const userInfo = {
+      "role": role,
       "password": "",
       ...personalDetails,
-      "role": role,
       ...addressData
     }
 
@@ -52,7 +52,7 @@ function SignUp():JSX.Element {
     <>
       <SignUpHeader text={t('SignUp')} />
       {step === 1 && <Step1Form onNext={handleNextStep} />}
-      {/* {step === 2 && <SignUpSecond role={role}/>} */}
+      {step === 2 && <SignUpSecond role={(role as 'seeker' || 'caregiver')} onNext={handleNextStep}/>}
       {step === 3 && <SignUpThirdForm onNext={handleNextStep} />}
       {step === 4 &&  <SignUpFourthForm/>}
     </>

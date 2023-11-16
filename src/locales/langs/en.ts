@@ -14,6 +14,7 @@ const en = {
     link: 'Don`t have an account?',
     resetPassword: 'Reset Password',
     signUp: 'Sign Up',
+    authError: 'Please enter valid credentials',
   },
   signUpSecondForm: {
     firstNameInvalid: 'First name maximum length is 100',
@@ -32,7 +33,7 @@ const en = {
     placeholderPhone: 'Phone Number',
     placeholderBirthDate: 'Date of Birth',
     placeholderIsOpen: 'I`m open to living in clients` houses',
-},
+  },
   footer: {
     termsText: 'By signing up you agree to our',
     termsButton: 'Terms & Conditions',

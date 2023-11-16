@@ -1,12 +1,13 @@
 import { FormControl, InputLabel, InputAdornment, IconButton, FilledInput } from '@mui/material';
-import React, { memo, useState } from 'react';
-import { useForm } from 'react-hook-form';
+import React, { memo, useEffect, useState } from 'react';
+import { useForm, SubmitHandler } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { InferType } from 'yup';
 import { useRouter } from 'next/router';
 import Visibility from 'src/assets/icons/Visibility';
 import VisibilityOff from 'src/assets/icons/VisibilityOff';
 import { useLocales } from 'src/locales';
+import { useSignInMutation } from 'src/redux/api/authAPI';
 import { useLoginSchema } from './validation';
 import {
   StyledForm,
@@ -24,6 +25,7 @@ function LoginForm(): JSX.Element {
   const loginSchema = useLoginSchema();
   const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
+  const [signIn, { isError: isSignInError, isSuccess: isSignInSuccess }] = useSignInMutation();
 
   const togglePassword = (): void => setShowPassword(!showPassword);
 
@@ -32,21 +34,43 @@ function LoginForm(): JSX.Element {
   const {
     register,
     handleSubmit,
+    setError,
+    clearErrors,
     formState: { errors, isValid },
   } = useForm<FormValues>({
     resolver: yupResolver(loginSchema),
     mode: 'onBlur',
   });
 
-  const onSubmit = handleSubmit((data) => {
-    alert(JSON.stringify(data));
-    router.push('/schedule');
-  });
+  const onSubmit: SubmitHandler<FormValues> = async (data): Promise<void> => {
+    try {
+      await signIn(data);
+    } catch (error) {
+      throw new Error(error);
+    }
+  };
+
+  useEffect(() => {
+    if (isSignInSuccess) {
+      router.push('/');
+    }
+  }, [isSignInSuccess, router]);
+
+  useEffect(() => {
+    if (isSignInError) {
+      setError('password', {
+        type: 'manual',
+        message: `${translate('loginForm.authError')}`,
+      });
+    } else {
+      clearErrors('password');
+    }
+  }, [isSignInError]);
 
   return (
     <>
       <Title>{translate('loginForm.formTitle')}</Title>
-      <StyledForm onSubmit={onSubmit}>
+      <StyledForm onSubmit={handleSubmit(onSubmit)}>
         <InputWrapper>
           <FormControl sx={{ width: '100%' }} variant="filled">
             <InputLabel htmlFor="email">{translate('loginForm.emailPlaceholder')}</InputLabel>

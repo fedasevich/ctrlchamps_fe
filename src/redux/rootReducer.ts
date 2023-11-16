@@ -1,9 +1,9 @@
 import { combineReducers } from 'redux';
 import createWebStorage from 'redux-persist/lib/storage/createWebStorage';
+
 import { addressReducer } from 'src/redux/slices/addressSlice';
 import { roleReducer } from 'src/redux/slices/roleSlice';
-
-import { personalDetailsReducer } from './slices/personalDetailsSlice';
+import { personalDetailsReducer } from 'src/redux/slices/personalDetailsSlice';
 // ----------------------------------------------------------------------
 
 export const createNoopStorage = () => ({

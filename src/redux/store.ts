@@ -1,13 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { useDispatch, useSelector, TypedUseSelectorHook } from 'react-redux';
 import { persistStore, persistReducer } from 'redux-persist';
-import rootReducer from 'src/redux/rootReducer';
 import storage from 'redux-persist/lib/storage';
+
+import rootReducer from 'src/redux/rootReducer';
 import { roleReducer } from 'src/redux/slices/roleSlice';
 import { addressReducer } from 'src/redux/slices/addressSlice';
-import { personalDetailsReducer } from './slices/personalDetailsSlice';
+import { personalDetailsReducer } from 'src/redux/slices/personalDetailsSlice';
 import api from 'src/redux/api/authAPI';
-
 
 const persistConfig = {
   key: 'root',
@@ -20,8 +20,8 @@ const store = configureStore({
   reducer: {
     persistedReducer,
     role: roleReducer,
-    address: addressReducer,
     personalDetails: personalDetailsReducer,
+    address: addressReducer,
     [ api.reducerPath ]: api.reducer
   },
   middleware: (getDefaultMiddleware) =>

@@ -9,9 +9,8 @@ import { useLocales } from 'src/locales';
 import { InferType } from 'yup';
 import { useSignUpThirdCountrySelectOptions } from './select-options';
 
-import { useSignUpThirdSchema } from './validation';
 import { AuthFormWrapper, ErrorMessage, NextButton, StyledForm } from './style';
-
+import { useSignUpThirdSchema } from './validation';
 
 interface SignUpThirdFormProps {
   onNext: () => void;

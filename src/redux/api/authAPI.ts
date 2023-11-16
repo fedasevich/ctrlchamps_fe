@@ -7,7 +7,7 @@ interface SignUpData {
     lastName: string;
     phoneNumber: string;
     dateOfBirth: string;
-    isOpenToClientHomeLiving: boolean;
+    isOpenToSeekerHomeLiving: boolean;
     role: string;
     country: string;
     state: string;
@@ -23,7 +23,7 @@ interface SignUpResponse {
     lastName: string;
     phoneNumber: string;
     dateOfBirth: string;
-    isOpenToClientHomeLiving: boolean;
+    isOpenToSeekerHomeLiving: boolean;
     role: string;
     country: string;
     state: string;

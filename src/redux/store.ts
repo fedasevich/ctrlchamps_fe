@@ -7,7 +7,7 @@ import rootReducer from 'src/redux/rootReducer';
 import { roleReducer } from 'src/redux/slices/roleSlice';
 import { addressReducer } from 'src/redux/slices/addressSlice';
 import { personalDetailsReducer } from 'src/redux/slices/personalDetailsSlice';
-import api from 'src/redux/api/authAPI';
+import { api } from 'src/redux/api/authAPI';
 
 const persistConfig = {
   key: 'root',
@@ -22,13 +22,13 @@ const store = configureStore({
     role: roleReducer,
     personalDetails: personalDetailsReducer,
     address: addressReducer,
-    [ api.reducerPath ]: api.reducer
+    [ api.reducerPath ]: api.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: false,
       immutableCheck: false,
-    }).concat(api.middleware),
+    }).concat([ api.middleware, accountVerificationApi.middleware ]),
 });
 const persistor = persistStore(store);
 

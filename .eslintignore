@@ -8,6 +8,8 @@ next.config.js
 **/src/theme
 **/src/assets/illustrations
 **/src/redux/store.ts
+*.config.js
+*.setup.js
 
 
 # template built-in components

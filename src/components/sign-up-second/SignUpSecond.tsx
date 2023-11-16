@@ -198,6 +198,7 @@ function SignUpSecond({ role, onNext }: IProps): JSX.Element {
                   selected={field.value}
                   customInput={<FilledInput fullWidth error={!!errors.dateOfBirth} />}
                   maxDate={new Date()}
+                  dateFormat="dd/MM/yyyy"
                 />
               )}
             />

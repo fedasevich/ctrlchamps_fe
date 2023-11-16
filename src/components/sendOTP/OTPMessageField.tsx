@@ -25,7 +25,7 @@ const OTPMessageField: React.FC<OTPMessageFieldProps> = ({ onSubmit }): JSX.Elem
 
   const fetchNewCode = useCallback(async () => {
     try {
-      await requestNewCode({ userId });
+      await requestNewCode({ userId }).unwrap();
     } catch (error) {
       throw new Error(error);
     }
@@ -47,14 +47,11 @@ const OTPMessageField: React.FC<OTPMessageFieldProps> = ({ onSubmit }): JSX.Elem
   const handleSubmit = async (): Promise<void> => {
     try {
       const verificationCode: string = code.join('');
-      const response = await submitCode({ code: verificationCode, userId });
-      if ('error' in response) {
-        setCodeDoesNotMatch(true);
-        setCode(['', '', '', '']);
-      } else {
-        onSubmit();
-      }
+      await submitCode({ code: verificationCode, userId }).unwrap();
+      onSubmit();
     } catch (error) {
+      setCodeDoesNotMatch(true);
+      setCode(['', '', '', '']);
       throw new Error(error);
     }
   };

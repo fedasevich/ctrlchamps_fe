@@ -4,6 +4,7 @@ import { persistStore, persistReducer } from 'redux-persist';
 import rootReducer from 'src/redux/rootReducer';
 import storage from 'redux-persist/lib/storage';
 import authReducer from 'src/redux/authReducer';
+import { personalDetailsReducer } from './slices/personalDetailsSlice';
 import { addressReducer } from 'src/redux/slices/addressSlice';
 import api from 'src/redux/api/userAPI';
 
@@ -19,6 +20,7 @@ const store = configureStore({
   reducer: {
     persistedReducer,
     auth: authReducer,
+    personalDetails: personalDetailsReducer,
     address: addressReducer,
     [ api.reducerPath ]: api.reducer
   },

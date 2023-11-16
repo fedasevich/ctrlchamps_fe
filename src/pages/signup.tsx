@@ -28,6 +28,7 @@ function SignUp():JSX.Element {
       ...personalDetails,
       ...addressData
     }
+    
 
     const handleSignUp = async (): Promise<void> => {
       try {
@@ -38,13 +39,7 @@ function SignUp():JSX.Element {
     };
 
     const handleNextStep = (): void => {
-      handleSignUp()
-        .then(() => {
           setStep(prevStep => prevStep + 1);
-        })
-        .catch((error) => {
-          throw new Error(error)
-        });
     };
     
 
@@ -54,7 +49,7 @@ function SignUp():JSX.Element {
       {step === 1 && <Step1Form onNext={handleNextStep} />}
       {step === 2 && <SignUpSecond role={(role as 'seeker' || 'caregiver')} onNext={handleNextStep}/>}
       {step === 3 && <SignUpThirdForm onNext={handleNextStep} />}
-      {step === 4 &&  <SignUpFourthForm/>}
+      {step === 4 &&  <SignUpFourthForm onNext={handleSignUp}/>}
     </>
   );
 };

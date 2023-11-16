@@ -35,7 +35,7 @@ export default function OTPInput({
     validate(codeLength, length);
 
     if (codeLength === length) {
-      setCode(newOtpValues.join(' '));
+      setCode(newOtpValues.join(''));
     }
   }
 

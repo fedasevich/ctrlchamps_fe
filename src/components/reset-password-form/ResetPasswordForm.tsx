@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { FormControl, IconButton, InputAdornment, OutlinedInput } from '@mui/material';
 import { useLocales } from 'src/locales';
-import { useResetPasswordMutation } from 'src/redux/api/userAPI';
+import { useResetPasswordMutation } from 'src/redux/api/authApi';
 
 import Visibility from 'src/assets/icons/Visibility';
 import VisibilityOff from 'src/assets/icons/VisibilityOff';

@@ -17,6 +17,8 @@ const en = {
     confirm: 'Confirm Password',
     success: 'Your Password is Updated!',
     instructions: 'Now you can go back to login to authenticate with new credentials',
+    code_sent: 'Reset code was sent',
+    code_not_sent: 'Failed to send reset code',
     placeholder: {
       pass: 'Password',
       confirm_pass: 'Confirm Password',

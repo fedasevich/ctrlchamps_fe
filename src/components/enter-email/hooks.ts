@@ -1,7 +1,8 @@
 import { Dispatch, SetStateAction, useState } from 'react';
 import { useLocales } from 'src/locales';
 import { checkIsEmail } from 'src/utils/checkEmail';
-import { MIN_EMAIL_LENGTH } from './constants';
+import { useRequestResetCodeMutation } from 'src/redux/api/authApi';
+import { BAD_REQUEST_STATUS, MIN_EMAIL_LENGTH } from './constants';
 
 type ReturnType = {
   email: string;
@@ -9,10 +10,10 @@ type ReturnType = {
   isDisabled: boolean;
   emailNotExists: boolean;
   showError: boolean;
+  serverError: string | null;
   setEmailNotExists: Dispatch<SetStateAction<boolean>>;
   sendCode: (e: React.FormEvent<HTMLFormElement>) => void;
   onChange: (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => void;
-  onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
   translate: (text: string) => string;
 };
 
@@ -22,9 +23,15 @@ export function useEnterEmail(next: (email?: string) => void): ReturnType {
   const [isDisabled, setIsDisabled] = useState<boolean>(true);
   const [emailNotExists, setEmailNotExists] = useState<boolean>(false);
   const [showError, setShowError] = useState<boolean>(false);
+  const [requestCode] = useRequestResetCodeMutation();
+  const [serverError, setServerError] = useState<string | null>(null);
 
   const onChange = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>): void => {
     setEmail(e.target.value);
+
+    setIsDisabled(false);
+    setEmailNotExists(false);
+    setServerError(null);
 
     if (!checkIsEmail(email)) {
       setIsDisabled(true);
@@ -35,21 +42,23 @@ export function useEnterEmail(next: (email?: string) => void): ReturnType {
     }
   };
 
-  const onSubmit = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
+  const sendCode = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();
     if (!checkIsEmail(email)) return;
 
     try {
-      await sendCode();
+      setIsDisabled(true);
+      await requestCode({ email }).unwrap();
       next(email);
     } catch (err) {
-      alert(err);
+      if (err.status === BAD_REQUEST_STATUS) {
+        setEmailNotExists(true);
+        return;
+      }
+
+      setServerError(translate('reset_password.errors.unexpected'));
     }
   };
-
-  async function sendCode(): Promise<void> {
-    // check if email exists in db (if it does, send code to this email)
-  }
 
   return {
     email,
@@ -57,10 +66,10 @@ export function useEnterEmail(next: (email?: string) => void): ReturnType {
     isDisabled,
     emailNotExists,
     setEmailNotExists,
-    sendCode,
     onChange,
-    onSubmit,
+    sendCode,
     translate,
     showError,
+    serverError,
   };
 }

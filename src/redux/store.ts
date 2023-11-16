@@ -7,7 +7,7 @@ import {
 import { persistStore, persistReducer } from 'redux-persist';
 import rootReducer, { rootPersistConfig } from './rootReducer';
 import authReducer from 'src/redux/authReducer';
-import api from 'src/redux/api/userAPI';
+import authApi from 'src/redux/api/authApi';
 
 // ----------------------------------------------------------------------
 
@@ -18,13 +18,13 @@ export type AppDispatch = typeof store.dispatch;
 const store = configureStore({
   reducer: {
     auth: authReducer,
-    [ api.reducerPath ]: api.reducer,
+    [authApi.reducerPath]: authApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: false,
       immutableCheck: false,
-    }).concat(api.middleware),
+    }).concat(authApi.middleware),
 });
 const persistor = persistStore(store);
 

@@ -1,6 +1,9 @@
-import EmailInboxIcon from 'src/assets/icons/EmailInboxIcon';
-import { useLocales } from 'src/locales';
 import { useState } from 'react';
+import { useLocales } from 'src/locales';
+import { useRequestResetCodeMutation, useVerifyResetCodeMutation } from 'src/redux/api/authApi';
+
+import { Alert, Snackbar } from '@mui/material';
+import EmailInboxIcon from 'src/assets/icons/EmailInboxIcon';
 import { FilledButton } from '../reusable/FilledButton';
 import {
   BtnContainer,
@@ -13,19 +16,24 @@ import {
 } from './styles';
 import OTPInput from './OTPInput';
 import { OTP_LENGTH } from './constants';
+import { ErrorText } from '../reusable/ErrorText';
 
 type VerificationProps = { userEmail: string; next: () => void; back: () => void };
 
 export default function Verification({ userEmail, next, back }: VerificationProps): JSX.Element {
   const { translate } = useLocales();
   const [code, setCode] = useState<string>('');
+  const [requestCode] = useRequestResetCodeMutation();
+  const [verifyCode] = useVerifyResetCodeMutation();
   const [submitDisabled, setSubmitDisabled] = useState<boolean>(true);
   const [length, setLength] = useState<number>(OTP_LENGTH);
+  const [toastShown, setToastShown] = useState<boolean>(false);
+  const [errorToastShown, setErrorToastShown] = useState<boolean>(false);
   const [error, setError] = useState<boolean>(false);
+  const [serverError, setServerError] = useState<boolean>(false);
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    alert(`${code} for ${userEmail}`);
     try {
       const valid = await checkCodeValidity(code);
       if (!valid) {
@@ -35,17 +43,26 @@ export default function Verification({ userEmail, next, back }: VerificationProp
       }
       next();
     } catch (err) {
-      alert(err);
+      setServerError(true);
     }
   };
 
   async function requestNewCode(email: string): Promise<void> {
-    // send new code
+    try {
+      await requestCode({ email }).unwrap();
+      setToastShown(true);
+    } catch (err) {
+      setErrorToastShown(true);
+    }
   }
 
   async function checkCodeValidity(submittedCode: string): Promise<boolean> {
-    // check if submitted code is valid
-    return true;
+    try {
+      await verifyCode({ email: userEmail, code: submittedCode }).unwrap();
+      return true;
+    } catch (err) {
+      return false;
+    }
   }
 
   return (
@@ -75,7 +92,24 @@ export default function Verification({ userEmail, next, back }: VerificationProp
             {translate('btn_submit')}
           </FilledButton>
         </BtnContainer>
+        {serverError && <ErrorText>{translate('reset_password.errors.unexpected')}</ErrorText>}
       </FormWrapper>
+      <Snackbar
+        open={toastShown}
+        autoHideDuration={2500}
+        onClose={(): void => setToastShown(false)}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+      >
+        <Alert severity="success">{translate('reset_password.code_sent')}</Alert>
+      </Snackbar>
+      <Snackbar
+        open={errorToastShown}
+        autoHideDuration={2500}
+        onClose={(): void => setErrorToastShown(false)}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+      >
+        <Alert severity="error">{translate('reset_password.code_not_sent')}</Alert>
+      </Snackbar>
     </Container>
   );
 }

@@ -13,7 +13,7 @@ import SignUpHeader from "src/components/reusable/header";
 function SignUp():JSX.Element {
     const { t } = useTranslation();
     const [step, setStep] = useState<number>(1);
-    const selectedOption = useSelector((state: RootState) => state.auth.selectedOption);
+    const selectedOption:string = useSelector((state: RootState) => state.auth.selectedOption);
     const [signUp] = useSignUpMutation();
     
     const userInfo = useMemo(() => ({

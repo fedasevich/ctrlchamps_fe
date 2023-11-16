@@ -5,7 +5,7 @@ import { TypedUseSelectorHook, useDispatch as useAppDispatch, useSelector as use
 import rootReducer from 'src/redux/rootReducer';
 import authReducer from 'src/redux/authReducer';
 import { personalDetailsReducer } from './slices/personalDetailsSlice';
-import api from 'src/redux/api/userAPI';
+import { api } from 'src/redux/api/userAPI';
 import { accountVerificationApi } from 'src/redux/api/accountVerificationAPI';
 
 // ----------------------------------------------------------------------

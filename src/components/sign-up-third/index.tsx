@@ -37,6 +37,7 @@ export default function SignUpThirdForm({ onNext }: SignUpThirdFormProps): JSX.E
 
   const onSubmit = handleSubmit((data) => {
     dispatch(saveAddressData(data));
+    onNext()
   });
 
   return (

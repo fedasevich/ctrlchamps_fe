@@ -4,6 +4,7 @@ import { useLocales } from 'src/locales';
 import LoginWrapper from 'src/components/login-form/LoginWrapper';
 import SignUpHeader from 'src/components/reusable/header';
 import LoginForm from 'src/components/login-form/LoginForm';
+import SignUpFooter from 'src/components/reusable/footer';
 
 export default function Login(): JSX.Element {
   const { translate } = useLocales();
@@ -14,7 +15,10 @@ export default function Login(): JSX.Element {
       </Head>
       <SignUpHeader text={translate('loginForm.title')} />
       <LoginWrapper>
-        <LoginForm />
+        <>
+          <LoginForm />
+          <SignUpFooter />
+        </>
       </LoginWrapper>
     </>
   );

@@ -4,11 +4,13 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { InferType } from 'yup';
 import { useRouter } from 'next/router';
-import Visibility from 'src/assets/icons/Visibility';
-import VisibilityOff from 'src/assets/icons/VisibilityOff';
+
 import { useLocales } from 'src/locales';
 import { useSignInMutation } from 'src/redux/api/authAPI';
+import Visibility from 'src/assets/icons/Visibility';
+import VisibilityOff from 'src/assets/icons/VisibilityOff';
 import { useLoginSchema } from './validation';
+
 import {
   StyledForm,
   Title,
@@ -22,8 +24,8 @@ import {
 
 function LoginForm(): JSX.Element {
   const { translate } = useLocales();
-  const loginSchema = useLoginSchema();
   const router = useRouter();
+  const loginSchema = useLoginSchema();
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [signIn, { isError: isSignInError, isSuccess: isSignInSuccess }] = useSignInMutation();
 

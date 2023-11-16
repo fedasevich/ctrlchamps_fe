@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 
-import { DigitInput } from './styles';
+import { DigitInput } from 'src/components/sendOTP/styles';
 
 interface DigitTextFieldProps {
   value: string;

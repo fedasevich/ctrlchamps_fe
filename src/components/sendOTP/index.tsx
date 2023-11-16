@@ -2,7 +2,7 @@ import React, { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next';
 
 import SignUpHeader from 'src/components/reusable/header';
-import OTPMessageField from 'src/components/sendOTP/OTPMessageField';
+import OTPMessageField from 'src/components/sendOTP/AccountVerification';
 import SuccessfulVerification from 'src/components/sendOTP/SuccessfulVerification';
 
 interface AccountVerificationProps {

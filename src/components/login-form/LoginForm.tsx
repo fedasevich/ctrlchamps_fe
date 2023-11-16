@@ -24,7 +24,7 @@ function LoginForm(): JSX.Element {
   const { translate } = useLocales();
   const loginSchema = useLoginSchema();
   const router = useRouter();
-  const [showPassword, setShowPassword] = useState(false);
+  const [showPassword, setShowPassword] = useState<boolean>(false);
   const [signIn, { isError: isSignInError, isSuccess: isSignInSuccess }] = useSignInMutation();
 
   const togglePassword = (): void => setShowPassword(!showPassword);

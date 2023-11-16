@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { FormControl, IconButton, InputAdornment, OutlinedInput } from '@mui/material';
 import { useLocales } from 'src/locales';
+import { useResetPasswordMutation } from 'src/redux/api/userAPI';
 
 import Visibility from 'src/assets/icons/Visibility';
 import VisibilityOff from 'src/assets/icons/VisibilityOff';
@@ -21,6 +22,8 @@ export default function ResetPasswordForm({
   const { translate } = useLocales();
   const resetPassSchema = useResetPassword();
   const [isVisible, setIsVisible] = useState<boolean>(false);
+  const [resetPassword, { isLoading }] = useResetPasswordMutation();
+  const [error, setError] = useState<string | null>(null);
 
   type FormValues = InferType<typeof resetPassSchema>;
 
@@ -37,9 +40,16 @@ export default function ResetPasswordForm({
   const showPassword = (): void => setIsVisible((visible) => !visible);
 
   const onSubmit = handleSubmit(async (data) => {
-    alert(`${data.password} ${data.confirmPassword}`);
-    // reset password by email
-    next();
+    try {
+      await resetPassword({ email, password: data.password }).unwrap();
+      next();
+    } catch (err) {
+      if (err.data && err.data.message) {
+        setError(err.data.message);
+        return;
+      }
+      setError(translate('reset_password.errors.unexpected'));
+    }
   });
 
   return (
@@ -52,6 +62,7 @@ export default function ResetPasswordForm({
             placeholder={translate('reset_password.placeholder.pass')}
             {...register('password')}
             id="password"
+            autoComplete="off"
             error={!!errors.password}
             type={isVisible ? 'text' : 'password'}
             endAdornment={
@@ -74,6 +85,7 @@ export default function ResetPasswordForm({
             {...register('confirmPassword')}
             id="confirmPassword"
             data-testid="confirmPass"
+            autoComplete="off"
             placeholder={translate('reset_password.placeholder.confirm_pass')}
             error={!!errors.confirmPassword}
             type={isVisible ? 'text' : 'password'}
@@ -91,10 +103,16 @@ export default function ResetPasswordForm({
           {errors?.confirmPassword && (
             <ErrorMessage variant="caption">{errors.confirmPassword?.message}</ErrorMessage>
           )}
-          <FilledButton type="submit" disabled={!isValid} sx={{ mt: 2 }} data-testid="reset btn">
-            {translate('reset_password.title')}
+          <FilledButton
+            type="submit"
+            disabled={!isValid || isLoading || error !== null}
+            sx={{ mt: 2 }}
+            data-testid="reset btn"
+          >
+            {isLoading ? translate('loading') : translate('reset_password.title')}
           </FilledButton>
         </FormControl>
+        {error && <ErrorMessage>{error}</ErrorMessage>}
       </StyledForm>
     </Container>
   );

@@ -16,6 +16,7 @@ export default function EnterEmail({ next }: { next: () => void }): JSX.Element 
           value={email}
           onChange={onChange}
           fullWidth
+          autoComplete="off"
           sx={{ color: SECONDARY.md_gray, mt: 6 }}
           label={translate('reset_password.input_label')}
           variant="filled"

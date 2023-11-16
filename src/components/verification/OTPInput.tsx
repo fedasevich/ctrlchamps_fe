@@ -54,6 +54,7 @@ export default function OTPInput({
           key={index}
           variant="standard"
           maxRows={1}
+          autoComplete="off"
           value={otpValues[index]}
           error={error}
           onChange={(e): void => onChange(e, index)}

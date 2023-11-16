@@ -11,6 +11,7 @@ const en = {
     emailInvalid: 'Please enter valid email',
     emailRequired: 'Email is required',
     phoneLengthInvalid: 'Phone length must be 10 numbers',
+    phoneInvalid: 'Phone can`t starts with 0',
     phoneRequired: 'Phone is required',
     birthDateRequired: 'Birth date is required',
     placeholderFirstName: 'First Name',
@@ -19,7 +20,7 @@ const en = {
     placeholderPhone: 'Phone Number',
     placeholderBirthDate: 'Date of Birth',
     placeholderIsOpen: 'I`m open to living in clients` houses',
-},
+  },
   footer: {
     termsText: 'By signing up you agree to our',
     termsButton: 'Terms & Conditions',

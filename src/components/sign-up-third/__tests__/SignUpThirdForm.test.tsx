@@ -5,8 +5,15 @@ import { fireEvent, render, screen, within } from '@testing-library/react';
 import { act } from 'react-dom/test-utils';
 import SignUpThirdForm from '../SignUpThirdForm';
 
-jest.mock('react-redux', () => ({
-  useDispatch: () => jest.fn(),
+jest.mock('src/redux/store', () => ({
+  useTypedSelector: () => ({
+    country: '',
+    state: '',
+    city: '',
+    zipCode: '',
+    address: '',
+  }),
+  useAppDispatch: () => jest.fn(),
 }));
 
 describe('SignUpThirdForm', () => {

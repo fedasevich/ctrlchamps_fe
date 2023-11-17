@@ -2,10 +2,10 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { FilledInput, FormControl, InputLabel, MenuItem, Select } from '@mui/material';
 
 import { useForm } from 'react-hook-form';
-import { useDispatch } from 'react-redux';
 
 import { useLocales } from 'src/locales';
 import { saveAddressData } from 'src/redux/slices/addressSlice';
+import { useAppDispatch, useTypedSelector } from 'src/redux/store';
 import { InferType } from 'yup';
 import { useSignUpThirdCountrySelectOptions } from './select-options';
 
@@ -18,22 +18,25 @@ interface SignUpThirdFormProps {
 
 export default function SignUpThirdForm({ onNext }: SignUpThirdFormProps): JSX.Element {
   const { translate } = useLocales();
-  const dispatch = useDispatch();
-
+  const dispatch = useAppDispatch();
   const signUpThirdSchema = useSignUpThirdSchema();
-
   const { countries } = useSignUpThirdCountrySelectOptions();
+  const initialAddressValues = useTypedSelector((state) => state.address.addressData);
 
   type FormValues = InferType<typeof signUpThirdSchema>;
 
   const {
     register,
     handleSubmit,
+    watch,
     formState: { errors, isValid },
   } = useForm<FormValues>({
     resolver: yupResolver(signUpThirdSchema),
     mode: 'onBlur',
+    defaultValues: initialAddressValues,
   });
+
+  const selectedCountry = watch('country');
 
   const onSubmit = handleSubmit((data) => {
     dispatch(saveAddressData(data));
@@ -51,8 +54,7 @@ export default function SignUpThirdForm({ onNext }: SignUpThirdFormProps): JSX.E
             SelectDisplayProps={
               { 'data-testid': 'country-select' } as React.HTMLAttributes<HTMLDivElement>
             }
-            // data-testid="country-select"
-            defaultValue=""
+            value={selectedCountry}
             {...register('country')}
             label={translate('signUpThirdForm.placeholderCountry')}
             id="country"

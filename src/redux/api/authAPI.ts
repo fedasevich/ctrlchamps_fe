@@ -1,4 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { route } from './routes';
 
 interface SignUpData {
   email: string;
@@ -7,7 +8,7 @@ interface SignUpData {
   lastName: string;
   phoneNumber: string;
   dateOfBirth: string;
-  isOpenToClientHomeLiving: boolean;
+  isOpenToSeekerHomeLiving?: boolean;
   role: string;
   country: string;
   state: string;
@@ -23,7 +24,7 @@ interface SignUpResponse {
   lastName: string;
   phoneNumber: string;
   dateOfBirth: string;
-  isOpenToClientHomeLiving: boolean;
+  isOpenToSeekerHomeLiving?: boolean;
   role: string;
   country: string;
   state: string;
@@ -41,27 +42,72 @@ interface SignInResponse {
   token: string;
 }
 
+interface AccountCheckData {
+  email: string;
+  phoneNumber: string;
+}
+
+interface AccountCheckResponse {
+  statusCode?: number;
+  message?: string;
+}
+
 export const authApi = createApi({
   reducerPath: 'authApi',
-  baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:3001' }),
+  baseQuery: fetchBaseQuery({ baseUrl: `${process.env.NEXT_PUBLIC_CLIENT_URL}/${route.auth}` }),
   endpoints: (builder) => ({
     signUp: builder.mutation<SignUpResponse, SignUpData>({
-      query: (signUpData) => ({
-        url: '/auth/sign-up',
+      query: (body) => ({
+        url: `${route.signUp}`,
         method: 'POST',
-        body: signUpData,
+        body,
+      }),
+    }),
+    requestResetCode: builder.mutation<void, { email: string }>({
+      query: (body) => ({
+        url: `${route.requestResetCode}`,
+        method: 'POST',
+        body,
+      }),
+    }),
+    verifyResetCode: builder.mutation<void, { email: string; code: string }>({
+      query: (body) => ({
+        url: `${route.verifyResetCode}`,
+        method: 'POST',
+        body,
+      }),
+    }),
+    resetPassword: builder.mutation<void, { email: string; password: string }>({
+      query: (body) => ({
+        url: `${route.reset}`,
+        method: 'POST',
+        body,
       }),
     }),
     signIn: builder.mutation<SignInResponse, SignInData>({
       query: (signInData) => ({
-        url: '/auth/sign-in',
+        url: `${route.signIn}`,
         method: 'POST',
         body: signInData,
+      }),
+    }),
+    accountCheck: builder.mutation<AccountCheckResponse, AccountCheckData>({
+      query: (accountCheckData) => ({
+        url: `${route.accountCheck}`,
+        method: 'POST',
+        body: accountCheckData,
       }),
     }),
   }),
 });
 
-export const { useSignUpMutation, useSignInMutation } = authApi;
+export const {
+  useSignUpMutation,
+  useResetPasswordMutation,
+  useRequestResetCodeMutation,
+  useVerifyResetCodeMutation,
+  useSignInMutation,
+  useAccountCheckMutation,
+} = authApi;
 
 export default authApi;

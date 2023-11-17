@@ -59,7 +59,7 @@ function SignUpSecond({ role, onNext }: IProps): JSX.Element {
   });
 
   const onSubmit: SubmitHandler<FormValues> = async (data): Promise<void> => {
-    const { firstName, lastName, email, phoneNumber, dateOfBirth, isOpenToClientHomeLiving } = data;
+    const { firstName, lastName, email, phoneNumber, dateOfBirth, isOpenToSeekerHomeLiving } = data;
     const dateToString = dateOfBirth.toLocaleDateString().padStart(dateLength);
     dispatch(
       savePersonalDetails({
@@ -68,7 +68,7 @@ function SignUpSecond({ role, onNext }: IProps): JSX.Element {
         email,
         phoneNumber,
         dateOfBirth: dateToString,
-        isOpenToClientHomeLiving,
+        isOpenToSeekerHomeLiving,
       })
     );
     try {
@@ -213,7 +213,7 @@ function SignUpSecond({ role, onNext }: IProps): JSX.Element {
         {role === 'caregiver' && (
           <FormControlLabel
             control={
-              <Switch {...register('isOpenToClientHomeLiving')} id="isOpenToClientHomeLiving" />
+              <Switch {...register('isOpenToSeekerHomeLiving')} id="isOpenToSeekerHomeLiving" />
             }
             label={translate('signUpSecondForm.placeholderIsOpen')}
           />

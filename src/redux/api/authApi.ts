@@ -4,7 +4,7 @@ import { route } from './routes';
 
 export const authApi = createApi({
   reducerPath: 'authApi',
-  baseQuery: fetchBaseQuery({ baseUrl: `${process.env.NEXT_PUBLIC_CLIENT_URL}/${route.auth}` }),
+  baseQuery: fetchBaseQuery({ baseUrl: `${process.env.NEXT_PUBLIC_API_URL}/${route.auth}` }),
   endpoints: (builder) => ({
     signUp: builder.mutation<string, { userInfo: UserInfo }>({
       query: (body) => ({

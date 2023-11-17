@@ -1,5 +1,6 @@
 import React, { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next';
+import { useRouter } from 'next/router';
 
 import SignUpHeader from 'src/components/reusable/header';
 import OTPMessageField from 'src/components/sendOTP/AccountVerification';
@@ -11,6 +12,8 @@ interface AccountVerificationProps {
 
 const AccountVerification: React.FC<AccountVerificationProps> = () :JSX.Element => {
     const { t } = useTranslation();
+    const router = useRouter();
+
     const [isSubmitted, setIsSubmitted] = useState<boolean>(false); 
     const profile :string = useMemo(() => process.env.NEXT_PUBLIC_PROFILE || '', []);
 
@@ -20,7 +23,7 @@ const AccountVerification: React.FC<AccountVerificationProps> = () :JSX.Element 
 
     return (
       <>
-        <SignUpHeader text={t('account_verification.account_verification')} />
+        <SignUpHeader text={t('account_verification.account_verification')} callback={()=>router.push('/sign-up')}/>
         {
         isSubmitted ? 
         <SuccessfulVerification

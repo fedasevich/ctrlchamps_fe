@@ -1,5 +1,6 @@
 import { useState, useCallback, useEffect, useMemo } from 'react';
 import { useRequestNewVerificationCodeMutation, useSubmitVerificationCodeMutation } from 'src/redux/api/accountVerificationAPI';
+import jwt from 'jsonwebtoken';
 
 const useVerification = (onSubmit: () => void) => {
     const [ submitCode ] = useSubmitVerificationCodeMutation();
@@ -8,7 +9,7 @@ const useVerification = (onSubmit: () => void) => {
     const [ code, setCode ] = useState<string[]>([ '', '', '', '' ]);
     const [ codeDoesNotMatch, setCodeDoesNotMatch ] = useState<boolean>(false);
 
-    const userId: string = useMemo(() => ' ', []);
+    const [ userId, setUserId ] = useState<string>('');
 
     const fetchNewCode = useCallback(async () => {
         try {
@@ -17,6 +18,11 @@ const useVerification = (onSubmit: () => void) => {
             // throw new Error(error);
         }
     }, [ requestNewCode, userId ]);
+
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+        console.log(token);
+    }, []);
 
     useEffect(() => {
         fetchNewCode();

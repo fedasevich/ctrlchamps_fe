@@ -39,7 +39,10 @@ function SignUp(): JSX.Element {
 
   const handleSignUp = async (password: string): Promise<void> => {
     try {
-      await signUp({ ...userInfo, password });
+      const response = await signUp({ ...userInfo, password });
+      if ('data' in response && response.data.token) {
+        localStorage.setItem('token', response.data.token);
+      }
       router.push('/account-verification');
     } catch (error) {
       throw new Error(error);

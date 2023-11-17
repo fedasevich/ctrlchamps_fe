@@ -1,17 +1,12 @@
 import { Button, Typography, styled } from '@mui/material';
 
-export const AuthFormWrapper = styled('div')`
-  height: 100vh;
-`;
-
 export const StyledForm = styled('form')`
-  height: calc(100vh - 48px);
+  height: 100%;
   display: flex;
   flex-direction: column;
   gap: 16px;
   width: 480px;
   margin: 0 auto;
-  padding: 24px 0;
   font-size: 16px;
   font-weight: 500;
   line-height: 1.5;

@@ -8,7 +8,7 @@ export const useSignUpSecondSchema = (): ObjectSchema<
     email: string;
     phoneNumber: string;
     dateOfBirth: Date;
-    isOpenToClientHomeLiving?: boolean;
+    isOpenToSeekerHomeLiving?: boolean;
   },
   AnyObject,
   {
@@ -17,7 +17,7 @@ export const useSignUpSecondSchema = (): ObjectSchema<
     email: undefined;
     phoneNumber: undefined;
     dateOfBirth: undefined;
-    isOpenToClientHomeLiving?: undefined;
+    isOpenToSeekerHomeLiving?: undefined;
   },
   ''
 > => {
@@ -39,6 +39,6 @@ export const useSignUpSecondSchema = (): ObjectSchema<
       .length(12, translate('signUpSecondForm.phoneLengthInvalid'))
       .required(translate('signUpSecondForm.phoneRequired')),
     dateOfBirth: date().required(translate('signUpSecondForm.birthDateRequired')),
-    isOpenToClientHomeLiving: boolean(),
+    isOpenToSeekerHomeLiving: boolean(),
   });
 };

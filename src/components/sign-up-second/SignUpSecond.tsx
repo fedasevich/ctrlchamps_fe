@@ -1,4 +1,4 @@
-import React, { memo, useEffect } from 'react';
+import React, { memo, useEffect, useMemo } from 'react';
 import { MuiTelInput } from 'mui-tel-input';
 import {
   Switch,
@@ -13,6 +13,7 @@ import { InferType } from 'yup';
 import { useDispatch } from 'react-redux';
 import { useForm, Controller, SubmitHandler } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { subYears } from 'date-fns';
 import 'react-datepicker/dist/react-datepicker.css';
 
 import { savePersonalDetails } from 'src/redux/slices/personalDetailsSlice';
@@ -38,7 +39,8 @@ function SignUpSecond({ role, onNext }: IProps): JSX.Element {
   const dispatch = useDispatch();
   const { translate } = useLocales();
   const signUpSecondSchema = useSignUpSecondSchema();
-  const dateLength = 10;
+  const dateLength = useMemo(() => 10, []);
+  const minAge = useMemo(() => 18, []);
   const [accountCheck, { isError: isCheckError, isSuccess: isCheckSuccess, error: checkError }] =
     useAccountCheckMutation();
 
@@ -83,10 +85,10 @@ function SignUpSecond({ role, onNext }: IProps): JSX.Element {
   }, [isCheckSuccess]);
 
   useEffect(() => {
-    if (isCheckError) {
-      const errorMessage = checkError?.data.message;
-      const isEmailError = errorMessage.includes('email');
-      const isPhoneError = errorMessage.includes('phone');
+    if (isCheckError && checkError) {
+      const errorMessage = checkError?.data?.message;
+      const isEmailError = errorMessage?.includes('email');
+      const isPhoneError = errorMessage?.includes('phone');
       if (isEmailError) {
         setError('email', {
           type: 'manual',
@@ -197,7 +199,7 @@ function SignUpSecond({ role, onNext }: IProps): JSX.Element {
                   onChange={(date): void => field.onChange(date)}
                   selected={field.value}
                   customInput={<FilledInput fullWidth error={!!errors.dateOfBirth} />}
-                  maxDate={new Date()}
+                  maxDate={subYears(new Date(), minAge)}
                   dateFormat="dd/MM/yyyy"
                 />
               )}

@@ -1,10 +1,11 @@
 import { FormControl, InputLabel, InputAdornment, IconButton, FilledInput } from '@mui/material';
-import React, { memo, useEffect, useState } from 'react';
+import React, { memo, useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { InferType } from 'yup';
 import { useRouter } from 'next/router';
 
+import { FetchBaseQueryError } from '@reduxjs/toolkit/dist/query';
 import { useLocales } from 'src/locales';
 import { useSignInMutation } from 'src/redux/api/authAPI';
 import Visibility from 'src/assets/icons/Visibility';
@@ -27,7 +28,7 @@ function LoginForm(): JSX.Element {
   const router = useRouter();
   const loginSchema = useLoginSchema();
   const [showPassword, setShowPassword] = useState<boolean>(false);
-  const [signIn, { isError: isSignInError, isSuccess: isSignInSuccess }] = useSignInMutation();
+  const [signIn] = useSignInMutation();
 
   const togglePassword = (): void => setShowPassword(!showPassword);
 
@@ -46,28 +47,25 @@ function LoginForm(): JSX.Element {
 
   const onSubmit: SubmitHandler<FormValues> = async (data): Promise<void> => {
     try {
-      await signIn(data);
+      await signIn(data)
+        .unwrap()
+        .then(() => {
+          router.push('/');
+        })
+        .catch((error: FetchBaseQueryError) => {
+          if (error) {
+            setError('password', {
+              type: 'manual',
+              message: `${translate('loginForm.authError')}`,
+            });
+          } else {
+            clearErrors('password');
+          }
+        });
     } catch (error) {
       throw new Error(error);
     }
   };
-
-  useEffect(() => {
-    if (isSignInSuccess) {
-      router.push('/');
-    }
-  }, [isSignInSuccess, router]);
-
-  useEffect(() => {
-    if (isSignInError) {
-      setError('password', {
-        type: 'manual',
-        message: `${translate('loginForm.authError')}`,
-      });
-    } else {
-      clearErrors('password');
-    }
-  }, [isSignInError]);
 
   return (
     <>

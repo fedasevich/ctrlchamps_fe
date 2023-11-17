@@ -57,10 +57,10 @@ function SignUp(): JSX.Element {
     <>
       <SignUpHeader text={t('SignUp')} callback={handleBackStep} />
       {step === 1 && <SignUpFirstForm onNext={handleNextStep} />}
-      {/* {step === 2 && (
+      {step === 2 && (
         <SignUpSecond role={(role as 'seeker') || 'caregiver'} onNext={handleNextStep} />
-      )} */}
-      {step === 2 && <SignUpThirdForm onNext={handleNextStep} />}
+      )}
+      {step === 3 && <SignUpThirdForm onNext={handleNextStep} />}
       {step === 4 && <SignUpFourthForm onNext={handleSignUp} />}
       <SignUpFooter />
     </>

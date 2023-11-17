@@ -18,19 +18,7 @@ interface SignUpData {
 }
 
 interface SignUpResponse {
-  email: string;
-  password: string;
-  firstName: string;
-  lastName: string;
-  phoneNumber: string;
-  dateOfBirth: string;
-  isOpenToSeekerHomeLiving?: boolean;
-  role: string;
-  country: string;
-  state: string;
-  city: string;
-  zipCode: string;
-  address: string;
+  token: string;
 }
 
 interface SignInData {
@@ -54,46 +42,46 @@ interface AccountCheckResponse {
 
 export const authApi = createApi({
   reducerPath: 'authApi',
-  baseQuery: fetchBaseQuery({ baseUrl: `${process.env.NEXT_PUBLIC_CLIENT_URL}/${route.auth}` }),
+  baseQuery: fetchBaseQuery({ baseUrl: `${ process.env.NEXT_PUBLIC_CLIENT_URL }/${ route.auth }` }),
   endpoints: (builder) => ({
     signUp: builder.mutation<SignUpResponse, SignUpData>({
       query: (body) => ({
-        url: `${route.signUp}`,
+        url: `${ route.signUp }`,
         method: 'POST',
         body,
       }),
     }),
-    requestResetCode: builder.mutation<void, { email: string }>({
+    requestResetCode: builder.mutation<void, { email: string; }>({
       query: (body) => ({
-        url: `${route.requestResetCode}`,
+        url: `${ route.requestResetCode }`,
         method: 'POST',
         body,
       }),
     }),
-    verifyResetCode: builder.mutation<void, { email: string; code: string }>({
+    verifyResetCode: builder.mutation<void, { email: string; code: string; }>({
       query: (body) => ({
-        url: `${route.verifyResetCode}`,
+        url: `${ route.verifyResetCode }`,
         method: 'POST',
         body,
       }),
     }),
-    resetPassword: builder.mutation<void, { email: string; password: string }>({
+    resetPassword: builder.mutation<void, { email: string; password: string; }>({
       query: (body) => ({
-        url: `${route.reset}`,
+        url: `${ route.reset }`,
         method: 'POST',
         body,
       }),
     }),
     signIn: builder.mutation<SignInResponse, SignInData>({
       query: (signInData) => ({
-        url: `${route.signIn}`,
+        url: `${ route.signIn }`,
         method: 'POST',
         body: signInData,
       }),
     }),
     accountCheck: builder.mutation<AccountCheckResponse, AccountCheckData>({
       query: (accountCheckData) => ({
-        url: `${route.accountCheck}`,
+        url: `${ route.accountCheck }`,
         method: 'POST',
         body: accountCheckData,
       }),

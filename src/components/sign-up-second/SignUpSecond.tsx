@@ -1,4 +1,4 @@
-import React, { memo, useEffect, useMemo } from 'react';
+import React, { memo, useEffect } from 'react';
 import { MuiTelInput } from 'mui-tel-input';
 import {
   Switch,
@@ -20,6 +20,7 @@ import { savePersonalDetails } from 'src/redux/slices/personalDetailsSlice';
 import { useAccountCheckMutation } from 'src/redux/api/authAPI';
 import { useLocales } from 'src/locales';
 import { useSignUpSecondSchema } from './validation';
+import { USER_MIN_AGE, DATE_LENGTH } from './constants';
 
 import { NextButton, StyledForm, StyledDatePicker, ErrorMessage, InputWrapper } from './styles';
 
@@ -32,8 +33,6 @@ function SignUpSecond({ role, onNext }: IProps): JSX.Element {
   const dispatch = useDispatch();
   const { translate } = useLocales();
   const signUpSecondSchema = useSignUpSecondSchema();
-  const dateLength = useMemo(() => 10, []);
-  const minAge = useMemo(() => 18, []);
   const [accountCheck, { isError: isCheckError, isSuccess: isCheckSuccess, error: checkError }] =
     useAccountCheckMutation();
 
@@ -53,7 +52,9 @@ function SignUpSecond({ role, onNext }: IProps): JSX.Element {
 
   const onSubmit: SubmitHandler<FormValues> = async (data): Promise<void> => {
     const { firstName, lastName, email, phoneNumber, dateOfBirth, isOpenToSeekerHomeLiving } = data;
-    const dateToString = dateOfBirth.toLocaleDateString().padStart(dateLength);
+    const dateToString = dateOfBirth.toLocaleDateString().padStart(DATE_LENGTH);
+    const maxBirthDate = subYears(new Date(), USER_MIN_AGE);
+
     dispatch(
       savePersonalDetails({
         firstName,
@@ -189,7 +190,7 @@ function SignUpSecond({ role, onNext }: IProps): JSX.Element {
                 onChange={(date): void => field.onChange(date)}
                 selected={field.value}
                 customInput={<FilledInput fullWidth error={!!errors.dateOfBirth} />}
-                maxDate={subYears(new Date(), minAge)}
+                maxDate={subYears(maxBirthDate)}
                 dateFormat="dd/MM/yyyy"
               />
             )}

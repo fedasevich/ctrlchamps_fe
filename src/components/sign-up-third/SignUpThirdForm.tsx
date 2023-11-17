@@ -9,7 +9,7 @@ import { useAppDispatch, useTypedSelector } from 'src/redux/store';
 import { InferType } from 'yup';
 import { useSignUpThirdCountrySelectOptions } from './select-options';
 
-import { AuthFormWrapper, ErrorMessage, NextButton, StyledForm } from './style';
+import { ErrorMessage, NextButton, StyledForm } from './style';
 import { useSignUpThirdSchema } from './validation';
 
 interface SignUpThirdFormProps {
@@ -44,7 +44,7 @@ export default function SignUpThirdForm({ onNext }: SignUpThirdFormProps): JSX.E
   });
 
   return (
-    <AuthFormWrapper>
+    <>
       <StyledForm onSubmit={onSubmit} data-testid="form">
         <FormControl variant="filled">
           <InputLabel htmlFor="country" data-testid="country-label">
@@ -139,11 +139,10 @@ export default function SignUpThirdForm({ onNext }: SignUpThirdFormProps): JSX.E
             </ErrorMessage>
           )}
         </FormControl>
-
-        <NextButton variant="contained" disabled={!isValid} type="submit" data-testid="next-button">
-          Next
-        </NextButton>
       </StyledForm>
-    </AuthFormWrapper>
+      <NextButton variant="contained" disabled={!isValid} type="submit" data-testid="next-button">
+        Next
+      </NextButton>
+    </>
   );
 }

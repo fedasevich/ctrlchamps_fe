@@ -9,7 +9,7 @@ import { useLocales } from 'src/locales';
 import { InferType } from 'yup';
 import { useSignUpThirdCountrySelectOptions } from './select-options';
 
-import { AuthFormWrapper, ErrorMessage, NextButton, StyledForm } from './style';
+import { ErrorMessage, NextButton, StyledForm } from './style';
 import { useSignUpThirdSchema } from './validation';
 
 interface SignUpThirdFormProps {
@@ -36,12 +36,12 @@ export default function SignUpThirdForm({ onNext }: SignUpThirdFormProps): JSX.E
   });
 
   const onSubmit = handleSubmit((data) => {
-    dispatch(saveAddressData(data))
-    onNext()
+    dispatch(saveAddressData(data));
+    onNext();
   });
 
   return (
-    <AuthFormWrapper>
+    <>
       <StyledForm onSubmit={onSubmit}>
         <FormControl variant="filled">
           <InputLabel htmlFor="country">
@@ -93,11 +93,10 @@ export default function SignUpThirdForm({ onNext }: SignUpThirdFormProps): JSX.E
             <ErrorMessage variant="caption">{errors.address?.message}</ErrorMessage>
           )}
         </FormControl>
-
-        <NextButton variant="contained" disabled={!isValid} type="submit">
-          Next
-        </NextButton>
       </StyledForm>
-    </AuthFormWrapper>
+      <NextButton variant="contained" disabled={!isValid} type="submit">
+        Next
+      </NextButton>
+    </>
   );
 }

@@ -8,15 +8,18 @@ import {
   Input,
   FilledInput,
 } from '@mui/material';
+
 import { InferType } from 'yup';
 import { useDispatch } from 'react-redux';
 import { useForm, Controller, SubmitHandler } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import 'react-datepicker/dist/react-datepicker.css';
+
 import { savePersonalDetails } from 'src/redux/slices/personalDetailsSlice';
-import { useLocales } from 'src/locales';
 import { useAccountCheckMutation } from 'src/redux/api/authAPI';
+import { useLocales } from 'src/locales';
 import { useSignUpSecondSchema } from './validation';
+
 import {
   NextButton,
   StyledForm,
@@ -33,11 +36,11 @@ interface IProps {
 
 function SignUpSecond({ role, onNext }: IProps): JSX.Element {
   const dispatch = useDispatch();
-  const [accountCheck, { isError: isCheckError, isSuccess: isCheckSuccess, error: checkError }] =
-    useAccountCheckMutation();
   const { translate } = useLocales();
   const signUpSecondSchema = useSignUpSecondSchema();
   const dateLength = 10;
+  const [accountCheck, { isError: isCheckError, isSuccess: isCheckSuccess, error: checkError }] =
+    useAccountCheckMutation();
 
   type FormValues = InferType<typeof signUpSecondSchema>;
 
@@ -159,7 +162,7 @@ function SignUpSecond({ role, onNext }: IProps): JSX.Element {
                       field.onChange('');
                       setError('phoneNumber', {
                         type: 'manual',
-                        message: 'Phone can`t starts with 0',
+                        message: `${translate('signUpSecondForm.phoneInvalid')}`,
                       });
                     } else {
                       clearErrors('phoneNumber');
@@ -195,6 +198,7 @@ function SignUpSecond({ role, onNext }: IProps): JSX.Element {
                   selected={field.value}
                   customInput={<FilledInput fullWidth error={!!errors.dateOfBirth} />}
                   maxDate={new Date()}
+                  dateFormat="dd/MM/yyyy"
                 />
               )}
             />

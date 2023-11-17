@@ -8,7 +8,7 @@ import { persistStore, persistReducer } from 'redux-persist';
 import rootReducer, { rootPersistConfig } from './rootReducer';
 import authReducer from 'src/redux/authReducer';
 import { personalDetailsReducer } from './slices/personalDetailsSlice';
-import authApi from 'src/redux/api/authApi';
+import authApi from 'src/redux/api/authAPI';
 
 // ----------------------------------------------------------------------
 

@@ -21,14 +21,7 @@ import { useAccountCheckMutation } from 'src/redux/api/authAPI';
 import { useLocales } from 'src/locales';
 import { useSignUpSecondSchema } from './validation';
 
-import {
-  NextButton,
-  StyledForm,
-  StyledDatePicker,
-  ErrorMessage,
-  Wrapper,
-  InputWrapper,
-} from './styles';
+import { NextButton, StyledForm, StyledDatePicker, ErrorMessage, InputWrapper } from './styles';
 
 interface IProps {
   role: 'caregiver' | 'seeker';
@@ -107,123 +100,119 @@ function SignUpSecond({ role, onNext }: IProps): JSX.Element {
   }, [isCheckError, checkError]);
 
   return (
-    <Wrapper>
-      <StyledForm onSubmit={handleSubmit(onSubmit)}>
-        <InputWrapper>
-          <FormControl sx={{ width: '100%' }} variant="filled">
-            <InputLabel htmlFor="firstName">
-              {translate('signUpSecondForm.placeholderFirstName')}
-            </InputLabel>
-            <FilledInput
-              {...register('firstName')}
-              id="firstName"
-              error={!!errors.firstName}
-              type="text"
-            />
-          </FormControl>
-          {errors?.firstName && (
-            <ErrorMessage variant="caption">{errors.firstName?.message}</ErrorMessage>
-          )}
-        </InputWrapper>
-        <InputWrapper>
-          <FormControl sx={{ width: '100%' }} variant="filled">
-            <InputLabel htmlFor="lastName">
-              {translate('signUpSecondForm.placeholderLastName')}
-            </InputLabel>
-            <FilledInput
-              {...register('lastName')}
-              id="lastName"
-              error={!!errors.lastName}
-              type="text"
-            />
-          </FormControl>
-          {errors?.lastName && (
-            <ErrorMessage variant="caption">{errors.lastName?.message}</ErrorMessage>
-          )}
-        </InputWrapper>
-        <InputWrapper>
-          <FormControl sx={{ width: '100%' }} variant="filled">
-            <InputLabel htmlFor="email">
-              {translate('signUpSecondForm.placeholderEmail')}
-            </InputLabel>
-            <FilledInput {...register('email')} id="email" error={!!errors.email} type="email" />
-          </FormControl>
-          {errors?.email && <ErrorMessage variant="caption">{errors.email?.message}</ErrorMessage>}
-        </InputWrapper>
-        <InputWrapper>
-          <FormControl sx={{ width: '100%' }} variant="filled">
-            <Controller
-              name="phoneNumber"
-              control={control}
-              render={({ field, fieldState }): JSX.Element => (
-                <MuiTelInput
-                  {...field}
-                  onChange={(value: string): void => {
-                    field.onChange(value);
-                    if (value.slice(2, 3) === '0') {
-                      field.onChange('');
-                      setError('phoneNumber', {
-                        type: 'manual',
-                        message: `${translate('signUpSecondForm.phoneInvalid')}`,
-                      });
-                    } else {
-                      clearErrors('phoneNumber');
-                    }
-                  }}
-                  variant="filled"
-                  defaultCountry="US"
-                  focusOnSelectCountry
-                  disableFormatting
-                  forceCallingCode
-                  onlyCountries={['US', 'CA']}
-                  error={fieldState.invalid}
-                  inputRef={Input}
-                  label={translate('signUpSecondForm.placeholderPhone')}
-                />
-              )}
-            />
-          </FormControl>
-          {errors?.phoneNumber && (
-            <ErrorMessage variant="caption">{errors.phoneNumber?.message}</ErrorMessage>
-          )}
-        </InputWrapper>
-
-        <InputWrapper>
-          <FormControl sx={{ width: '100%', height: 48 }} variant="filled">
-            <Controller
-              control={control}
-              name="dateOfBirth"
-              render={({ field }): JSX.Element => (
-                <StyledDatePicker
-                  placeholderText={translate('signUpSecondForm.placeholderBirthDate')}
-                  onChange={(date): void => field.onChange(date)}
-                  selected={field.value}
-                  customInput={<FilledInput fullWidth error={!!errors.dateOfBirth} />}
-                  maxDate={subYears(new Date(), minAge)}
-                  dateFormat="dd/MM/yyyy"
-                />
-              )}
-            />
-          </FormControl>
-          {errors?.dateOfBirth && (
-            <ErrorMessage variant="caption">{errors.dateOfBirth?.message}</ErrorMessage>
-          )}
-        </InputWrapper>
-
-        {role === 'caregiver' && (
-          <FormControlLabel
-            control={
-              <Switch {...register('isOpenToSeekerHomeLiving')} id="isOpenToSeekerHomeLiving" />
-            }
-            label={translate('signUpSecondForm.placeholderIsOpen')}
+    <StyledForm onSubmit={handleSubmit(onSubmit)}>
+      <InputWrapper>
+        <FormControl sx={{ width: '100%' }} variant="filled">
+          <InputLabel htmlFor="firstName">
+            {translate('signUpSecondForm.placeholderFirstName')}
+          </InputLabel>
+          <FilledInput
+            {...register('firstName')}
+            id="firstName"
+            error={!!errors.firstName}
+            type="text"
           />
+        </FormControl>
+        {errors?.firstName && (
+          <ErrorMessage variant="caption">{errors.firstName?.message}</ErrorMessage>
         )}
+      </InputWrapper>
+      <InputWrapper>
+        <FormControl sx={{ width: '100%' }} variant="filled">
+          <InputLabel htmlFor="lastName">
+            {translate('signUpSecondForm.placeholderLastName')}
+          </InputLabel>
+          <FilledInput
+            {...register('lastName')}
+            id="lastName"
+            error={!!errors.lastName}
+            type="text"
+          />
+        </FormControl>
+        {errors?.lastName && (
+          <ErrorMessage variant="caption">{errors.lastName?.message}</ErrorMessage>
+        )}
+      </InputWrapper>
+      <InputWrapper>
+        <FormControl sx={{ width: '100%' }} variant="filled">
+          <InputLabel htmlFor="email">{translate('signUpSecondForm.placeholderEmail')}</InputLabel>
+          <FilledInput {...register('email')} id="email" error={!!errors.email} type="email" />
+        </FormControl>
+        {errors?.email && <ErrorMessage variant="caption">{errors.email?.message}</ErrorMessage>}
+      </InputWrapper>
+      <InputWrapper>
+        <FormControl sx={{ width: '100%' }} variant="filled">
+          <Controller
+            name="phoneNumber"
+            control={control}
+            render={({ field, fieldState }): JSX.Element => (
+              <MuiTelInput
+                {...field}
+                onChange={(value: string): void => {
+                  field.onChange(value);
+                  if (value.slice(2, 3) === '0') {
+                    field.onChange('');
+                    setError('phoneNumber', {
+                      type: 'manual',
+                      message: `${translate('signUpSecondForm.phoneInvalid')}`,
+                    });
+                  } else {
+                    clearErrors('phoneNumber');
+                  }
+                }}
+                variant="filled"
+                defaultCountry="US"
+                focusOnSelectCountry
+                disableFormatting
+                forceCallingCode
+                onlyCountries={['US', 'CA']}
+                error={fieldState.invalid}
+                inputRef={Input}
+                label={translate('signUpSecondForm.placeholderPhone')}
+              />
+            )}
+          />
+        </FormControl>
+        {errors?.phoneNumber && (
+          <ErrorMessage variant="caption">{errors.phoneNumber?.message}</ErrorMessage>
+        )}
+      </InputWrapper>
 
-        <NextButton variant="contained" type="submit" disabled={!isValid}>
-          Next
-        </NextButton>
-      </StyledForm>
-    </Wrapper>
+      <InputWrapper>
+        <FormControl sx={{ width: '100%', height: 48 }} variant="filled">
+          <Controller
+            control={control}
+            name="dateOfBirth"
+            render={({ field }): JSX.Element => (
+              <StyledDatePicker
+                placeholderText={translate('signUpSecondForm.placeholderBirthDate')}
+                onChange={(date): void => field.onChange(date)}
+                selected={field.value}
+                customInput={<FilledInput fullWidth error={!!errors.dateOfBirth} />}
+                maxDate={subYears(new Date(), minAge)}
+                dateFormat="dd/MM/yyyy"
+              />
+            )}
+          />
+        </FormControl>
+        {errors?.dateOfBirth && (
+          <ErrorMessage variant="caption">{errors.dateOfBirth?.message}</ErrorMessage>
+        )}
+      </InputWrapper>
+
+      {role === 'caregiver' && (
+        <FormControlLabel
+          control={
+            <Switch {...register('isOpenToSeekerHomeLiving')} id="isOpenToSeekerHomeLiving" />
+          }
+          label={translate('signUpSecondForm.placeholderIsOpen')}
+        />
+      )}
+
+      <NextButton variant="contained" type="submit" disabled={!isValid}>
+        Next
+      </NextButton>
+    </StyledForm>
   );
 }
 

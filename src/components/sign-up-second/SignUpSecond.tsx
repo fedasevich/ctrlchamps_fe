@@ -22,7 +22,7 @@ import { useAccountCheckMutation } from 'src/redux/api/authAPI';
 import { savePersonalDetails } from 'src/redux/slices/personalDetailsSlice';
 import { useSignUpSecondSchema } from './validation';
 
-import { USER_DATE_BIRTH_FORMAT, getMinBirthDate } from './constants';
+import { USER_DATE_BIRTH_FORMAT, EMAIL_ERROR, PHONE_ERROR, getMinBirthDate } from './constants';
 import { ErrorMessage, InputWrapper, NextButton, StyledDatePicker, StyledForm } from './styles';
 
 interface IProps {
@@ -82,8 +82,8 @@ function SignUpSecond({ role, onNext }: IProps): JSX.Element {
         })
         .catch((error: FetchBaseQueryError) => {
           const errorMessage = (error.data as { message?: string })?.message;
-          const isEmailError = errorMessage?.includes('email');
-          const isPhoneError = errorMessage?.includes('phone');
+          const isEmailError = errorMessage?.includes(EMAIL_ERROR);
+          const isPhoneError = errorMessage?.includes(PHONE_ERROR);
 
           if (isEmailError) {
             setError('email', {
@@ -192,7 +192,7 @@ function SignUpSecond({ role, onNext }: IProps): JSX.Element {
             render={({ field }): JSX.Element => (
               <StyledDatePicker
                 placeholderText={translate('signUpSecondForm.placeholderBirthDate')}
-                onChange={(date): void => field.onChange(date)}
+                onChange={(date: Date): void => field.onChange(date)}
                 selected={field.value}
                 customInput={<FilledInput fullWidth error={!!errors.dateOfBirth} />}
                 maxDate={minBirthDate}

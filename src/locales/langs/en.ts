@@ -11,6 +11,7 @@ const en = {
     emailInvalid: 'Please enter valid email',
     emailRequired: 'Email is required',
     phoneLengthInvalid: 'Phone length must be 10 numbers',
+    phoneInvalid: 'Phone can`t starts with 0',
     phoneRequired: 'Phone is required',
     birthDateRequired: 'Birth date is required',
     placeholderFirstName: 'First Name',

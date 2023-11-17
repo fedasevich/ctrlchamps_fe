@@ -105,7 +105,7 @@ const en = {
     btn_submit: 'Submit',
     successfully_verified: "Successfully Verified",
     successfully_caregiver: "Now you can pass background check and set up your profile and start exploring care seekers in your area",
-    successfully_caregiver_btn: "Set up Profile",
+    successfully_caregiver_btn: "Profile Profile",
     successfully_seeker: "Now you can sign in your account and start seeking care givers in your area",
     successfully_seeker_btn: "Sign In",
   },

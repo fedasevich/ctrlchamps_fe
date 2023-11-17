@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
+import { useRouter } from 'next/router';
 
 import { RootState } from 'src/redux/store';
 import { useSignUpMutation } from 'src/redux/api/authAPI';
@@ -12,9 +13,9 @@ import SignUpFourthForm from 'src/components/sign-up-fourth';
 import SignUpHeader from 'src/components/reusable/header';
 import SignUpFooter from 'src/components/reusable/footer';
 
-
 function SignUp():JSX.Element {
     const { t } = useTranslation();
+    const router = useRouter();
 
   const [step, setStep] = useState<number>(1);
   const role = useSelector((state: RootState) => state.role.role);
@@ -24,16 +25,19 @@ function SignUp():JSX.Element {
   const [signUp] = useSignUpMutation();
 
     const userInfo = {
-      "role": role,
-      "password": "",
+      "role": capitalizeFirstLetter(role),
       ...personalDetails,
       ...addressData
     }
     
+    function capitalizeFirstLetter(string:string) {
+      return string.charAt(0).toUpperCase() + string.slice(1);
+  }
 
-    const handleSignUp = async (): Promise<void> => {
+    const handleSignUp = async (password: string): Promise<void> => {
       try {
-        await signUp( userInfo );
+        await signUp( {...userInfo, password} )
+        router.push('/account-verification');
       } catch (error) {
         throw new Error(error);
       }
@@ -48,9 +52,9 @@ function SignUp():JSX.Element {
     <>
       <SignUpHeader text={t('SignUp')} />
       {step === 1 && <SignUpFirstForm onNext={handleNextStep} />}
-      {/* {step === 2 && <SignUpSecond role={(role as 'seeker' || 'caregiver')} onNext={handleNextStep}/>} */}
-      {step === 2 && <SignUpThirdForm onNext={handleNextStep} />}
-      {step === 3 &&  <SignUpFourthForm onNext={handleSignUp}/>}
+      {step === 2 && <SignUpSecond role={(role as 'seeker' || 'caregiver')} onNext={handleNextStep}/>}
+      {step === 3 && <SignUpThirdForm onNext={handleNextStep} />}
+      {step === 4 &&  <SignUpFourthForm onNext={handleSignUp}/>}
       <SignUpFooter/>
     </>
   );

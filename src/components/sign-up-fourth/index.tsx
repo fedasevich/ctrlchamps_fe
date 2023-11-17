@@ -10,7 +10,7 @@ import { AuthFormWrapper, ErrorMessage, NextButton, StyledForm } from './style';
 import { useSignUpFourthSchema } from './validation';
 
 interface SignUpFourthFormProps {
-  onNext: () => void;
+  onNext: (password: string) => void;
 }
 
 export default function SignUpFourthForm({ onNext }: SignUpFourthFormProps): JSX.Element {
@@ -33,7 +33,7 @@ export default function SignUpFourthForm({ onNext }: SignUpFourthFormProps): JSX
     mode: 'onBlur',
   });
 
-  const onSubmit = handleSubmit((data) => onNext());
+  const onSubmit = handleSubmit((data) => onNext(data.password));
 
   return (
     <AuthFormWrapper>

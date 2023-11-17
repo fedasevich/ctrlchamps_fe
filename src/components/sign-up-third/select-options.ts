@@ -1,6 +1,6 @@
 import { useLocales } from 'src/locales';
 
-export type SelectCountries = 'CA' | 'US';
+export type SelectCountries = 'Canada' | 'USA';
 
 type SelectOptions = {
   value: SelectCountries;
@@ -17,11 +17,11 @@ export const useSignUpThirdCountrySelectOptions = (): Countries => {
   const countries: SelectOptions[] = [
     {
       label: translate('countries.canada'),
-      value: 'CA',
+      value: 'Canada',
     },
     {
       label: translate('countries.unitedStates'),
-      value: 'US',
+      value: 'USA',
     },
   ];
 

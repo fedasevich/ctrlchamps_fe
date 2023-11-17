@@ -8,17 +8,17 @@ import { useSignUpMutation } from 'src/redux/api/authAPI';
 
 import SignUpFirstForm from 'src/components/sign-up-first/SignUpFirst';
 import SignUpSecond from 'src/components/sign-up-second/SignUpSecond';
-import SignUpThirdForm from 'src/components/sign-up-third';
-import SignUpFourthForm from 'src/components/sign-up-fourth';
+import SignUpThirdForm from 'src/components/sign-up-third/SignUpThirdForm';
+import SignUpFourthForm from 'src/components/sign-up-fourth/SignUpFourthForm';
 import SignUpHeader from 'src/components/reusable/header';
 import SignUpFooter from 'src/components/reusable/footer';
 import SignUpWrapper from 'src/components/reusable/sign-up-wrapper/SignUpWrapper';
 
+const FIRST_STEP = 1;
+
 function SignUp(): JSX.Element {
   const { t } = useTranslation();
   const router = useRouter();
-
-  const FIRST_STEP = 1;
 
   const [step, setStep] = useState<number>(FIRST_STEP);
   const role = useSelector((state: RootState) => state.role.role);

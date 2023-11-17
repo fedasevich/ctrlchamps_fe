@@ -139,10 +139,11 @@ export default function SignUpThirdForm({ onNext }: SignUpThirdFormProps): JSX.E
             </ErrorMessage>
           )}
         </FormControl>
-      </StyledForm>
-      <NextButton variant="contained" disabled={!isValid} type="submit" data-testid="next-button">
+              <NextButton variant="contained" disabled={!isValid} type="submit" data-testid="next-button">
         Next
       </NextButton>
+      </StyledForm>
+
     </>
   );
 }

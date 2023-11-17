@@ -1,27 +1,50 @@
-import { useState, useCallback, useEffect, useMemo } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { useRequestNewVerificationCodeMutation, useSubmitVerificationCodeMutation } from 'src/redux/api/accountVerificationAPI';
-import jwt from 'jsonwebtoken';
+import jwt_decode from 'jwt-decode';
 
-const useVerification = (onSubmit: () => void) => {
+const successCode = 204;
+
+interface UseVerificationProps {
+    onSubmit: () => void;
+}
+
+interface UseVerificationResult {
+    code: string[];
+    codeDoesNotMatch: boolean;
+    userId: string;
+    handleInputChange: (index: number) => (value: string) => void;
+    handleSubmit: () => Promise<void>;
+    fetchNewCode: () => Promise<void>;
+}
+
+const useVerification = ({ onSubmit }: UseVerificationProps) => {
     const [ submitCode ] = useSubmitVerificationCodeMutation();
     const [ requestNewCode ] = useRequestNewVerificationCodeMutation();
 
     const [ code, setCode ] = useState<string[]>([ '', '', '', '' ]);
     const [ codeDoesNotMatch, setCodeDoesNotMatch ] = useState<boolean>(false);
-
     const [ userId, setUserId ] = useState<string>('');
 
     const fetchNewCode = useCallback(async () => {
         try {
-            await requestNewCode({ userId }).unwrap();
+            const token = localStorage.getItem('token');
+            if (token) {
+                const decoded: { id: string; } = jwt_decode(token);
+                setUserId(decoded.id);
+                const response = await requestNewCode({ userId }).unwrap();
+                console.log(response);
+            }
         } catch (error) {
-            // throw new Error(error);
+            // Обработка ошибок
         }
-    }, [ requestNewCode, userId ]);
+    }, [ requestNewCode ]);
 
     useEffect(() => {
         const token = localStorage.getItem('token');
-        console.log(token);
+        if (token) {
+            const decoded: { id: string; } = jwt_decode(token);
+            setUserId(decoded.id);
+        }
     }, []);
 
     useEffect(() => {
@@ -45,13 +68,14 @@ const useVerification = (onSubmit: () => void) => {
         } catch (error) {
             setCodeDoesNotMatch(true);
             setCode([ '', '', '', '' ]);
-            // throw new Error(error);
+            // Обработка ошибок
         }
     }, [ code, submitCode, userId, onSubmit ]);
 
     return {
         code,
         codeDoesNotMatch,
+        userId,
         handleInputChange,
         handleSubmit,
         fetchNewCode,

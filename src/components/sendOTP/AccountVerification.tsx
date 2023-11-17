@@ -14,7 +14,7 @@ interface OTPMessageFieldProps {
 
 const OTPMessageField: React.FC<OTPMessageFieldProps> = ({ onSubmit }): JSX.Element => {
   const { t } = useTranslation();
-  const { code, codeDoesNotMatch, handleInputChange, handleSubmit, fetchNewCode } = useVerification(onSubmit);
+  const { code, codeDoesNotMatch, handleInputChange, handleSubmit, fetchNewCode } = useVerification({onSubmit});
 
   return (
     <Container component="main" maxWidth="sm">

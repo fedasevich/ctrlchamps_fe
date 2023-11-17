@@ -17,7 +17,7 @@ export const accountVerificationApi = createApi({
             query: ({ userId, code }) => ({
                 url: `/auth/verify-account/${ userId }`,
                 method: 'POST',
-                body: { code },
+                body: { "code": code },
             }),
         }),
         requestNewVerificationCode: builder.mutation<ResponseData, { userId: string; }>({

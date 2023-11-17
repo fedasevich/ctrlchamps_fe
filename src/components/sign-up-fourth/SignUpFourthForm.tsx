@@ -84,10 +84,10 @@ export default function SignUpFourthForm({ onNext }: SignUpFourthFormProps): JSX
             <ErrorMessage variant="caption">{errors.confirmPassword?.message}</ErrorMessage>
           )}
         </FormControl>
-      </StyledForm>
-      <NextButton variant="contained" disabled={!isValid} type="submit">
+        <NextButton variant="contained" disabled={!isValid} type="submit">
         Next
       </NextButton>
+      </StyledForm>
     </>
   );
 }

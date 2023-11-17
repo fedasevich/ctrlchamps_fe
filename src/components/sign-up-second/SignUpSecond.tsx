@@ -10,7 +10,6 @@ import {
 } from '@mui/material';
 
 import { InferType } from 'yup';
-import { useDispatch } from 'react-redux';
 import { useForm, Controller, SubmitHandler } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { subYears } from 'date-fns';
@@ -18,6 +17,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 
 import { savePersonalDetails } from 'src/redux/slices/personalDetailsSlice';
 import { useAccountCheckMutation } from 'src/redux/api/authAPI';
+import { useAppDispatch, useTypedSelector } from 'src/redux/store';
 import { useLocales } from 'src/locales';
 import { useSignUpSecondSchema } from './validation';
 
@@ -29,13 +29,17 @@ interface IProps {
 }
 
 function SignUpSecond({ role, onNext }: IProps): JSX.Element {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const { translate } = useLocales();
   const signUpSecondSchema = useSignUpSecondSchema();
   const dateLength = useMemo(() => 10, []);
   const minAge = useMemo(() => 18, []);
+  const maxBirthDate = subYears(new Date(), minAge);
   const [accountCheck, { isError: isCheckError, isSuccess: isCheckSuccess, error: checkError }] =
     useAccountCheckMutation();
+  const initialDetailsValues = useTypedSelector((state) => state.personalDetails.personalDetails);
+  const initialDateOfBirth = initialDetailsValues.dateOfBirth || maxBirthDate;
+  // console.log(new Date(initialDetailsValues.dateOfBirth))
 
   type FormValues = InferType<typeof signUpSecondSchema>;
 
@@ -49,6 +53,9 @@ function SignUpSecond({ role, onNext }: IProps): JSX.Element {
   } = useForm<FormValues>({
     resolver: yupResolver(signUpSecondSchema),
     mode: 'onBlur',
+    // defaultValues: {...initialDetailsValues, dateOfBirth: initialDateOfBirth}
+    defaultValues: {initialDetailsValues}
+
   });
 
   const onSubmit: SubmitHandler<FormValues> = async (data): Promise<void> => {
@@ -190,7 +197,7 @@ function SignUpSecond({ role, onNext }: IProps): JSX.Element {
                 <StyledDatePicker
                   placeholderText={translate('signUpSecondForm.placeholderBirthDate')}
                   onChange={(date): void => field.onChange(date)}
-                  selected={field.value}
+                  selected={field.value || null}
                   customInput={<FilledInput fullWidth error={!!errors.dateOfBirth} />}
                   maxDate={subYears(new Date(), minAge)}
                   dateFormat="dd/MM/yyyy"

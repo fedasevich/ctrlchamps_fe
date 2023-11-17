@@ -5,8 +5,13 @@ import NeedHelpIcon from 'src/assets/icons/NeedHelpIcon';
 import NeedHelpModal from 'src/components/modal-need-help/NeedHelpModal';
 import { Container, Header, Text, Link, InfoButton } from './styles';
 
-export default function SignUpHeader({ text }: { text: string }): JSX.Element {
-  const { back } = useRouter();
+export default function SignUpHeader({
+  text,
+  callback,
+}: {
+  text: string;
+  callback: () => void;
+}): JSX.Element {
   const [showModal, setShowModal] = useState<boolean>(false);
 
   const handleClick = (): void => {
@@ -21,7 +26,7 @@ export default function SignUpHeader({ text }: { text: string }): JSX.Element {
     <>
       <Header>
         <Container>
-          <Link type="button" onClick={back}>
+          <Link type="button" onClick={callback}>
             <ArrowBackFilled />
           </Link>
           <Text>{text}</Text>

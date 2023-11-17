@@ -21,14 +21,7 @@ import { useAccountCheckMutation } from 'src/redux/api/authAPI';
 import { useLocales } from 'src/locales';
 import { useSignUpSecondSchema } from './validation';
 
-import {
-  NextButton,
-  StyledForm,
-  StyledDatePicker,
-  ErrorMessage,
-  Wrapper,
-  InputWrapper,
-} from './styles';
+import { NextButton, StyledForm, StyledDatePicker, ErrorMessage, InputWrapper } from './styles';
 
 interface IProps {
   role: 'caregiver' | 'seeker';
@@ -107,7 +100,7 @@ function SignUpSecond({ role, onNext }: IProps): JSX.Element {
   }, [isCheckError, checkError]);
 
   return (
-    <Wrapper>
+    <>
       <StyledForm onSubmit={handleSubmit(onSubmit)}>
         <InputWrapper>
           <FormControl sx={{ width: '100%' }} variant="filled">
@@ -223,7 +216,7 @@ function SignUpSecond({ role, onNext }: IProps): JSX.Element {
           Next
         </NextButton>
       </StyledForm>
-    </Wrapper>
+    </>
   );
 }
 

@@ -6,7 +6,7 @@ import Visibility from 'src/assets/icons/Visibility';
 import VisibilityOff from 'src/assets/icons/VisibilityOff';
 import { useLocales } from 'src/locales';
 import { InferType } from 'yup';
-import { AuthFormWrapper, ErrorMessage, NextButton, StyledForm } from './style';
+import { ErrorMessage, NextButton, StyledForm } from './style';
 import { useSignUpFourthSchema } from './validation';
 
 interface SignUpFourthFormProps {
@@ -36,7 +36,7 @@ export default function SignUpFourthForm({ onNext }: SignUpFourthFormProps): JSX
   const onSubmit = handleSubmit((data) => onNext(data.password));
 
   return (
-    <AuthFormWrapper>
+    <>
       <StyledForm onSubmit={onSubmit}>
         <FormControl sx={{ width: '100%' }} variant="filled">
           <InputLabel htmlFor="password">
@@ -84,11 +84,10 @@ export default function SignUpFourthForm({ onNext }: SignUpFourthFormProps): JSX
             <ErrorMessage variant="caption">{errors.confirmPassword?.message}</ErrorMessage>
           )}
         </FormControl>
-
-        <NextButton variant="contained" disabled={!isValid} type="submit">
-          Next
-        </NextButton>
       </StyledForm>
-    </AuthFormWrapper>
+      <NextButton variant="contained" disabled={!isValid} type="submit">
+        Next
+      </NextButton>
+    </>
   );
 }

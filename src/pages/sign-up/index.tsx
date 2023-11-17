@@ -12,6 +12,7 @@ import SignUpThirdForm from 'src/components/sign-up-third';
 import SignUpFourthForm from 'src/components/sign-up-fourth';
 import SignUpHeader from 'src/components/reusable/header';
 import SignUpFooter from 'src/components/reusable/footer';
+import SignUpWrapper from 'src/components/reusable/sign-up-wrapper/SignUpWrapper';
 
 function SignUp(): JSX.Element {
   const { t } = useTranslation();
@@ -26,7 +27,6 @@ function SignUp(): JSX.Element {
 
   const [signUp] = useSignUpMutation();
 
-  
   const userInfo = {
     role: capitalizeFirstLetter(role),
     ...personalDetails,
@@ -59,13 +59,17 @@ function SignUp(): JSX.Element {
   return (
     <>
       <SignUpHeader text={t('SignUp')} callback={handleBackStep} />
-      {step === 1 && <SignUpFirstForm onNext={handleNextStep} />}
-      {step === 2 && (
-        <SignUpSecond role={(role as 'seeker') || 'caregiver'} onNext={handleNextStep} />
-      )}
-      {step === 3 && <SignUpThirdForm onNext={handleNextStep} />}
-      {step === 4 && <SignUpFourthForm onNext={handleSignUp} />}
-      <SignUpFooter />
+      <SignUpWrapper>
+        <>
+          {step === 1 && <SignUpFirstForm onNext={handleNextStep} />}
+          {step === 2 && (
+            <SignUpSecond role={(role as 'seeker') || 'caregiver'} onNext={handleNextStep} />
+          )}
+          {step === 3 && <SignUpThirdForm onNext={handleNextStep} />}
+          {step === 4 && <SignUpFourthForm onNext={handleSignUp} />}
+          <SignUpFooter />
+        </>
+      </SignUpWrapper>
     </>
   );
 }

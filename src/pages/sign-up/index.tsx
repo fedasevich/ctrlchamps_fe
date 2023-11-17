@@ -17,13 +17,16 @@ function SignUp(): JSX.Element {
   const { t } = useTranslation();
   const router = useRouter();
 
-  const [step, setStep] = useState<number>(1);
+  const FIRST_STEP = 1;
+
+  const [step, setStep] = useState<number>(FIRST_STEP);
   const role = useSelector((state: RootState) => state.role.role);
   const addressData = useSelector((state: RootState) => state.address.addressData);
   const personalDetails = useSelector((state: RootState) => state.personalDetails.personalDetails);
 
   const [signUp] = useSignUpMutation();
 
+  
   const userInfo = {
     role: capitalizeFirstLetter(role),
     ...personalDetails,

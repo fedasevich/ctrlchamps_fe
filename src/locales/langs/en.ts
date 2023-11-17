@@ -4,13 +4,15 @@ const en = {
   example: 'text for demo purposes',
   signUpFirstForm: {
     seeker: {
-      title: "Seeker",
-      description: "Find the perfect caregiver for you and your loved one to get reliable and personalised care"
+      title: 'Seeker',
+      description:
+        'Find the perfect caregiver for you and your loved one to get reliable and personalised care',
     },
     caregiver: {
-      title: "Caregiver",
-      description: "Connect with clients seeking your expertise and provide compassionate care for those in need"
-    }
+      title: 'Caregiver',
+      description:
+        'Connect with clients seeking your expertise and provide compassionate care for those in need',
+    },
   },
   signUpSecondForm: {
     firstNameInvalid: 'First name maximum length is 100',
@@ -19,9 +21,11 @@ const en = {
     lastNameRequired: 'Last name is required',
     emailLengthInvalid: 'Email maximum length is 100',
     emailInvalid: 'Please enter valid email',
+    emailExist: 'User with this email already exists',
     emailRequired: 'Email is required',
     phoneLengthInvalid: 'Phone length must be 10 numbers',
     phoneInvalid: 'Phone can`t starts with 0',
+    phoneExist: 'User with this phone number already exists',
     phoneRequired: 'Phone is required',
     birthDateRequired: 'Birth date is required',
     placeholderFirstName: 'First Name',
@@ -103,11 +107,13 @@ const en = {
     sent_code: 'We have sent and OTP verification code to your email, please enter it here',
     request_code: 'Request new code',
     btn_submit: 'Submit',
-    successfully_verified: "Successfully Verified",
-    successfully_caregiver: "Now you can pass background check and set up your profile and start exploring care seekers in your area",
-    successfully_caregiver_btn: "Profile Profile",
-    successfully_seeker: "Now you can sign in your account and start seeking care givers in your area",
-    successfully_seeker_btn: "Sign In",
+    successfully_verified: 'Successfully Verified',
+    successfully_caregiver:
+      'Now you can pass background check and set up your profile and start exploring care seekers in your area',
+    successfully_caregiver_btn: 'Set up Profile',
+    successfully_seeker:
+      'Now you can sign in your account and start seeking care givers in your area',
+    successfully_seeker_btn: 'Sign In',
   },
   reset_password: {
     title: 'Reset Password',

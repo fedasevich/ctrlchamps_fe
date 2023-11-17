@@ -1,85 +1,92 @@
-import { useState, useCallback, useEffect } from 'react';
-import { useRequestNewVerificationCodeMutation, useSubmitVerificationCodeMutation } from 'src/redux/api/accountVerificationAPI';
 import jwt_decode from 'jwt-decode';
+import { useCallback, useEffect, useState } from 'react';
+import {
+  useRequestNewVerificationCodeMutation,
+  useSubmitVerificationCodeMutation,
+} from 'src/redux/api/accountVerificationAPI';
 
 const successCode = 204;
 
 interface UseVerificationProps {
-    onSubmit: () => void;
+  onSubmit: () => void;
 }
 
 interface UseVerificationResult {
-    code: string[];
-    codeDoesNotMatch: boolean;
-    userId: string;
-    handleInputChange: (index: number) => (value: string) => void;
-    handleSubmit: () => Promise<void>;
-    fetchNewCode: () => Promise<void>;
+  code: string[];
+  codeDoesNotMatch: boolean;
+  userId: string;
+  handleInputChange: (index: number) => (value: string) => void;
+  handleSubmit: () => Promise<void>;
+  fetchNewCode: () => Promise<void>;
 }
 
 const useVerification = ({ onSubmit }: UseVerificationProps) => {
-    const [ submitCode ] = useSubmitVerificationCodeMutation();
-    const [ requestNewCode ] = useRequestNewVerificationCodeMutation();
+  const [submitCode] = useSubmitVerificationCodeMutation();
+  const [requestNewCode] = useRequestNewVerificationCodeMutation();
 
-    const [ code, setCode ] = useState<string[]>([ '', '', '', '' ]);
-    const [ codeDoesNotMatch, setCodeDoesNotMatch ] = useState<boolean>(false);
-    const [ userId, setUserId ] = useState<string>('');
+  const [code, setCode] = useState<string[]>(['', '', '', '']);
+  const [codeDoesNotMatch, setCodeDoesNotMatch] = useState<boolean>(false);
+  const [userId, setUserId] = useState<string>('');
 
-    const fetchNewCode = useCallback(async () => {
-        try {
-            const token = localStorage.getItem('token');
-            if (token) {
-                const decoded: { id: string; } = jwt_decode(token);
-                setUserId(decoded.id);
-                const response = await requestNewCode({ userId }).unwrap();
-                console.log(response);
-            }
-        } catch (error) {
-            // Обработка ошибок
-        }
-    }, [ requestNewCode ]);
+  const fetchNewCode = useCallback(async () => {
+    try {
+      const token = localStorage.getItem('token');
+      if (token) {
+        const decoded: { id: string } = jwt_decode(token);
+        setUserId(decoded.id);
+        const response = await requestNewCode({ userId: decoded.id })
+          .unwrap()
+          .then(() => {});
+      }
+    } catch (error) {
+      // Обработка ошибок
+    }
+  }, [requestNewCode]);
 
-    useEffect(() => {
-        const token = localStorage.getItem('token');
-        if (token) {
-            const decoded: { id: string; } = jwt_decode(token);
-            setUserId(decoded.id);
-        }
-    }, []);
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      const decoded: { id: string } = jwt_decode(token);
+      setUserId(decoded.id);
+    }
+  }, []);
 
-    useEffect(() => {
-        fetchNewCode();
-    }, [ fetchNewCode ]);
+  useEffect(() => {
+    fetchNewCode();
+  }, [fetchNewCode]);
 
-    const handleInputChange = useCallback((index: number) => (value: string) => {
-        setCode((prevCode) => {
-            const newCode = [ ...prevCode ];
-            newCode[ index ] = value;
-            return newCode;
-        });
-        setCodeDoesNotMatch(false);
-    }, []);
+  const handleInputChange = useCallback(
+    (index: number) => (value: string) => {
+      setCode((prevCode) => {
+        const newCode = [...prevCode];
+        newCode[index] = value;
+        return newCode;
+      });
+      setCodeDoesNotMatch(false);
+    },
+    []
+  );
 
-    const handleSubmit = useCallback(async () => {
-        try {
-            const verificationCode: string = code.join('');
-            await submitCode({ code: verificationCode, userId }).unwrap();
-            onSubmit();
-        } catch (error) {
-            setCodeDoesNotMatch(true);
-            setCode([ '', '', '', '' ]);
-            // Обработка ошибок
-        }
-    }, [ code, submitCode, userId, onSubmit ]);
+  const handleSubmit = useCallback(async () => {
+    try {
+      const verificationCode: string = code.join('');
+      await submitCode({ code: verificationCode, userId }).unwrap();
+      onSubmit();
+    } catch (error) {
+      setCodeDoesNotMatch(true);
+      setCode(['', '', '', '']);
+      // Обработка ошибок
+    }
+  }, [code, submitCode, userId, onSubmit]);
 
-    return {
-        code,
-        codeDoesNotMatch,
-        userId,
-        handleInputChange,
-        handleSubmit,
-        fetchNewCode,
-    };
+  return {
+    code,
+    codeDoesNotMatch,
+    userId,
+    handleInputChange,
+    handleSubmit,
+    fetchNewCode,
+  };
 };
 
 export default useVerification;

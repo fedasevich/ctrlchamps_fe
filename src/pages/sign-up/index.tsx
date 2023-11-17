@@ -1,20 +1,24 @@
-import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
-import { useTranslation } from 'react-i18next';
 import { useRouter } from 'next/router';
+import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
 
-import { RootState } from 'src/redux/store';
 import { useSignUpMutation } from 'src/redux/api/authAPI';
+import { RootState } from 'src/redux/store';
 
+import SignUpFooter from 'src/components/reusable/footer';
+import SignUpHeader from 'src/components/reusable/header';
+import SignUpWrapper from 'src/components/reusable/sign-up-wrapper/SignUpWrapper';
 import SignUpFirstForm from 'src/components/sign-up-first/SignUpFirst';
+import SignUpFourthForm from 'src/components/sign-up-fourth/SignUpFourthForm';
 import SignUpSecond from 'src/components/sign-up-second/SignUpSecond';
 import SignUpThirdForm from 'src/components/sign-up-third/SignUpThirdForm';
-import SignUpFourthForm from 'src/components/sign-up-fourth/SignUpFourthForm';
-import SignUpHeader from 'src/components/reusable/header';
-import SignUpFooter from 'src/components/reusable/footer';
-import SignUpWrapper from 'src/components/reusable/sign-up-wrapper/SignUpWrapper';
 
 const FIRST_STEP = 1;
+
+function capitalizeFirstLetter(string: string): string {
+  return string.charAt(0).toUpperCase() + string.slice(1);
+}
 
 function SignUp(): JSX.Element {
   const { t } = useTranslation();
@@ -32,10 +36,6 @@ function SignUp(): JSX.Element {
     ...personalDetails,
     ...addressData,
   };
-
-  function capitalizeFirstLetter(string: string) {
-    return string.charAt(0).toUpperCase() + string.slice(1);
-  }
 
   const handleSignUp = async (password: string): Promise<void> => {
     try {

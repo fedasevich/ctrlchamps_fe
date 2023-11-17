@@ -1,15 +1,17 @@
-import React, { useState, useMemo } from 'react';
-import { useDispatch } from 'react-redux';
+import React, { useEffect, useMemo, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
-import { FormControlLabel, Radio, FormLabel, FormHelperText } from '@mui/material';
+import { RootState } from 'src/redux/store';
+
+import { FormControlLabel, FormHelperText, FormLabel, Radio } from '@mui/material';
 import { Box } from '@mui/system';
 
 import { useTranslation } from 'react-i18next';
+
 import { setRole } from 'src/redux/slices/roleSlice';
 import {
   BoxWrapper,
   NextButton,
-  StyledParagraph,
   StyledParagraphMain,
   selectedItemColorLigthTheme,
   signupColorInLightTheme,
@@ -31,6 +33,11 @@ const SignUpFirstForm: React.FC<Step1FormProps> = ({ onNext }) => {
   const dispatch = useDispatch();
 
   const [selectedOption, setSelectedOption] = useState<string>('');
+  const role = useSelector((state: RootState) => state.role.role);
+
+  useEffect(() => {
+    setSelectedOption(role);
+  }, [role]);
 
   const handleOptionChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     setSelectedOption(event.target.value);

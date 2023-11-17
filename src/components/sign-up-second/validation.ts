@@ -1,5 +1,5 @@
 import { useLocales } from 'src/locales';
-import { AnyObject, ObjectSchema, boolean, object, date, string } from 'yup';
+import { AnyObject, ObjectSchema, boolean, date, object, string } from 'yup';
 
 export const useSignUpSecondSchema = (): ObjectSchema<
   {

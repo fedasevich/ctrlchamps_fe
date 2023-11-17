@@ -1,24 +1,21 @@
 import { configureStore } from '@reduxjs/toolkit';
-import {
-  TypedUseSelectorHook,
-  useDispatch as useAppDispatch,
-  useSelector as useAppSelector,
-} from 'react-redux';
+import { useDispatch, useSelector, TypedUseSelectorHook } from 'react-redux';
 import { persistStore, persistReducer } from 'redux-persist';
-import rootReducer, { rootPersistConfig } from './rootReducer';
-import authReducer from 'src/redux/authReducer';
-import { personalDetailsReducer } from './slices/personalDetailsSlice';
-import authApi from 'src/redux/api/authAPI';
+import storage from 'redux-persist/lib/storage';
 
-// ----------------------------------------------------------------------
+import rootReducer from 'src/redux/rootReducer';
+import { personalDetailsReducer } from 'src/redux/slices/personalDetailsSlice';
+import { authApi } from 'src/redux/api/authAPI';
 
-export type RootState = ReturnType<typeof rootReducer>;
+const persistConfig = {
+  key: 'root',
+  storage,
+};
 
-export type AppDispatch = typeof store.dispatch;
-
+const persistedReducer = persistReducer(persistConfig, rootReducer);
 const store = configureStore({
   reducer: {
-    auth: authReducer,
+    persistedReducer,
     personalDetails: personalDetailsReducer,
     [authApi.reducerPath]: authApi.reducer,
   },
@@ -26,14 +23,14 @@ const store = configureStore({
     getDefaultMiddleware({
       serializableCheck: false,
       immutableCheck: false,
-    }).concat(authApi.middleware),
+    }).concat([authApi.middleware]),
 });
 const persistor = persistStore(store);
 
-const { dispatch } = store;
+export type RootState = ReturnType<typeof rootReducer>;
+export const useTypedSelector: TypedUseSelectorHook<RootState> = useSelector;
 
-const useSelector: TypedUseSelectorHook<RootState> = useAppSelector;
+export { store, persistor };
 
-const useDispatch = () => useAppDispatch<AppDispatch>();
-
-export { store, persistor, dispatch, useSelector, useDispatch };
+export type AppDispatch = typeof store.dispatch;
+export const useAppDispatch = () => useDispatch<AppDispatch>();

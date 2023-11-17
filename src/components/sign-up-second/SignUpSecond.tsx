@@ -1,28 +1,29 @@
-import React, { memo, useEffect } from 'react';
-import { MuiTelInput } from 'mui-tel-input';
 import {
-  Switch,
-  FormControlLabel,
-  FormControl,
-  InputLabel,
-  Input,
   FilledInput,
+  FormControl,
+  FormControlLabel,
+  Input,
+  InputLabel,
+  Switch,
 } from '@mui/material';
+import { MuiTelInput } from 'mui-tel-input';
+import { memo, useMemo } from 'react';
 
-import { InferType } from 'yup';
-import { useDispatch } from 'react-redux';
-import { useForm, Controller, SubmitHandler } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { subYears } from 'date-fns';
 import 'react-datepicker/dist/react-datepicker.css';
+import { Controller, SubmitHandler, useForm } from 'react-hook-form';
+import { useAppDispatch, useTypedSelector } from 'src/redux/store';
+import { InferType } from 'yup';
 
-import { savePersonalDetails } from 'src/redux/slices/personalDetailsSlice';
-import { useAccountCheckMutation } from 'src/redux/api/authAPI';
+import { FetchBaseQueryError } from '@reduxjs/toolkit/dist/query';
+import { format, parse } from 'date-fns';
 import { useLocales } from 'src/locales';
+import { useAccountCheckMutation } from 'src/redux/api/authAPI';
+import { savePersonalDetails } from 'src/redux/slices/personalDetailsSlice';
 import { useSignUpSecondSchema } from './validation';
-import { USER_MIN_AGE, DATE_LENGTH } from './constants';
 
-import { NextButton, StyledForm, StyledDatePicker, ErrorMessage, InputWrapper } from './styles';
+import { USER_DATE_BIRTH_FORMAT, getMinBirthDate } from './constants';
+import { ErrorMessage, InputWrapper, NextButton, StyledDatePicker, StyledForm } from './styles';
 
 interface IProps {
   role: 'caregiver' | 'seeker';
@@ -30,11 +31,23 @@ interface IProps {
 }
 
 function SignUpSecond({ role, onNext }: IProps): JSX.Element {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const { translate } = useLocales();
+
   const signUpSecondSchema = useSignUpSecondSchema();
-  const [accountCheck, { isError: isCheckError, isSuccess: isCheckSuccess, error: checkError }] =
-    useAccountCheckMutation();
+
+  const minBirthDate = useMemo(() => getMinBirthDate, []);
+
+  const [accountCheck] = useAccountCheckMutation();
+  const initialDetailsValues = useTypedSelector((state) => state.personalDetails.personalDetails);
+
+  const initialDateOfBirth = useMemo(
+    () =>
+      initialDetailsValues.dateOfBirth
+        ? parse(initialDetailsValues.dateOfBirth, USER_DATE_BIRTH_FORMAT, new Date())
+        : undefined,
+    [initialDetailsValues]
+  );
 
   type FormValues = InferType<typeof signUpSecondSchema>;
 
@@ -48,57 +61,49 @@ function SignUpSecond({ role, onNext }: IProps): JSX.Element {
   } = useForm<FormValues>({
     resolver: yupResolver(signUpSecondSchema),
     mode: 'onBlur',
+    defaultValues: { ...initialDetailsValues, dateOfBirth: initialDateOfBirth },
   });
 
   const onSubmit: SubmitHandler<FormValues> = async (data): Promise<void> => {
-    const { firstName, lastName, email, phoneNumber, dateOfBirth, isOpenToSeekerHomeLiving } = data;
-    const dateToString = dateOfBirth.toLocaleDateString().padStart(DATE_LENGTH);
-    const maxBirthDate = subYears(new Date(), USER_MIN_AGE);
+    const { email, phoneNumber, dateOfBirth } = data;
+    const formattedDate = format(dateOfBirth, USER_DATE_BIRTH_FORMAT);
 
     dispatch(
       savePersonalDetails({
-        firstName,
-        lastName,
-        email,
-        phoneNumber,
-        dateOfBirth: dateToString,
-        isOpenToSeekerHomeLiving,
+        ...data,
+        dateOfBirth: formattedDate,
       })
     );
     try {
-      await accountCheck({ email, phoneNumber });
+      await accountCheck({ email, phoneNumber })
+        .unwrap()
+        .then(() => {
+          onNext();
+        })
+        .catch((error: FetchBaseQueryError) => {
+          const errorMessage = (error.data as { message?: string })?.message;
+          const isEmailError = errorMessage?.includes('email');
+          const isPhoneError = errorMessage?.includes('phone');
+
+          if (isEmailError) {
+            setError('email', {
+              type: 'manual',
+              message: translate('signUpSecondForm.emailExist'),
+            });
+            return;
+          }
+
+          if (isPhoneError) {
+            setError('phoneNumber', {
+              type: 'manual',
+              message: translate('signUpSecondForm.phoneExist'),
+            });
+          }
+        });
     } catch (error) {
       throw new Error(error);
     }
   };
-
-  useEffect(() => {
-    if (isCheckSuccess) {
-      onNext();
-    }
-  }, [isCheckSuccess]);
-
-  useEffect(() => {
-    if (isCheckError && checkError) {
-      const errorMessage = checkError?.data?.message;
-      const isEmailError = errorMessage?.includes('email');
-      const isPhoneError = errorMessage?.includes('phone');
-      if (isEmailError) {
-        setError('email', {
-          type: 'manual',
-          message: `${errorMessage}`,
-        });
-      } else if (isPhoneError) {
-        setError('phoneNumber', {
-          type: 'manual',
-          message: `${errorMessage}`,
-        });
-      }
-    } else {
-      clearErrors('email');
-      clearErrors('phoneNumber');
-    }
-  }, [isCheckError, checkError]);
 
   return (
     <StyledForm onSubmit={handleSubmit(onSubmit)}>
@@ -157,9 +162,9 @@ function SignUpSecond({ role, onNext }: IProps): JSX.Element {
                       type: 'manual',
                       message: `${translate('signUpSecondForm.phoneInvalid')}`,
                     });
-                  } else {
-                    clearErrors('phoneNumber');
+                    return;
                   }
+                  clearErrors('phoneNumber');
                 }}
                 variant="filled"
                 defaultCountry="US"
@@ -190,7 +195,7 @@ function SignUpSecond({ role, onNext }: IProps): JSX.Element {
                 onChange={(date): void => field.onChange(date)}
                 selected={field.value}
                 customInput={<FilledInput fullWidth error={!!errors.dateOfBirth} />}
-                maxDate={subYears(maxBirthDate)}
+                maxDate={minBirthDate}
                 dateFormat="dd/MM/yyyy"
               />
             )}

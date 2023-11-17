@@ -1,13 +1,12 @@
-import React, { useState, useCallback, useEffect } from 'react';
+import React from 'react';
 import { Container } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-
-import { useRequestNewVerificationCodeMutation, useSubmitVerificationCodeMutation } from 'src/redux/api/accountVerificationAPI';
 import EmailInboxIcon from 'src/assets/icons/EmailInboxIcon';
 import { FilledButton } from 'src/components/reusable/FilledButton';
-import DigitTextField from 'src/components/sendOTP/digiticTextField';
-
+import DigitTextField from 'src/components/sendOTP/DigitInputField';
+import useVerification from 'src/hooks/useVerification';
 import { AccountVerificationContainer, IconContainer, StyledParagraph, StyledParagraphMain, SubmitButtonContainer } from 'src/components/sendOTP/styles';
+
 
 interface OTPMessageFieldProps { 
   onSubmit: () => void;
@@ -15,49 +14,7 @@ interface OTPMessageFieldProps {
 
 const OTPMessageField: React.FC<OTPMessageFieldProps> = ({ onSubmit }): JSX.Element => {
   const { t } = useTranslation();
-
-  const [submitCode] = useSubmitVerificationCodeMutation();
-  const [requestNewCode] = useRequestNewVerificationCodeMutation();
-
-  const [code, setCode] = useState<string[]>(['', '', '', '']);
-  const [codeDoesNotMatch, setCodeDoesNotMatch] = useState<boolean>(false);
-  const userId: string = '';
-
-  const fetchNewCode = useCallback(async () => {
-    try {
-      await requestNewCode({ userId });
-    } catch (error) {
-      throw new Error(error);
-    }
-  }, [requestNewCode, userId]);
-
-  useEffect(() => {
-    fetchNewCode();
-  }, [fetchNewCode]);
-
-  const handleInputChange = useCallback((index: number) => (value: string) => {
-    setCode((prevCode) => {
-      const newCode = [...prevCode];
-      newCode[index] = value;
-      return newCode;
-    });
-    setCodeDoesNotMatch(false); 
-  }, []);
-
-  const handleSubmit = async (): Promise<void> => {
-    try {
-      const verificationCode: string = code.join('');
-      const response = await submitCode({ code: verificationCode, userId });
-      if ('error' in response) {
-        setCodeDoesNotMatch(true);
-        setCode(['', '', '', '']);
-      } else {
-        onSubmit();
-      }
-    } catch (error) {
-      throw new Error(error);
-    }
-  };
+  const { code, codeDoesNotMatch, handleInputChange, handleSubmit, fetchNewCode } = useVerification(onSubmit);
 
   return (
     <Container component="main" maxWidth="sm">

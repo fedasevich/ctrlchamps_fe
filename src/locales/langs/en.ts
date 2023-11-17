@@ -99,6 +99,7 @@ const en = {
   request_code: 'Request new code',
   edit_email: 'Edit email',
   account_verification: {
+    account_verification: 'Account Verification',
     sent_code: 'We have sent and OTP verification code to your email, please enter it here',
     request_code: 'Request new code',
     btn_submit: 'Submit',

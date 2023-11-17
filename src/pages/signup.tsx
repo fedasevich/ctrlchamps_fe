@@ -5,11 +5,12 @@ import { useTranslation } from 'react-i18next';
 import { RootState } from 'src/redux/store';
 import { useSignUpMutation } from 'src/redux/api/authAPI';
 
-import SignUpFirstForm from 'src/components/sign-up/sign-up-first/SignUpForm1';
+import SignUpFirstForm from 'src/components/sign-up-first/SignUpFirst';
 import SignUpSecond from 'src/components/sign-up-second/SignUpSecond';
 import SignUpThirdForm from 'src/components/sign-up-third';
 import SignUpFourthForm from 'src/components/sign-up-fourth';
 import SignUpHeader from 'src/components/reusable/header';
+import SignUpFooter from 'src/components/reusable/footer';
 
 
 function SignUp():JSX.Element {
@@ -50,6 +51,7 @@ function SignUp():JSX.Element {
       {/* {step === 2 && <SignUpSecond role={(role as 'seeker' || 'caregiver')} onNext={handleNextStep}/>} */}
       {step === 2 && <SignUpThirdForm onNext={handleNextStep} />}
       {step === 3 &&  <SignUpFourthForm onNext={handleSignUp}/>}
+      <SignUpFooter/>
     </>
   );
 };

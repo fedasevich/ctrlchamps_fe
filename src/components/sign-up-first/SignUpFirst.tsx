@@ -63,9 +63,6 @@ const SignUpFirstForm: React.FC<Step1FormProps> = ({ onNext }) => {
         >
           Next
         </NextButton>
-        <StyledParagraph>
-          {t("BySigningUp")} <a href="#">{t("terms_conditions")}</a>
-        </StyledParagraph>
         </div> 
       </BoxWrapper>
     </Container>

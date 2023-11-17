@@ -20,7 +20,7 @@ const AccountVerification: React.FC<AccountVerificationProps> = () :JSX.Element 
 
     return (
       <>
-        <SignUpHeader text={t('AccountVerification')} />
+        <SignUpHeader text={t('account_verification.account_verification')} />
         {
         isSubmitted ? 
         <SuccessfulVerification

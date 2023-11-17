@@ -2,6 +2,16 @@ const en = {
   app_title: 'App title',
   app: `this application`,
   example: 'text for demo purposes',
+  signUpFirstForm: {
+    seeker: {
+      title: "Seeker",
+      description: "Find the perfect caregiver for you and your loved one to get reliable and personalised care"
+    },
+    caregiver: {
+      title: "Caregiver",
+      description: "Connect with clients seeking your expertise and provide compassionate care for those in need"
+    }
+  },
   signUpSecondForm: {
     firstNameInvalid: 'First name maximum length is 100',
     firstNameRequired: 'First name is required',

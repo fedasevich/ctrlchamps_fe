@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { RootState } from 'src/redux/store';
 import { useSignUpMutation } from 'src/redux/api/authAPI';
 
-import Step1Form from 'src/components/sign-up/sign-up-first/SignUpForm1';
+import SignUpFirstForm from 'src/components/sign-up/sign-up-first/SignUpForm1';
 import SignUpSecond from 'src/components/sign-up-second/SignUpSecond';
 import SignUpThirdForm from 'src/components/sign-up-third';
 import SignUpFourthForm from 'src/components/sign-up-fourth';
@@ -46,7 +46,7 @@ function SignUp():JSX.Element {
   return (
     <>
       <SignUpHeader text={t('SignUp')} />
-      {step === 1 && <Step1Form onNext={handleNextStep} />}
+      {step === 1 && <SignUpFirstForm onNext={handleNextStep} />}
       {step === 2 && <SignUpSecond role={(role as 'seeker' || 'caregiver')} onNext={handleNextStep}/>}
       {step === 3 && <SignUpThirdForm onNext={handleNextStep} />}
       {step === 4 &&  <SignUpFourthForm onNext={handleSignUp}/>}

@@ -21,7 +21,7 @@ interface CustomRadioProps {
   handleOptionChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-const Step1Form: React.FC<Step1FormProps> = ({ onNext }) => {
+const SignUpFirstForm: React.FC<Step1FormProps> = ({ onNext }) => {
   const dispatch = useDispatch();
 
   const [selectedOption, setSelectedOption] = useState<string>('');
@@ -43,15 +43,15 @@ const Step1Form: React.FC<Step1FormProps> = ({ onNext }) => {
     <Container component="main" maxWidth="sm">
       <BoxWrapper>
         <CustomRadio
-          label={t("Seeker.Title")}
-          description={t("Seeker.Description")}
+          label={t("signUpFirstForm.seeker.title")}
+          description={t("signUpFirstForm.seeker.description")}
           value="seeker"
           selectedOption={selectedOption}
           handleOptionChange={handleOptionChange}
         />
         <CustomRadio
-          label={t("Caregiver.Title")}
-          description={t("Caregiver.Description")}
+          label={t("signUpFirstForm.caregiver.title")}
+          description={t("signUpFirstForm.caregiver.description")}
           value="caregiver"
           selectedOption={selectedOption}
           handleOptionChange={handleOptionChange}
@@ -116,4 +116,4 @@ const CustomRadio: React.FC<CustomRadioProps> = ({
   );
 };
 
-export default Step1Form;
+export default SignUpFirstForm;

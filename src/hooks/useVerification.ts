@@ -14,7 +14,7 @@ const useVerification = (onSubmit: () => void) => {
         try {
             await requestNewCode({ userId }).unwrap();
         } catch (error) {
-            throw new Error(error);
+            // throw new Error(error);
         }
     }, [ requestNewCode, userId ]);
 
@@ -39,7 +39,7 @@ const useVerification = (onSubmit: () => void) => {
         } catch (error) {
             setCodeDoesNotMatch(true);
             setCode([ '', '', '', '' ]);
-            throw new Error(error);
+            // throw new Error(error);
         }
     }, [ code, submitCode, userId, onSubmit ]);
 

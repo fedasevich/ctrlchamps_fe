@@ -6,6 +6,8 @@ import rootReducer from 'src/redux/rootReducer';
 
 import { personalDetailsReducer } from 'src/redux/slices/personalDetailsSlice';
 import { roleReducer } from 'src/redux/slices/roleSlice';
+import { tokenReducer } from 'src/redux/slices/tokenSlice';
+
 
 import { api } from 'src/redux/api/authAPI';
 import { accountVerificationApi } from 'src/redux/api/accountVerificationAPI';
@@ -20,6 +22,7 @@ const store = configureStore({
   reducer: {
     role: roleReducer,
     personalDetails: personalDetailsReducer,
+    token: tokenReducer,
     [ api.reducerPath ]: api.reducer,
     [ accountVerificationApi.reducerPath ]: accountVerificationApi.reducer,
   },

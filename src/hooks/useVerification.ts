@@ -1,4 +1,8 @@
 import { useCallback, useEffect, useState } from 'react';
+
+import { useSelector } from 'react-redux';
+import { RootState } from 'src/redux/store';
+
 import {
     useRequestNewVerificationCodeMutation,
     useSubmitVerificationCodeMutation,
@@ -28,32 +32,20 @@ const useVerification = ({ onSubmit }: UseVerificationProps): UseVerificationRes
     const [ codeDoesNotMatch, setCodeDoesNotMatch ] = useState<boolean>(false);
     const [ userId, setUserId ] = useState<string>('');
 
+    const token = useSelector((state: RootState) => state.token.token);
+
     const fetchNewCode = useCallback(async () => {
         try {
-            const token = localStorage.getItem('token');
             if (token) {
-                const decoded: { id: string; } = jwt_decode(token);
+                const decoded: { id: string; iat: number, exp: number; } = jwt_decode(token);
                 setUserId(decoded.id);
-                const response = await requestNewCode({ userId: decoded.id })
-                    .unwrap()
-                    .then(() => { });
+                await requestNewCode({ userId: decoded.id })
+                    .unwrap();
             }
         } catch (error) {
             throw new Error(error);
         }
-    }, [ requestNewCode ]);
-
-    useEffect(() => {
-        const token = localStorage.getItem('token');
-        if (token) {
-            const decoded: { id: string; } = jwt_decode(token);
-            setUserId(decoded.id);
-        }
-    }, []);
-
-    useEffect(() => {
-        fetchNewCode();
-    }, [ fetchNewCode ]);
+    }, [ token, requestNewCode ]);
 
     const handleInputChange = useCallback(
         (index: number) => (value: string) => {
@@ -77,6 +69,10 @@ const useVerification = ({ onSubmit }: UseVerificationProps): UseVerificationRes
             setCode([ '', '', '', '' ]);
         }
     }, [ code, submitCode, userId, onSubmit ]);
+
+    useEffect(() => {
+        fetchNewCode();
+    }, [ fetchNewCode ]);
 
     return {
         code,

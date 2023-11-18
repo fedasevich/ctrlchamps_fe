@@ -1,6 +1,7 @@
 import { combineReducers } from 'redux';
 import createWebStorage from 'redux-persist/lib/storage/createWebStorage';
 import { roleReducer } from 'src/redux/slices/roleSlice';
+import { tokenReducer } from 'src/redux/slices/tokenSlice';
 import { personalDetailsReducer } from 'src/redux/slices/personalDetailsSlice';
 // ----------------------------------------------------------------------
 
@@ -30,6 +31,7 @@ export const rootPersistConfig = {
 const rootReducer = combineReducers({
   role: roleReducer,
   personalDetails: personalDetailsReducer,
+  token: tokenReducer,
 });
 
 export default rootReducer;

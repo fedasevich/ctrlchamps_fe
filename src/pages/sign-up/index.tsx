@@ -3,8 +3,9 @@ import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { useRouter } from 'next/router';
 
-import { RootState } from 'src/redux/store';
+import { RootState, useDispatch } from 'src/redux/store';
 import { useSignUpMutation } from 'src/redux/api/authAPI';
+import { setToken } from 'src/redux/slices/tokenSlice';
 
 import Step1Form from "src/components/sign-up/sign-up-first/SignUpForm1";
 import SignUpHeader from "src/components/reusable/header";
@@ -14,6 +15,7 @@ const FIRST_STEP :number = 1;
 function SignUp() :JSX.Element {
     const { t } = useTranslation();
     const router = useRouter();
+    const dispatch = useDispatch();
 
     const [signUp] = useSignUpMutation();
 
@@ -35,10 +37,11 @@ function SignUp() :JSX.Element {
 
     const handleSignUp = async (): Promise<void> => {
       try {
-        const response = await signUp( userInfo );
-        if ('data' in response && response.data.token) {
-          localStorage.setItem('token', response.data.token);
-        }
+        await signUp( userInfo )
+        .unwrap()
+        .then(({token}: {token: string}) => {
+          dispatch(setToken(token)
+          )});
         router.push('/account-verification');
       } catch (error) {
         throw new Error(error);

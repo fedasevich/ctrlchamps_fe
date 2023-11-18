@@ -1,5 +1,7 @@
-import React, { useMemo, useState } from 'react'
+import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
+import { RootState } from 'src/redux/store';
 
 import SignUpHeader from 'src/components/reusable/header';
 import OTPMessageField from 'src/components/sendOTP/AccountVerification';
@@ -11,8 +13,10 @@ interface AccountVerificationProps {
 
 const AccountVerification: React.FC<AccountVerificationProps> = () :JSX.Element => {
     const { t } = useTranslation();
+
     const [isSubmitted, setIsSubmitted] = useState<boolean>(false); 
-    const profile :string = useMemo(() => process.env.NEXT_PUBLIC_PROFILE || '', []);
+    const role :string = useSelector((state: RootState) => state.role.role);
+
 
     const onSubmit = (): void => {
       setIsSubmitted(true);
@@ -20,11 +24,11 @@ const AccountVerification: React.FC<AccountVerificationProps> = () :JSX.Element 
 
     return (
       <>
-        <SignUpHeader text={t('AccountVerification')} />
+        <SignUpHeader text={t('account_verification.account_verification')}/>
         {
         isSubmitted ? 
         <SuccessfulVerification
-          profile={profile}
+          profile={role}
         /> : 
         <OTPMessageField onSubmit={onSubmit}/> }
       </>

@@ -11,7 +11,7 @@ interface SubmitVerificationCodeProps {
 
 export const accountVerificationApi = createApi({
     reducerPath: 'accountVerificationApi',
-    baseQuery: fetchBaseQuery({ baseUrl: process.env.NEXT_PUBLIC_BACKEND_URL }),
+    baseQuery: fetchBaseQuery({ baseUrl: process.env.NEXT_PUBLIC_API_URL }),
     endpoints: (builder) => ({
         submitVerificationCode: builder.mutation<ResponseData, SubmitVerificationCodeProps>({
             query: ({ userId, code }) => ({
@@ -29,4 +29,5 @@ export const accountVerificationApi = createApi({
     }),
 });
 
-export const { useSubmitVerificationCodeMutation, useRequestNewVerificationCodeMutation } = accountVerificationApi;
+export const { useSubmitVerificationCodeMutation, useRequestNewVerificationCodeMutation } =
+    accountVerificationApi;

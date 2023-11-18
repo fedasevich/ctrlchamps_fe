@@ -1,35 +1,71 @@
-import { useState, useCallback, useEffect, useMemo } from 'react';
-import { useRequestNewVerificationCodeMutation, useSubmitVerificationCodeMutation } from 'src/redux/api/accountVerificationAPI';
+import { useCallback, useEffect, useState } from 'react';
+import {
+    useRequestNewVerificationCodeMutation,
+    useSubmitVerificationCodeMutation,
+} from 'src/redux/api/accountVerificationAPI';
 
-const useVerification = (onSubmit: () => void) => {
+import jwt_decode from 'jwt-decode';
+
+
+interface UseVerificationProps {
+    onSubmit: () => void;
+}
+
+interface UseVerificationResult {
+    code: string[];
+    codeDoesNotMatch: boolean;
+    userId: string;
+    handleInputChange: (index: number) => (value: string) => void;
+    handleSubmit: () => Promise<void>;
+    fetchNewCode: () => Promise<void>;
+}
+
+const useVerification = ({ onSubmit }: UseVerificationProps): UseVerificationResult => {
     const [ submitCode ] = useSubmitVerificationCodeMutation();
     const [ requestNewCode ] = useRequestNewVerificationCodeMutation();
 
     const [ code, setCode ] = useState<string[]>([ '', '', '', '' ]);
     const [ codeDoesNotMatch, setCodeDoesNotMatch ] = useState<boolean>(false);
-
-    const userId: string = useMemo(() => ' ', []);
+    const [ userId, setUserId ] = useState<string>('');
 
     const fetchNewCode = useCallback(async () => {
         try {
-            await requestNewCode({ userId }).unwrap();
+            const token = localStorage.getItem('token');
+            if (token) {
+                const decoded: { id: string; } = jwt_decode(token);
+                setUserId(decoded.id);
+                const response = await requestNewCode({ userId: decoded.id })
+                    .unwrap()
+                    .then(() => { });
+            }
         } catch (error) {
             throw new Error(error);
         }
-    }, [ requestNewCode, userId ]);
+    }, [ requestNewCode ]);
+
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+        if (token) {
+            const decoded: { id: string; } = jwt_decode(token);
+            setUserId(decoded.id);
+        }
+    }, []);
 
     useEffect(() => {
         fetchNewCode();
     }, [ fetchNewCode ]);
 
-    const handleInputChange = useCallback((index: number) => (value: string) => {
-        setCode((prevCode) => {
-            const newCode = [ ...prevCode ];
-            newCode[ index ] = value;
-            return newCode;
-        });
-        setCodeDoesNotMatch(false);
-    }, []);
+    const handleInputChange = useCallback(
+        (index: number) => (value: string) => {
+            setCode((prevCode) => {
+                const newCode = [ ...prevCode ];
+                newCode[ index ] = value;
+                return newCode;
+            });
+            setCodeDoesNotMatch(false);
+        },
+        []
+    );
 
     const handleSubmit = useCallback(async () => {
         try {
@@ -39,13 +75,13 @@ const useVerification = (onSubmit: () => void) => {
         } catch (error) {
             setCodeDoesNotMatch(true);
             setCode([ '', '', '', '' ]);
-            throw new Error(error);
         }
     }, [ code, submitCode, userId, onSubmit ]);
 
     return {
         code,
         codeDoesNotMatch,
+        userId,
         handleInputChange,
         handleSubmit,
         fetchNewCode,

@@ -3,9 +3,11 @@ import { persistStore } from 'redux-persist';
 import { TypedUseSelectorHook, useDispatch as useAppDispatch, useSelector as useAppSelector } from 'react-redux';
 
 import rootReducer from 'src/redux/rootReducer';
-import authReducer from 'src/redux/authReducer';
-import { personalDetailsReducer } from './slices/personalDetailsSlice';
-import { api } from 'src/redux/api/userAPI';
+
+import { personalDetailsReducer } from 'src/redux/slices/personalDetailsSlice';
+import { roleReducer } from 'src/redux/slices/roleSlice';
+
+import { api } from 'src/redux/api/authAPI';
 import { accountVerificationApi } from 'src/redux/api/accountVerificationAPI';
 
 // ----------------------------------------------------------------------
@@ -16,7 +18,7 @@ export type AppDispatch = typeof store.dispatch;
 
 const store = configureStore({
   reducer: {
-    auth: authReducer,
+    role: roleReducer,
     personalDetails: personalDetailsReducer,
     [ api.reducerPath ]: api.reducer,
     [ accountVerificationApi.reducerPath ]: accountVerificationApi.reducer,

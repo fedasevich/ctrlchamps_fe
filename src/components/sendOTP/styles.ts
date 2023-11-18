@@ -1,8 +1,7 @@
 import { TextField } from '@mui/material';
-
-import typography from 'src/theme/typography';
 import styled from '@emotion/styled';
-import { PRIMARY } from 'src/theme/colors';
+import typography from 'src/theme/typography';
+import { PRIMARY, SECONDARY, TEXT_COLOR } from 'src/theme/colors';
 
 export const AccountVerificationContainer = styled.div`
     padding-top: 1em;
@@ -31,7 +30,7 @@ export const IconContainer = styled.div`
   width: 10em; 
   height: 10em;
   border-radius: 50%;
-  background-color: #08BCB81F;
+  background-color:${ SECONDARY.selected };
 `;
 
 export const SubmitButtonContainer = styled.div`
@@ -84,7 +83,7 @@ export const DigitInput = styled(TextField)`
 
   &.error {
     input {
-      border-bottom: 1px solid red;
+      border-bottom: 1px solid ${ TEXT_COLOR.error };
     }
   }
 

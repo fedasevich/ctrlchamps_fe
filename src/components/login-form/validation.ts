@@ -1,11 +1,13 @@
 import { AnyObject, ObjectSchema, object, string } from 'yup';
 import { useLocales } from 'src/locales';
 
+export type LoginValues = {
+  email: string;
+  password: string;
+};
+
 export const useLoginSchema = (): ObjectSchema<
-  {
-    email: string;
-    password: string;
-  },
+  LoginValues,
   AnyObject,
   {
     email: undefined;

@@ -1,17 +1,16 @@
 import { FormControl, InputLabel, InputAdornment, IconButton, FilledInput } from '@mui/material';
 import React, { memo, useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
-import { InferType } from 'yup';
 import { useRouter } from 'next/router';
+import { yupResolver } from '@hookform/resolvers/yup';
 
 import { FetchBaseQueryError } from '@reduxjs/toolkit/dist/query';
 import { useLocales } from 'src/locales';
 import { useSignInMutation } from 'src/redux/api/authAPI';
 import Visibility from 'src/assets/icons/Visibility';
 import VisibilityOff from 'src/assets/icons/VisibilityOff';
-import { useLoginSchema } from './validation';
 
+import { LoginValues, useLoginSchema } from './validation';
 import {
   StyledForm,
   Title,
@@ -32,7 +31,7 @@ function LoginForm(): JSX.Element {
 
   const togglePassword = (): void => setShowPassword(!showPassword);
 
-  type FormValues = InferType<typeof loginSchema>;
+  // type FormValues = InferType<typeof loginSchema>;
 
   const {
     register,
@@ -40,7 +39,7 @@ function LoginForm(): JSX.Element {
     setError,
     clearErrors,
     formState: { errors, isValid },
-  } = useForm<FormValues>({
+  } = useForm<LoginValues>({
     resolver: yupResolver(loginSchema),
     mode: 'onBlur',
   });

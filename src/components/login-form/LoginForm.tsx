@@ -31,8 +31,6 @@ function LoginForm(): JSX.Element {
 
   const togglePassword = (): void => setShowPassword(!showPassword);
 
-  // type FormValues = InferType<typeof loginSchema>;
-
   const {
     register,
     handleSubmit,
@@ -44,7 +42,7 @@ function LoginForm(): JSX.Element {
     mode: 'onBlur',
   });
 
-  const onSubmit: SubmitHandler<FormValues> = async (data): Promise<void> => {
+  const onSubmit: SubmitHandler<LoginValues> = async (data): Promise<void> => {
     try {
       await signIn(data)
         .unwrap()

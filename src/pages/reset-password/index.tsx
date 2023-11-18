@@ -11,6 +11,7 @@ import { useRouter } from 'next/router';
 export default function ResetPassword(): JSX.Element {
   const { translate } = useLocales();
   const { back: pushBack } = useRouter();
+
   const [currentStep, setCurrentStep] = useState<number>(1);
   const [userEmail, setUserEmail] = useState<string>('');
 

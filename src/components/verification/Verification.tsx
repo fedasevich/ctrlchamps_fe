@@ -22,13 +22,18 @@ type VerificationProps = { userEmail: string; next: () => void; back: () => void
 
 export default function Verification({ userEmail, next, back }: VerificationProps): JSX.Element {
   const { translate } = useLocales();
+
   const [code, setCode] = useState<string>('');
+  const [length, setLength] = useState<number>(OTP_LENGTH);
+
   const [requestCode] = useRequestResetCodeMutation();
   const [verifyCode] = useVerifyResetCodeMutation();
+
   const [submitDisabled, setSubmitDisabled] = useState<boolean>(true);
-  const [length, setLength] = useState<number>(OTP_LENGTH);
+
   const [toastShown, setToastShown] = useState<boolean>(false);
   const [errorToastShown, setErrorToastShown] = useState<boolean>(false);
+
   const [error, setError] = useState<boolean>(false);
   const [serverError, setServerError] = useState<boolean>(false);
 

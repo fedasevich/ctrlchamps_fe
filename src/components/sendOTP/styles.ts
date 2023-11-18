@@ -41,7 +41,7 @@ export const TextBlock = styled.div`
   text-align: center;
   width: 60%;
   padding-bottom: 1em;
-  font-size: 16px;
+  font-size: ${ typography.subtitle1.fontSize };
 `;
 
 export const StyledParagraph = styled.p`

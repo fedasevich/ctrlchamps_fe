@@ -1,16 +1,15 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { FilledInput, FormControl, InputLabel, MenuItem, Select } from '@mui/material';
 
-import { useForm } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 
 import { useLocales } from 'src/locales';
 import { saveAddressData } from 'src/redux/slices/addressSlice';
 import { useAppDispatch, useTypedSelector } from 'src/redux/store';
-import { InferType } from 'yup';
 import { useSignUpThirdCountrySelectOptions } from './select-options';
 
 import { ErrorMessage, NextButton, StyledForm } from './style';
-import { useSignUpThirdSchema } from './validation';
+import { SignUpThirdFormValues, useSignUpThirdSchema } from './validation';
 
 interface SignUpThirdFormProps {
   onNext: () => void;
@@ -23,20 +22,16 @@ export default function SignUpThirdForm({ onNext }: SignUpThirdFormProps): JSX.E
   const { countries } = useSignUpThirdCountrySelectOptions();
   const initialAddressValues = useTypedSelector((state) => state.address.addressData);
 
-  type FormValues = InferType<typeof signUpThirdSchema>;
-
   const {
     register,
+    control,
     handleSubmit,
-    watch,
     formState: { errors, isValid },
-  } = useForm<FormValues>({
+  } = useForm<SignUpThirdFormValues>({
     resolver: yupResolver(signUpThirdSchema),
     mode: 'onBlur',
     defaultValues: initialAddressValues,
   });
-
-  const selectedCountry = watch('country');
 
   const onSubmit = handleSubmit((data) => {
     dispatch(saveAddressData(data));
@@ -49,21 +44,29 @@ export default function SignUpThirdForm({ onNext }: SignUpThirdFormProps): JSX.E
         <InputLabel htmlFor="country" data-testid="country-label">
           {translate('signUpThirdForm.placeholderCountry')}
         </InputLabel>
-        <Select
-          SelectDisplayProps={
-            { 'data-testid': 'country-select' } as React.HTMLAttributes<HTMLDivElement>
-          }
-          value={selectedCountry}
-          {...register('country')}
-          label={translate('signUpThirdForm.placeholderCountry')}
-          id="country"
-        >
-          {countries.map((country) => (
-            <MenuItem value={country.value} key={country.value}>
-              {country.label}
-            </MenuItem>
-          ))}
-        </Select>
+
+        <Controller
+          name="country"
+          control={control}
+          render={({ field: { onChange, value } }) => (
+            <Select
+              value={value}
+              onChange={onChange}
+              SelectDisplayProps={
+                { 'data-testid': 'country-select' } as React.HTMLAttributes<HTMLDivElement>
+              }
+              label={translate('signUpThirdForm.placeholderCountry')}
+              id="country"
+            >
+              {countries.map((country) => (
+                <MenuItem value={country.value} key={country.value}>
+                  {country.label}
+                </MenuItem>
+              ))}
+            </Select>
+          )}
+        />
+
         {errors?.country && (
           <ErrorMessage data-testid="country-error">{errors.country?.message}</ErrorMessage>
         )}

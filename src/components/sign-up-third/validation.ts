@@ -1,14 +1,16 @@
 import { useLocales } from 'src/locales';
 import { AnyObject, ObjectSchema, object, string } from 'yup';
 
+export type SignUpThirdFormValues = {
+  country: string;
+  state: string;
+  city: string;
+  zipCode: string;
+  address: string;
+};
+
 export const useSignUpThirdSchema = (): ObjectSchema<
-  {
-    country: string;
-    state: string;
-    city: string;
-    zipCode: string;
-    address: string;
-  },
+  SignUpThirdFormValues,
   AnyObject,
   {
     country: undefined;

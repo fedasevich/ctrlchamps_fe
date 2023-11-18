@@ -1,33 +1,51 @@
 import Head from 'next/head';
-import { useRouter } from 'next/router';
-import PasswordShieldIcon from 'src/assets/icons/PasswordShieldIcon';
+import { useState } from 'react';
+import { useLocales } from 'src/locales';
+
 import EnterEmail from 'src/components/enter-email/EnterEmail';
-import { FilledButton } from 'src/components/reusable/FilledButton';
 import SignUpHeader from 'src/components/reusable/header';
 import { Verification, VerificationSuccess } from 'src/components/verification';
-import { useLocales } from 'src/locales';
-import { ROUTES } from 'src/routes';
+import ResetPasswordForm from 'src/components/reset-password-form/ResetPasswordForm';
 
 export default function ResetPassword(): JSX.Element {
   const { translate } = useLocales();
-  const { push } = useRouter();
+  const [currentStep, setCurrentStep] = useState<number>(1);
+  const [userEmail, setUserEmail] = useState<string>('');
+
+  const next = (email?: string): void => {
+    setCurrentStep((prev) => prev + 1);
+
+    if (email) setUserEmail(email);
+  };
+
+  const back = (): void => {
+    if (currentStep > 0) {
+      setCurrentStep((prev) => prev - 1);
+    }
+  };
+
+  function handleSteps(step: number): JSX.Element {
+    switch (step) {
+      case 1:
+        return <EnterEmail next={next} />;
+      case 2:
+        return <Verification userEmail={userEmail} next={next} back={back} />;
+      case 3:
+        return <ResetPasswordForm email={userEmail} next={next} />;
+      case 4:
+        return <VerificationSuccess />;
+      default:
+        return <EnterEmail next={next} />;
+    }
+  }
+
   return (
     <>
       <Head>
         <title>{translate('reset_password.title')}</title>
       </Head>
       <SignUpHeader text={translate('reset_password.title')} />
-      <EnterEmail />
-      <Verification text={translate('reset_password.sent_code')} />
-      <VerificationSuccess
-        icon={<PasswordShieldIcon />}
-        title={translate('reset_password.success')}
-        text={translate('reset_password.instructions')}
-      >
-        <FilledButton onClick={(): Promise<boolean> => push(ROUTES.login)}>
-          {translate('reset_password.btn_back')}
-        </FilledButton>
-      </VerificationSuccess>
+      {handleSteps(currentStep)}
     </>
   );
 }

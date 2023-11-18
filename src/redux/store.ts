@@ -8,8 +8,8 @@ import { persistStore, persistReducer } from 'redux-persist';
 import rootReducer, { rootPersistConfig } from './rootReducer';
 import authReducer from 'src/redux/authReducer';
 import authApi from 'src/redux/api/authApi';
+import { personalDetailsReducer } from './slices/personalDetailsSlice';
 
-// ----------------------------------------------------------------------
 
 export type RootState = ReturnType<typeof rootReducer>;
 
@@ -19,6 +19,7 @@ const store = configureStore({
   reducer: {
     auth: authReducer,
     [authApi.reducerPath]: authApi.reducer,
+    personalDetails: personalDetailsReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

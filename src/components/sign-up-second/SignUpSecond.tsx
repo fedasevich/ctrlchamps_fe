@@ -1,3 +1,5 @@
+import { memo, useMemo } from 'react';
+import { MuiTelInput } from 'mui-tel-input';
 import {
   FilledInput,
   FormControl,
@@ -6,23 +8,20 @@ import {
   InputLabel,
   Switch,
 } from '@mui/material';
-import { MuiTelInput } from 'mui-tel-input';
-import { memo, useMemo } from 'react';
 
-import { yupResolver } from '@hookform/resolvers/yup';
-import 'react-datepicker/dist/react-datepicker.css';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
-import { useAppDispatch, useTypedSelector } from 'src/redux/store';
-import { InferType } from 'yup';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { format, parse, subYears } from 'date-fns';
+import 'react-datepicker/dist/react-datepicker.css';
 
 import { FetchBaseQueryError } from '@reduxjs/toolkit/dist/query';
-import { format, parse } from 'date-fns';
-import { useLocales } from 'src/locales';
+import { useAppDispatch, useTypedSelector } from 'src/redux/store';
 import { useAccountCheckMutation } from 'src/redux/api/authAPI';
 import { savePersonalDetails } from 'src/redux/slices/personalDetailsSlice';
-import { useSignUpSecondSchema } from './validation';
+import { useLocales } from 'src/locales';
 
-import { USER_DATE_BIRTH_FORMAT, EMAIL_ERROR, PHONE_ERROR, getMinBirthDate } from './constants';
+import { useSignUpSecondSchema, SignUpSecondValues } from './validation';
+import { USER_DATE_BIRTH_FORMAT, EMAIL_ERROR, USER_MIN_AGE, PHONE_ERROR } from './constants';
 import { ErrorMessage, InputWrapper, NextButton, StyledDatePicker, StyledForm } from './styles';
 
 interface IProps {
@@ -33,12 +32,10 @@ interface IProps {
 function SignUpSecond({ role, onNext }: IProps): JSX.Element {
   const dispatch = useAppDispatch();
   const { translate } = useLocales();
-
   const signUpSecondSchema = useSignUpSecondSchema();
-
-  const minBirthDate = useMemo(() => getMinBirthDate, []);
-
   const [accountCheck] = useAccountCheckMutation();
+
+  const minBirthDate = useMemo(() => subYears(new Date(), USER_MIN_AGE), []);
   const initialDetailsValues = useTypedSelector((state) => state.personalDetails.personalDetails);
 
   const initialDateOfBirth = useMemo(
@@ -49,8 +46,6 @@ function SignUpSecond({ role, onNext }: IProps): JSX.Element {
     [initialDetailsValues]
   );
 
-  type FormValues = InferType<typeof signUpSecondSchema>;
-
   const {
     register,
     control,
@@ -58,13 +53,13 @@ function SignUpSecond({ role, onNext }: IProps): JSX.Element {
     setError,
     clearErrors,
     formState: { errors, isValid },
-  } = useForm<FormValues>({
+  } = useForm<SignUpSecondValues>({
     resolver: yupResolver(signUpSecondSchema),
     mode: 'onBlur',
     defaultValues: { ...initialDetailsValues, dateOfBirth: initialDateOfBirth },
   });
 
-  const onSubmit: SubmitHandler<FormValues> = async (data): Promise<void> => {
+  const onSubmit: SubmitHandler<SignUpSecondValues> = async (data): Promise<void> => {
     const { email, phoneNumber, dateOfBirth } = data;
     const formattedDate = format(dateOfBirth, USER_DATE_BIRTH_FORMAT);
 
@@ -196,7 +191,7 @@ function SignUpSecond({ role, onNext }: IProps): JSX.Element {
                 selected={field.value}
                 customInput={<FilledInput fullWidth error={!!errors.dateOfBirth} />}
                 maxDate={minBirthDate}
-                dateFormat="dd/MM/yyyy"
+                dateFormat={USER_DATE_BIRTH_FORMAT}
               />
             )}
           />

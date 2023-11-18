@@ -1,15 +1,17 @@
 import { useLocales } from 'src/locales';
 import { AnyObject, ObjectSchema, boolean, object, date, string } from 'yup';
 
+export type SignUpSecondValues = {
+  firstName: string;
+  lastName: string;
+  email: string;
+  phoneNumber: string;
+  dateOfBirth: Date;
+  isOpenToSeekerHomeLiving?: boolean;
+};
+
 export const useSignUpSecondSchema = (): ObjectSchema<
-  {
-    firstName: string;
-    lastName: string;
-    email: string;
-    phoneNumber: string;
-    dateOfBirth: Date;
-    isOpenToSeekerHomeLiving?: boolean;
-  },
+  SignUpSecondValues,
   AnyObject,
   {
     firstName: undefined;

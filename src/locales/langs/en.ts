@@ -62,6 +62,7 @@ const en = {
   btn_submit: 'Submit',
   request_code: 'Request new code',
   edit_email: 'Edit email',
+  loading: 'Loading...',
   reset_password: {
     title: 'Reset Password',
     enter_email: 'Please enter your e-mail to get a link to reset your password',
@@ -73,6 +74,8 @@ const en = {
     confirm: 'Confirm Password',
     success: 'Your Password is Updated!',
     instructions: 'Now you can go back to login to authenticate with new credentials',
+    code_sent: 'Reset code was sent',
+    code_not_sent: 'Failed to send reset code',
     placeholder: {
       pass: 'Password',
       confirm_pass: 'Confirm Password',
@@ -86,6 +89,7 @@ const en = {
       email: "An account matching that email doesn't exist",
       invalid: 'Enter valid email',
       invalid_pass: 'Password should contain at least {{num}} characters',
+      unexpected: 'Something went wrong..',
     },
   },
 };

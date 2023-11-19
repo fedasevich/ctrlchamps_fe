@@ -4,5 +4,5 @@ import { TYPOGRAPHY } from 'src/theme/fonts';
 
 export const ErrorText = styled(Typography)(() => ({
   color: TEXT_COLOR.error,
-  fontSize: TYPOGRAPHY.xs,
+  fontSize: TYPOGRAPHY.xss,
 }));

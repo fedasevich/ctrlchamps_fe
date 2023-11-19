@@ -73,6 +73,12 @@ const TextBtn = styled(Button)(() => ({
   },
 }));
 
+const FormWrapper = styled.form`
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+`;
+
 const BtnContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -90,4 +96,5 @@ export {
   TextWrapper,
   TextInputContainer,
   BtnContainer,
+  FormWrapper,
 };

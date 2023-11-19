@@ -16,7 +16,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 
 import { FetchBaseQueryError } from '@reduxjs/toolkit/dist/query';
 import { useAppDispatch, useTypedSelector } from 'src/redux/store';
-import { useAccountCheckMutation } from 'src/redux/api/authAPI';
+import { useAccountCheckMutation } from 'src/redux/api/authApi';
 import { savePersonalDetails } from 'src/redux/slices/personalDetailsSlice';
 import { useLocales } from 'src/locales';
 

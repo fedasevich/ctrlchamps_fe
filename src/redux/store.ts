@@ -9,7 +9,6 @@ import rootReducer, { rootPersistConfig } from './rootReducer';
 import authReducer from 'src/redux/authReducer';
 import authApi from 'src/redux/api/authApi';
 import { personalDetailsReducer } from './slices/personalDetailsSlice';
-import api from 'src/redux/api/authApi';
 
 export type RootState = ReturnType<typeof rootReducer>;
 

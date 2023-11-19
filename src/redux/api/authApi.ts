@@ -2,6 +2,15 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { UserInfo } from './user.interface';
 import { route } from './routes';
 
+interface SignInData {
+  email: string;
+  password: string;
+}
+
+interface SignInResponse {
+  token: string;
+}
+
 export const authApi = createApi({
   reducerPath: 'authApi',
   baseQuery: fetchBaseQuery({ baseUrl: `${process.env.NEXT_PUBLIC_API_URL}/${route.auth}` }),
@@ -34,6 +43,13 @@ export const authApi = createApi({
         body,
       }),
     }),
+    signIn: builder.mutation<SignInResponse, SignInData>({
+      query: (signInData) => ({
+        url: `${route.signIn}`,
+        method: 'POST',
+        body: signInData,
+      }),
+    }),
   }),
 });
 
@@ -42,5 +58,6 @@ export const {
   useResetPasswordMutation,
   useRequestResetCodeMutation,
   useVerifyResetCodeMutation,
+  useSignInMutation,
 } = authApi;
 export default authApi;

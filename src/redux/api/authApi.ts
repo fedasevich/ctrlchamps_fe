@@ -1,46 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { UserInfo } from './user.interface';
 import { route } from './routes';
-
-interface SignUpData {
-  email: string;
-  password: string;
-  firstName: string;
-  lastName: string;
-  phoneNumber: string;
-  dateOfBirth: string;
-  isOpenToClientHomeLiving: boolean;
-  role: string;
-  country: string;
-  state: string;
-  city: string;
-  zipCode: string;
-  address: string;
-}
-
-interface SignUpResponse {
-  email: string;
-  password: string;
-  firstName: string;
-  lastName: string;
-  phoneNumber: string;
-  dateOfBirth: string;
-  isOpenToClientHomeLiving: boolean;
-  role: string;
-  country: string;
-  state: string;
-  city: string;
-  zipCode: string;
-  address: string;
-}
-
-interface SignInData {
-  email: string;
-  password: string;
-}
-
-interface SignInResponse {
-  token: string;
-}
 
 interface AccountCheckData {
   email: string;
@@ -56,7 +16,7 @@ export const authApi = createApi({
   reducerPath: 'authApi',
   baseQuery: fetchBaseQuery({ baseUrl: `${process.env.NEXT_PUBLIC_API_URL}/${route.auth}` }),
   endpoints: (builder) => ({
-    signUp: builder.mutation<SignUpResponse, SignUpData>({
+    signUp: builder.mutation<string, { userInfo: UserInfo }>({
       query: (body) => ({
         url: `${route.signUp}`,
         method: 'POST',
@@ -84,13 +44,6 @@ export const authApi = createApi({
         body,
       }),
     }),
-    signIn: builder.mutation<SignInResponse, SignInData>({
-      query: (signInData) => ({
-        url: `${route.signIn}`,
-        method: 'POST',
-        body: signInData,
-      }),
-    }),
     accountCheck: builder.mutation<AccountCheckResponse, AccountCheckData>({
       query: (accountCheckData) => ({
         url: `${route.accountCheck}`,
@@ -106,7 +59,6 @@ export const {
   useResetPasswordMutation,
   useRequestResetCodeMutation,
   useVerifyResetCodeMutation,
-  useSignInMutation,
   useAccountCheckMutation,
 } = authApi;
 

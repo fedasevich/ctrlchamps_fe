@@ -6,7 +6,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 
 import { FetchBaseQueryError } from '@reduxjs/toolkit/dist/query';
 import { useLocales } from 'src/locales';
-import { useSignInMutation } from 'src/redux/api/authAPI';
+import { useSignInMutation } from 'src/redux/api/authApi';
 import Visibility from 'src/assets/icons/Visibility';
 import VisibilityOff from 'src/assets/icons/VisibilityOff';
 

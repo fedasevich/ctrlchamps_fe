@@ -1,6 +1,6 @@
-import { useRouter } from 'next/router';
 import React, { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useRouter } from 'next/router';
 
 import SignUpHeader from 'src/components/reusable/header';
 import OTPMessageField from 'src/components/sendOTP/AccountVerification';

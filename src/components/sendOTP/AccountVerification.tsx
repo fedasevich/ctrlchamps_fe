@@ -28,7 +28,6 @@ const OTPMessageField: React.FC<OTPMessageFieldProps> = ({ onSubmit }): JSX.Elem
             {[0, 1, 2, 3].map((index) => (
               <DigitTextField
                 key={index}
-                placeholder={index.toString()}
                 value={code[index]}
                 onChange={handleInputChange(index)}
                 className={codeDoesNotMatch ? 'error' : ''}

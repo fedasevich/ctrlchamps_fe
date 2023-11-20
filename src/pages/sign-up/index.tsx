@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 
 import { useSignUpMutation } from 'src/redux/api/authAPI';
-import { RootState } from 'src/redux/store';
+import { RootState, useAppDispatch } from 'src/redux/store';
 
 import SignUpFooter from 'src/components/reusable/footer';
 import SignUpHeader from 'src/components/reusable/header';
@@ -13,6 +13,7 @@ import SignUpFirstForm from 'src/components/sign-up-first/SignUpFirst';
 import SignUpFourthForm from 'src/components/sign-up-fourth/SignUpFourthForm';
 import SignUpSecond from 'src/components/sign-up-second/SignUpSecond';
 import SignUpThirdForm from 'src/components/sign-up-third/SignUpThirdForm';
+import { setToken } from 'src/redux/slices/tokenSlice';
 
 const FIRST_STEP = 1;
 
@@ -23,6 +24,7 @@ function capitalizeFirstLetter(string: string): string {
 function SignUp(): JSX.Element {
   const { t } = useTranslation();
   const router = useRouter();
+  const dispatch = useAppDispatch();
 
   const [step, setStep] = useState<number>(FIRST_STEP);
   const role = useSelector((state: RootState) => state.role.role);
@@ -39,10 +41,11 @@ function SignUp(): JSX.Element {
 
   const handleSignUp = async (password: string): Promise<void> => {
     try {
-      const response = await signUp({ ...userInfo, password });
-      if ('data' in response && response.data.token) {
-        localStorage.setItem('token', response.data.token);
-      }
+      await signUp( { ...userInfo, password } )
+      .unwrap()
+      .then(({token}: {token: string}) => {
+        dispatch(setToken(token)
+        )});
       router.push('/account-verification');
     } catch (error) {
       throw new Error(error);

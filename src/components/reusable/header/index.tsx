@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { useRouter } from 'next/router';
 import ArrowBackFilled from 'src/assets/icons/ArrowBackFilled';
 import NeedHelpIcon from 'src/assets/icons/NeedHelpIcon';
 import NeedHelpModal from 'src/components/modal-need-help/NeedHelpModal';

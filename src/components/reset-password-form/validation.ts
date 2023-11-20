@@ -2,11 +2,13 @@ import { useTranslation } from 'react-i18next';
 import { AnyObject, ObjectSchema, object, ref, string } from 'yup';
 import { MIN_PASS_LENGTH } from './constants';
 
+export type FormValues = {
+  password: string;
+  confirmPassword: string;
+};
+
 type ReturnType = ObjectSchema<
-  {
-    password: string;
-    confirmPassword: string;
-  },
+  FormValues,
   AnyObject,
   {
     password: undefined;

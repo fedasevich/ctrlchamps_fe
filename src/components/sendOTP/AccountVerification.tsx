@@ -1,25 +1,19 @@
 import React from 'react';
 import { Container } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-
 import EmailInboxIcon from 'src/assets/icons/EmailInboxIcon';
-
 import { FilledButton } from 'src/components/reusable/FilledButton';
 import DigitTextField from 'src/components/sendOTP/DigitInputField';
-
 import useVerification from 'src/hooks/useVerification';
-
 import { AccountVerificationContainer, IconContainer, StyledParagraph, StyledParagraphMain, SubmitButtonContainer } from 'src/components/sendOTP/styles';
 
 
 interface OTPMessageFieldProps { 
   onSubmit: () => void;
 }
-
 const OTPMessageField: React.FC<OTPMessageFieldProps> = ({ onSubmit }): JSX.Element => {
   const { t } = useTranslation();
   const { code, codeDoesNotMatch, handleInputChange, handleSubmit, fetchNewCode } = useVerification({onSubmit});
-
   return (
     <Container component="main" maxWidth="sm">
       <AccountVerificationContainer>
@@ -32,7 +26,6 @@ const OTPMessageField: React.FC<OTPMessageFieldProps> = ({ onSubmit }): JSX.Elem
             {[0, 1, 2, 3].map((index) => (
               <DigitTextField
                 key={index}
-                placeholder={index.toString()}
                 value={code[index]}
                 onChange={handleInputChange(index)}
                 className={codeDoesNotMatch ? 'error' : ''}
@@ -54,5 +47,4 @@ const OTPMessageField: React.FC<OTPMessageFieldProps> = ({ onSubmit }): JSX.Elem
     </Container>
   );
 }
-
 export default OTPMessageField;

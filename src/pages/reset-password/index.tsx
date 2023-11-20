@@ -6,9 +6,12 @@ import EnterEmail from 'src/components/enter-email/EnterEmail';
 import SignUpHeader from 'src/components/reusable/header';
 import { Verification, VerificationSuccess } from 'src/components/verification';
 import ResetPasswordForm from 'src/components/reset-password-form/ResetPasswordForm';
+import { useRouter } from 'next/router';
 
 export default function ResetPassword(): JSX.Element {
   const { translate } = useLocales();
+  const { back: pushBack } = useRouter();
+
   const [currentStep, setCurrentStep] = useState<number>(1);
   const [userEmail, setUserEmail] = useState<string>('');
 
@@ -44,7 +47,7 @@ export default function ResetPassword(): JSX.Element {
       <Head>
         <title>{translate('reset_password.title')}</title>
       </Head>
-      <SignUpHeader text={translate('reset_password.title')} />
+      <SignUpHeader text={translate('reset_password.title')} callback={pushBack} />
       {handleSteps(currentStep)}
     </>
   );

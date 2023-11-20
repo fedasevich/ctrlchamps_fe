@@ -105,7 +105,7 @@ function LoginForm(): JSX.Element {
         </ResetPasswordLink>
         <BottomText>
           {translate('loginForm.link')}
-          <SignUpLink href="/signup">{translate('loginForm.signUp')}</SignUpLink>
+          <SignUpLink href="/sign-up">{translate('loginForm.signUp')}</SignUpLink>
         </BottomText>
       </StyledForm>
     </>

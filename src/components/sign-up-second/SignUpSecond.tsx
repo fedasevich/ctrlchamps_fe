@@ -202,11 +202,23 @@ function SignUpSecond({ role, onNext }: IProps): JSX.Element {
       </InputWrapper>
 
       {role === 'caregiver' && (
-        <FormControlLabel
-          control={
-            <Switch {...register('isOpenToSeekerHomeLiving')} id="isOpenToSeekerHomeLiving" />
-          }
-          label={translate('signUpSecondForm.placeholderIsOpen')}
+        <Controller
+          control={control}
+          name="isOpenToSeekerHomeLiving"
+          render={({ field }): JSX.Element => {
+            return (
+              <FormControlLabel
+                control={
+                  <Switch
+                    value={field.value}
+                    checked={field.value}
+                    onChange={(date): void => field.onChange(date)}
+                  />
+                }
+                label={translate('signUpSecondForm.placeholderIsOpen')}
+              />
+            );
+          }}
         />
       )}
 

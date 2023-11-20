@@ -15,14 +15,14 @@ export const accountVerificationApi = createApi({
   endpoints: (builder) => ({
     submitVerificationCode: builder.mutation<ResponseData, SubmitVerificationCodeProps>({
       query: ({ userId, code }) => ({
-        url: `/auth/verify-account/${userId}`,
+        url: `/auth/verify-account/${ userId }`,
         method: 'POST',
-        body: { code },
+        body: { otpCode: code },
       }),
     }),
-    requestNewVerificationCode: builder.mutation<ResponseData, { userId: string }>({
+    requestNewVerificationCode: builder.mutation<ResponseData, { userId: string; }>({
       query: ({ userId }) => ({
-        url: `/auth/request-new-verification-code/${userId}`,
+        url: `/auth/request-new-verification-code/${ userId }`,
         method: 'POST',
       }),
     }),

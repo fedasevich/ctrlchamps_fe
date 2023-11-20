@@ -81,9 +81,11 @@ const useVerification = ({ onSubmit }: UseVerificationProps): UseVerificationRes
   }, [ code, submitCode, userId, onSubmit ]);
 
   useEffect(() => {
-    fetchNewCode();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    if (!isCodeFetched) {
+      fetchNewCode();
+      setIsCodeFetched(true);
+    }
+  }, [ fetchNewCode, isCodeFetched ]);
 
   return {
     code,

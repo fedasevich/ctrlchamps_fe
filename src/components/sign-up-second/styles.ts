@@ -1,6 +1,5 @@
 import { Button, Typography, styled } from '@mui/material';
 import { TYPOGRAPHY } from 'src/theme/fonts';
-import DatePicker from 'react-datepicker';
 
 export const StyledForm = styled('form')`
   height: 100%;
@@ -23,11 +22,6 @@ export const InputWrapper = styled('div')`
 export const NextButton = styled(Button)`
   border-radius: 4px;
   margin-top: auto;
-`;
-
-export const StyledDatePicker = styled(DatePicker)`
-  width: 480px;
-  height: 48px;
 `;
 
 export const ErrorMessage = styled(Typography)`

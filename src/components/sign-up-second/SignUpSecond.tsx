@@ -8,6 +8,7 @@ import {
   InputLabel,
   Switch,
 } from '@mui/material';
+import DatePicker from 'react-datepicker';
 
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -19,10 +20,10 @@ import { useAppDispatch, useTypedSelector } from 'src/redux/store';
 import { useAccountCheckMutation } from 'src/redux/api/authApi';
 import { savePersonalDetails } from 'src/redux/slices/personalDetailsSlice';
 import { useLocales } from 'src/locales';
+import { USER_DATE_BIRTH_FORMAT, USER_MIN_AGE, EMAIL_ERROR, PHONE_ERROR } from 'src/constants';
 
 import { useSignUpSecondSchema, SignUpSecondValues } from './validation';
-import { USER_DATE_BIRTH_FORMAT, EMAIL_ERROR, USER_MIN_AGE, PHONE_ERROR } from './constants';
-import { ErrorMessage, InputWrapper, NextButton, StyledDatePicker, StyledForm } from './styles';
+import { ErrorMessage, InputWrapper, NextButton, StyledForm } from './styles';
 
 interface IProps {
   role: 'caregiver' | 'seeker';
@@ -118,6 +119,7 @@ function SignUpSecond({ role, onNext }: IProps): JSX.Element {
           <ErrorMessage variant="caption">{errors.firstName?.message}</ErrorMessage>
         )}
       </InputWrapper>
+
       <InputWrapper>
         <FormControl sx={{ width: '100%' }} variant="filled">
           <InputLabel htmlFor="lastName">
@@ -134,6 +136,7 @@ function SignUpSecond({ role, onNext }: IProps): JSX.Element {
           <ErrorMessage variant="caption">{errors.lastName?.message}</ErrorMessage>
         )}
       </InputWrapper>
+
       <InputWrapper>
         <FormControl sx={{ width: '100%' }} variant="filled">
           <InputLabel htmlFor="email">{translate('signUpSecondForm.placeholderEmail')}</InputLabel>
@@ -141,6 +144,7 @@ function SignUpSecond({ role, onNext }: IProps): JSX.Element {
         </FormControl>
         {errors?.email && <ErrorMessage variant="caption">{errors.email?.message}</ErrorMessage>}
       </InputWrapper>
+
       <InputWrapper>
         <FormControl sx={{ width: '100%' }} variant="filled">
           <Controller
@@ -181,12 +185,14 @@ function SignUpSecond({ role, onNext }: IProps): JSX.Element {
 
       <InputWrapper>
         <FormControl sx={{ width: '100%', height: 48 }} variant="filled">
+          <InputLabel htmlFor="dateOfBirth">
+            {translate('signUpSecondForm.placeholderBirthDate')}
+          </InputLabel>
           <Controller
             control={control}
             name="dateOfBirth"
             render={({ field }): JSX.Element => (
-              <StyledDatePicker
-                placeholderText={translate('signUpSecondForm.placeholderBirthDate')}
+              <DatePicker
                 onChange={(date: Date): void => field.onChange(date)}
                 selected={field.value}
                 customInput={<FilledInput fullWidth error={!!errors.dateOfBirth} />}
@@ -205,20 +211,18 @@ function SignUpSecond({ role, onNext }: IProps): JSX.Element {
         <Controller
           control={control}
           name="isOpenToSeekerHomeLiving"
-          render={({ field }): JSX.Element => {
-            return (
-              <FormControlLabel
-                control={
-                  <Switch
-                    value={field.value}
-                    checked={field.value}
-                    onChange={(date): void => field.onChange(date)}
-                  />
-                }
-                label={translate('signUpSecondForm.placeholderIsOpen')}
-              />
-            );
-          }}
+          render={({ field }): JSX.Element => (
+            <FormControlLabel
+              control={
+                <Switch
+                  value={field.value}
+                  checked={field.value}
+                  onChange={(date): void => field.onChange(date)}
+                />
+              }
+              label={translate('signUpSecondForm.placeholderIsOpen')}
+            />
+          )}
         />
       )}
 

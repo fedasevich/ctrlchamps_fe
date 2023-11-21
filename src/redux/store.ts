@@ -5,6 +5,7 @@ import rootReducer from 'src/redux/rootReducer';
 import { personalDetailsReducer } from 'src/redux/slices/personalDetailsSlice';
 import authApi from './api/authApi';
 
+
 const store = configureStore({
   reducer: {
     personalDetails: personalDetailsReducer,

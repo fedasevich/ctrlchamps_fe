@@ -12,6 +12,15 @@ interface AccountCheckResponse {
   message?: string;
 }
 
+interface SignInData {
+  email: string;
+  password: string;
+}
+
+interface SignInResponse {
+  token: string;
+}
+
 export const authApi = createApi({
   reducerPath: 'authApi',
   baseQuery: fetchBaseQuery({ baseUrl: `${process.env.NEXT_PUBLIC_API_URL}/${route.auth}` }),
@@ -49,6 +58,13 @@ export const authApi = createApi({
         url: `${route.accountCheck}`,
         method: 'POST',
         body: accountCheckData,
+}),
+    }),
+    signIn: builder.mutation<SignInResponse, SignInData>({
+      query: (signInData) => ({
+        url: `${route.signIn}`,
+        method: 'POST',
+        body: signInData,
       }),
     }),
   }),
@@ -60,6 +76,7 @@ export const {
   useRequestResetCodeMutation,
   useVerifyResetCodeMutation,
   useAccountCheckMutation,
+  useSignInMutation,
 } = authApi;
 
 export default authApi;

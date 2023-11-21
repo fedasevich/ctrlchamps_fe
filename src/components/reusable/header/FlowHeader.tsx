@@ -3,7 +3,7 @@ import ArrowBackFilled from 'src/assets/icons/ArrowBackFilled';
 import NeedHelpIcon from 'src/assets/icons/NeedHelpIcon';
 import NeedHelpModal from 'src/components/modal-need-help/NeedHelpModal';
 import CloseIcon from 'src/assets/icons/CloseIcon';
-import { Container, Header, Text, Link, InfoButton } from './styles';
+import { Container, Header, Text, InfoButton, Icon } from './styles';
 
 enum IconType {
   close = 'close',
@@ -33,9 +33,9 @@ export default function FlowHeader({
     <>
       <Header>
         <Container>
-          <Link type="button" onClick={callback}>
+          <Icon type="button" onClick={callback}>
             {iconType === IconType.back ? <ArrowBackFilled /> : <CloseIcon />}
-          </Link>
+          </Icon>
           <Text>{text}</Text>
         </Container>
         <InfoButton type="button" onClick={handleClick}>

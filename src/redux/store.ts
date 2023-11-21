@@ -14,7 +14,7 @@ import { accountVerificationApi } from './api/accountVerificationAPI';
 const persistConfig = {
   key: 'root',
   storage,
-  whitelist: [ 'token' ],
+  whitelist: ['token'],
 };
 
 const persistedTokenReducer = persistReducer(persistConfig, tokenReducer);
@@ -25,14 +25,14 @@ const store = configureStore({
     personalDetails: personalDetailsReducer,
     address: addressReducer,
     token: persistedTokenReducer,
-    [ authApi.reducerPath ]: authApi.reducer,
-    [ accountVerificationApi.reducerPath ]: accountVerificationApi.reducer
+    [authApi.reducerPath]: authApi.reducer,
+    [accountVerificationApi.reducerPath]: accountVerificationApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: false,
       immutableCheck: false,
-    }).concat([ authApi.middleware, accountVerificationApi.middleware ]),
+    }).concat([authApi.middleware, accountVerificationApi.middleware]),
 });
 
 const persistor = persistStore(store);

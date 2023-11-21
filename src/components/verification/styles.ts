@@ -11,6 +11,18 @@ const Container = styled.div`
   gap: 48px;
 `;
 
+const OtpContainer = styled.div`
+  display: flex;
+  gap: 16px;
+`;
+
+const OtpWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+`;
+
 const IconWrapper = styled.div`
   background: ${PRIMARY.light_main};
   width: fit-content;
@@ -52,10 +64,6 @@ const TextWrapper = styled.div`
   gap: 4px;
 `;
 
-const TextInputContainer = styled.div`
-  display: flex;
-  gap: 16px;
-`;
 const TextInput = styled(TextField)(() => ({
   width: '88px',
   textAlign: 'center',
@@ -94,7 +102,8 @@ export {
   TextBtn,
   TextInput,
   TextWrapper,
-  TextInputContainer,
+  OtpContainer,
+  OtpWrapper,
   BtnContainer,
   FormWrapper,
 };

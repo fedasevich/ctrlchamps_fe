@@ -33,6 +33,7 @@ const en = {
       invalid: 'Enter valid email',
       invalid_pass: 'Password should contain at least {{num}} characters',
       unexpected: 'Something went wrong..',
+      invalid_code: "Entered code doesn't match the code which was sent to your email.",
     },
   },
 };

@@ -2,6 +2,20 @@ const en = {
   app_title: 'App title',
   app: `this application`,
   example: 'text for demo purposes',
+  loginForm: {
+    emailInvalid: 'Email is incorrect',
+    passwordInvalid: 'Password needs to be at least 8 characters',
+    emailRequired: 'Email is required',
+    passwordRequired: 'Password is required',
+    emailPlaceholder: 'E-mail Address',
+    passwordPlaceholder: 'Password',
+    title: 'Sign In',
+    formTitle: 'Sign in to get access to your appointments',
+    link: 'Don`t have an account?',
+    resetPassword: 'Reset Password',
+    signUp: 'Sign Up',
+    authError: 'Please enter valid credentials',
+  },
   signUpSecondForm: {
     firstNameInvalid: 'First name maximum length is 100',
     firstNameRequired: 'First name is required',
@@ -87,6 +101,19 @@ const en = {
   btn_submit: 'Submit',
   request_code: 'Request new code',
   edit_email: 'Edit email',
+  account_verification: {
+    account_verification: 'Account Verification',
+    sent_code: 'We have sent and OTP verification code to your email, please enter it here',
+    request_code: 'Request new code',
+    btn_submit: 'Submit',
+    successfully_verified: 'Successfully Verified',
+    successfully_caregiver:
+      'Now you can pass background check and set up your profile and start exploring care seekers in your area',
+    successfully_caregiver_btn: 'Set up Profile',
+    successfully_seeker:
+      'Now you can sign in your account and start seeking care givers in your area',
+    successfully_seeker_btn: 'Sign In',
+  },
   loading: 'Loading...',
   reset_password: {
     title: 'Reset Password',

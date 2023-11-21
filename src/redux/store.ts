@@ -2,41 +2,43 @@ import { configureStore } from '@reduxjs/toolkit';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 import { persistReducer, persistStore } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
-import authApi from 'src/redux/api/authApi';
-import api from 'src/redux/api/userAPI';
-import authReducer from 'src/redux/authReducer';
+
 import rootReducer from 'src/redux/rootReducer';
 import { addressReducer } from 'src/redux/slices/addressSlice';
-import { personalDetailsReducer } from './slices/personalDetailsSlice';
+import { personalDetailsReducer } from 'src/redux/slices/personalDetailsSlice';
+import { roleReducer } from 'src/redux/slices/roleSlice';
+import { tokenReducer } from 'src/redux/slices/tokenSlice';
+import { accountVerificationApi } from './api/accountVerificationAPI';
+import authApi from './api/authApi';
 
 const persistConfig = {
   key: 'root',
   storage,
+  whitelist: ['token'],
 };
 
-const persistedReducer = persistReducer(persistConfig, rootReducer);
+const persistedTokenReducer = persistReducer(persistConfig, tokenReducer);
 
 const store = configureStore({
   reducer: {
-    persistedReducer,
-    auth: authReducer,
-    [authApi.reducerPath]: authApi.reducer,
+    role: roleReducer,
     personalDetails: personalDetailsReducer,
     address: addressReducer,
-    [api.reducerPath]: api.reducer,
+    token: persistedTokenReducer,
+    [authApi.reducerPath]: authApi.reducer,
+    [accountVerificationApi.reducerPath]: accountVerificationApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: false,
       immutableCheck: false,
-    }).concat(authApi.middleware),
+    }).concat([authApi.middleware, accountVerificationApi.middleware]),
 });
+
 const persistor = persistStore(store);
 
 export type RootState = ReturnType<typeof rootReducer>;
 export const useTypedSelector: TypedUseSelectorHook<RootState> = useSelector;
-
-export { persistor, store };
-
 export type AppDispatch = typeof store.dispatch;
 export const useAppDispatch = () => useDispatch<AppDispatch>();
+export { persistor, store };

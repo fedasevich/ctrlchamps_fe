@@ -2,13 +2,21 @@ import React, { useState } from 'react';
 import ArrowBackFilled from 'src/assets/icons/ArrowBackFilled';
 import NeedHelpIcon from 'src/assets/icons/NeedHelpIcon';
 import NeedHelpModal from 'src/components/modal-need-help/NeedHelpModal';
+import CloseIcon from 'src/assets/icons/CloseIcon';
 import { Container, Header, Text, Link, InfoButton } from './styles';
 
-export default function SignUpHeader({
+enum IconType {
+  close = 'close',
+  back = 'back',
+}
+
+export default function FlowHeader({
   text,
+  iconType,
   callback,
 }: {
   text: string;
+  iconType: 'back' | 'close';
   callback: () => void;
 }): JSX.Element {
   const [showModal, setShowModal] = useState<boolean>(false);
@@ -26,7 +34,7 @@ export default function SignUpHeader({
       <Header>
         <Container>
           <Link type="button" onClick={callback}>
-            <ArrowBackFilled />
+            {iconType === IconType.back ? <ArrowBackFilled /> : <CloseIcon />}
           </Link>
           <Text>{text}</Text>
         </Container>

@@ -1,70 +1,97 @@
-import React, { useMemo, useState } from 'react'
-import { useSelector } from 'react-redux';
-import { useTranslation } from 'react-i18next';
+import jwt_decode from 'jwt-decode';
 import { useRouter } from 'next/router';
+import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
 
-import { RootState, useDispatch } from 'src/redux/store';
+import { useRequestNewVerificationCodeMutation } from 'src/redux/api/accountVerificationAPI';
 import { useSignUpMutation } from 'src/redux/api/authAPI';
+import { RootState, useAppDispatch } from 'src/redux/store';
 import { setToken } from 'src/redux/slices/tokenSlice';
+import { ROUTES } from 'src/routes';
 
-import Step1Form from "src/components/sign-up/sign-up-first/SignUpForm1";
-import SignUpHeader from "src/components/reusable/header";
 
-const FIRST_STEP :number = 1;
+import SignUpFooter from 'src/components/reusable/footer';
+import SignUpHeader from 'src/components/reusable/header';
+import SignUpWrapper from 'src/components/reusable/sign-up-wrapper/SignUpWrapper';
+import SignUpFirstForm from 'src/components/sign-up-first/SignUpFirst';
+import SignUpSecond from 'src/components/sign-up-second/SignUpSecond';
+import SignUpThirdForm from 'src/components/sign-up-third/SignUpThirdForm';
+import SignUpFourthForm from 'src/components/sign-up-fourth/SignUpFourthForm';
 
-function SignUp() :JSX.Element {
-    const { t } = useTranslation();
-    const router = useRouter();
-    const dispatch = useDispatch();
+const FIRST_STEP = 1;
 
-    const [signUp] = useSignUpMutation();
+function capitalizeFirstLetter(string: string): string {
+  return string.charAt(0).toUpperCase() + string.slice(1);
+}
 
-    const [step, setStep] = useState<number>(FIRST_STEP);
+function SignUp(): JSX.Element {
+  const { t } = useTranslation();
+  const router = useRouter();
+  const dispatch = useAppDispatch();
 
-    const role :string = useSelector((state: RootState) => state.role.role);
-    const personalDetails = useSelector((state: RootState) => state.personalDetails.personalDetails);
-    
-    const userInfo = useMemo(() => ({
-        role,
-        ...personalDetails,
-        country: '',
-        state: '',
-        city: '',
-        zipCode: '',
-        address: '',
-        password: '',
-      }), [role, personalDetails]);
+  const [step, setStep] = useState<number>(FIRST_STEP);
+  const role = useSelector((state: RootState) => state.role.role);
+  const addressData = useSelector((state: RootState) => state.address.addressData);
+  const personalDetails = useSelector((state: RootState) => state.personalDetails.personalDetails);
 
-    const handleSignUp = async (): Promise<void> => {
+  const [signUp] = useSignUpMutation();
+  const [requestNewCode] = useRequestNewVerificationCodeMutation();
+
+  const userInfo = {
+    role: capitalizeFirstLetter(role),
+    ...personalDetails,
+    ...addressData,
+  };
+
+  const handleSignUp = async (password: string): Promise<void> => {
+    try {
+      const { token }: { token: string } = await signUp({ ...userInfo, password }).unwrap();
+  
+      dispatch(setToken(token));
+  
+      const decoded: { id: string; iat: number; exp: number } = jwt_decode(token);
       try {
-        await signUp( userInfo )
-        .unwrap()
-        .then(({token}: {token: string}) => {
-          dispatch(setToken(token)
-          )});
-        router.push('/account-verification');
+        await requestNewCode({ userId: decoded.id })
+          .unwrap()
+          .then(() => {
+            router.push(ROUTES.account_verification);
+          })
       } catch (error) {
         throw new Error(error);
       }
-    };
+    } catch (error) {
+      throw new Error(error);
+    }
+  };
+  
 
-    const handleNextStep = (): void => {
-      handleSignUp()
-        .then(() => {
-          setStep(prevStep => prevStep + 1);
-        })
-        .catch((error) => {
-          throw new Error(error)
-        });
-    };
+  const handleBackStep = (): void => {
+    if (step > 1) {
+      setStep((prevStep) => prevStep - 1);
+    }
+  };
+
+  const handleNextStep = (): void => {
+    setStep((prevStep) => prevStep + 1);
+  };
 
   return (
     <>
-    <SignUpHeader text={t('SignUp')}/>
-    {step === 1 && <Step1Form onNext={handleNextStep} />}
-    {step === 2 && <div/>}
+      <SignUpHeader text={t('SignUp')} callback={handleBackStep} />
+      <SignUpWrapper>
+        <>
+          {step === 1 && <SignUpFirstForm onNext={handleNextStep} />}
+          {step === 2 && (
+            <SignUpSecond role={(role as 'seeker') || 'caregiver'} onNext={handleNextStep} />
+          )}
+          {step === 3 && <SignUpThirdForm onNext={handleNextStep} />}
+          {step === 4 && <SignUpFourthForm onNext={handleSignUp} />}
+          <SignUpFooter />
+        </>
+      </SignUpWrapper>
     </>
-  )
+  );
 }
 
-export default SignUp
+export default SignUp;

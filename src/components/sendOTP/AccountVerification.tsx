@@ -5,15 +5,24 @@ import EmailInboxIcon from 'src/assets/icons/EmailInboxIcon';
 import { FilledButton } from 'src/components/reusable/FilledButton';
 import DigitTextField from 'src/components/sendOTP/DigitInputField';
 import useVerification from 'src/hooks/useVerification';
-import { AccountVerificationContainer, IconContainer, StyledParagraph, StyledParagraphMain, SubmitButtonContainer } from 'src/components/sendOTP/styles';
+import {
+  AccountVerificationContainer,
+  IconContainer,
+  StyledParagraph,
+  StyledParagraphMain,
+  SubmitButtonContainer,
+} from 'src/components/sendOTP/styles';
 
-
-interface OTPMessageFieldProps { 
+interface OTPMessageFieldProps {
   onSubmit: () => void;
 }
+
 const OTPMessageField: React.FC<OTPMessageFieldProps> = ({ onSubmit }): JSX.Element => {
   const { t } = useTranslation();
-  const { code, codeDoesNotMatch, handleInputChange, handleSubmit, fetchNewCode } = useVerification({onSubmit});
+
+  const { code, codeDoesNotMatch, handleInputChange, handleSubmit, requestNewCode } =
+    useVerification({ onSubmit });
+
   return (
     <Container component="main" maxWidth="sm">
       <AccountVerificationContainer>
@@ -33,7 +42,9 @@ const OTPMessageField: React.FC<OTPMessageFieldProps> = ({ onSubmit }): JSX.Elem
             ))}
           </div>
         </form>
-        <StyledParagraphMain onClick={fetchNewCode}>{t('account_verification.request_code')}</StyledParagraphMain>
+        <StyledParagraphMain onClick={requestNewCode}>
+          {t('account_verification.request_code')}
+        </StyledParagraphMain>
         <SubmitButtonContainer>
           <FilledButton
             fullWidth
@@ -46,5 +57,5 @@ const OTPMessageField: React.FC<OTPMessageFieldProps> = ({ onSubmit }): JSX.Elem
       </AccountVerificationContainer>
     </Container>
   );
-}
+};
 export default OTPMessageField;

@@ -10,7 +10,7 @@ interface DigitTextFieldProps {
 
 const DigitTextField: React.FC<DigitTextFieldProps> = ({ value, onChange, className }) => {
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
-    const digitValue:string = event.target.value.replace(/\D/g, '').slice(0, 1);
+    const digitValue: string = event.target.value.replace(/\D/g, '').slice(0, 1);
     onChange(digitValue);
   };
 

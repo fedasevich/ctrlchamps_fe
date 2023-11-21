@@ -1,19 +1,24 @@
+
+import jwt_decode from 'jwt-decode';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 
+import { useRequestNewVerificationCodeMutation } from 'src/redux/api/accountVerificationAPI';
 import { useSignUpMutation } from 'src/redux/api/authAPI';
 import { RootState, useAppDispatch } from 'src/redux/store';
+import { setToken } from 'src/redux/slices/tokenSlice';
+import { ROUTES } from 'src/routes';
+
 
 import SignUpFooter from 'src/components/reusable/footer';
 import SignUpHeader from 'src/components/reusable/header';
 import SignUpWrapper from 'src/components/reusable/sign-up-wrapper/SignUpWrapper';
 import SignUpFirstForm from 'src/components/sign-up-first/SignUpFirst';
-import SignUpFourthForm from 'src/components/sign-up-fourth/SignUpFourthForm';
 import SignUpSecond from 'src/components/sign-up-second/SignUpSecond';
 import SignUpThirdForm from 'src/components/sign-up-third/SignUpThirdForm';
-import { setToken } from 'src/redux/slices/tokenSlice';
+import SignUpFourthForm from 'src/components/sign-up-fourth/SignUpFourthForm';
 
 const FIRST_STEP = 1;
 
@@ -32,6 +37,7 @@ function SignUp(): JSX.Element {
   const personalDetails = useSelector((state: RootState) => state.personalDetails.personalDetails);
 
   const [signUp] = useSignUpMutation();
+  const [requestNewCode] = useRequestNewVerificationCodeMutation();
 
   const userInfo = {
     role: capitalizeFirstLetter(role),
@@ -41,16 +47,25 @@ function SignUp(): JSX.Element {
 
   const handleSignUp = async (password: string): Promise<void> => {
     try {
-      await signUp( { ...userInfo, password } )
-      .unwrap()
-      .then(({token}: {token: string}) => {
-        dispatch(setToken(token)
-        )});
-      router.push('/account-verification');
+      const { token }: { token: string } = await signUp({ ...userInfo, password }).unwrap();
+  
+      dispatch(setToken(token));
+  
+      const decoded: { id: string; iat: number; exp: number } = jwt_decode(token);
+      try {
+        await requestNewCode({ userId: decoded.id })
+          .unwrap()
+          .then(() => {
+            router.push(ROUTES.account_verification);
+          })
+      } catch (error) {
+        throw new Error(error);
+      }
     } catch (error) {
       throw new Error(error);
     }
   };
+  
 
   const handleBackStep = (): void => {
     if (step > 1) {

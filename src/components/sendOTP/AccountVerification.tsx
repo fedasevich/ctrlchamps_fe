@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Container } from '@mui/material';
 import { useTranslation } from 'react-i18next';
@@ -11,11 +12,9 @@ import { AccountVerificationContainer, IconContainer, StyledParagraph, StyledPar
 interface OTPMessageFieldProps { 
   onSubmit: () => void;
 }
-
 const OTPMessageField: React.FC<OTPMessageFieldProps> = ({ onSubmit }): JSX.Element => {
   const { t } = useTranslation();
-  const { code, codeDoesNotMatch, handleInputChange, handleSubmit, fetchNewCode } = useVerification({onSubmit});
-
+  const { code, codeDoesNotMatch, handleInputChange, handleSubmit, requestNewCode } = useVerification({onSubmit});
   return (
     <Container component="main" maxWidth="sm">
       <AccountVerificationContainer>
@@ -35,7 +34,7 @@ const OTPMessageField: React.FC<OTPMessageFieldProps> = ({ onSubmit }): JSX.Elem
             ))}
           </div>
         </form>
-        <StyledParagraphMain onClick={fetchNewCode}>{t('account_verification.request_code')}</StyledParagraphMain>
+        <StyledParagraphMain onClick={requestNewCode}>{t('account_verification.request_code')}</StyledParagraphMain>
         <SubmitButtonContainer>
           <FilledButton
             fullWidth
@@ -49,5 +48,5 @@ const OTPMessageField: React.FC<OTPMessageFieldProps> = ({ onSubmit }): JSX.Elem
     </Container>
   );
 }
-
 export default OTPMessageField;
+

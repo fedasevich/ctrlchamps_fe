@@ -10,7 +10,6 @@ import authReducer from 'src/redux/authReducer';
 import authApi from 'src/redux/api/authApi';
 import { personalDetailsReducer } from './slices/personalDetailsSlice';
 
-
 export type RootState = ReturnType<typeof rootReducer>;
 
 export type AppDispatch = typeof store.dispatch;

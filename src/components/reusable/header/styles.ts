@@ -23,7 +23,7 @@ const Text = styled.p`
   text-transform: capitalize;
 `;
 
-const Link = styled.button`
+const Icon = styled.button`
   border: none;
   background: none;
   display: flex;
@@ -45,4 +45,4 @@ const InfoButton = styled.button`
   cursor: pointer;
 `;
 
-export { Header, Container, Text, Link, InfoButton };
+export { Header, Container, Text, Icon, InfoButton };

@@ -20,7 +20,10 @@ export default function ResetPasswordForm({
 }): JSX.Element {
   const { translate } = useLocales();
   const resetPassSchema = useResetPassword();
-  const [isVisible, setIsVisible] = useState<boolean>(false);
+
+  const [isPassVisible, setIsPassVisible] = useState<boolean>(false);
+  const [isConfirmPassVisible, setIsConfirmPassVisible] = useState<boolean>(false);
+
   const [resetPassword, { isLoading }] = useResetPasswordMutation();
   const [error, setError] = useState<string | null>(null);
 
@@ -34,7 +37,8 @@ export default function ResetPasswordForm({
     mode: 'onChange',
   });
 
-  const showPassword = (): void => setIsVisible((visible) => !visible);
+  const showPassword = (): void => setIsPassVisible((visible) => !visible);
+  const showConfirmPassword = (): void => setIsConfirmPassVisible((visible) => !visible);
 
   const onSubmit = handleSubmit(async (data) => {
     try {
@@ -61,21 +65,20 @@ export default function ResetPasswordForm({
             id="password"
             autoComplete="off"
             error={!!errors.password}
-            type={isVisible ? 'text' : 'password'}
+            type={isPassVisible ? 'text' : 'password'}
             endAdornment={
               <InputAdornment position="end">
                 <IconButton
                   aria-label={translate('reset_password.aria.toggle')}
                   onClick={showPassword}
                 >
-                  {isVisible ? <Visibility /> : <VisibilityOff />}
+                  {isPassVisible ? <Visibility /> : <VisibilityOff />}
                 </IconButton>
               </InputAdornment>
             }
           />
           {errors?.password && <ErrorMessage>{errors.password?.message}</ErrorMessage>}
         </FormControl>
-
         <FormControl variant="outlined">
           <OutlinedInput
             size="small"
@@ -85,14 +88,14 @@ export default function ResetPasswordForm({
             autoComplete="off"
             placeholder={translate('reset_password.placeholder.confirm_pass')}
             error={!!errors.confirmPassword}
-            type={isVisible ? 'text' : 'password'}
+            type={isConfirmPassVisible ? 'text' : 'password'}
             endAdornment={
               <InputAdornment position="end">
                 <IconButton
                   aria-label={translate('reset_password.aria.toggle')}
-                  onClick={showPassword}
+                  onClick={showConfirmPassword}
                 >
-                  {isVisible ? <Visibility /> : <VisibilityOff />}
+                  {isConfirmPassVisible ? <Visibility /> : <VisibilityOff />}
                 </IconButton>
               </InputAdornment>
             }

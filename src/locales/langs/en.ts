@@ -61,6 +61,31 @@ const en = {
     text: 'Reach out to us via email and we`ll get back to you as soon as possible:',
     email: 'support@afyanexcare.com',
   },
+  signUpThirdForm: {
+    countryRequired: 'Country is required',
+
+    stateMaxLength: 'State must be at most 100 characters',
+    stateRequired: 'State is required',
+
+    cityMaxLength: 'City must be at most 100 characters',
+    cityRequired: 'City is required',
+
+    zipCodeMaxLength: 'Zip code must be at most 100 characters',
+    zipCodeRequired: 'Zip code is required',
+
+    addressMaxLength: 'Address must be at most 100 characters',
+    addressRequired: 'Address is required',
+
+    placeholderCountry: 'Country',
+    placeholderState: 'State',
+    placeholderCity: 'City',
+    placeholderZipCode: 'Zip Code',
+    placeholderAddress: 'Address',
+  },
+  countries: {
+    canada: 'Canada',
+    unitedStates: 'USA',
+  },
   signUpFourthForm: {
     passwordInvalid: 'Password needs to be at least 8 characters',
     passwordsNotMatching: 'Passwords field and Confirm password field must match',
@@ -120,6 +145,7 @@ const en = {
       invalid: 'Enter valid email',
       invalid_pass: 'Password should contain at least {{num}} characters',
       unexpected: 'Something went wrong..',
+      invalid_code: "Entered code doesn't match the code which was sent to your email.",
     },
   },
 };

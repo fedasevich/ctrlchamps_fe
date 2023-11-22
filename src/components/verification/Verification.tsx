@@ -1,22 +1,21 @@
 import { useState } from 'react';
+import { Alert, Snackbar } from '@mui/material';
+
 import { useLocales } from 'src/locales';
 import { useRequestResetCodeMutation, useVerifyResetCodeMutation } from 'src/redux/api/authApi';
-
-import { Alert, Snackbar } from '@mui/material';
 import EmailInboxIcon from 'src/assets/icons/EmailInboxIcon';
-import { FilledButton } from '../reusable/FilledButton';
+import { ErrorText, FilledButton } from '../reusable';
 import {
   BtnContainer,
-  TextInputContainer as CodeInputWrapper,
   Container,
   FormWrapper,
   IconWrapper,
+  OtpWrapper,
   Text,
   TextBtn,
 } from './styles';
 import OTPInput from './OTPInput';
 import { OTP_LENGTH } from './constants';
-import { ErrorText } from '../reusable/ErrorText';
 
 type VerificationProps = { userEmail: string; next: () => void; back: () => void };
 
@@ -77,7 +76,7 @@ export default function Verification({ userEmail, next, back }: VerificationProp
       </IconWrapper>
       <Text>{translate('reset_password.sent_code')}</Text>
       <FormWrapper onSubmit={onSubmit}>
-        <CodeInputWrapper>
+        <OtpWrapper>
           <OTPInput
             length={length}
             setCode={setCode}
@@ -85,7 +84,8 @@ export default function Verification({ userEmail, next, back }: VerificationProp
             error={error}
             setError={setError}
           />
-        </CodeInputWrapper>
+          {error && <ErrorText>{translate('reset_password.errors.invalid_code')}</ErrorText>}
+        </OtpWrapper>
         <BtnContainer>
           <TextBtn onClick={(): Promise<void> => requestNewCode(userEmail)} disableRipple>
             {translate('request_code')}

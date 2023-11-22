@@ -1,15 +1,15 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { useDispatch, TypedUseSelectorHook, useSelector } from 'react-redux';
-import { persistStore, persistReducer } from 'redux-persist';
+import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
+import { persistReducer, persistStore } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 
 import rootReducer from 'src/redux/rootReducer';
-import { roleReducer } from 'src/redux/slices/roleSlice';
 import { addressReducer } from 'src/redux/slices/addressSlice';
 import { personalDetailsReducer } from 'src/redux/slices/personalDetailsSlice';
+import { roleReducer } from 'src/redux/slices/roleSlice';
 import { tokenReducer } from 'src/redux/slices/tokenSlice';
-import authApi from './api/authApi';
 import { accountVerificationApi } from './api/accountVerificationAPI';
+import authApi from './api/authApi';
 
 const persistConfig = {
   key: 'root',
@@ -41,4 +41,4 @@ export type RootState = ReturnType<typeof rootReducer>;
 export const useTypedSelector: TypedUseSelectorHook<RootState> = useSelector;
 export type AppDispatch = typeof store.dispatch;
 export const useAppDispatch = () => useDispatch<AppDispatch>();
-export { store, persistor };
+export { persistor, store };

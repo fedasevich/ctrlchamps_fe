@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction, useState } from 'react';
-import { TextInput } from './styles';
+import { OtpContainer, TextInput } from './styles';
 
 type Props = {
   length: number;
@@ -48,7 +48,7 @@ export default function OTPInput({
   }
 
   return (
-    <>
+    <OtpContainer>
       {otpValues.map((_, index) => (
         <TextInput
           key={index}
@@ -61,6 +61,6 @@ export default function OTPInput({
           inputProps={{ maxLength: 1, style: { textAlign: 'center' } }}
         />
       ))}
-    </>
+    </OtpContainer>
   );
 }

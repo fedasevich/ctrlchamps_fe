@@ -160,6 +160,13 @@ const en = {
       recurring_desc:
         'Scheduled appointments that repeat or predetermined intervals, catering to ongoing or long-term needs',
     },
+    modal: {
+      header: 'Cancel appointment creation',
+      confirmation: 'Are you sure you would like to cancel this appointment creation?',
+      positive_confirm: 'Yes, cancel',
+      aria_label: 'cancel-appointment-modal',
+      aria_description: 'modal-to-cancel-appointment',
+    },
     placeholder: {
       name: 'Appointment Name',
     },

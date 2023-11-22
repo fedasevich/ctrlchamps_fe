@@ -1,5 +1,6 @@
 import { Button, Typography, styled } from '@mui/material';
 import { TYPOGRAPHY } from 'src/theme/fonts';
+import typography from 'src/theme/typography';
 import { SECONDARY, PRIMARY } from 'src/theme/colors';
 
 export const Wrapper = styled('div')`
@@ -20,7 +21,7 @@ export const StyledForm = styled('form')`
 `;
 
 export const Title = styled(Typography)`
-  font-weight: 500;
+  font-weight: ${typography.fontWeightMedium};
   letter-spacing: 0.15px;
   line-height: 1.5;
   letter-spacing: 0.15px;
@@ -29,7 +30,7 @@ export const Title = styled(Typography)`
 `;
 
 export const Label = styled('p')`
-  font-weight: 500;
+  font-weight: ${typography.fontWeightMedium};
   letter-spacing: 0.15px;
   line-height: 1.5;
   letter-spacing: 0.15px;

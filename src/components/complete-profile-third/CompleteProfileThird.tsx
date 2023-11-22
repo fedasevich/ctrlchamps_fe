@@ -3,7 +3,6 @@ import { Checkbox, FormControlLabel } from '@mui/material';
 import { useForm, Controller } from 'react-hook-form';
 import { useLocales } from 'src/locales';
 import { Wrapper, Title, StyledForm, Label, NextButton } from './styles';
-
 import { CompleteProfileThirdValues } from './types';
 
 interface IProps {

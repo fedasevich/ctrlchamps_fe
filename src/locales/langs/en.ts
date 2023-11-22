@@ -16,6 +16,18 @@ const en = {
     signUp: 'Sign Up',
     authError: 'Please enter valid credentials',
   },
+  signUpFirstForm: {
+    Seeker: {
+      Title: 'Seeker',
+      Description:
+        'Find the perfect caregiver for you or your loved one to get reliable and personalized care',
+    },
+    Caregiver: {
+      Title: 'Caregiver',
+      Description:
+        'Connect with clients seeking your expertise and provide compassionate care for those in need',
+    },
+  },
   signUpSecondForm: {
     firstNameInvalid: 'First name maximum length is 100',
     firstNameRequired: 'First name is required',
@@ -33,6 +45,35 @@ const en = {
     placeholderPhone: 'Phone Number',
     placeholderBirthDate: 'Date of Birth',
     placeholderIsOpen: 'I`m open to living in clients` houses',
+  },
+  signUpThirdForm: {
+    countryRequired: 'Country is required',
+
+    stateMaxLength: 'State must be at most 100 characters',
+    stateRequired: 'State is required',
+
+    cityMaxLength: 'City must be at most 100 characters',
+    cityRequired: 'City is required',
+
+    zipCodeMaxLength: 'Zip code must be at most 100 characters',
+    zipCodeRequired: 'Zip code is required',
+
+    addressMaxLength: 'Address must be at most 100 characters',
+    addressRequired: 'Address is required',
+
+    placeholderCountry: 'Country',
+    placeholderState: 'State',
+    placeholderCity: 'City',
+    placeholderZipCode: 'Zip Code',
+    placeholderAddress: 'Address',
+  },
+  signUpFourthForm: {
+    passwordInvalid: 'Password needs to be at least 8 characters',
+    passwordsNotMatching: 'Passwords field and Confirm password field must match',
+    passwordRequired: 'Password is required',
+    confirmPasswordRequired: 'Confirm password is required',
+    placeholderPassword: 'Password',
+    placeholderConfirmPassword: 'Confirm Password',
   },
   footer: {
     termsText: 'By signing up you agree to our',
@@ -58,46 +99,12 @@ const en = {
     text: 'Reach out to us via email and we`ll get back to you as soon as possible:',
     email: 'support@afyanexcare.com',
   },
-  signUpThirdForm: {
-    countryRequired: 'Country is required',
-
-    stateMaxLength: 'State must be at most 100 characters',
-    stateRequired: 'State is required',
-
-    cityMaxLength: 'City must be at most 100 characters',
-    cityRequired: 'City is required',
-
-    zipCodeMaxLength: 'Zip code must be at most 100 characters',
-    zipCodeRequired: 'Zip code is required',
-
-    addressMaxLength: 'Address must be at most 100 characters',
-    addressRequired: 'Address is required',
-
-    placeholderCountry: 'Country',
-    placeholderState: 'State',
-    placeholderCity: 'City',
-    placeholderZipCode: 'Zip Code',
-    placeholderAddress: 'Address',
-  },
   countries: {
     canada: 'Canada',
     unitedStates: 'USA',
   },
-  signUpFourthForm: {
-    passwordInvalid: 'Password needs to be at least 8 characters',
-    passwordsNotMatching: 'Passwords field and Confirm password field must match',
-    passwordRequired: 'Password is required',
-    confirmPasswordRequired: 'Confirm password is required',
-    placeholderPassword: 'Password',
-    placeholderConfirmPassword: 'Confirm Password',
-  },
+
   SignUp: 'Sign Up',
-  seeker:
-    'Find the perfect caregiver for you or your loved one to get reliable and personalized care',
-  caregiver:
-    'Connect with clients seeking your expertise and provide compassionate care for those in need',
-  BySigningUp: 'By signing up you agree to the ',
-  terms_conditions: 'Terms and Conditions',
   btn_submit: 'Submit',
   request_code: 'Request new code',
   edit_email: 'Edit email',

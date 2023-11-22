@@ -77,7 +77,7 @@ function SignUp(): JSX.Element {
 
   return (
     <>
-      <FlowHeader text={t('SignUp')} callback={handleBackStep} iconType="close" />
+      <FlowHeader text={t('SignUp')} callback={handleBackStep} iconType="back" />
       <SignUpWrapper>
         <>
           {step === 1 && <SignUpFirstForm onNext={handleNextStep} />}

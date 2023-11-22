@@ -10,7 +10,6 @@ import { setRole } from 'src/redux/slices/roleSlice';
 import {
   BoxWrapper,
   NextButton,
-  StyledParagraph,
   StyledParagraphMain,
   selectedItemColorLigthTheme,
   signupColorInLightTheme,
@@ -50,28 +49,22 @@ const SignUpFirstForm: React.FC<Step1FormProps> = ({ onNext }) => {
     <Container component="main" maxWidth="sm">
       <BoxWrapper>
         <CustomRadio
-          label={t('Seeker.Title')}
-          description={t('Seeker.Description')}
+          label={t('signUpFirstForm.Seeker.Title')}
+          description={t('signUpFirstForm.Seeker.Description')}
           value="seeker"
           selectedOption={selectedOption}
           handleOptionChange={handleOptionChange}
         />
         <CustomRadio
-          label={t('Caregiver.Title')}
-          description={t('Caregiver.Description')}
+          label={t('signUpFirstForm.Caregiver.Title')}
+          description={t('signUpFirstForm.Caregiver.Description')}
           value="caregiver"
           selectedOption={selectedOption}
           handleOptionChange={handleOptionChange}
         />
-
-        <div>
-          <NextButton disabled={!selectedOption} onClick={handleNext}>
-            Next
-          </NextButton>
-          <StyledParagraph>
-            {t('BySigningUp')} <a href="#">{t('terms_conditions')}</a>
-          </StyledParagraph>
-        </div>
+        <NextButton disabled={!selectedOption} onClick={handleNext}>
+          Next
+        </NextButton>
       </BoxWrapper>
     </Container>
   );

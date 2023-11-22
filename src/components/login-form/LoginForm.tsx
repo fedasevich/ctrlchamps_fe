@@ -9,6 +9,7 @@ import { useLocales } from 'src/locales';
 import { useSignInMutation } from 'src/redux/api/authApi';
 import Visibility from 'src/assets/icons/Visibility';
 import VisibilityOff from 'src/assets/icons/VisibilityOff';
+import { ROUTES } from 'src/routes';
 
 import { LoginValues, useLoginSchema } from './validation';
 import {
@@ -47,7 +48,7 @@ function LoginForm(): JSX.Element {
       await signIn(data)
         .unwrap()
         .then(() => {
-          router.push('/');
+          router.push(ROUTES.home);
         })
         .catch((error: FetchBaseQueryError) => {
           if (error) {
@@ -100,12 +101,12 @@ function LoginForm(): JSX.Element {
         <SignInButton variant="contained" type="submit" disabled={!isValid}>
           {translate('loginForm.title')}
         </SignInButton>
-        <ResetPasswordLink href="/reset-password">
+        <ResetPasswordLink href={`${ROUTES.reset_password}`}>
           {translate('loginForm.resetPassword')}
         </ResetPasswordLink>
         <BottomText>
           {translate('loginForm.link')}
-          <SignUpLink href="/signup">{translate('loginForm.signUp')}</SignUpLink>
+          <SignUpLink href={`${ROUTES.register}`}>{translate('loginForm.signUp')}</SignUpLink>
         </BottomText>
       </StyledForm>
     </>

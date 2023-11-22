@@ -15,7 +15,7 @@ import FlowHeader from 'src/components/reusable/header/FlowHeader';
 import SignUpWrapper from 'src/components/reusable/sign-up-wrapper/SignUpWrapper';
 
 import SignUpFirstForm from 'src/components/sign-up-first';
-import SignUpSecond from 'src/components/sign-up-second';
+import SignUpSecondForm from 'src/components/sign-up-second';
 import SignUpThirdForm from 'src/components/sign-up-third';
 import SignUpFourthForm from 'src/components/sign-up-fourth';
 
@@ -82,7 +82,7 @@ function SignUp(): JSX.Element {
         <>
           {step === 1 && <SignUpFirstForm onNext={handleNextStep} />}
           {step === 2 && (
-            <SignUpSecond role={(role as 'seeker') || 'caregiver'} onNext={handleNextStep} />
+            <SignUpSecondForm role={(role as 'seeker') || 'caregiver'} onNext={handleNextStep} />
           )}
           {step === 3 && <SignUpThirdForm onNext={handleNextStep} />}
           {step === 4 && <SignUpFourthForm onNext={handleSignUp} />}

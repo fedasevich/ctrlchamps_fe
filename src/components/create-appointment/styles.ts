@@ -43,13 +43,13 @@ const AppointmentTypeContainer = styled('div')`
   display: flex;
   flex-direction: column;
   gap: 16px;
-  background-color: ${PRIMARY.white};
   width: 360px;
+  background-color: ${PRIMARY.white};
   border-radius: 4px;
-  padding: 16px;
+  box-shadow: 0px 1px 16px 0px rgba(0, 0, 0, 0.1);
   margin-top: calc(24px + ${HEADER.FLOW_HEIGHT}px);
   margin-bottom: 5%;
-  box-shadow: 0px 1px 16px 0px rgba(0, 0, 0, 0.1);
+  padding: 16px;
 `;
 
 const AppointmentTypeCard = styled('div')`

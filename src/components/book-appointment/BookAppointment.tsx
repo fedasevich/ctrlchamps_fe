@@ -15,6 +15,8 @@ import {
 export default function BookAppointment(): JSX.Element {
   const { push } = useRouter();
   const { translate } = useLocales();
+
+  const pushToCreateAppointmentPage = (): Promise<boolean> => push(ROUTES.create_appointment);
   return (
     <Background>
       <BookingContainer>
@@ -25,7 +27,7 @@ export default function BookAppointment(): JSX.Element {
           <MainText>{translate('create_appointment.not_created')}</MainText>
           <BaseText>{translate('create_appointment.connect_caregivers')}</BaseText>
         </TextContainer>
-        <Button onClick={(): Promise<boolean> => push(ROUTES.create_appointment)}>
+        <Button onClick={pushToCreateAppointmentPage}>
           {translate('create_appointment.create')}
         </Button>
       </BookingContainer>

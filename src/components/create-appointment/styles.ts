@@ -1,5 +1,6 @@
 import { TextField, Typography, styled } from '@mui/material';
 import { HEADER } from 'src/config-global';
+import typography from 'src/theme/typography';
 import { PRIMARY, SECONDARY } from 'src/theme/colors';
 import { TYPOGRAPHY } from 'src/theme/fonts';
 import { FilledButton } from '../reusable';
@@ -15,7 +16,7 @@ const Background = styled('div')`
 const MainText = styled(Typography)`
   color: ${PRIMARY.black};
   font-size: ${TYPOGRAPHY.base}px;
-  font-weight: 500;
+  font-weight: ${typography.fontWeightMedium};
   text-transform: capitalize;
 `;
 
@@ -36,7 +37,7 @@ const Button = styled(FilledButton)`
   padding: 8px;
   font-size: ${TYPOGRAPHY.base_xs}px;
   text-transform: none;
-  font-weight: 500;
+  font-weight: ${typography.fontWeightMedium};
 `;
 
 const AppointmentTypeContainer = styled('div')`
@@ -72,14 +73,14 @@ const AppointmentTypeInput = styled(TextField)`
 const AppointmentTypeText = styled(Typography)`
   color: ${PRIMARY.black};
   font-size: ${TYPOGRAPHY.base}px;
-  font-weight: 500;
+  font-weight: ${typography.fontWeightMedium};
   text-transform: capitalize;
 `;
 
 const AppointmentTypeDetails = styled(Typography)`
   color: ${SECONDARY.md_gray};
   font-size: ${TYPOGRAPHY.xs}px;
-  font-weight: 500;
+  font-weight: ${typography.fontWeightMedium};
 `;
 
 const IconWrapper = styled('div')`

@@ -14,16 +14,15 @@ import {
   IconWrapper,
 } from './styles';
 import { AppointmentTypeI } from './types';
-
-enum Appointment {
-  oneTime = 'one-time',
-  recurring = 'recurring',
-}
+import { Appointment } from './enums';
 
 export default function AppointmentType(): JSX.Element {
   const { translate } = useLocales();
   const [appointmentName, setAppointmentName] = useState<string>('');
   const [appointmentType, setAppointmentType] = useState<AppointmentTypeI | null>(null);
+
+  const selectOneTime = (): void => setAppointmentType(Appointment.oneTime);
+  const selectRecurring = (): void => setAppointmentType(Appointment.recurring);
 
   return (
     <Background>
@@ -42,7 +41,7 @@ export default function AppointmentType(): JSX.Element {
         )}
         <AppointmentTypeCard
           className={appointmentType === Appointment.oneTime ? 'active' : ''}
-          onClick={(): void => setAppointmentType(Appointment.oneTime)}
+          onClick={selectOneTime}
         >
           <IconWrapper>
             <OneTimeIcon />
@@ -54,7 +53,7 @@ export default function AppointmentType(): JSX.Element {
         </AppointmentTypeCard>
         <AppointmentTypeCard
           className={appointmentType === Appointment.recurring ? 'active' : ''}
-          onClick={(): void => setAppointmentType(Appointment.recurring)}
+          onClick={selectRecurring}
         >
           <IconWrapper>
             <RecurringIcon />

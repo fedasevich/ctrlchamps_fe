@@ -2,7 +2,7 @@ import React, { useState, useMemo } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { FormControlLabel, Radio, FormLabel, FormHelperText } from '@mui/material';
-import { Box, Container } from '@mui/system';
+import { Box } from '@mui/system';
 
 import { useTranslation } from 'react-i18next';
 import { setRole } from 'src/redux/slices/roleSlice';
@@ -46,7 +46,7 @@ const SignUpFirstForm: React.FC<Step1FormProps> = ({ onNext }) => {
   const { t } = useTranslation();
 
   return (
-    <Container component="main" maxWidth="sm">
+    <>
       <BoxWrapper>
         <CustomRadio
           label={t('signUpFirstForm.Seeker.Title')}
@@ -62,11 +62,11 @@ const SignUpFirstForm: React.FC<Step1FormProps> = ({ onNext }) => {
           selectedOption={selectedOption}
           handleOptionChange={handleOptionChange}
         />
-        <NextButton disabled={!selectedOption} onClick={handleNext}>
-          Next
-        </NextButton>
       </BoxWrapper>
-    </Container>
+      <NextButton variant="contained" disabled={!selectedOption} onClick={handleNext}>
+        Next
+      </NextButton>
+    </>
   );
 };
 

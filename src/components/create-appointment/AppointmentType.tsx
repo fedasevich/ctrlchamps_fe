@@ -23,18 +23,21 @@ export default function AppointmentType(): JSX.Element {
 
   const selectOneTime = (): void => setAppointmentType(Appointment.oneTime);
   const selectRecurring = (): void => setAppointmentType(Appointment.recurring);
+  const changeAppointmentName = (
+    e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
+  ): void => setAppointmentName(e.target.value);
 
   return (
     <Background>
       <AppointmentTypeContainer>
         <AppointmentTypeInput
-          placeholder={translate('create_appointment.placeholder.name')}
+          label={translate('create_appointment.placeholder.name')}
           variant="standard"
           autoComplete="off"
           fullWidth
           size="small"
           value={appointmentName}
-          onChange={(e): void => setAppointmentName(e.target.value)}
+          onChange={changeAppointmentName}
         />
         {appointmentName.length > MAX_APPOINTMENT_NAME_LENGTH && (
           <ErrorText>{translate('create_appointment.errors.max_type_char')}</ErrorText>

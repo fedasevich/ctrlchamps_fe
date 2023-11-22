@@ -62,7 +62,7 @@ const AppointmentTypeCard = styled('div')`
   padding: 12px;
   cursor: pointer;
   &.active {
-    border: 2px solid ${PRIMARY.info};
+    background-color: ${PRIMARY.light_main};
   }
 `;
 

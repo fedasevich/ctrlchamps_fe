@@ -1,11 +1,13 @@
 import { useMemo } from 'react';
 import { parse, subYears } from 'date-fns';
+import { FetchBaseQueryError } from '@reduxjs/toolkit/dist/query';
+import { UseFormSetError } from 'react-hook-form';
+
 import { useAccountCheckMutation } from 'src/redux/api/authApi';
 import { useTypedSelector } from 'src/redux/store';
 import { USER_DATE_BIRTH_FORMAT, USER_MIN_AGE, EMAIL_ERROR, PHONE_ERROR } from 'src/constants';
-import { FetchBaseQueryError } from '@reduxjs/toolkit/dist/query';
 import { useLocales } from 'src/locales';
-import { UseFormSetError } from 'react-hook-form';
+
 import { SignUpSecondValues } from './validation';
 
 interface IProps {

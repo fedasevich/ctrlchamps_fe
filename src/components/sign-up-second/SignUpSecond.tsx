@@ -18,7 +18,7 @@ import { InferType } from 'yup';
 import { FetchBaseQueryError } from '@reduxjs/toolkit/dist/query';
 import { format, parse } from 'date-fns';
 import { useLocales } from 'src/locales';
-import { useAccountCheckMutation } from 'src/redux/api/authAPI';
+import { useAccountCheckMutation } from 'src/redux/api/authApi';
 import { savePersonalDetails } from 'src/redux/slices/personalDetailsSlice';
 import { useSignUpSecondSchema } from './validation';
 

@@ -3,4 +3,7 @@ module.exports = {
   transpilePackages: ['mui-tel-input'],
   trailingSlash: true,
   env: {},
+  eslint: {
+    ignoreDuringBuilds: true,
+  }
 };

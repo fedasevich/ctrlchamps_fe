@@ -1,26 +1,26 @@
-import { FormControl, InputLabel, InputAdornment, IconButton, FilledInput } from '@mui/material';
-import React, { memo, useState } from 'react';
-import { useForm, SubmitHandler } from 'react-hook-form';
-import { useRouter } from 'next/router';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { FilledInput, FormControl, IconButton, InputAdornment, InputLabel } from '@mui/material';
+import { useRouter } from 'next/router';
+import { memo, useState } from 'react';
+import { SubmitHandler, useForm } from 'react-hook-form';
 
 import { FetchBaseQueryError } from '@reduxjs/toolkit/dist/query';
-import { useLocales } from 'src/locales';
-import { useSignInMutation } from 'src/redux/api/authAPI';
 import Visibility from 'src/assets/icons/Visibility';
 import VisibilityOff from 'src/assets/icons/VisibilityOff';
+import { useLocales } from 'src/locales';
+import { useSignInMutation } from 'src/redux/api/authApi';
 
-import { LoginValues, useLoginSchema } from './validation';
 import {
+  BottomText,
+  ErrorMessage,
+  InputWrapper,
+  ResetPasswordLink,
+  SignInButton,
+  SignUpLink,
   StyledForm,
   Title,
-  ErrorMessage,
-  SignInButton,
-  ResetPasswordLink,
-  BottomText,
-  SignUpLink,
-  InputWrapper,
 } from './styles';
+import { LoginValues, useLoginSchema } from './validation';
 
 function LoginForm(): JSX.Element {
   const { translate } = useLocales();

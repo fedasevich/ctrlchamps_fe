@@ -1,7 +1,7 @@
 import { Dispatch, SetStateAction, useState } from 'react';
 import { useLocales } from 'src/locales';
-import { checkIsEmail } from 'src/utils/checkEmail';
 import { useRequestResetCodeMutation } from 'src/redux/api/authApi';
+import { checkIsEmail } from 'src/utils/checkEmail';
 import { BAD_REQUEST_STATUS, MIN_EMAIL_LENGTH } from './constants';
 
 type ReturnType = {

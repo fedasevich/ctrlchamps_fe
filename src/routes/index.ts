@@ -4,4 +4,5 @@ export const ROUTES = {
   login: '/login',
   sign_up: 'sign-up',
   register: '/register',
+  create_appointment: '/create-appointment',
 };

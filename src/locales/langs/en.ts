@@ -148,6 +148,7 @@ const en = {
     },
   },
   create_appointment: {
+    header_text: 'New Appointment',
     not_created: 'No appointments created yet',
     connect_caregivers: 'Connect with caregivers in your area and schedule appointment today.',
     create: 'Create an appointment',

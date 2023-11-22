@@ -9,9 +9,13 @@ export default function CreateAppointmentPage(): JSX.Element {
   return (
     <>
       <Head>
-        <title>{translate('loginForm.title')}</title>
+        <title>{translate('create_appointment.create')}</title>
       </Head>
-      <FlowHeader text="New Appointment" iconType="close" callback={(): void => {}} />
+      <FlowHeader
+        text={translate('create_appointment.header_text')}
+        iconType="close"
+        callback={(): void => {}}
+      />
 
       <AppointmentType />
     </>

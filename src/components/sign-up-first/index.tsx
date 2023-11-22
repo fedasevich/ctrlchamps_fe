@@ -1,12 +1,20 @@
-import React, { useState , useMemo } from 'react';
+import React, { useState, useMemo } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { FormControlLabel, Radio, FormLabel, FormHelperText } from '@mui/material';
 import { Box, Container } from '@mui/system';
 
 import { useTranslation } from 'react-i18next';
-import { setSelectedOptionReducer } from 'src/redux/authReducer';
-import { BoxWrapper, NextButton, StyledParagraph, StyledParagraphMain, selectedItemColorLigthTheme, signupColorInLightTheme } from './styles';
+import { setRole } from 'src/redux/slices/roleSlice';
+
+import {
+  BoxWrapper,
+  NextButton,
+  StyledParagraph,
+  StyledParagraphMain,
+  selectedItemColorLigthTheme,
+  signupColorInLightTheme,
+} from './styles';
 
 interface Step1FormProps {
   onNext: () => void;
@@ -20,17 +28,17 @@ interface CustomRadioProps {
   handleOptionChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-const Step1Form: React.FC<Step1FormProps> = ({ onNext }) => {
+const SignUpFirstForm: React.FC<Step1FormProps> = ({ onNext }) => {
   const dispatch = useDispatch();
 
   const [selectedOption, setSelectedOption] = useState<string>('');
 
-  const handleOptionChange = (event: React.ChangeEvent<HTMLInputElement>):void => {
+  const handleOptionChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     setSelectedOption(event.target.value);
-    dispatch(setSelectedOptionReducer(event.target.value));
+    dispatch(setRole(event.target.value));
   };
 
-  const handleNext = ():void => {
+  const handleNext = (): void => {
     if (selectedOption) {
       onNext();
     }
@@ -42,30 +50,28 @@ const Step1Form: React.FC<Step1FormProps> = ({ onNext }) => {
     <Container component="main" maxWidth="sm">
       <BoxWrapper>
         <CustomRadio
-          label={t("Seeker.Title")}
-          description={t("Seeker.Description")}
+          label={t('Seeker.Title')}
+          description={t('Seeker.Description')}
           value="seeker"
           selectedOption={selectedOption}
           handleOptionChange={handleOptionChange}
         />
         <CustomRadio
-          label={t("Caregiver.Title")}
-          description={t("Caregiver.Description")}
+          label={t('Caregiver.Title')}
+          description={t('Caregiver.Description')}
           value="caregiver"
           selectedOption={selectedOption}
           handleOptionChange={handleOptionChange}
         />
 
-        <div><NextButton
-        disabled={!selectedOption}
-        onClick={handleNext}
-        >
-          Next
-        </NextButton>
-        <StyledParagraph>
-          {t("BySigningUp")} <a href="#">{t("terms_conditions")}</a>
-        </StyledParagraph>
-        </div> 
+        <div>
+          <NextButton disabled={!selectedOption} onClick={handleNext}>
+            Next
+          </NextButton>
+          <StyledParagraph>
+            {t('BySigningUp')} <a href="#">{t('terms_conditions')}</a>
+          </StyledParagraph>
+        </div>
       </BoxWrapper>
     </Container>
   );
@@ -78,7 +84,10 @@ const CustomRadio: React.FC<CustomRadioProps> = ({
   selectedOption,
   handleOptionChange,
 }) => {
-  const backgroundColor = useMemo(() => selectedOption === value ? selectedItemColorLigthTheme : 'transparent', [selectedOption, value]);
+  const backgroundColor = useMemo(
+    () => (selectedOption === value ? selectedItemColorLigthTheme : 'transparent'),
+    [selectedOption, value]
+  );
 
   return (
     <Box
@@ -91,7 +100,9 @@ const CustomRadio: React.FC<CustomRadioProps> = ({
           cursor: 'pointer',
         },
       }}
-      onClick={() => handleOptionChange({ target: { value } } as React.ChangeEvent<HTMLInputElement>)}
+      onClick={() =>
+        handleOptionChange({ target: { value } } as React.ChangeEvent<HTMLInputElement>)
+      }
     >
       <FormControlLabel
         control={
@@ -115,4 +126,4 @@ const CustomRadio: React.FC<CustomRadioProps> = ({
   );
 };
 
-export default Step1Form;
+export default SignUpFirstForm;

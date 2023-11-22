@@ -25,17 +25,14 @@ interface AccountCheckData {
   email: string;
   phoneNumber: string;
 }
-
 interface AccountCheckResponse {
   statusCode?: number;
   message?: string;
 }
-
 interface SignInData {
   email: string;
   password: string;
 }
-
 interface SignInResponse {
   token: string;
 }

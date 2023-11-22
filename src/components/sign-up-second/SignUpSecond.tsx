@@ -1,4 +1,4 @@
-import { memo, useMemo } from 'react';
+import { memo } from 'react';
 import { MuiTelInput } from 'mui-tel-input';
 import {
   FilledInput,
@@ -12,18 +12,17 @@ import DatePicker from 'react-datepicker';
 
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { format, parse, subYears } from 'date-fns';
+import { format } from 'date-fns';
 import 'react-datepicker/dist/react-datepicker.css';
 
-import { FetchBaseQueryError } from '@reduxjs/toolkit/dist/query';
-import { useAppDispatch, useTypedSelector } from 'src/redux/store';
-import { useAccountCheckMutation } from 'src/redux/api/authApi';
+import { useAppDispatch } from 'src/redux/store';
 import { savePersonalDetails } from 'src/redux/slices/personalDetailsSlice';
 import { useLocales } from 'src/locales';
-import { USER_DATE_BIRTH_FORMAT, USER_MIN_AGE, EMAIL_ERROR, PHONE_ERROR } from 'src/constants';
+import { USER_DATE_BIRTH_FORMAT } from 'src/constants';
 
 import { useSignUpSecondSchema, SignUpSecondValues } from './validation';
 import { ErrorMessage, InputWrapper, NextButton, StyledForm } from './styles';
+import { useSignUpSecond } from './hooks';
 
 interface IProps {
   role: 'caregiver' | 'seeker';
@@ -34,18 +33,7 @@ function SignUpSecond({ role, onNext }: IProps): JSX.Element {
   const dispatch = useAppDispatch();
   const { translate } = useLocales();
   const signUpSecondSchema = useSignUpSecondSchema();
-  const [accountCheck] = useAccountCheckMutation();
-
-  const minBirthDate = useMemo(() => subYears(new Date(), USER_MIN_AGE), []);
-  const initialDetailsValues = useTypedSelector((state) => state.personalDetails.personalDetails);
-
-  const initialDateOfBirth = useMemo(
-    () =>
-      initialDetailsValues.dateOfBirth
-        ? parse(initialDetailsValues.dateOfBirth, USER_DATE_BIRTH_FORMAT, new Date())
-        : undefined,
-    [initialDetailsValues]
-  );
+  const { defaultValues, minBirthDate, onAccountCheck } = useSignUpSecond(onNext);
 
   const {
     register,
@@ -57,7 +45,7 @@ function SignUpSecond({ role, onNext }: IProps): JSX.Element {
   } = useForm<SignUpSecondValues>({
     resolver: yupResolver(signUpSecondSchema),
     mode: 'onBlur',
-    defaultValues: { ...initialDetailsValues, dateOfBirth: initialDateOfBirth },
+    defaultValues: { ...defaultValues },
   });
 
   const onSubmit: SubmitHandler<SignUpSecondValues> = async (data): Promise<void> => {
@@ -70,35 +58,8 @@ function SignUpSecond({ role, onNext }: IProps): JSX.Element {
         dateOfBirth: formattedDate,
       })
     );
-    try {
-      await accountCheck({ email, phoneNumber })
-        .unwrap()
-        .then(() => {
-          onNext();
-        })
-        .catch((error: FetchBaseQueryError) => {
-          const errorMessage = (error.data as { message?: string })?.message;
-          const isEmailError = errorMessage?.includes(EMAIL_ERROR);
-          const isPhoneError = errorMessage?.includes(PHONE_ERROR);
 
-          if (isEmailError) {
-            setError('email', {
-              type: 'manual',
-              message: translate('signUpSecondForm.emailExist'),
-            });
-            return;
-          }
-
-          if (isPhoneError) {
-            setError('phoneNumber', {
-              type: 'manual',
-              message: translate('signUpSecondForm.phoneExist'),
-            });
-          }
-        });
-    } catch (error) {
-      throw new Error(error);
-    }
+    onAccountCheck({ email, phoneNumber }, setError);
   };
 
   return (

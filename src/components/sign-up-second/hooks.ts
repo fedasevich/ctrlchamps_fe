@@ -49,6 +49,8 @@ export function useSignUpSecond(onNext: () => void): ReturnType {
     [initialDetailsValues]
   );
 
+  const defaultValues = { ...initialDetailsValues, dateOfBirth: initialDateOfBirth };
+
   const onAccountCheck = async (
     { email, phoneNumber }: IProps,
     setError: UseFormSetError<SignUpSecondValues>
@@ -83,8 +85,6 @@ export function useSignUpSecond(onNext: () => void): ReturnType {
       throw new Error(error);
     }
   };
-
-  const defaultValues = { ...initialDetailsValues, dateOfBirth: initialDateOfBirth };
 
   return { defaultValues, minBirthDate, onAccountCheck };
 }

@@ -42,7 +42,7 @@ export default function AppointmentType(): JSX.Element {
         )}
         <AppointmentTypeCard
           className={appointmentType === Appointment.oneTime ? 'active' : ''}
-          onClick={(): void => setAppointmentType('one-time')}
+          onClick={(): void => setAppointmentType(Appointment.oneTime)}
         >
           <IconWrapper>
             <OneTimeIcon />
@@ -54,7 +54,7 @@ export default function AppointmentType(): JSX.Element {
         </AppointmentTypeCard>
         <AppointmentTypeCard
           className={appointmentType === Appointment.recurring ? 'active' : ''}
-          onClick={(): void => setAppointmentType('recurring')}
+          onClick={(): void => setAppointmentType(Appointment.recurring)}
         >
           <IconWrapper>
             <RecurringIcon />

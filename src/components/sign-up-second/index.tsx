@@ -17,7 +17,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import { useAppDispatch } from 'src/redux/store';
 import { savePersonalDetails } from 'src/redux/slices/personalDetailsSlice';
 import { useLocales } from 'src/locales';
-import { USER_DATE_BIRTH_FORMAT } from 'src/constants';
+import { USER_DATE_BIRTH_FORMAT, USER_ROLE } from 'src/constants';
 
 import { useSignUpSecondSchema, SignUpSecondValues } from './validation';
 import { ErrorMessage, InputWrapper, NextButton, StyledForm } from './styles';
@@ -158,7 +158,7 @@ function SignUpSecond({ role, onNext }: IProps): JSX.Element {
           <ErrorMessage variant="caption">{errors.dateOfBirth?.message}</ErrorMessage>
         )}
       </InputWrapper>
-      {role === 'caregiver' && (
+      {role === USER_ROLE.caregiver && (
         <Controller
           control={control}
           name="isOpenToSeekerHomeLiving"

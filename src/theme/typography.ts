@@ -46,7 +46,7 @@ export const secondaryFont = Barlow({
 const typography = {
   fontFamily: primaryFont.style.fontFamily,
   fontWeightRegular: 400,
-  fontWeightMedium: 600,
+  fontWeightMedium: 500,
   fontWeightBold: 700,
   h1: {
     fontWeight: 800,

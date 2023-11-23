@@ -5,4 +5,5 @@ export const ROUTES = {
   register: '/sign-up',
   home: '/',
   sign_up: 'sign-up',
+  create_appointment: '/create-appointment',
 };

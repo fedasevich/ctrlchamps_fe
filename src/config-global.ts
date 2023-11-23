@@ -11,10 +11,7 @@ export const AUTH0_API = {};
 // ----------------------------------------------------------------------
 //
 export const HEADER = {
-  H_MOBILE: 64,
-  H_MAIN_DESKTOP: 88,
-  H_DASHBOARD_DESKTOP: 92,
-  H_DASHBOARD_DESKTOP_OFFSET: 92 - 32,
+  FLOW_HEIGHT: 64,
 };
 
 export const NAV = {

@@ -1,15 +1,17 @@
 import { useLocales } from 'src/locales';
 import { AnyObject, ObjectSchema, boolean, object, date, string } from 'yup';
 
+export type SignUpSecondValues = {
+  firstName: string;
+  lastName: string;
+  email: string;
+  phoneNumber: string;
+  dateOfBirth: Date;
+  isOpenToSeekerHomeLiving?: boolean;
+};
+
 export const useSignUpSecondSchema = (): ObjectSchema<
-  {
-    firstName: string;
-    lastName: string;
-    email: string;
-    phoneNumber: string;
-    dateOfBirth: Date;
-    isOpenToClientHomeLiving?: boolean;
-  },
+  SignUpSecondValues,
   AnyObject,
   {
     firstName: undefined;
@@ -17,7 +19,7 @@ export const useSignUpSecondSchema = (): ObjectSchema<
     email: undefined;
     phoneNumber: undefined;
     dateOfBirth: undefined;
-    isOpenToClientHomeLiving?: undefined;
+    isOpenToSeekerHomeLiving?: undefined;
   },
   ''
 > => {
@@ -39,6 +41,6 @@ export const useSignUpSecondSchema = (): ObjectSchema<
       .length(12, translate('signUpSecondForm.phoneLengthInvalid'))
       .required(translate('signUpSecondForm.phoneRequired')),
     dateOfBirth: date().required(translate('signUpSecondForm.birthDateRequired')),
-    isOpenToClientHomeLiving: boolean(),
+    isOpenToSeekerHomeLiving: boolean(),
   });
 };

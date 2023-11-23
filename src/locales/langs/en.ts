@@ -165,6 +165,12 @@ const en = {
     housekeeping: 'Housekeeping and Laundry',
     socialActivities: 'Social and Recreational Activities',
   },
+  completeProfileFifth: {
+    placeholderRate: 'Rate ($/h)',
+    minRateError: 'minimal value is 1 $/h',
+    maxRateError: 'maximal value is 200 $/h',
+    rateRequired: 'rate is required',
+  },
   create_appointment: {
     header_text: 'New Appointment',
     not_created: 'No appointments created yet',

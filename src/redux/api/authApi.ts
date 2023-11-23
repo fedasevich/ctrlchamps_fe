@@ -9,6 +9,7 @@ interface SignInData {
 interface SignInResponse {
   token: string;
 }
+
 interface SignUpData {
   email: string;
   password: string;

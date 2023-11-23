@@ -7,4 +7,5 @@ const route = {
   signIn: '/sign-in',
   accountCheck: '/account-check',
 };
+
 export { route };

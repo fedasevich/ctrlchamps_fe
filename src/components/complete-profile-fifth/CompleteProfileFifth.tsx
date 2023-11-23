@@ -5,6 +5,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 
 import { useLocales } from 'src/locales';
 
+import { MARKS } from './constants';
 import { CompleteProfileFifthValues, useCompleteProfileFifthSchema } from './validation';
 import {
   Wrapper,
@@ -22,17 +23,6 @@ interface IProps {
 function CompleteProfileFifth({ onNext }: IProps): JSX.Element {
   const { translate } = useLocales();
   const completeProfileFifthSchema = useCompleteProfileFifthSchema();
-
-    const marks = [
-      {
-        value: 0,
-        label: '0',
-      },
-      {
-        value: 200,
-        label: '200',
-      },
-    ];
 
   const {
     control,
@@ -65,7 +55,7 @@ function CompleteProfileFifth({ onNext }: IProps): JSX.Element {
               min={0}
               max={200}
               valueLabelDisplay="auto"
-              marks={marks}
+              marks={MARKS}
             />
           )}
         />

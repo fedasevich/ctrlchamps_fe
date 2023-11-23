@@ -6,5 +6,6 @@ const route = {
   verifyResetCode: '/verify-reset-otp',
   accountCheck: '/account-check',
   signIn: '/sign-in',
+  accountCheck: '/account-check',
 };
 export { route };

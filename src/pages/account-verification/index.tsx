@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux';
 
 import { ROUTES } from 'src/routes';
 import { RootState } from 'src/redux/store';
-import SignUpHeader from 'src/components/reusable/header';
+import FlowHeader from 'src/components/reusable/header/FlowHeader';
 import OTPMessageField from 'src/components/sendOTP/AccountVerification';
 import SuccessfulVerification from 'src/components/sendOTP/SuccessfulVerification';
 
@@ -27,9 +27,10 @@ const AccountVerification: React.FC<AccountVerificationProps> = (): JSX.Element 
 
   return (
     <>
-      <SignUpHeader
+      <FlowHeader
         text={t('account_verification.account_verification')}
         callback={(): Promise<boolean> => router.push(ROUTES.sign_up)}
+        iconType="back"
       />
       {isSubmitted ? (
         <SuccessfulVerification profile={role} />

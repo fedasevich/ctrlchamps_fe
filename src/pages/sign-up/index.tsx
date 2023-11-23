@@ -5,19 +5,19 @@ import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 
 import { useRequestNewVerificationCodeMutation } from 'src/redux/api/accountVerificationAPI';
-import { useSignUpMutation } from 'src/redux/api/authAPI';
+import { useSignUpMutation } from 'src/redux/api/authApi';
 import { RootState, useAppDispatch } from 'src/redux/store';
 import { setToken } from 'src/redux/slices/tokenSlice';
 import { ROUTES } from 'src/routes';
 
-
 import SignUpFooter from 'src/components/reusable/footer';
-import SignUpHeader from 'src/components/reusable/header';
+import FlowHeader from 'src/components/reusable/header/FlowHeader';
 import SignUpWrapper from 'src/components/reusable/sign-up-wrapper/SignUpWrapper';
-import SignUpFirstForm from 'src/components/sign-up-first/SignUpFirst';
-import SignUpSecond from 'src/components/sign-up-second/SignUpSecond';
-import SignUpThirdForm from 'src/components/sign-up-third/SignUpThirdForm';
-import SignUpFourthForm from 'src/components/sign-up-fourth/SignUpFourthForm';
+
+import SignUpFirstForm from 'src/components/sign-up-first';
+import SignUpSecondForm from 'src/components/sign-up-second';
+import SignUpThirdForm from 'src/components/sign-up-third';
+import SignUpFourthForm from 'src/components/sign-up-fourth';
 
 const FIRST_STEP = 1;
 
@@ -47,16 +47,16 @@ function SignUp(): JSX.Element {
   const handleSignUp = async (password: string): Promise<void> => {
     try {
       const { token }: { token: string } = await signUp({ ...userInfo, password }).unwrap();
-  
+
       dispatch(setToken(token));
-  
+
       const decoded: { id: string; iat: number; exp: number } = jwt_decode(token);
       try {
         await requestNewCode({ userId: decoded.id })
           .unwrap()
           .then(() => {
             router.push(ROUTES.account_verification);
-          })
+          });
       } catch (error) {
         throw new Error(error);
       }
@@ -64,7 +64,6 @@ function SignUp(): JSX.Element {
       throw new Error(error);
     }
   };
-  
 
   const handleBackStep = (): void => {
     if (step > 1) {
@@ -78,12 +77,12 @@ function SignUp(): JSX.Element {
 
   return (
     <>
-      <SignUpHeader text={t('SignUp')} callback={handleBackStep} />
+      <FlowHeader text={t('SignUp')} callback={handleBackStep} iconType="back" />
       <SignUpWrapper>
         <>
           {step === 1 && <SignUpFirstForm onNext={handleNextStep} />}
           {step === 2 && (
-            <SignUpSecond role={(role as 'seeker') || 'caregiver'} onNext={handleNextStep} />
+            <SignUpSecondForm role={(role as 'seeker') || 'caregiver'} onNext={handleNextStep} />
           )}
           {step === 3 && <SignUpThirdForm onNext={handleNextStep} />}
           {step === 4 && <SignUpFourthForm onNext={handleSignUp} />}

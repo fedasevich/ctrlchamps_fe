@@ -1,10 +1,14 @@
-export const MARKS = [
+export const MAX_RATE = 200;
+export const MIN_RATE = 0;
+export const RATE_STEP = 1;
+
+export const RATE_MARKS = [
   {
-    value: 0,
-    label: '0',
+    value: MIN_RATE,
+    label: `${MIN_RATE}`,
   },
   {
-    value: 200,
-    label: '200',
+    value: MAX_RATE,
+    label: `${MAX_RATE}`,
   },
 ];

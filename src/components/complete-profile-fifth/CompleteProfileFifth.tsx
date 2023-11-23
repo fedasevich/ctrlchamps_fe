@@ -5,7 +5,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 
 import { useLocales } from 'src/locales';
 
-import { MARKS } from './constants';
+import { RATE_MARKS, MAX_RATE, MIN_RATE, RATE_STEP } from './constants';
 import { CompleteProfileFifthValues, useCompleteProfileFifthSchema } from './validation';
 import {
   Wrapper,
@@ -32,7 +32,7 @@ function CompleteProfileFifth({ onNext }: IProps): JSX.Element {
     mode: 'onBlur',
     resolver: yupResolver(completeProfileFifthSchema),
     defaultValues: {
-      rate: 0,
+      rate: MIN_RATE,
     },
   });
 
@@ -52,10 +52,10 @@ function CompleteProfileFifth({ onNext }: IProps): JSX.Element {
               size="medium"
               onChange={(value): void => field.onChange(value)}
               aria-labelledby="input-slider"
-              min={0}
-              max={200}
+              min={MIN_RATE}
+              max={MAX_RATE}
               valueLabelDisplay="auto"
-              marks={MARKS}
+              marks={RATE_MARKS}
             />
           )}
         />
@@ -74,9 +74,9 @@ function CompleteProfileFifth({ onNext }: IProps): JSX.Element {
                   error={!!errors.rate}
                   onChange={(value): void => field.onChange(value)}
                   inputProps={{
-                    step: 1,
-                    min: 0,
-                    max: 200,
+                    step: RATE_STEP,
+                    min: MIN_RATE,
+                    max: MAX_RATE,
                     type: 'number',
                     'aria-labelledby': 'input-slider',
                   }}

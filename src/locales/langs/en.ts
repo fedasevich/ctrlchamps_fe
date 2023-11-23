@@ -1,3 +1,5 @@
+import { MAX_APPOINTMENT_NAME_LENGTH } from 'src/components/create-appointment/constants';
+
 const en = {
   app_title: 'App title',
   app: `this application`,
@@ -150,6 +152,33 @@ const en = {
       invalid_pass: 'Password should contain at least {{num}} characters',
       unexpected: 'Something went wrong..',
       invalid_code: "Entered code doesn't match the code which was sent to your email.",
+    },
+  },
+  create_appointment: {
+    header_text: 'New Appointment',
+    not_created: 'No appointments created yet',
+    connect_caregivers: 'Connect with caregivers in your area and schedule appointment today.',
+    create: 'Create an appointment',
+    btn_next: 'next',
+    type: {
+      one: 'one-time',
+      recurring: 'Recurring',
+      one_desc: 'Scheduled appointments designed for one specific occasion or purpose.',
+      recurring_desc:
+        'Scheduled appointments that repeat or predetermined intervals, catering to ongoing or long-term needs',
+    },
+    modal: {
+      header: 'Cancel appointment creation',
+      confirmation: 'Are you sure you would like to cancel this appointment creation?',
+      positive_confirm: 'Yes, cancel',
+      aria_label: 'cancel-appointment-modal',
+      aria_description: 'modal-to-cancel-appointment',
+    },
+    placeholder: {
+      name: 'Appointment Name',
+    },
+    errors: {
+      max_type_char: `You cannot enter more than ${MAX_APPOINTMENT_NAME_LENGTH} characters`,
     },
   },
 };

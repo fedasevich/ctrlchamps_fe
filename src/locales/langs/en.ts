@@ -108,7 +108,6 @@ const en = {
     canada: 'Canada',
     unitedStates: 'USA',
   },
-
   SignUp: 'Sign Up',
   btn_submit: 'Submit',
   request_code: 'Request new code',
@@ -156,6 +155,15 @@ const en = {
       unexpected: 'Something went wrong..',
       invalid_code: "Entered code doesn't match the code which was sent to your email.",
     },
+  },
+  completeProfileThird: {
+    title: 'Please specify the services you have experience with or the qualifications you possess',
+    personalCare: 'Personal Care Assistance',
+    medicationManagement: 'Medication Management',
+    mobilitySupport: 'Mobility Support',
+    mealPreparation: 'Meal Preparation',
+    housekeeping: 'Housekeeping and Laundry',
+    socialActivities: 'Social and Recreational Activities',
   },
   create_appointment: {
     header_text: 'New Appointment',

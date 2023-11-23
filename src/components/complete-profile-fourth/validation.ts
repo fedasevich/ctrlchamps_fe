@@ -1,5 +1,5 @@
-import { useLocales } from 'src/locales';
 import { AnyObject, ObjectSchema, object, number } from 'yup';
+import { useLocales } from 'src/locales';
 
 export type CompleteProfileFifthValues = {
   rate: number;

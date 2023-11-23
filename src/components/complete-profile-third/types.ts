@@ -6,3 +6,7 @@ export type CompleteProfileThirdValues = {
   housekeeping: boolean;
   socialActivities: boolean;
 };
+
+export interface IProps {
+  onNext: () => void;
+}

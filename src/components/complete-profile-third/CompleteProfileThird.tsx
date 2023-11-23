@@ -1,13 +1,11 @@
 import React, { memo } from 'react';
 import { Checkbox, FormControlLabel } from '@mui/material';
 import { useForm, Controller } from 'react-hook-form';
-import { useLocales } from 'src/locales';
-import { Wrapper, Title, StyledForm, Label, NextButton } from './styles';
-import { CompleteProfileThirdValues } from './types';
 
-interface IProps {
-  onNext: () => void;
-}
+import { useLocales } from 'src/locales';
+
+import { Wrapper, Title, StyledForm, Label, NextButton, ButtonWrapper } from './styles';
+import { CompleteProfileThirdValues, IProps } from './types';
 
 function CompleteProfileThird({ onNext }: IProps): JSX.Element {
   const { translate } = useLocales();
@@ -138,9 +136,11 @@ function CompleteProfileThird({ onNext }: IProps): JSX.Element {
           }
         />
 
-        <NextButton variant="contained" type="submit" disabled={!isDirty}>
-          Next
-        </NextButton>
+        <ButtonWrapper>
+          <NextButton variant="contained" type="submit" disabled={!isDirty}>
+            Next
+          </NextButton>
+        </ButtonWrapper>
       </StyledForm>
     </Wrapper>
   );

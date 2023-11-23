@@ -152,6 +152,12 @@ const en = {
       invalid_code: "Entered code doesn't match the code which was sent to your email.",
     },
   },
+  completeProfileFifth: {
+    placeholderRate: 'Rate ($/h)',
+    minRateError: 'minimal value is 1 $/h',
+    maxRateError: 'maximal value is 200 $/h',
+    rateRequired: 'rate is required',
+  },
 };
 
 export default en;

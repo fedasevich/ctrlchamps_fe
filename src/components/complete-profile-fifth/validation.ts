@@ -1,5 +1,6 @@
 import { AnyObject, ObjectSchema, object, number } from 'yup';
 import { useLocales } from 'src/locales';
+import { MAX_RATE } from './constants';
 
 export type CompleteProfileFifthValues = {
   rate: number;
@@ -18,7 +19,7 @@ export const useCompleteProfileFifthSchema = (): ObjectSchema<
   return object({
     rate: number()
       .min(1, translate('completeProfileFifth.minRateError'))
-      .max(200, translate('completeProfileFifth.maxRateError'))
+      .max(MAX_RATE, translate('completeProfileFifth.maxRateError'))
       .required(translate('completeProfileFifth.rateRequired')),
   });
 };

@@ -148,6 +148,13 @@ const en = {
   profile: {
     pageTitle: 'Profile',
     headerTitle: 'Complete Profile',
+
+    qualification: 'Qualification',
+    workExperience: 'Work Experience',
+    services: 'Services',
+    availability: 'Availability',
+    rates: 'Rates',
+    bio: 'Bio',
   },
   profileQualification: {
     certificationNameMaxLength: 'Certification name must be at most 100 characters',
@@ -166,8 +173,11 @@ const en = {
       'Please specify your experience and feel free to attach any document to proof your certification',
     subTitle: 'Added Certificate(s)',
 
-    next: 'next',
-    save: 'save',
+    next: 'Next',
+    save: 'Save',
+    return: 'Return',
+    delete: 'Delete',
+
     addCertificate: 'Add Another Certificate',
 
     placeholderCertificationName: 'Certification Name',
@@ -176,6 +186,11 @@ const en = {
     placeholderStartDate: 'Start Date',
     placeholderExpirationDate: 'Expiration Date',
     placeholderCheckbox: 'No expiration date',
+
+    editQualification: 'Edit Qualification',
+    deleteCertificate: 'Delete a certificate',
+    deleteWarning:
+      'Are you sure you want to delete this certificate? Information will not be saved',
   },
 };
 

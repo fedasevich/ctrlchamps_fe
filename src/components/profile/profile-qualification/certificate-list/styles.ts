@@ -1,7 +1,6 @@
-import { Button, ListItemButton, styled } from '@mui/material';
+import { Button, ListItemButton, Typography, styled } from '@mui/material';
 
-import { Title } from 'src/components/profile/profile-qualification/certificate-form/styles';
-import { PRIMARY } from 'src/theme/colors';
+import { PRIMARY, SECONDARY } from 'src/theme/colors';
 import { TYPOGRAPHY } from 'src/theme/fonts';
 import typography from 'src/theme/typography';
 
@@ -16,6 +15,13 @@ export const ButtonWrapper = styled('div')`
   flex-direction: column;
   margin-top: auto;
   gap: 15px;
+`;
+
+export const Title = styled(Typography)`
+  font-weight: ${typography.fontWeightMedium};
+  color: ${SECONDARY.md_gray};
+  margin-bottom: 20px;
+  max-width: 405px;
 `;
 
 export const SubTitle = styled(Title)`

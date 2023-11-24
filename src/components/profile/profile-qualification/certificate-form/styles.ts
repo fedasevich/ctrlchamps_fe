@@ -20,7 +20,7 @@ export const Title = styled(Typography)`
   font-weight: ${typography.fontWeightMedium};
   color: ${SECONDARY.md_gray};
   padding-bottom: 10px;
-  width: 405px;
+  max-width: 405px;
 `;
 
 export const StyledDatePicker = styled(DatePicker)`
@@ -38,5 +38,5 @@ export const StyledButton = styled(Button)`
   border-radius: 4px;
   width: 100%;
   height: 40px;
-  margin: 0 auto;
+  margin-top: auto;
 `;

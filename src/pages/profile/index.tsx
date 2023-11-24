@@ -1,61 +1,65 @@
 import Head from 'next/head';
 import { useState } from 'react';
+
 import ProfileQualification from 'src/components/profile/profile-qualification/ProfileQualification';
 import { Step } from 'src/components/profile/profile-qualification/types';
 import FlowHeader from 'src/components/reusable/header/FlowHeader';
 import { ProfileWrapper } from 'src/components/reusable/profile-wrapper/ProfileWrapper';
-import HorizontalStepper from 'src/components/reusable/stepper/Stepper';
+import HorizontalStepper from 'src/components/reusable/horizontal-stepper/HorizontalStepper';
 import { useLocales } from 'src/locales';
+import {
+  FIRST_STEP_INDEX,
+  SECOND_STEP_INDEX,
+} from 'src/components/profile/profile-qualification/constants';
 
 function Profile(): JSX.Element {
   const { translate } = useLocales();
 
-  const [activeStep, setActiveStep] = useState<number>(0);
+  const [activeStepIndex, setActiveStep] = useState<number>(FIRST_STEP_INDEX);
   const [completed, setCompleted] = useState<Record<string, boolean>>({});
 
   const handleNext = (): void => {
-    const newCompleted = { ...completed, [activeStep]: true };
-    setCompleted(newCompleted);
-    const newActiveStep = activeStep + 1;
-    setActiveStep(newActiveStep);
+    setCompleted({ ...completed, [activeStepIndex]: true });
+    setActiveStep(activeStepIndex + SECOND_STEP_INDEX);
   };
 
-  const steps: Step[] = [
+  // TODO: fill in the rest of the steps components
+  const STEPS: Step[] = [
     {
-      label: 'Qualification',
+      label: translate('profile.qualification'),
       component: <ProfileQualification onNext={handleNext} />,
     },
     {
-      label: 'Work Experience',
-      component: <div>Work Experience</div>,
+      label: translate('profile.workExperience'),
+      component: <div>{translate('profile.workExperience')}</div>,
     },
     {
-      label: 'Services',
-      component: <div>Services</div>,
+      label: translate('profile.services'),
+      component: <div>{translate('profile.services')}</div>,
     },
     {
-      label: 'Availability',
-      component: <div>Availability</div>,
+      label: translate('profile.availability'),
+      component: <div>{translate('profile.availability')}</div>,
     },
     {
-      label: 'Rates',
-      component: <div>Rates</div>,
+      label: translate('profile.rates'),
+      component: <div>{translate('profile.rates')}</div>,
     },
     {
-      label: 'Bio',
-      component: <div>Bio</div>,
+      label: translate('profile.bio'),
+      component: <div>{translate('profile.bio')}</div>,
     },
   ];
 
-  const ActiveStepComponent = steps[activeStep].component;
+  const ActiveStepComponent = STEPS[activeStepIndex].component;
 
   const handleBack = (): void => {
-    setActiveStep((prevActiveStep) => prevActiveStep - 1);
+    setActiveStep((prevActiveStep) => prevActiveStep - SECOND_STEP_INDEX);
   };
 
-  const handleStep = (step: number) => () => {
-    if (step === 0 || completed[step - 1]) {
-      setActiveStep(step);
+  const handleStep = (stepIndex: number) => () => {
+    if (stepIndex === FIRST_STEP_INDEX || completed[stepIndex - SECOND_STEP_INDEX]) {
+      setActiveStep(stepIndex);
     }
   };
 
@@ -66,10 +70,10 @@ function Profile(): JSX.Element {
       </Head>
       <FlowHeader text={translate('profile.headerTitle')} iconType="back" callback={handleBack} />
       <HorizontalStepper
-        activeStep={activeStep}
+        activeStep={activeStepIndex}
         completed={completed}
         onStep={handleStep}
-        steps={steps}
+        steps={STEPS}
       />
       <ProfileWrapper>{ActiveStepComponent}</ProfileWrapper>
     </>

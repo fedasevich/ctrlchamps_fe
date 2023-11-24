@@ -1,8 +1,8 @@
-import Box from '@mui/material/Box';
 import Stepper from '@mui/material/Stepper';
 import Step from '@mui/material/Step';
 import StepButton from '@mui/material/StepButton';
 import { Step as StepType } from 'src/components/profile/profile-qualification/types';
+import { StepperWrapper } from 'src/components/reusable/horizontal-stepper/styles';
 
 type Props = {
   completed: Record<string, boolean>;
@@ -18,7 +18,7 @@ export default function HorizontalStepper({
   steps,
 }: Props): JSX.Element {
   return (
-    <Box sx={{ width: '60%', marginInline: 'auto', marginTop: '25px' }}>
+    <StepperWrapper>
       <Stepper nonLinear activeStep={activeStep}>
         {steps.map((step, index) => (
           <Step key={step.label} completed={completed[index]}>
@@ -28,6 +28,6 @@ export default function HorizontalStepper({
           </Step>
         ))}
       </Stepper>
-    </Box>
+    </StepperWrapper>
   );
 }

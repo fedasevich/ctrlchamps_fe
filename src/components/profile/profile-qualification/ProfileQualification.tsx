@@ -1,9 +1,10 @@
 import { useState } from 'react';
+
 import { Title } from 'src/components/profile/profile-qualification/certificate-form/styles';
 import { ProfileQuality } from 'src/components/profile/profile-qualification/types';
-import { useLocales } from 'src/locales';
 import CertificateList from 'src/components/profile/profile-qualification/certificate-list/CertificateList';
 import CertificateForm from 'src/components/profile/profile-qualification/certificate-form/CertificateForm';
+import { useLocales } from 'src/locales';
 
 type Props = {
   onNext: () => void;
@@ -39,7 +40,7 @@ export default function ProfileQualification({ onNext }: Props): JSX.Element {
     setCertificates(updatedCertificates);
     onCloseModal();
   };
-  
+
   return (
     <>
       <Title>{translate('profileQualification.mainTitle')}</Title>

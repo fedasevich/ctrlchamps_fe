@@ -1,7 +1,7 @@
 // next
 import Head from 'next/head';
+import BookAppointment from 'src/components/book-appointment/BookAppointment';
 import { useLocales } from 'src/locales';
-import Link from 'next/link';
 
 export default function HomePage(): JSX.Element {
   const { translate } = useLocales();
@@ -11,7 +11,7 @@ export default function HomePage(): JSX.Element {
       <Head>
         <title>{translate('app_title')}</title>
       </Head>
-      <Link href="page-example">go to example page</Link>
+      <BookAppointment />
     </>
   );
 }

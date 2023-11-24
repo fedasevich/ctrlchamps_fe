@@ -1,12 +1,12 @@
 import Head from 'next/head';
 import { useState } from 'react';
+import { useRouter } from 'next/router';
 import { useLocales } from 'src/locales';
 
 import EnterEmail from 'src/components/enter-email/EnterEmail';
-import SignUpHeader from 'src/components/reusable/header';
+import FlowHeader from 'src/components/reusable/header/FlowHeader';
 import { Verification, VerificationSuccess } from 'src/components/verification';
 import ResetPasswordForm from 'src/components/reset-password-form/ResetPasswordForm';
-import { useRouter } from 'next/router';
 
 export default function ResetPassword(): JSX.Element {
   const { translate } = useLocales();
@@ -47,7 +47,7 @@ export default function ResetPassword(): JSX.Element {
       <Head>
         <title>{translate('reset_password.title')}</title>
       </Head>
-      <SignUpHeader text={translate('reset_password.title')} callback={pushBack} />
+      <FlowHeader text={translate('reset_password.title')} callback={pushBack} iconType="back" />
       {handleSteps(currentStep)}
     </>
   );

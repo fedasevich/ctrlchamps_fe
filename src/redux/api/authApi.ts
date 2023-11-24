@@ -1,6 +1,15 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { route } from './routes';
 
+interface SignInData {
+  email: string;
+  password: string;
+}
+
+interface SignInResponse {
+  token: string;
+}
+
 interface SignUpData {
   email: string;
   password: string;
@@ -21,15 +30,6 @@ interface SignUpResponse {
   token: string;
 }
 
-interface SignInData {
-  email: string;
-  password: string;
-}
-
-interface SignInResponse {
-  token: string;
-}
-
 interface AccountCheckData {
   email: string;
   phoneNumber: string;
@@ -41,12 +41,12 @@ interface AccountCheckResponse {
 }
 
 export const authApi = createApi({
-  reducerPath: 'authApi',
+  reducerPath: 'dataApi',
   baseQuery: fetchBaseQuery({ baseUrl: `${process.env.NEXT_PUBLIC_API_URL}/${route.auth}` }),
   endpoints: (builder) => ({
     signUp: builder.mutation<SignUpResponse, SignUpData>({
       query: (body) => ({
-        url: `${route.signUp}`,
+        url: '/sign-up',
         method: 'POST',
         body,
       }),

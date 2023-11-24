@@ -1,4 +1,5 @@
 import { MAX_APPOINTMENT_NAME_LENGTH } from 'src/components/create-appointment/constants';
+import { MAX_RATE, MIN_RATE } from 'src/components/complete-profile-fifth/constants';
 
 const en = {
   app_title: 'App title',
@@ -167,8 +168,8 @@ const en = {
   },
   completeProfileFifth: {
     placeholderRate: 'Rate ($/h)',
-    minRateError: 'minimal value is 1 $/h',
-    maxRateError: 'maximal value is 200 $/h',
+    minRateError: `value must be more than ${MIN_RATE} $/h`,
+    maxRateError: `maximal value is ${MAX_RATE} $/h`,
     rateRequired: 'rate is required',
   },
   create_appointment: {

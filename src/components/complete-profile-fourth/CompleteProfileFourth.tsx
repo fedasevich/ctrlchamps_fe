@@ -25,9 +25,22 @@ export default function CompleteProfileFourth({ onNext }: { onNext: () => void }
 
   const [daySelected, setDaySelected] = useState<daySelectedType | null>(null);
   const [chosenDays, setChosenDays] = useState<string[]>([]);
-
   const [availableFrom, setAvailableFrom] = useState<string>('');
   const [availableTo, setAvailableTo] = useState<string>('');
+
+  useEffect(() => {
+    if (daySelected && availableFrom && availableTo) {
+      dispatch(
+        chooseAvailableTime({
+          time: {
+            from: availableFrom,
+            to: availableTo,
+          },
+          weekDay: daySelected,
+        })
+      );
+    }
+  }, [daySelected, availableFrom, availableTo, dispatch]);
 
   const chooseDay = (selectedDay: daySelectedType): void => {
     const previousDay = daySelected;
@@ -54,20 +67,6 @@ export default function CompleteProfileFourth({ onNext }: { onNext: () => void }
   const chooseToDate = (value: string): void => {
     setAvailableTo(value);
   };
-
-  useEffect(() => {
-    if (daySelected && availableFrom && availableTo) {
-      dispatch(
-        chooseAvailableTime({
-          time: {
-            from: availableFrom,
-            to: availableTo,
-          },
-          weekDay: daySelected,
-        })
-      );
-    }
-  }, [daySelected, availableFrom, availableTo, dispatch]);
 
   return (
     <Wrapper>

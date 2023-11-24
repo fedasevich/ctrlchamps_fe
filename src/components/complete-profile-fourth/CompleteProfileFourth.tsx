@@ -17,7 +17,7 @@ import {
   Wrapper,
 } from './styles';
 
-export default function CompleteProfileSecond({ onNext }: { onNext: () => void }): JSX.Element {
+export default function CompleteProfileFourth({ onNext }: { onNext: () => void }): JSX.Element {
   const { translate } = useLocales();
 
   const availableDays = useTypedSelector((state) => state.availableDays);

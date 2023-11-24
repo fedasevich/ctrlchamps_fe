@@ -2,7 +2,7 @@ import { Typography, styled } from '@mui/material';
 import { PRIMARY, SECONDARY } from 'src/theme/colors';
 import { TYPOGRAPHY } from 'src/theme/fonts';
 import typography from 'src/theme/typography';
-import { FilledButton } from '../reusable';
+import { FilledButton } from 'src/components/reusable/FilledButton';
 
 const Wrapper = styled('div')`
   height: calc(100% - 140px);

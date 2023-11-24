@@ -6,7 +6,7 @@ import typography from 'src/theme/typography';
 
 export const StyledListItemButton = styled(ListItemButton)`
   color: ${PRIMARY.black};
-  font-size: ${TYPOGRAPHY.md}px;
+  font-size: ${TYPOGRAPHY.sm}px;
   font-weight: ${typography.fontWeightMedium};
 `;
 

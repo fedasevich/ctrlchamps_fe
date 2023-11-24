@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { Dispatch, SetStateAction, useEffect } from 'react';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import {
@@ -12,9 +12,8 @@ import {
 import 'react-datepicker/dist/react-datepicker.css';
 
 import { useLocales } from 'src/locales';
-import uuidv4 from 'src/utils/uuidv4';
 import { ProfileQuality } from 'src/components/profile/profile-qualification/types';
-import { useProfileQualificationSchema } from 'src/components/profile/profile-qualification/validation';
+import { useProfileQualificationSchema } from 'src/components/profile/profile-qualification/certificate-form/validation';
 import {
   DATE_FORMAT,
   DEFAULT_PROFILE_QUALIFICATION_VALUES,
@@ -25,6 +24,7 @@ import {
   StyledDatePicker,
   StyledForm,
 } from 'src/components/profile/profile-qualification/certificate-form/styles';
+import uuidv4 from 'src/utils/uuidv4';
 
 type Props = {
   onClose: () => void;

@@ -15,12 +15,12 @@ import {
 function Profile(): JSX.Element {
   const { translate } = useLocales();
 
-  const [activeStepIndex, setActiveStep] = useState<number>(FIRST_STEP_INDEX);
+  const [activeStepIndex, setActiveStepIndex] = useState<number>(FIRST_STEP_INDEX);
   const [completed, setCompleted] = useState<Record<string, boolean>>({});
 
   const handleNext = (): void => {
     setCompleted({ ...completed, [activeStepIndex]: true });
-    setActiveStep(activeStepIndex + SECOND_STEP_INDEX);
+    setActiveStepIndex(activeStepIndex + SECOND_STEP_INDEX);
   };
 
   // TODO: fill in the rest of the steps components
@@ -54,12 +54,14 @@ function Profile(): JSX.Element {
   const ActiveStepComponent = STEPS[activeStepIndex].component;
 
   const handleBack = (): void => {
-    setActiveStep((prevActiveStep) => prevActiveStep - SECOND_STEP_INDEX);
+    if (activeStepIndex > FIRST_STEP_INDEX) {
+      setActiveStepIndex(activeStepIndex - SECOND_STEP_INDEX);
+    }
   };
 
   const handleStep = (stepIndex: number) => () => {
     if (stepIndex === FIRST_STEP_INDEX || completed[stepIndex - SECOND_STEP_INDEX]) {
-      setActiveStep(stepIndex);
+      setActiveStepIndex(stepIndex);
     }
   };
 

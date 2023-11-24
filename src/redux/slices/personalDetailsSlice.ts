@@ -7,7 +7,7 @@ interface IPersonalDetails {
     email: string;
     phoneNumber: string;
     dateOfBirth: string;
-    isOpenToClientHomeLiving?: boolean;
+    isOpenToSeekerHomeLiving?: boolean;
   };
   error: string;
 }
@@ -19,7 +19,7 @@ const initialState: IPersonalDetails = {
     email: '',
     phoneNumber: '',
     dateOfBirth: '',
-    isOpenToClientHomeLiving: false,
+    isOpenToSeekerHomeLiving: false,
   },
   error: '',
 };

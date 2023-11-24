@@ -6,7 +6,6 @@ import { roleReducer } from './slices/roleSlice';
 import { tokenReducer } from './slices/tokenSlice';
 
 const rootReducer = combineReducers({
-  auth: authReducer,
   role: roleReducer,
   personalDetails: personalDetailsReducer,
   address: addressReducer,

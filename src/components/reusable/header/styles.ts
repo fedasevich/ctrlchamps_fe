@@ -8,6 +8,7 @@ const Header = styled.header`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  background: ${PRIMARY.white};
 `;
 
 const Container = styled.div`

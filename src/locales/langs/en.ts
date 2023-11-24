@@ -1,3 +1,6 @@
+import { MAX_APPOINTMENT_NAME_LENGTH } from 'src/components/create-appointment/constants';
+import { MAX_RATE, MIN_RATE } from 'src/components/complete-profile-fifth/constants';
+
 const en = {
   app_title: 'App title',
   app: `this application`,
@@ -16,6 +19,18 @@ const en = {
     signUp: 'Sign Up',
     authError: 'Please enter valid credentials',
   },
+  signUpFirstForm: {
+    Seeker: {
+      Title: 'Seeker',
+      Description:
+        'Find the perfect caregiver for you or your loved one to get reliable and personalized care',
+    },
+    Caregiver: {
+      Title: 'Caregiver',
+      Description:
+        'Connect with clients seeking your expertise and provide compassionate care for those in need',
+    },
+  },
   signUpSecondForm: {
     firstNameInvalid: 'First name maximum length is 100',
     firstNameRequired: 'First name is required',
@@ -23,8 +38,11 @@ const en = {
     lastNameRequired: 'Last name is required',
     emailLengthInvalid: 'Email maximum length is 100',
     emailInvalid: 'Please enter valid email',
+    emailExist: 'User with this email already exists',
     emailRequired: 'Email is required',
     phoneLengthInvalid: 'Phone length must be 10 numbers',
+    phoneInvalid: 'Phone can`t starts with 0',
+    phoneExist: 'User with this phone number already exists',
     phoneRequired: 'Phone is required',
     birthDateRequired: 'Birth date is required',
     placeholderFirstName: 'First Name',
@@ -33,6 +51,35 @@ const en = {
     placeholderPhone: 'Phone Number',
     placeholderBirthDate: 'Date of Birth',
     placeholderIsOpen: 'I`m open to living in clients` houses',
+  },
+  signUpThirdForm: {
+    countryRequired: 'Country is required',
+
+    stateMaxLength: 'State must be at most 100 characters',
+    stateRequired: 'State is required',
+
+    cityMaxLength: 'City must be at most 100 characters',
+    cityRequired: 'City is required',
+
+    zipCodeMaxLength: 'Zip code must be at most 100 characters',
+    zipCodeRequired: 'Zip code is required',
+
+    addressMaxLength: 'Address must be at most 100 characters',
+    addressRequired: 'Address is required',
+
+    placeholderCountry: 'Country',
+    placeholderState: 'State',
+    placeholderCity: 'City',
+    placeholderZipCode: 'Zip Code',
+    placeholderAddress: 'Address',
+  },
+  signUpFourthForm: {
+    passwordInvalid: 'Password needs to be at least 8 characters',
+    passwordsNotMatching: 'Passwords field and Confirm password field must match',
+    passwordRequired: 'Password is required',
+    confirmPasswordRequired: 'Confirm password is required',
+    placeholderPassword: 'Password',
+    placeholderConfirmPassword: 'Confirm Password',
   },
   footer: {
     termsText: 'By signing up you agree to our',
@@ -58,46 +105,11 @@ const en = {
     text: 'Reach out to us via email and we`ll get back to you as soon as possible:',
     email: 'support@afyanexcare.com',
   },
-  signUpThirdForm: {
-    countryRequired: 'Country is required',
-
-    stateMaxLength: 'State must be at most 100 characters',
-    stateRequired: 'State is required',
-
-    cityMaxLength: 'City must be at most 100 characters',
-    cityRequired: 'City is required',
-
-    zipCodeMaxLength: 'Zip code must be at most 100 characters',
-    zipCodeRequired: 'Zip code is required',
-
-    addressMaxLength: 'Address must be at most 100 characters',
-    addressRequired: 'Address is required',
-
-    placeholderCountry: 'Country',
-    placeholderState: 'State',
-    placeholderCity: 'City',
-    placeholderZipCode: 'Zip Code',
-    placeholderAddress: 'Address',
-  },
   countries: {
     canada: 'Canada',
     unitedStates: 'USA',
   },
-  signUpFourthForm: {
-    passwordInvalid: 'Password needs to be at least 8 characters',
-    passwordsNotMatching: 'Passwords field and Confirm password field must match',
-    passwordRequired: 'Password is required',
-    confirmPasswordRequired: 'Confirm password is required',
-    placeholderPassword: 'Password',
-    placeholderConfirmPassword: 'Confirm Password',
-  },
   SignUp: 'Sign Up',
-  seeker:
-    'Find the perfect caregiver for you or your loved one to get reliable and personalized care',
-  caregiver:
-    'Connect with clients seeking your expertise and provide compassionate care for those in need',
-  BySigningUp: 'By signing up you agree to the ',
-  terms_conditions: 'Terms and Conditions',
   btn_submit: 'Submit',
   request_code: 'Request new code',
   edit_email: 'Edit email',
@@ -191,6 +203,47 @@ const en = {
     deleteCertificate: 'Delete a certificate',
     deleteWarning:
       'Are you sure you want to delete this certificate? Information will not be saved',
+  completeProfileThird: {
+    title: 'Please specify the services you have experience with or the qualifications you possess',
+    personalCare: 'Personal Care Assistance',
+    medicationManagement: 'Medication Management',
+    mobilitySupport: 'Mobility Support',
+    mealPreparation: 'Meal Preparation',
+    housekeeping: 'Housekeeping and Laundry',
+    socialActivities: 'Social and Recreational Activities',
+  },
+  completeProfileFifth: {
+    placeholderRate: 'Rate ($/h)',
+    minRateError: `value must be more than ${MIN_RATE} $/h`,
+    maxRateError: `maximal value is ${MAX_RATE} $/h`,
+    rateRequired: 'rate is required',
+  },
+  create_appointment: {
+    header_text: 'New Appointment',
+    not_created: 'No appointments created yet',
+    connect_caregivers: 'Connect with caregivers in your area and schedule appointment today.',
+    create: 'Create an appointment',
+    btn_next: 'next',
+    type: {
+      one: 'one-time',
+      recurring: 'Recurring',
+      one_desc: 'Scheduled appointments designed for one specific occasion or purpose.',
+      recurring_desc:
+        'Scheduled appointments that repeat or predetermined intervals, catering to ongoing or long-term needs',
+    },
+    modal: {
+      header: 'Cancel appointment creation',
+      confirmation: 'Are you sure you would like to cancel this appointment creation?',
+      positive_confirm: 'Yes, cancel',
+      aria_label: 'cancel-appointment-modal',
+      aria_description: 'modal-to-cancel-appointment',
+    },
+    placeholder: {
+      name: 'Appointment Name',
+    },
+    errors: {
+      max_type_char: `You cannot enter more than ${MAX_APPOINTMENT_NAME_LENGTH} characters`,
+    },
   },
 };
 

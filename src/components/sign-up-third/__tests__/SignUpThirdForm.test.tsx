@@ -3,7 +3,7 @@
  */
 import { fireEvent, render, screen, within } from '@testing-library/react';
 import { act } from 'react-dom/test-utils';
-import SignUpThirdForm from '../SignUpThirdForm';
+import SignUpThirdForm from '..';
 
 jest.mock('src/redux/store', () => ({
   useTypedSelector: () => ({

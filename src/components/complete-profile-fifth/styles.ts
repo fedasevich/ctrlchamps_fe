@@ -2,17 +2,21 @@ import { Button, Typography, styled } from '@mui/material';
 import { TYPOGRAPHY } from 'src/theme/fonts';
 import typography from 'src/theme/typography';
 
-export const StyledForm = styled('form')`
+export const Wrapper = styled('div')`
   height: 100%;
   display: flex;
   flex-direction: column;
-  gap: 16px;
-  width: 480px;
+  width: 400px;
   margin: 0 auto;
-  font-size: ${TYPOGRAPHY.base}px;
-  font-weight: ${typography.fontWeightMedium};
-  line-height: 1.5;
-  letter-spacing: 0.15px;
+`;
+
+export const StyledForm = styled('form')`
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 102px;
+  padding: 102px 0 0;
 `;
 
 export const InputWrapper = styled('div')`
@@ -20,9 +24,15 @@ export const InputWrapper = styled('div')`
   flex-direction: column;
 `;
 
+export const ButtonWrapper = styled('div')`
+  border-top: 1px solid var(--divider, rgba(0, 0, 0, 0.12));
+  padding: 16px 0 0;
+  margin-top: auto;
+`;
+
 export const NextButton = styled(Button)`
   border-radius: 4px;
-  margin-top: auto;
+  width: 100%;
 `;
 
 export const ErrorMessage = styled(Typography)`

@@ -1,4 +1,6 @@
 import { Button, Typography, styled } from '@mui/material';
+import { TYPOGRAPHY } from 'src/theme/fonts';
+import typography from 'src/theme/typography';
 
 export const StyledForm = styled('form')`
   height: 100%;
@@ -7,8 +9,8 @@ export const StyledForm = styled('form')`
   gap: 16px;
   width: 480px;
   margin: 0 auto;
-  font-size: 16px;
-  font-weight: 500;
+  font-size: ${TYPOGRAPHY.base}px;
+  font-weight: ${typography.fontWeightMedium};
   line-height: 1.5;
   letter-spacing: 0.15px;
 `;
@@ -20,5 +22,6 @@ export const NextButton = styled(Button)`
 
 export const ErrorMessage = styled(Typography)`
   color: ${({ theme }): string => theme.palette.error.main};
-  font-size: 12px;
+  font-size: ${TYPOGRAPHY.xss}px;
+  font-weight: ${typography.fontWeightMedium};
 `;

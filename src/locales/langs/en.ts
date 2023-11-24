@@ -145,6 +145,38 @@ const en = {
       invalid_code: "Entered code doesn't match the code which was sent to your email.",
     },
   },
+  profile: {
+    pageTitle: 'Profile',
+    headerTitle: 'Complete Profile',
+  },
+  profileQualification: {
+    certificationNameMaxLength: 'Certification name must be at most 100 characters',
+    certificationNameRequired: 'Certification name is required',
+
+    certificationNumberMaxLength: 'Certification number must be at most 100 characters',
+    certificationNumberRequired: 'Certification number is required',
+
+    certificationLinkMaxLength: 'Certification link must be at most 100 characters',
+    certificationLinkInvalidUrl: 'Please enter valid URL',
+
+    startDateRequired: 'Start date is required',
+    expirationDate: 'Expiration date is required',
+
+    mainTitle:
+      'Please specify your experience and feel free to attach any document to proof your certification',
+    subTitle: 'Added Certificate(s)',
+
+    next: 'next',
+    save: 'save',
+    addCertificate: 'Add Another Certificate',
+
+    placeholderCertificationName: 'Certification Name',
+    placeholderCertificationNumber: 'Certification Number (ID)',
+    placeholderCertificationLink: 'Certification Link',
+    placeholderStartDate: 'Start Date',
+    placeholderExpirationDate: 'Expiration Date',
+    placeholderCheckbox: 'No expiration date',
+  },
 };
 
 export default en;

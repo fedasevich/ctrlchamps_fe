@@ -5,7 +5,7 @@
   "description": "Next.Js & Typescript",
   "private": true,
   "scripts": {
-    "dev": "next dev -p 3000",
+    "dev": "next dev -p 4000",
     "start": "next start",
     "build": "next build",
     "build-netlify": "next build && cp -r .next _next && mv _next .next/",
@@ -38,6 +38,7 @@
     "@hello-pangea/dnd": "^16.2.0",
     "@hookform/resolvers": "^2.9.11",
     "@iconify/react": "^4.1.0",
+    "@mui/icons-material": "^5.14.18",
     "@mui/lab": "^5.0.0-alpha.120",
     "@mui/material": "^5.11.10",
     "@mui/system": "^5.11.9",

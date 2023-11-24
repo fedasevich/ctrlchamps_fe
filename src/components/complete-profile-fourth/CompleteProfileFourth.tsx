@@ -72,7 +72,7 @@ export default function CompleteProfileFourth({ onNext }: { onNext: () => void }
   return (
     <Wrapper>
       <Container>
-        <BaseText>{translate('completeProfileSecond.specify_time')}</BaseText>
+        <BaseText>{translate('completeProfileFourth.specify_time')}</BaseText>
         <WeekSlotContainer>
           {weekDays.map((day) => (
             <WeekSlot
@@ -86,7 +86,7 @@ export default function CompleteProfileFourth({ onNext }: { onNext: () => void }
         </WeekSlotContainer>
         <SelectContainer>
           <FormControl fullWidth variant="standard">
-            <InputLabel>{translate('completeProfileSecond.from')}</InputLabel>
+            <InputLabel>{translate('completeProfileFourth.from')}</InputLabel>
             <Select
               disabled={daySelected === null}
               value={availableFrom}
@@ -100,7 +100,7 @@ export default function CompleteProfileFourth({ onNext }: { onNext: () => void }
             </Select>
           </FormControl>
           <FormControl fullWidth variant="standard">
-            <InputLabel>{translate('completeProfileSecond.to')}</InputLabel>
+            <InputLabel>{translate('completeProfileFourth.to')}</InputLabel>
             <Select
               disabled={daySelected === null}
               value={availableTo}

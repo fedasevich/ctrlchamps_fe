@@ -157,11 +157,6 @@ const en = {
       invalid_code: "Entered code doesn't match the code which was sent to your email.",
     },
   },
-  completeProfileSecond: {
-    specify_time: ' Please specify your preferred time and your availability throughout the week',
-    from: 'From',
-    to: 'To',
-  },
   completeProfileThird: {
     title: 'Please specify the services you have experience with or the qualifications you possess',
     personalCare: 'Personal Care Assistance',
@@ -170,6 +165,11 @@ const en = {
     mealPreparation: 'Meal Preparation',
     housekeeping: 'Housekeeping and Laundry',
     socialActivities: 'Social and Recreational Activities',
+  },
+  completeProfileFourth: {
+    specify_time: ' Please specify your preferred time and your availability throughout the week',
+    from: 'From',
+    to: 'To',
   },
   completeProfileFifth: {
     placeholderRate: 'Rate ($/h)',

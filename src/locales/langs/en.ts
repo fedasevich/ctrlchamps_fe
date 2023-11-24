@@ -203,6 +203,7 @@ const en = {
     deleteCertificate: 'Delete a certificate',
     deleteWarning:
       'Are you sure you want to delete this certificate? Information will not be saved',
+  },
   completeProfileThird: {
     title: 'Please specify the services you have experience with or the qualifications you possess',
     personalCare: 'Personal Care Assistance',

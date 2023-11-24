@@ -1,6 +1,7 @@
 import Stepper from '@mui/material/Stepper';
 import Step from '@mui/material/Step';
 import StepButton from '@mui/material/StepButton';
+
 import { Step as StepType } from 'src/components/profile/profile-qualification/types';
 import { StepperWrapper } from 'src/components/reusable/horizontal-stepper/styles';
 

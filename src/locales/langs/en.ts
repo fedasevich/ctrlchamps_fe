@@ -4,6 +4,7 @@ const en = {
   app_title: 'App title',
   app: `this application`,
   example: 'text for demo purposes',
+  btn_next: 'next',
   loginForm: {
     emailInvalid: 'Email is incorrect',
     passwordInvalid: 'Password needs to be at least 8 characters',
@@ -156,6 +157,11 @@ const en = {
       invalid_code: "Entered code doesn't match the code which was sent to your email.",
     },
   },
+  completeProfileSecond: {
+    specify_time: ' Please specify your preferred time and your availability throughout the week',
+    from: 'From',
+    to: 'To',
+  },
   completeProfileThird: {
     title: 'Please specify the services you have experience with or the qualifications you possess',
     personalCare: 'Personal Care Assistance',
@@ -171,6 +177,7 @@ const en = {
     maxRateError: 'maximal value is 200 $/h',
     rateRequired: 'rate is required',
   },
+  complete_profile: 'complete profile',
   create_appointment: {
     header_text: 'New Appointment',
     not_created: 'No appointments created yet',

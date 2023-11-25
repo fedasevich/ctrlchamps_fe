@@ -1,11 +1,13 @@
 import { useLocales } from 'src/locales';
 import { AnyObject, ObjectSchema, object, ref, string } from 'yup';
 
+export type SignUpFourthFormValues = {
+  password: string;
+  confirmPassword: string;
+};
+
 export const useSignUpFourthSchema = (): ObjectSchema<
-  {
-    password: string;
-    confirmPassword: string;
-  },
+  SignUpFourthFormValues,
   AnyObject,
   {
     password: undefined;
@@ -15,15 +17,12 @@ export const useSignUpFourthSchema = (): ObjectSchema<
 > => {
   const { translate } = useLocales();
 
-  const invalidPassword: string = translate('signUpFourthForm.passwordInvalid');
-  const passwordsNotMatching: string = translate('signUpFourthForm.passwordsNotMatching');
-  const passwordRequired: string = translate('signUpFourthForm.passwordRequired');
-  const confirmPasswordRequired: string = translate('signUpFourthForm.confirmPasswordRequired');
-
   return object({
-    password: string().min(8, invalidPassword).required(passwordRequired),
+    password: string()
+      .min(8, translate('signUpFourthForm.passwordInvalid'))
+      .required(translate('signUpFourthForm.passwordRequired')),
     confirmPassword: string()
-      .oneOf([ref('password'), undefined], passwordsNotMatching)
-      .required(confirmPasswordRequired),
+      .oneOf([ref('password'), undefined], translate('signUpFourthForm.passwordsNotMatching'))
+      .required(translate('signUpFourthForm.confirmPasswordRequired')),
   });
 };

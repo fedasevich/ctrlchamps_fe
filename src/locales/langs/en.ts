@@ -5,6 +5,7 @@ const en = {
   app_title: 'App title',
   app: `this application`,
   example: 'text for demo purposes',
+  btn_next: 'next',
   loginForm: {
     emailInvalid: 'Email is incorrect',
     passwordInvalid: 'Password needs to be at least 8 characters',
@@ -166,12 +167,18 @@ const en = {
     housekeeping: 'Housekeeping and Laundry',
     socialActivities: 'Social and Recreational Activities',
   },
+  completeProfileFourth: {
+    specify_time: ' Please specify your preferred time and your availability throughout the week',
+    from: 'From',
+    to: 'To',
+  },
   completeProfileFifth: {
     placeholderRate: 'Rate ($/h)',
     minRateError: `value must be more than ${MIN_RATE} $/h`,
     maxRateError: `maximal value is ${MAX_RATE} $/h`,
     rateRequired: 'rate is required',
   },
+  complete_profile: 'complete profile',
   create_appointment: {
     header_text: 'New Appointment',
     not_created: 'No appointments created yet',

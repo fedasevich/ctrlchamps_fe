@@ -18,7 +18,6 @@ export default function ProfileQualification({ onNext }: Props): JSX.Element {
   const { translate } = useLocales();
 
   const onOpenModal = (): void => setIsModalActive(true);
-
   const onOpenEditModal = (certificate: ProfileQuality): void => {
     setEditingCertificate(certificate);
     setIsModalActive(true);

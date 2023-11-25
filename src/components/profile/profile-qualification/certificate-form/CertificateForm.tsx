@@ -58,6 +58,14 @@ export default function CertificateForm({
     defaultValues: editingCertificate ?? DEFAULT_PROFILE_QUALIFICATION_VALUES,
   });
 
+  const isExpirationDateDisabled = watch('isExpirationDateDisabled');
+
+  useEffect(() => {
+    if (isExpirationDateDisabled) {
+      resetField('expirationDate');
+    }
+  }, [isExpirationDateDisabled, resetField]);
+
   const onSubmit: SubmitHandler<ProfileQuality> = (values): void => {
     if (editingCertificate) {
       onSave(values);
@@ -66,14 +74,6 @@ export default function CertificateForm({
     }
     onClose();
   };
-
-  const isExpirationDateDisabled = watch('isExpirationDateDisabled');
-
-  useEffect(() => {
-    if (isExpirationDateDisabled) {
-      resetField('expirationDate');
-    }
-  }, [isExpirationDateDisabled, resetField]);
 
   return (
     <StyledForm onSubmit={handleSubmit(onSubmit)}>

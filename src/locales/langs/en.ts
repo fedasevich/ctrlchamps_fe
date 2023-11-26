@@ -1,10 +1,12 @@
 import { MAX_APPOINTMENT_NAME_LENGTH } from 'src/components/create-appointment/constants';
 import { MAX_RATE, MIN_RATE } from 'src/components/complete-profile-fifth/constants';
+import { MAX_CHARACTERS_LENGTH } from 'src/constants';
 
 const en = {
   app_title: 'App title',
   app: `this application`,
   example: 'text for demo purposes',
+  btn_next: 'next',
   loginForm: {
     emailInvalid: 'Email is incorrect',
     passwordInvalid: 'Password needs to be at least 8 characters',
@@ -169,13 +171,13 @@ const en = {
     bio: 'Bio',
   },
   profileQualification: {
-    certificationNameMaxLength: 'Certification name must be at most 100 characters',
+    certificationNameMaxLength: `Certification name must be at most ${MAX_CHARACTERS_LENGTH} characters`,
     certificationNameRequired: 'Certification name is required',
 
-    certificationNumberMaxLength: 'Certification number must be at most 100 characters',
+    certificationNumberMaxLength: `Certification number must be at most ${MAX_CHARACTERS_LENGTH} characters`,
     certificationNumberRequired: 'Certification number is required',
 
-    certificationLinkMaxLength: 'Certification link must be at most 100 characters',
+    certificationLinkMaxLength: `Certification link must be at most ${MAX_CHARACTERS_LENGTH} characters`,
     certificationLinkInvalidUrl: 'Please enter valid URL',
 
     startDateRequired: 'Start date is required',
@@ -225,12 +227,18 @@ const en = {
     housekeeping: 'Housekeeping and Laundry',
     socialActivities: 'Social and Recreational Activities',
   },
+  completeProfileFourth: {
+    specify_time: ' Please specify your preferred time and your availability throughout the week',
+    from: 'From',
+    to: 'To',
+  },
   completeProfileFifth: {
     placeholderRate: 'Rate ($/h)',
     minRateError: `value must be more than ${MIN_RATE} $/h`,
     maxRateError: `maximal value is ${MAX_RATE} $/h`,
     rateRequired: 'rate is required',
   },
+  complete_profile: 'complete profile',
   create_appointment: {
     header_text: 'New Appointment',
     not_created: 'No appointments created yet',

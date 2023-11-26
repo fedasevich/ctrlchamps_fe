@@ -11,6 +11,7 @@ import {
   FIRST_STEP_INDEX,
   SECOND_STEP_INDEX,
 } from 'src/components/profile/profile-qualification/constants';
+import { Bio } from 'src/components/profile/bio/Bio';
 
 function Profile(): JSX.Element {
   const { translate } = useLocales();
@@ -47,7 +48,7 @@ function Profile(): JSX.Element {
     },
     {
       label: translate('profile.bio'),
-      component: <div>{translate('profile.bio')}</div>,
+      component: <Bio />,
     },
   ];
 

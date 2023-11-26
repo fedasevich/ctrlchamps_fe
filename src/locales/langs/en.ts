@@ -211,7 +211,7 @@ const en = {
     fileSizeError: 'Upload a shorter video',
 
     descriptionRequired: 'Description is required',
-    descriptionMaxLength: 'The maximum is 100 words',
+    descriptionMaxLength: `The maximum is ${MAX_CHARACTERS_LENGTH} characters`,
 
     fewFactsAboutYou: 'Few facts about you',
 

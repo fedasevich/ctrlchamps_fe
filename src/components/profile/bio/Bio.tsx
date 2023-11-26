@@ -1,4 +1,4 @@
-import { ChangeEvent, ReactElement, useRef, useState } from 'react';
+import { ChangeEvent, ReactElement, useState } from 'react';
 import { useForm, Controller, ControllerRenderProps, SubmitHandler } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { FormControl, FilledInput, InputLabel, Button } from '@mui/material';
@@ -15,15 +15,19 @@ import {
   StyledVideo,
   VideocamIcon,
   StyledFormControl,
+  NotAllowIcon,
 } from 'src/components/profile/bio/styles';
 import { BioFormValues } from 'src/components/profile/bio/types';
-import { AVI_FORMAT, DEFAULT_BIO_VALUES } from 'src/components/profile/bio/constants';
+import {
+  AVI_FORMAT,
+  DEFAULT_BIO_VALUES,
+  MOV_FORMAT,
+  MP4_FORMAT,
+} from 'src/components/profile/bio/constants';
 import { useLocales } from 'src/locales';
 
 export function Bio(): JSX.Element {
   const [videoPreviewURL, setVideoPreviewURL] = useState<string>('');
-
-  const fileInputRef = useRef<HTMLInputElement | null>(null);
 
   const { translate } = useLocales();
 
@@ -62,8 +66,17 @@ export function Bio(): JSX.Element {
     resetField('video');
     URL.revokeObjectURL(videoPreviewURL);
     setVideoPreviewURL('');
-    if (fileInputRef.current) {
-      fileInputRef.current.value = '';
+  };
+
+  const renderVideoPreview = (videoFormat?: string): JSX.Element => {
+    switch (videoFormat) {
+      case AVI_FORMAT:
+        return <VideocamIcon />;
+      case MP4_FORMAT:
+      case MOV_FORMAT:
+        return <StyledVideo src={videoPreviewURL} />;
+      default:
+        return <NotAllowIcon color="error" />;
     }
   };
 
@@ -85,18 +98,13 @@ export function Bio(): JSX.Element {
 
       {videoPreviewURL && (
         <MediaWrapper>
-          {video?.type === AVI_FORMAT ? (
-            <VideocamIcon />
-          ) : (
-            <StyledVideo src={videoPreviewURL}>
-              <track kind="captions" />
-            </StyledVideo>
-          )}
+          {renderVideoPreview(video?.type)}
           <StyledIconButton onClick={onDeleteVideo} size="small" edge="start" color="inherit">
             <Close />
           </StyledIconButton>
         </MediaWrapper>
       )}
+
       {errors?.video && <ErrorMessage>{errors.video?.message}</ErrorMessage>}
 
       <StyledFormControl fullWidth variant="filled">
@@ -112,7 +120,6 @@ export function Bio(): JSX.Element {
               >
                 {translate('profileBio.addVideo')}
                 <input
-                  ref={fileInputRef}
                   type="file"
                   accept="video/*"
                   onChange={(e): void => onFileChange(e, field)}

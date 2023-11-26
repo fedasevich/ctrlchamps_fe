@@ -1,9 +1,15 @@
 import { Button, FormControl, IconButton, Typography, styled } from '@mui/material';
+import DoNotDisturbAltIcon from '@mui/icons-material/DoNotDisturbAlt';
 import VideocamOutlinedIcon from '@mui/icons-material/VideocamOutlined';
 
 import { PRIMARY, SECONDARY } from 'src/theme/colors';
 import { TYPOGRAPHY } from 'src/theme/fonts';
 import typography from 'src/theme/typography';
+
+const commonMediaStyles = {
+  width: '100px',
+  height: '100px',
+};
 
 export const ErrorMessage = styled(Typography)`
   color: ${({ theme }): string => theme.palette.error.main};
@@ -30,8 +36,7 @@ export const StyledForm = styled('form')`
 `;
 
 export const MediaWrapper = styled('div')`
-  width: 100px;
-  height: 100px;
+  ${commonMediaStyles};
   position: relative;
 `;
 
@@ -49,13 +54,15 @@ export const StyledIconButton = styled(IconButton)`
 `;
 
 export const VideocamIcon = styled(VideocamOutlinedIcon)`
-  width: 100px;
-  height: 100px;
+  ${commonMediaStyles};
+`;
+
+export const NotAllowIcon = styled(DoNotDisturbAltIcon)`
+  ${commonMediaStyles};
 `;
 
 export const StyledVideo = styled('video')`
-  width: 100px;
-  height: 100px;
+  ${commonMediaStyles};
 `;
 
 export const StyledFormControl = styled(FormControl)`

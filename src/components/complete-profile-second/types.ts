@@ -9,3 +9,14 @@ export type CompleteProfileSecondValues = {
 export type ProfileExperience = CompleteProfileSecondValues & {
   id: string;
 };
+
+export type SelectWorkTypes = 'Hospital' | 'Clinic' | 'Agency' | 'Other';
+
+export type SelectOptions = {
+  value: SelectWorkTypes;
+  label: string;
+};
+
+export type WorkTypes = {
+  workTypes: SelectOptions[];
+};

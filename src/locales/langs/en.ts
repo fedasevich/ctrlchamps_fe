@@ -1,5 +1,6 @@
 import { MAX_APPOINTMENT_NAME_LENGTH } from 'src/components/create-appointment/constants';
 import { MAX_RATE, MIN_RATE } from 'src/components/complete-profile-fifth/constants';
+import { MAX_CHARACTERS_LENGTH } from 'src/constants';
 
 const en = {
   app_title: 'App title',
@@ -176,7 +177,7 @@ const en = {
     workTypes: { hospital: 'Hospital', clinic: 'Clinic', agency: 'Agency', other: 'Other' },
     errors: {
       workPlaceRequired: 'Work place is required',
-      workPlaceLength: 'Work place must be at most 100 characters',
+      workPlaceLength: `Work place must be at most ${MAX_CHARACTERS_LENGTH} characters`,
       workTypeRequired: 'Work type is required',
       startDateRequired: 'Start date is required',
       endDateRequired: 'End date is required',

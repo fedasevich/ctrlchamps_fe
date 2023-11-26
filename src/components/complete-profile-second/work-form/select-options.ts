@@ -1,15 +1,5 @@
 import { useLocales } from 'src/locales';
-
-export type SelectWorkTypes = 'Hospital' | 'Clinic' | 'Agency' | 'Other';
-
-type SelectOptions = {
-  value: SelectWorkTypes;
-  label: string;
-};
-
-type WorkTypes = {
-  workTypes: SelectOptions[];
-};
+import { SelectOptions, WorkTypes } from 'src/components/complete-profile-second/types';
 
 export const useExperienceSelectOptions = (): WorkTypes => {
   const { translate } = useLocales();

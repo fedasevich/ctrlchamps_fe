@@ -204,6 +204,18 @@ const en = {
     deleteWarning:
       'Are you sure you want to delete this certificate? Information will not be saved',
   },
+  profileBio: {
+    fileFormatError: 'Allowed video formats: mp4, mov, avi',
+    fileSizeError: 'Upload a shorter video',
+
+    descriptionRequired: 'Description is required',
+    descriptionMaxLength: 'The maximum is 100 words',
+
+    fewFactsAboutYou: 'Few facts about you',
+
+    addVideo: 'Add video',
+    submit: 'Submit',
+  },
   completeProfileThird: {
     title: 'Please specify the services you have experience with or the qualifications you possess',
     personalCare: 'Personal Care Assistance',

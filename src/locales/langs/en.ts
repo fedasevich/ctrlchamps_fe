@@ -1,5 +1,6 @@
 import { MAX_APPOINTMENT_NAME_LENGTH } from 'src/components/create-appointment/constants';
 import { MAX_RATE, MIN_RATE } from 'src/components/complete-profile-fifth/constants';
+import { MAX_CHARACTERS_LENGTH } from 'src/constants';
 
 const en = {
   app_title: 'App title',
@@ -169,13 +170,13 @@ const en = {
     bio: 'Bio',
   },
   profileQualification: {
-    certificationNameMaxLength: 'Certification name must be at most 100 characters',
+    certificationNameMaxLength: `Certification name must be at most ${MAX_CHARACTERS_LENGTH} characters`,
     certificationNameRequired: 'Certification name is required',
 
-    certificationNumberMaxLength: 'Certification number must be at most 100 characters',
+    certificationNumberMaxLength: `Certification number must be at most ${MAX_CHARACTERS_LENGTH} characters`,
     certificationNumberRequired: 'Certification number is required',
 
-    certificationLinkMaxLength: 'Certification link must be at most 100 characters',
+    certificationLinkMaxLength: `Certification link must be at most ${MAX_CHARACTERS_LENGTH} characters`,
     certificationLinkInvalidUrl: 'Please enter valid URL',
 
     startDateRequired: 'Start date is required',

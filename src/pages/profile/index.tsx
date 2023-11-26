@@ -16,7 +16,7 @@ import { Bio } from 'src/components/profile/bio/Bio';
 function Profile(): JSX.Element {
   const { translate } = useLocales();
 
-  const [activeStepIndex, setActiveStepIndex] = useState<number>(FIRST_STEP_INDEX);
+  const [activeStepIndex, setActiveStepIndex] = useState<number>(5);
   const [completed, setCompleted] = useState<Record<string, boolean>>({});
 
   const handleNext = (): void => {

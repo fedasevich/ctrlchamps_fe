@@ -1,4 +1,4 @@
-import { Button, IconButton, Typography, styled } from '@mui/material';
+import { Button, FormControl, IconButton, Typography, styled } from '@mui/material';
 import VideocamOutlinedIcon from '@mui/icons-material/VideocamOutlined';
 
 import { PRIMARY, SECONDARY } from 'src/theme/colors';
@@ -58,6 +58,6 @@ export const StyledVideo = styled('video')`
   height: 100px;
 `;
 
-export const StyledButton = styled(Button)`
+export const StyledFormControl = styled(FormControl)`
   margin-top: 70px;
 `;

@@ -1,7 +1,7 @@
 import { ChangeEvent, ReactElement, useRef, useState } from 'react';
 import { useForm, Controller, ControllerRenderProps, SubmitHandler } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { FormControl, FilledInput, InputLabel } from '@mui/material';
+import { FormControl, FilledInput, InputLabel, Button } from '@mui/material';
 import { Close } from '@mui/icons-material';
 import VideocamOutlinedIcon from '@mui/icons-material/VideocamOutlined';
 
@@ -14,7 +14,7 @@ import {
   StyledIconButton,
   StyledVideo,
   VideocamIcon,
-  StyledButton,
+  StyledFormControl,
 } from 'src/components/profile/bio/styles';
 import { BioFormValues } from 'src/components/profile/bio/types';
 import { AVI_FORMAT, DEFAULT_BIO_VALUES } from 'src/components/profile/bio/constants';
@@ -83,27 +83,29 @@ export function Bio(): JSX.Element {
         {errors?.description && <ErrorMessage>{errors.description?.message}</ErrorMessage>}
       </FormControl>
 
-      <FormControl fullWidth variant="filled">
-        {videoPreviewURL && (
-          <MediaWrapper>
-            {video?.type === AVI_FORMAT ? (
-              <VideocamIcon />
-            ) : (
-              <StyledVideo src={videoPreviewURL}>
-                <track kind="captions" />
-              </StyledVideo>
-            )}
-            <StyledIconButton onClick={onDeleteVideo} size="small" edge="start" color="inherit">
-              <Close />
-            </StyledIconButton>
-          </MediaWrapper>
-        )}
+      {videoPreviewURL && (
+        <MediaWrapper>
+          {video?.type === AVI_FORMAT ? (
+            <VideocamIcon />
+          ) : (
+            <StyledVideo src={videoPreviewURL}>
+              <track kind="captions" />
+            </StyledVideo>
+          )}
+          <StyledIconButton onClick={onDeleteVideo} size="small" edge="start" color="inherit">
+            <Close />
+          </StyledIconButton>
+        </MediaWrapper>
+      )}
+      {errors?.video && <ErrorMessage>{errors.video?.message}</ErrorMessage>}
+
+      <StyledFormControl fullWidth variant="filled">
         {!video && (
           <Controller
             name="video"
             control={control}
             render={({ field }): ReactElement => (
-              <StyledButton
+              <Button
                 component="label"
                 variant="outlined"
                 startIcon={<VideocamOutlinedIcon fontSize="large" />}
@@ -116,12 +118,11 @@ export function Bio(): JSX.Element {
                   onChange={(e): void => onFileChange(e, field)}
                   hidden
                 />
-              </StyledButton>
+              </Button>
             )}
           />
         )}
-        {errors?.video && <ErrorMessage>{errors.video?.message}</ErrorMessage>}
-      </FormControl>
+      </StyledFormControl>
 
       <StyledSubmitButton type="submit" disabled={!isValid} variant="contained" color="primary">
         {translate('profileBio.submit')}

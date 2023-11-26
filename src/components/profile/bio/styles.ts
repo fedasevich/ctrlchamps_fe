@@ -7,8 +7,8 @@ import { TYPOGRAPHY } from 'src/theme/fonts';
 import typography from 'src/theme/typography';
 
 const commonMediaStyles = {
-  width: '100px',
-  height: '100px',
+  width: '80px',
+  height: '80px',
 };
 
 export const ErrorMessage = styled(Typography)`

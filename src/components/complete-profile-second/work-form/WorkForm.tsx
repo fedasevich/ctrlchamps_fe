@@ -15,14 +15,19 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import uuidv4 from 'src/utils/uuidv4';
 
-import { DATE_FORMAT } from 'src/components/profile/profile-qualification/certificate-form/constants';
 import { ProfileExperience } from 'src/components/complete-profile-second/types';
 import { useLocales } from 'src/locales';
-
-import { useExperienceSelectOptions } from './select-options';
-import { useProfileExperienceSchema } from './validation';
-import { DEFAULT_EXPERIENCE_VALUES } from './constants';
-import { ErrorMessage, StyledButton, StyledForm } from './styles';
+import { useExperienceSelectOptions } from 'src/components/complete-profile-second/work-form/select-options';
+import { useProfileExperienceSchema } from 'src/components/complete-profile-second/work-form/validation';
+import {
+  DEFAULT_EXPERIENCE_VALUES,
+  DATE_FORMAT,
+} from 'src/components/complete-profile-second/work-form/constants';
+import {
+  ErrorMessage,
+  StyledButton,
+  StyledForm,
+} from 'src/components/complete-profile-second/work-form/styles';
 
 type Props = {
   onClose: () => void;

@@ -6,8 +6,13 @@ import WorkForm from 'src/components/complete-profile-second/work-form/WorkForm'
 import { ProfileExperience } from 'src/components/complete-profile-second/types';
 import Modal from 'src/components/reusable/modal/Modal';
 import { useLocales } from 'src/locales';
-
-import { ButtonWrapper, StyledListItemButton, SubTitle, StyledButton, Title } from './styles';
+import {
+  ButtonWrapper,
+  StyledListItemButton,
+  SubTitle,
+  StyledButton,
+  Title,
+} from 'src/components/complete-profile-second/work-list/styles';
 
 type Props = {
   onClose: () => void;

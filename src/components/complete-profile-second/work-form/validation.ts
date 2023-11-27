@@ -1,7 +1,7 @@
 import { ObjectSchema, boolean, date, object, string } from 'yup';
 import { useLocales } from 'src/locales';
 import { MAX_CHARACTERS_LENGTH } from 'src/constants';
-import { CompleteProfileSecondValues } from '../types';
+import { CompleteProfileSecondValues } from 'src/components/complete-profile-second/types';
 
 export const useProfileExperienceSchema = (): ObjectSchema<CompleteProfileSecondValues> => {
   const { translate } = useLocales();

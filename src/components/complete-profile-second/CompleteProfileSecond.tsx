@@ -1,9 +1,9 @@
 import { memo, useState } from 'react';
 import { useLocales } from 'src/locales';
-import WorkForm from './work-form/WorkForm';
-import WorkList from './work-list/WorkList';
-import { ProfileExperience } from './types';
-import { Title } from './styles';
+import WorkForm from 'src/components/complete-profile-second/work-form/WorkForm';
+import WorkList from 'src/components/complete-profile-second/work-list/WorkList';
+import { ProfileExperience } from 'src/components/complete-profile-second/types';
+import { Title } from 'src/components/complete-profile-second/styles';
 
 interface IProps {
   onNext: () => void;

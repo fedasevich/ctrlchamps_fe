@@ -8,9 +8,11 @@ import { addressReducer } from 'src/redux/slices/addressSlice';
 import { personalDetailsReducer } from 'src/redux/slices/personalDetailsSlice';
 import { roleReducer } from 'src/redux/slices/roleSlice';
 import { tokenReducer } from 'src/redux/slices/tokenSlice';
-import { accountVerificationApi } from './api/accountVerificationAPI';
+import { availableDaysReducer } from 'src/redux/slices/availableDaysSlice';
+
+import accountVerificationApi from './api/accountVerificationAPI';
 import authApi from './api/authApi';
-import { availableDaysReducer } from './slices/availableDaysSlice';
+import profileApi from './api/profileCompleteApi';
 
 const persistConfig = {
   key: 'root',
@@ -29,12 +31,13 @@ const store = configureStore({
     availableDays: availableDaysReducer,
     [authApi.reducerPath]: authApi.reducer,
     [accountVerificationApi.reducerPath]: accountVerificationApi.reducer,
+    [profileApi.reducerPath]: profileApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: false,
       immutableCheck: false,
-    }).concat([authApi.middleware, accountVerificationApi.middleware]),
+    }).concat([authApi.middleware, accountVerificationApi.middleware, profileApi.middleware]),
 });
 
 const persistor = persistStore(store);

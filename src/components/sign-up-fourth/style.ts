@@ -1,19 +1,16 @@
 import { Button, Typography, styled } from '@mui/material';
-
-export const AuthFormWrapper = styled('div')`
-  height: 100vh;
-`;
+import { TYPOGRAPHY } from 'src/theme/fonts';
+import typography from 'src/theme/typography';
 
 export const StyledForm = styled('form')`
-  height: calc(100vh - 48px);
+  height: 100%;
   display: flex;
   flex-direction: column;
   gap: 16px;
   width: 480px;
   margin: 0 auto;
-  padding: 24px 0;
-  font-size: 16px;
-  font-weight: 500;
+  font-size: ${TYPOGRAPHY.base}px;
+  font-weight: ${typography.fontWeightMedium};
   line-height: 1.5;
   letter-spacing: 0.15px;
 `;
@@ -25,5 +22,6 @@ export const NextButton = styled(Button)`
 
 export const ErrorMessage = styled(Typography)`
   color: ${({ theme }): string => theme.palette.error.main};
-  font-size: 12px;
+  font-size: ${TYPOGRAPHY.xss}px;
+  font-weight: ${typography.fontWeightMedium};
 `;

@@ -8,11 +8,7 @@ const Header = styled.header`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  position: absolute;
-  width: 100%;
-  top: 0;
   background: ${PRIMARY.white};
-  z-index: 10;
 `;
 
 const Container = styled.div`

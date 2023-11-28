@@ -63,14 +63,17 @@ export function Bio(): JSX.Element {
       if (data.video) {
         await uploadVideoMutation({
           userId: decoded.id,
+          token,
           file: data.video,
         });
       }
       await updateDescription({
         userId: decoded.id,
+        token,
         updateProfileDto: { description: data.description },
-      });
-      router.push(ROUTES.schedule);
+      })
+        .unwrap()
+        .then(() => router.push(ROUTES.schedule));
     } catch (error) {
       throw new Error(error);
     }

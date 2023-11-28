@@ -20,10 +20,10 @@ export interface UpdateProfileRequest {
 }
 
 export interface UpdateProfileResponse {
-  services?: string[];
-  availability?: TimeSlot[];
-  hourlyRate?: number;
-  description?: string;
+  services: string[];
+  availability: TimeSlot[];
+  hourlyRate: number;
+  description: string;
 }
 
 export const profileApi = createApi({
@@ -31,27 +31,38 @@ export const profileApi = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: `${process.env.NEXT_PUBLIC_API_URL}/${route.profile}` }),
   endpoints: (builder) => ({
     getProfileInformation: builder.query({
-      query: (userId) => `${userId}`,
+      query: ({ userId, token }) => ({
+        url: `${userId}`,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }),
     }),
-    createProfile: builder.mutation<void, { userId: string }>({
-      query: ({ userId }) => ({
+    createProfile: builder.mutation<void, { userId: string; token: string }>({
+      query: ({ userId, token }) => ({
         url: `/${userId}`,
         method: 'POST',
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       }),
     }),
     updateProfile: builder.mutation<
       UpdateProfileResponse,
-      { userId: string; updateProfileDto: UpdateProfileRequest }
+      { userId: string; token: string; updateProfileDto: UpdateProfileRequest }
     >({
-      query: ({ userId, updateProfileDto }) => ({
+      query: ({ userId, token, updateProfileDto }) => ({
         url: `/${userId}`,
         method: 'PATCH',
         body: updateProfileDto,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       }),
     }),
 
-    uploadFile: builder.mutation<void, { userId: string; file: File }>({
-      query: ({ userId, file }) => {
+    uploadFile: builder.mutation<void, { userId: string; token: string; file: File }>({
+      query: ({ userId, token, file }) => {
         const formData = new FormData();
         formData.append('file', file);
 
@@ -59,6 +70,9 @@ export const profileApi = createApi({
           url: `${route.uploadFile}/${userId}`,
           method: 'POST',
           body: formData,
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         };
       },
     }),

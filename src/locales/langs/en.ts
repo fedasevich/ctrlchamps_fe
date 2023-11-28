@@ -1,5 +1,6 @@
 import { MAX_APPOINTMENT_NAME_LENGTH } from 'src/components/create-appointment/constants';
 import { MAX_RATE, MIN_RATE } from 'src/components/complete-profile-fifth/constants';
+import { MAX_CHARACTERS_LENGTH } from 'src/constants';
 
 const en = {
   app_title: 'App title',
@@ -156,6 +157,30 @@ const en = {
       invalid_pass: 'Password should contain at least {{num}} characters',
       unexpected: 'Something went wrong..',
       invalid_code: "Entered code doesn't match the code which was sent to your email.",
+    },
+  },
+  completeProfileSecond: {
+    title: 'Please specify your experience and the places you have worked',
+    subTitle: 'Added Work place(s)',
+    workPlaceLabel: 'Place of Work',
+    workTypeLabel: 'Type',
+    startDateLabel: 'Start Date',
+    endDateLabel: 'End Date',
+    checkboxLabel: 'I’m currently working on this position',
+    addWorkPlace: 'Add another Work place',
+    next: 'Next',
+    return: 'Return',
+    delete: 'Delete',
+    editWorkPlace: 'Edit work place',
+    deleteWorkPlace: 'Delete a work place',
+    deleteWarning: 'Are you sure you want to delete this work place? Information will not be saved',
+    workTypes: { hospital: 'Hospital', clinic: 'Clinic', agency: 'Agency', other: 'Other' },
+    errors: {
+      workPlaceRequired: 'Work place is required',
+      workPlaceLength: `Work place must be at most ${MAX_CHARACTERS_LENGTH} characters`,
+      workTypeRequired: 'Work type is required',
+      startDateRequired: 'Start date is required',
+      endDateRequired: 'End date is required',
     },
   },
   completeProfileThird: {

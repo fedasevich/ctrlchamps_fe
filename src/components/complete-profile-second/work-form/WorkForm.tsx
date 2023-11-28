@@ -19,10 +19,8 @@ import { ProfileExperience } from 'src/components/complete-profile-second/types'
 import { useLocales } from 'src/locales';
 import { useExperienceSelectOptions } from 'src/components/complete-profile-second/work-form/select-options';
 import { useProfileExperienceSchema } from 'src/components/complete-profile-second/work-form/validation';
-import {
-  DEFAULT_EXPERIENCE_VALUES,
-  DATE_FORMAT,
-} from 'src/components/complete-profile-second/work-form/constants';
+import { DATE_FORMAT } from 'src/constants';
+import { DEFAULT_EXPERIENCE_VALUES } from 'src/components/complete-profile-second/work-form/constants';
 import {
   ErrorMessage,
   StyledButton,

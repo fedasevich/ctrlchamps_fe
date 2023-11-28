@@ -159,6 +159,53 @@ const en = {
       invalid_code: "Entered code doesn't match the code which was sent to your email.",
     },
   },
+  profile: {
+    pageTitle: 'Profile',
+    headerTitle: 'Complete Profile',
+
+    qualification: 'Qualification',
+    workExperience: 'Work Experience',
+    services: 'Services',
+    availability: 'Availability',
+    rates: 'Rates',
+    bio: 'Bio',
+  },
+  profileQualification: {
+    certificationNameMaxLength: `Certification name must be at most ${MAX_CHARACTERS_LENGTH} characters`,
+    certificationNameRequired: 'Certification name is required',
+
+    certificationNumberMaxLength: `Certification number must be at most ${MAX_CHARACTERS_LENGTH} characters`,
+    certificationNumberRequired: 'Certification number is required',
+
+    certificationLinkMaxLength: `Certification link must be at most ${MAX_CHARACTERS_LENGTH} characters`,
+    certificationLinkInvalidUrl: 'Please enter valid URL',
+
+    startDateRequired: 'Start date is required',
+    expirationDate: 'Expiration date is required',
+
+    mainTitle:
+      'Please specify your experience and feel free to attach any document to proof your certification',
+    subTitle: 'Added Certificate(s)',
+
+    next: 'Next',
+    save: 'Save',
+    return: 'Return',
+    delete: 'Delete',
+
+    addCertificate: 'Add Another Certificate',
+
+    placeholderCertificationName: 'Certification Name',
+    placeholderCertificationNumber: 'Certification Number (ID)',
+    placeholderCertificationLink: 'Certification Link',
+    placeholderStartDate: 'Start Date',
+    placeholderExpirationDate: 'Expiration Date',
+    placeholderCheckbox: 'No expiration date',
+
+    editQualification: 'Edit Qualification',
+    deleteCertificate: 'Delete a certificate',
+    deleteWarning:
+      'Are you sure you want to delete this certificate? Information will not be saved',
+  },
   completeProfileSecond: {
     title: 'Please specify your experience and the places you have worked',
     subTitle: 'Added Work place(s)',

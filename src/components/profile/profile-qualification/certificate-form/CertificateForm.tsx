@@ -14,16 +14,14 @@ import 'react-datepicker/dist/react-datepicker.css';
 import { useLocales } from 'src/locales';
 import { ProfileQuality } from 'src/components/profile/profile-qualification/types';
 import { useProfileQualificationSchema } from 'src/components/profile/profile-qualification/certificate-form/validation';
-import {
-  DATE_FORMAT,
-  DEFAULT_PROFILE_QUALIFICATION_VALUES,
-} from 'src/components/profile/profile-qualification/certificate-form/constants';
+import { DEFAULT_PROFILE_QUALIFICATION_VALUES } from 'src/components/profile/profile-qualification/certificate-form/constants';
 import {
   ErrorMessage,
   StyledButton,
   StyledDatePicker,
   StyledForm,
 } from 'src/components/profile/profile-qualification/certificate-form/styles';
+import { DATE_FORMAT } from 'src/constants';
 import uuidv4 from 'src/utils/uuidv4';
 
 type Props = {

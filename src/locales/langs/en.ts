@@ -206,6 +206,18 @@ const en = {
     deleteWarning:
       'Are you sure you want to delete this certificate? Information will not be saved',
   },
+  profileBio: {
+    fileFormatError: 'Allowed video formats: mp4, mov, avi',
+    fileSizeError: 'Upload a shorter video',
+
+    descriptionRequired: 'Description is required',
+    descriptionMaxLength: `The maximum is ${MAX_CHARACTERS_LENGTH} characters`,
+
+    fewFactsAboutYou: 'Few facts about you',
+
+    addVideo: 'Add video',
+    submit: 'Submit',
+  },
   completeProfileSecond: {
     title: 'Please specify your experience and the places you have worked',
     subTitle: 'Added Work place(s)',

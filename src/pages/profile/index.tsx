@@ -7,6 +7,7 @@ import FlowHeader from 'src/components/reusable/header/FlowHeader';
 import { ProfileWrapper } from 'src/components/reusable/profile-wrapper/ProfileWrapper';
 import HorizontalStepper from 'src/components/reusable/horizontal-stepper/HorizontalStepper';
 import { useLocales } from 'src/locales';
+import { Bio } from 'src/components/profile/bio/Bio';
 import { FIRST_STEP_INDEX, SECOND_STEP_INDEX } from 'src/constants';
 
 function Profile(): JSX.Element {
@@ -44,7 +45,7 @@ function Profile(): JSX.Element {
     },
     {
       label: translate('profile.bio'),
-      component: <div>{translate('profile.bio')}</div>,
+      component: <Bio />,
     },
   ];
 

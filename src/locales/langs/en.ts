@@ -206,6 +206,9 @@ const en = {
       max_type_char: `You cannot enter more than ${MAX_APPOINTMENT_NAME_LENGTH} characters`,
     },
   },
+  health_questionnaire: {
+    btn_next: 'Next',
+  },
 };
 
 export default en;

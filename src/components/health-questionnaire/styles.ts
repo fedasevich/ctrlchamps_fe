@@ -1,4 +1,11 @@
-import { Button, CardActions, Typography, styled } from '@mui/material';
+import {
+  Button,
+  CardActions,
+  ToggleButton,
+  ToggleButtonGroup,
+  Typography,
+  styled,
+} from '@mui/material';
 import typography from 'src/theme/typography';
 import { PRIMARY, SECONDARY } from 'src/theme/colors';
 import { TYPOGRAPHY } from 'src/theme/fonts';
@@ -25,7 +32,7 @@ export const QuestionnaireContainer = styled('div')`
   margin-bottom: 5%;
 
   @media (max-width: 600px) {
-    width: 300px;
+    width: 100%;
   }
 `;
 
@@ -41,10 +48,6 @@ export const QuestionnaireTypeText = styled(Typography)`
   padding-bottom: 10px;
 `;
 
-export const ActionButton = styled(Button)`
-  width: 250px;
-`;
-
 export const SubmitButton = styled(FilledButton)`
   width: 90%;
   display: flex;
@@ -58,4 +61,34 @@ export const SubmitButton = styled(FilledButton)`
 
 export const CardActionsStyled = styled(CardActions)`
   justify-content: space-around;
+  margin: 20px auto;
 `;
+
+export const ActionButton = styled(Button)`
+  width: 250px;
+  padding: 8px;
+  font-size: ${TYPOGRAPHY.base_xs}px;
+  text-transform: none;
+  font-weight: ${typography.fontWeightMedium};
+`;
+
+export const ToggleButtonGroupStyled = styled(ToggleButtonGroup)`
+  margin: 10px 0 20px 0;
+  display: flex;
+  gap: 10px;
+  justify-content: space-between;
+  border: none;
+`;
+
+export const ToggleButtonStyled = styled(ToggleButton)(({ theme }) => ({
+  margin: '4px',
+  fontWeight: theme.typography.fontWeightMedium,
+  '&.MuiToggleButtonGroup-grouped': {
+    border: `1px solid ${SECONDARY.md_gray} !important`,
+  },
+  '&.Mui-selected': {
+    backgroundColor: PRIMARY.light_main,
+    color: PRIMARY.main,
+    border: `1px solid ${PRIMARY.main} !important`,
+  },
+}));

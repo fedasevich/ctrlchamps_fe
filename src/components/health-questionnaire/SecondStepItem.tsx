@@ -6,6 +6,8 @@ import {
   ToggleButtonGroup,
   Typography,
 } from '@mui/material';
+import { PRIMARY, SECONDARY } from 'src/theme/colors';
+import { ToggleButtonGroupStyled, ToggleButtonStyled } from './styles';
 
 const SecondStepItem = ({
   questions,
@@ -32,24 +34,18 @@ const SecondStepItem = ({
           <Typography variant="body2" fontWeight="bold">
             {question}
           </Typography>
-          <ToggleButtonGroup
+          <ToggleButtonGroupStyled
             value={alignments[index]}
-            style={{ margin: '10px 0 20px 0' }}
             exclusive
             onChange={(event, newAlignment) => handleAlignmentChange(index, newAlignment)}
             aria-label={`Alignment for ${question}`}
           >
             {options.map((option) => (
-              <ToggleButton
-                style={{ margin: '4px' }}
-                key={option}
-                value={option}
-                aria-label={option}
-              >
+              <ToggleButtonStyled key={option} value={option} aria-label={option}>
                 {option}
-              </ToggleButton>
+              </ToggleButtonStyled>
             ))}
-          </ToggleButtonGroup>
+          </ToggleButtonGroupStyled>
         </div>
       ))}
     </div>

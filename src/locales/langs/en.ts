@@ -210,6 +210,9 @@ const en = {
     btn_next: 'Next',
     note_placeholder: 'Enter...',
     header_text: 'Activities of Daily Living Assessment',
+    activity: 'Activity',
+    back: 'Back',
+    submit: 'Submit',
   },
 };
 

@@ -5,6 +5,8 @@ import { personalDetailsReducer } from 'src/redux/slices/personalDetailsSlice';
 import { roleReducer } from './slices/roleSlice';
 import { tokenReducer } from './slices/tokenSlice';
 import { availableDaysReducer } from './slices/availableDaysSlice';
+import { healthQuestionnaireReducer } from './slices/healthQuestionnaireSlice';
+import { rateReducer } from './slices/rateSlice';
 
 const rootReducer = combineReducers({
   role: roleReducer,

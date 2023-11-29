@@ -9,10 +9,11 @@ import { personalDetailsReducer } from 'src/redux/slices/personalDetailsSlice';
 import { roleReducer } from 'src/redux/slices/roleSlice';
 import { tokenReducer } from 'src/redux/slices/tokenSlice';
 import { availableDaysReducer } from 'src/redux/slices/availableDaysSlice';
+import { rateReducer } from 'src/redux/slices/rateSlice';
 
-import accountVerificationApi from './api/accountVerificationAPI';
-import authApi from './api/authApi';
-import profileApi from './api/profileCompleteApi';
+import accountVerificationApi from 'src/redux/api/accountVerificationAPI';
+import authApi from 'src/redux/api/authApi';
+import profileApi from 'src/redux/api/profileCompleteApi';
 
 const persistConfig = {
   key: 'root',
@@ -29,6 +30,7 @@ const store = configureStore({
     address: addressReducer,
     token: persistedTokenReducer,
     availableDays: availableDaysReducer,
+    hourlyRate: rateReducer,
     [authApi.reducerPath]: authApi.reducer,
     [accountVerificationApi.reducerPath]: accountVerificationApi.reducer,
     [profileApi.reducerPath]: profileApi.reducer,

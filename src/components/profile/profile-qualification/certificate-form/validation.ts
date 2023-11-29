@@ -2,8 +2,7 @@ import { ObjectSchema, boolean, date, object, string } from 'yup';
 
 import { ProfileQualityFormValues } from 'src/components/profile/profile-qualification/types';
 import { useLocales } from 'src/locales';
-import { MAX_CHARACTERS_LENGTH } from 'src/constants';
-import { URL_PATTERN } from 'src/components/profile/profile-qualification/certificate-form/constants';
+import { MAX_CHARACTERS_LENGTH, URL_PATTERN } from 'src/constants';
 
 export const useProfileQualificationSchema = (): ObjectSchema<ProfileQualityFormValues> => {
   const { translate } = useLocales();

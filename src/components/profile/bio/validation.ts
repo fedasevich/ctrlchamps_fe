@@ -1,12 +1,9 @@
 import { ObjectSchema, mixed, string, object } from 'yup';
 
 import { useLocales } from 'src/locales';
-import {
-  ALLOWED_VIDEO_FORMATS,
-  MAX_DESCRIPTION_LENGTH,
-  MAX_FILE_SIZE_BYTES,
-} from 'src/components/profile/bio/constants';
+import { ALLOWED_VIDEO_FORMATS, MAX_FILE_SIZE_BYTES } from 'src/components/profile/bio/constants';
 import { BioFormValues } from 'src/components/profile/bio/types';
+import { MAX_CHARACTERS_LENGTH } from 'src/constants';
 
 export const useBioFormSchema = (): ObjectSchema<BioFormValues> => {
   const { translate } = useLocales();
@@ -25,6 +22,6 @@ export const useBioFormSchema = (): ObjectSchema<BioFormValues> => {
       ),
     description: string()
       .required(translate('profileBio.descriptionRequired'))
-      .max(MAX_DESCRIPTION_LENGTH, translate('profileBio.descriptionMaxLength')),
+      .max(MAX_CHARACTERS_LENGTH, translate('profileBio.descriptionMaxLength')),
   });
 };

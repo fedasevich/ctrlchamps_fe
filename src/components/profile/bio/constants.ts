@@ -1,7 +1,6 @@
 import { BioFormValues } from 'src/components/profile/bio/types';
 
 export const MAX_FILE_SIZE_BYTES = 52428800;
-export const MAX_DESCRIPTION_LENGTH = 100;
 
 export const AVI_FORMAT = 'video/avi';
 export const MOV_FORMAT = 'video/quicktime';

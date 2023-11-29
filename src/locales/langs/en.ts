@@ -208,6 +208,8 @@ const en = {
   },
   health_questionnaire: {
     btn_next: 'Next',
+    note_placeholder: 'Enter...',
+    header_text: 'Activities of Daily Living Assessment',
   },
 };
 

@@ -3,12 +3,7 @@ import { useState } from 'react';
 import Step1 from './Step1';
 import Step2 from './Step2';
 import Step3 from './Step3';
-import {
-  QuestionnaireContainer,
-  Background,
-  Container,
-  QuestionnaireContainerContent,
-} from './styles';
+import { QuestionnaireContainer, Background } from './styles';
 
 const HealthQuestionnaire = () => {
   const [currentStep, setCurrentStep] = useState(1);
@@ -27,23 +22,11 @@ const HealthQuestionnaire = () => {
 
   return (
     <Background>
-      <Container>
-        <QuestionnaireContainer>
-          <QuestionnaireContainerContent>
-            {currentStep === 1 && <Step1 onNext={handleNext} />}
-            {currentStep === 2 && (
-              <Step2
-              // onNext={handleNext} onBack={handleBack}
-              />
-            )}
-            {currentStep === 3 && (
-              <Step3
-              // onBack={handleBack}
-              />
-            )}
-          </QuestionnaireContainerContent>
-        </QuestionnaireContainer>
-      </Container>
+      <QuestionnaireContainer>
+        {currentStep === 1 && <Step1 onNext={handleNext} />}
+        {currentStep === 2 && <Step2 onNext={handleNext} onBack={handleBack} />}
+        {currentStep === 3 && <Step3 />}
+      </QuestionnaireContainer>
     </Background>
   );
 };

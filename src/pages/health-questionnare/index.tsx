@@ -13,11 +13,12 @@ export default function HealthQuestionnairePage(): JSX.Element {
   return (
     <div>
       <FlowHeader
-        text="Activities of Daily Living Assessment"
+        text={translate('health_questionnaire.header_text')}
         iconType="close"
         callback={handleOpen}
       />
       <HealthQuestionnaire />
+      <CancelAppointmentModal open={modalOpen} setOpen={setModalOpen} />
     </div>
   );
 }

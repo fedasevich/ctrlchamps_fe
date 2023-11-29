@@ -8,9 +8,10 @@ import { addressReducer } from 'src/redux/slices/addressSlice';
 import { personalDetailsReducer } from 'src/redux/slices/personalDetailsSlice';
 import { roleReducer } from 'src/redux/slices/roleSlice';
 import { tokenReducer } from 'src/redux/slices/tokenSlice';
+import { availableDaysReducer } from 'src/redux/slices/availableDaysSlice';
+import { healthQuestionnaireReducer } from 'src/redux/slices/healthQuestionnaireSlice';
 import { accountVerificationApi } from './api/accountVerificationAPI';
 import authApi from './api/authApi';
-import { availableDaysReducer } from './slices/availableDaysSlice';
 
 const persistConfig = {
   key: 'root',
@@ -27,6 +28,7 @@ const store = configureStore({
     address: addressReducer,
     token: persistedTokenReducer,
     availableDays: availableDaysReducer,
+    healthQuestionnaire: healthQuestionnaireReducer,
     [authApi.reducerPath]: authApi.reducer,
     [accountVerificationApi.reducerPath]: accountVerificationApi.reducer,
   },

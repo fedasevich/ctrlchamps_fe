@@ -6,11 +6,11 @@ import {
   Typography,
   styled,
 } from '@mui/material';
+import { HEADER } from 'src/config-global';
 import typography from 'src/theme/typography';
 import { PRIMARY, SECONDARY } from 'src/theme/colors';
 import { TYPOGRAPHY } from 'src/theme/fonts';
-import { HEADER } from 'src/config-global';
-import { FilledButton } from '../reusable';
+import { FilledButton } from 'src/components/reusable';
 
 export const Background = styled('div')`
   background-color: ${PRIMARY.light_main};
@@ -44,7 +44,7 @@ export const QuestionnaireContainerContent = styled('div')`
 export const QuestionnaireTypeText = styled(Typography)`
   color: ${PRIMARY.black};
   font-size: ${TYPOGRAPHY.md}px;
-  font-weight: ${typography.fontWeightMedium};
+  font-weight: ${typography.subtitle1.fontWeight};
   padding-bottom: 10px;
 `;
 
@@ -80,15 +80,25 @@ export const ToggleButtonGroupStyled = styled(ToggleButtonGroup)`
   border: none;
 `;
 
-export const ToggleButtonStyled = styled(ToggleButton)(({ theme }) => ({
-  margin: '4px',
-  fontWeight: theme.typography.fontWeightMedium,
-  '&.MuiToggleButtonGroup-grouped': {
-    border: `1px solid ${SECONDARY.md_gray} !important`,
-  },
-  '&.Mui-selected': {
-    backgroundColor: PRIMARY.light_main,
-    color: PRIMARY.main,
-    border: `1px solid ${PRIMARY.main} !important`,
-  },
-}));
+export const ToggleButtonStyled = styled(ToggleButton)`
+  margin: 4px;
+  font-weight: ${typography.fontWeightMedium};
+  line-height: 1.4;
+
+  &.MuiToggleButtonGroup-grouped {
+    border: 1px solid ${SECONDARY.md_gray} !important;
+  }
+
+  &.Mui-selected {
+    background-color: ${PRIMARY.light_main};
+    color: ${PRIMARY.main};
+    border: 1px solid ${PRIMARY.main} !important;
+  }
+`;
+
+export const DescriptionBlock = styled('div')`
+  color: ${SECONDARY.md_gray};
+  font-weight: ${typography.fontWeightMedium};
+  margin-bottom: 10px;
+  line-height: 1.5;
+`;

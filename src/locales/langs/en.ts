@@ -210,9 +210,13 @@ const en = {
     btn_next: 'Next',
     note_placeholder: 'Enter...',
     header_text: 'Activities of Daily Living Assessment',
+    diagnoses: 'Health Concerns and Medical Diagnoses',
     activity: 'Activity',
     back: 'Back',
     submit: 'Submit',
+    env: 'Environment Challanges',
+    env_description:
+      'The following list can be used to indicate challenges that impact functioning within the home environment. Use this checklist as a guide for home modifications that can help improve an elder’s functional independence as their needs and abilities change.',
   },
 };
 

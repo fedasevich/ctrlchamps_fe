@@ -35,4 +35,19 @@ export const ActivitiesOfDailyLivingAssessment = [
   'Driving/Managing Transportation',
 ];
 
+export const EnvironmentChallenges = [
+  'Climbing stairs',
+  'Turning doorknobs',
+  'Locking/unlocking doors',
+  'Operating light switches',
+  'Retrieving and sorting mail',
+  'Pulling cabinets and drawers in kitchen',
+  'Pulling cabinets and drawers in bathroom',
+  'Using oven/stovetop',
+  'Using microwave/toaster/small appliances',
+  'Using large utensils for food preparation',
+  'Entering shower/bathtub',
+  'Opening windows',
+];
+
 export const Options = ['Accomplishes Alone', 'Need Some Help', 'Completly Dependent'];

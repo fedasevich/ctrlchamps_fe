@@ -8,6 +8,8 @@ const route = {
   signIn: '/sign-in',
   accountCheck: '/account-check',
   uploadFile: '/uploadFile',
+  certificates: '/certificates',
+  workExperience: '/work-experience',
 };
 
 export { route };

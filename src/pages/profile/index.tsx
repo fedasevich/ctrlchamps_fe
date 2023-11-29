@@ -2,6 +2,7 @@ import Head from 'next/head';
 import { useState } from 'react';
 
 import ProfileQualification from 'src/components/profile/profile-qualification/ProfileQualification';
+import CompleteProfileThird from 'src/components/complete-profile-third/CompleteProfileThird';
 import { Step } from 'src/components/profile/profile-qualification/types';
 import FlowHeader from 'src/components/reusable/header/FlowHeader';
 import { ProfileWrapper } from 'src/components/reusable/profile-wrapper/ProfileWrapper';
@@ -33,7 +34,7 @@ function Profile(): JSX.Element {
     },
     {
       label: translate('profile.services'),
-      component: <div>{translate('profile.services')}</div>,
+      component: <CompleteProfileThird onNext={handleNext} />,
     },
     {
       label: translate('profile.availability'),

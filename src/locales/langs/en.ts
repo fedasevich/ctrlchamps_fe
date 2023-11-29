@@ -298,7 +298,7 @@ const en = {
     activity: 'Activity',
     back: 'Back',
     submit: 'Submit',
-    env: 'Environment Challanges',
+    env: 'Environment Challenges',
     env_description:
       'The following list can be used to indicate challenges that impact functioning within the home environment. Use this checklist as a guide for home modifications that can help improve an elder’s functional independence as their needs and abilities change.',
   },

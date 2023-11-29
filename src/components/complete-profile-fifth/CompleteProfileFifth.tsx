@@ -1,8 +1,10 @@
 import React, { memo } from 'react';
 import { Slider, FilledInput, InputLabel, FormControl } from '@mui/material';
-import { useForm, Controller } from 'react-hook-form';
+import { useForm, Controller, SubmitHandler } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
+import jwt_decode from 'jwt-decode';
 
+import { useUpdateProfileMutation } from 'src/redux/api/profileCompleteApi';
 import { useLocales } from 'src/locales';
 import { useAppDispatch, useTypedSelector } from 'src/redux/store';
 import { saveRate } from 'src/redux/slices/rateSlice';
@@ -35,6 +37,9 @@ function CompleteProfileFifth({ onNext }: IProps): JSX.Element {
   const completeProfileFifthSchema = useCompleteProfileFifthSchema();
 
   const initialRateValue = useTypedSelector((state) => state.hourlyRate.hourlyRate);
+  const token = useTypedSelector((state) => state.token.token);
+
+  const [updateHourlyRate] = useUpdateProfileMutation();
 
   const {
     control,
@@ -48,14 +53,26 @@ function CompleteProfileFifth({ onNext }: IProps): JSX.Element {
     },
   });
 
-  const onSubmit = handleSubmit((data) => {
+  const onSubmit: SubmitHandler<CompleteProfileFifthValues> = async (data) => {
+    const decoded: { id: string } = jwt_decode(token);
     dispatch(saveRate(data.hourlyRate));
-    onNext();
-  });
+
+    try {
+      await updateHourlyRate({
+        userId: decoded.id,
+        token,
+        updateProfileDto: { hourlyRate: data.hourlyRate },
+      })
+        .unwrap()
+        .then(() => onNext());
+    } catch (error) {
+      throw new Error(error);
+    }
+  };
 
   return (
     <Wrapper>
-      <StyledForm onSubmit={onSubmit}>
+      <StyledForm onSubmit={handleSubmit(onSubmit)}>
         <Controller
           name="hourlyRate"
           control={control}

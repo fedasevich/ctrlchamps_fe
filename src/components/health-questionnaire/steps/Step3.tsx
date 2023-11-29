@@ -39,15 +39,7 @@ const Step3 = ({ onNext, onBack }: { onNext: () => void; onBack: () => void }): 
                   onChange={(): void => handleOptionSelect(item)}
                 />
               }
-              label={
-                <Typography
-                  variant="body2"
-                  fontWeight={({ typography }) => typography.fontWeightMedium}
-                  fontSize={15}
-                >
-                  {item}
-                </Typography>
-              }
+              label={item}
             />
           ))}
         </FormGroup>

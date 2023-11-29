@@ -4,9 +4,18 @@ import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 
 import { useLocales } from 'src/locales';
-
-import { RATE_MARKS, MAX_RATE, MIN_RATE, RATE_STEP } from './constants';
-import { CompleteProfileFifthValues, useCompleteProfileFifthSchema } from './validation';
+import { useAppDispatch, useTypedSelector } from 'src/redux/store';
+import { saveRate } from 'src/redux/slices/rateSlice';
+import {
+  RATE_MARKS,
+  MAX_RATE,
+  MIN_RATE,
+  RATE_STEP,
+} from 'src/components/complete-profile-fifth/constants';
+import {
+  CompleteProfileFifthValues,
+  useCompleteProfileFifthSchema,
+} from 'src/components/complete-profile-fifth/validation';
 import {
   Wrapper,
   StyledForm,
@@ -14,7 +23,7 @@ import {
   ButtonWrapper,
   ErrorMessage,
   InputWrapper,
-} from './styles';
+} from 'src/components/complete-profile-fifth/styles';
 
 interface IProps {
   onNext: () => void;
@@ -22,7 +31,10 @@ interface IProps {
 
 function CompleteProfileFifth({ onNext }: IProps): JSX.Element {
   const { translate } = useLocales();
+  const dispatch = useAppDispatch();
   const completeProfileFifthSchema = useCompleteProfileFifthSchema();
+
+  const initialRateValue = useTypedSelector((state) => state.hourlyRate.hourlyRate);
 
   const {
     control,
@@ -32,11 +44,12 @@ function CompleteProfileFifth({ onNext }: IProps): JSX.Element {
     mode: 'onBlur',
     resolver: yupResolver(completeProfileFifthSchema),
     defaultValues: {
-      rate: MIN_RATE,
+      hourlyRate: initialRateValue,
     },
   });
 
-  const onSubmit = handleSubmit(() => {
+  const onSubmit = handleSubmit((data) => {
+    dispatch(saveRate(data.hourlyRate));
     onNext();
   });
 
@@ -44,7 +57,7 @@ function CompleteProfileFifth({ onNext }: IProps): JSX.Element {
     <Wrapper>
       <StyledForm onSubmit={onSubmit}>
         <Controller
-          name="rate"
+          name="hourlyRate"
           control={control}
           render={({ field }): JSX.Element => (
             <Slider
@@ -61,7 +74,7 @@ function CompleteProfileFifth({ onNext }: IProps): JSX.Element {
         />
         <InputWrapper>
           <Controller
-            name="rate"
+            name="hourlyRate"
             control={control}
             render={({ field }): JSX.Element => (
               <FormControl sx={{ width: '100%' }} variant="filled">
@@ -71,7 +84,7 @@ function CompleteProfileFifth({ onNext }: IProps): JSX.Element {
 
                 <FilledInput
                   {...field}
-                  error={!!errors.rate}
+                  error={!!errors.hourlyRate}
                   onChange={(value): void => field.onChange(value)}
                   inputProps={{
                     step: RATE_STEP,
@@ -84,7 +97,9 @@ function CompleteProfileFifth({ onNext }: IProps): JSX.Element {
               </FormControl>
             )}
           />
-          {errors?.rate && <ErrorMessage variant="caption">{errors.rate?.message}</ErrorMessage>}
+          {errors?.hourlyRate && (
+            <ErrorMessage variant="caption">{errors.hourlyRate?.message}</ErrorMessage>
+          )}
         </InputWrapper>
 
         <ButtonWrapper>

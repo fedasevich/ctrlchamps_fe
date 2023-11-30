@@ -15,6 +15,7 @@ export interface TimeSlot {
 export interface UpdateProfileRequest {
   services?: string[];
   availability?: TimeSlot[];
+  timeZone?: string;
   hourlyRate?: number;
   description?: string;
 }
@@ -22,6 +23,7 @@ export interface UpdateProfileRequest {
 export interface UpdateProfileResponse {
   services: string[];
   availability: TimeSlot[];
+  timeZone: string;
   hourlyRate: number;
   description: string;
 }

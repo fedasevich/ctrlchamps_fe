@@ -50,7 +50,7 @@ function LoginForm(): JSX.Element {
     try {
       await signIn(data)
         .unwrap()
-        .then(({ token }) => {
+        .then(({ token }: { token: string }) => {
           dispatch(setToken(token));
           router.push(ROUTES.home);
         })

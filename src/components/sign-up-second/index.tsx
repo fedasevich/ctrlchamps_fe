@@ -147,7 +147,7 @@ function SignUpSecond({ role, onNext }: IProps): JSX.Element {
         )}
       </InputWrapper>
 
-      <LocalizationProvider dateAdapter={AdapterDateFns}>
+      <InputWrapper>
         <Controller
           name="dateOfBirth"
           control={control}
@@ -172,7 +172,7 @@ function SignUpSecond({ role, onNext }: IProps): JSX.Element {
         {errors?.dateOfBirth && (
           <ErrorMessage variant="caption">{errors.dateOfBirth?.message}</ErrorMessage>
         )}
-      </LocalizationProvider>
+      </InputWrapper>
 
       {role === USER_ROLE.caregiver && (
         <Controller

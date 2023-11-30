@@ -5,14 +5,6 @@ export const PHONE_ERROR = 'phone';
 export const USER_MIN_AGE = 18;
 export const MAX_CHARACTERS_LENGTH = 100;
 export const DATE_FORMAT = 'MM/dd/yyyy';
-
-export const STEPS = {
-  first: 1,
-  second: 2,
-  third: 3,
-  fourth: 4,
-};
-
 export const URL_PATTERN = /^https:\/\/.+$/;
 
 export const USER_ROLE = {

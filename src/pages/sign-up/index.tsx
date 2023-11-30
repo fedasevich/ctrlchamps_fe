@@ -9,7 +9,6 @@ import { useSignUpMutation } from 'src/redux/api/authApi';
 import { RootState, useAppDispatch } from 'src/redux/store';
 import { setToken } from 'src/redux/slices/tokenSlice';
 import { ROUTES } from 'src/routes';
-import { STEPS } from 'src/constants/index';
 
 import SignUpFooter from 'src/components/reusable/footer';
 import FlowHeader from 'src/components/reusable/header/FlowHeader';
@@ -23,6 +22,13 @@ import SignUpFourthForm from 'src/components/sign-up-fourth';
 function capitalizeFirstLetter(string: string): string {
   return string.charAt(0).toUpperCase() + string.slice(1);
 }
+
+const STEPS = {
+  first: 1,
+  second: 2,
+  third: 3,
+  fourth: 4,
+};
 
 function SignUp(): JSX.Element {
   const { t } = useTranslation();

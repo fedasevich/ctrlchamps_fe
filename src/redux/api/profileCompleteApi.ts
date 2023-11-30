@@ -1,11 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { route } from './routes';
 
-export interface UploadVideoRequest {
-  userId: string;
-  file: File;
-}
-
 export interface TimeSlot {
   day: string;
   startTime: string;
@@ -143,41 +138,6 @@ export const profileApi = createApi({
         body: { workExperiences },
       }),
     }),
-    updateCertificate: builder.mutation<
-      CertificateResponse,
-      { certificateId: string; certificate: Certificate }
-    >({
-      query: ({ certificateId, certificate }) => ({
-        url: `${route.certificates}/${certificateId}`,
-        method: 'PATCH',
-        body: certificate,
-      }),
-    }),
-
-    deleteCertificate: builder.mutation<void, string>({
-      query: (certificateId) => ({
-        url: `${route.certificates}/${certificateId}`,
-        method: 'DELETE',
-      }),
-    }),
-
-    updateWorkExperience: builder.mutation<
-      WorkExperienceResponse,
-      { workExperienceId: string; workExperience: WorkExperience }
-    >({
-      query: ({ workExperienceId, workExperience }) => ({
-        url: `${route.workExperience}/${workExperienceId}`,
-        method: 'PATCH',
-        body: workExperience,
-      }),
-    }),
-
-    deleteWorkExperience: builder.mutation<void, string>({
-      query: (workExperienceId) => ({
-        url: `${route.workExperience}/${workExperienceId}`,
-        method: 'DELETE',
-      }),
-    }),
   }),
 });
 
@@ -188,10 +148,6 @@ export const {
   useUploadFileMutation,
   useCreateCertificateMutation,
   useCreateWorkExperienceMutation,
-  useUpdateCertificateMutation,
-  useDeleteCertificateMutation,
-  useUpdateWorkExperienceMutation,
-  useDeleteWorkExperienceMutation,
 } = profileApi;
 
 export default profileApi;

@@ -1,4 +1,3 @@
-import { memo } from 'react';
 import { MuiTelInput } from 'mui-tel-input';
 import {
   FilledInput,
@@ -199,4 +198,4 @@ function SignUpSecond({ role, onNext }: IProps): JSX.Element {
     </StyledForm>
   );
 }
-export default memo(SignUpSecond);
+export default SignUpSecond;

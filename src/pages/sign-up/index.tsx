@@ -9,6 +9,7 @@ import { useSignUpMutation } from 'src/redux/api/authApi';
 import { RootState, useAppDispatch } from 'src/redux/store';
 import { setToken } from 'src/redux/slices/tokenSlice';
 import { ROUTES } from 'src/routes';
+import { STEPS } from 'src/constants/index';
 
 import SignUpFooter from 'src/components/reusable/footer';
 import FlowHeader from 'src/components/reusable/header/FlowHeader';
@@ -19,8 +20,6 @@ import SignUpSecondForm from 'src/components/sign-up-second';
 import SignUpThirdForm from 'src/components/sign-up-third';
 import SignUpFourthForm from 'src/components/sign-up-fourth';
 
-const FIRST_STEP = 1;
-
 function capitalizeFirstLetter(string: string): string {
   return string.charAt(0).toUpperCase() + string.slice(1);
 }
@@ -30,7 +29,7 @@ function SignUp(): JSX.Element {
   const router = useRouter();
   const dispatch = useAppDispatch();
 
-  const [step, setStep] = useState<number>(FIRST_STEP);
+  const [step, setStep] = useState<number>(STEPS.first);
   const role = useSelector((state: RootState) => state.role.role);
   const addressData = useSelector((state: RootState) => state.address.addressData);
   const personalDetails = useSelector((state: RootState) => state.personalDetails.personalDetails);
@@ -71,8 +70,14 @@ function SignUp(): JSX.Element {
     }
   };
 
-  const handleNextStep = (): void => {
-    setStep((prevStep) => prevStep + 1);
+  const handleSecondStep = (): void => {
+    setStep(STEPS.second);
+  };
+  const handleThirdStep = (): void => {
+    setStep(STEPS.third);
+  };
+  const handleFourthStep = (): void => {
+    setStep(STEPS.fourth);
   };
 
   return (
@@ -80,11 +85,11 @@ function SignUp(): JSX.Element {
       <FlowHeader text={t('SignUp')} callback={handleBackStep} iconType="back" />
       <SignUpWrapper>
         <>
-          {step === 1 && <SignUpFirstForm onNext={handleNextStep} />}
+          {step === 1 && <SignUpFirstForm onNext={handleSecondStep} />}
           {step === 2 && (
-            <SignUpSecondForm role={(role as 'seeker') || 'caregiver'} onNext={handleNextStep} />
+            <SignUpSecondForm role={(role as 'seeker') || 'caregiver'} onNext={handleThirdStep} />
           )}
-          {step === 3 && <SignUpThirdForm onNext={handleNextStep} />}
+          {step === 3 && <SignUpThirdForm onNext={handleFourthStep} />}
           {step === 4 && <SignUpFourthForm onNext={handleSignUp} />}
           <SignUpFooter />
         </>

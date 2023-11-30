@@ -2,12 +2,14 @@ import { Dispatch, SetStateAction } from 'react';
 import { useRouter } from 'next/router';
 import { Modal } from '@mui/material';
 import { useLocales } from 'src/locales';
+import { useAppDispatch } from 'src/redux/store';
+import { cancelAppointment } from 'src/redux/slices/appointmentSlice';
 import { ROUTES } from 'src/routes';
 import Cross from 'src/assets/icons/Cross';
-import { FilledButton } from '../reusable';
+import { FilledButton } from 'src/components/reusable';
 import { Box, CloseButton, HeaderText, ModalContent, ModalHeader, Text } from './styles';
 
-export default function CancelAppointmentModal({
+export function CancelAppointmentModal({
   open,
   setOpen,
 }: {
@@ -16,10 +18,12 @@ export default function CancelAppointmentModal({
 }): JSX.Element {
   const { push } = useRouter();
   const { translate } = useLocales();
+  const dispatch = useAppDispatch();
 
   const handleClose = (): void => setOpen(false);
 
-  const cancelAppointment = (): void => {
+  const cancelThisAppointment = (): void => {
+    dispatch(cancelAppointment());
     setOpen(false);
     push(ROUTES.home);
   };
@@ -46,7 +50,7 @@ export default function CancelAppointmentModal({
         </ModalHeader>
         <ModalContent>
           <Text>{translate('create_appointment.modal.confirmation')}</Text>
-          <FilledButton fullWidth onClick={cancelAppointment}>
+          <FilledButton fullWidth onClick={cancelThisAppointment}>
             {translate('create_appointment.modal.positive_confirm')}
           </FilledButton>
         </ModalContent>

@@ -78,78 +78,102 @@ export interface WorkExperienceResponse {
 
 export const profileApi = createApi({
   reducerPath: 'profileApi',
-  baseQuery: fetchBaseQuery({ baseUrl: `${process.env.NEXT_PUBLIC_API_URL}/${route.profile}` }),
+  baseQuery: fetchBaseQuery({
+    baseUrl: `${process.env.NEXT_PUBLIC_API_URL}/${route.profile}`,
+    prepareHeaders: (headers) => {
+      const token = localStorage.getItem('token');
+
+      if (token) {
+        headers.set('Authorization', `Bearer ${token}`);
+      }
+
+      return headers;
+    },
+  }),
   endpoints: (builder) => ({
     getProfileInformation: builder.query({
-      query: ({ userId, token }) => ({
-        url: `${userId}`,
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+      query: () => ({
+        url: `/`,
       }),
     }),
-    createProfile: builder.mutation<void, { userId: string; token: string }>({
-      query: ({ userId, token }) => ({
-        url: `/${userId}`,
+    createProfile: builder.mutation<void, void>({
+      query: () => ({
+        url: `/`,
         method: 'POST',
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
       }),
     }),
     updateProfile: builder.mutation<
       UpdateProfileResponse,
-      { userId: string; token: string; updateProfileDto: UpdateProfileRequest }
+      { updateProfileDto: UpdateProfileRequest }
     >({
-      query: ({ userId, token, updateProfileDto }) => ({
-        url: `/${userId}`,
+      query: ({ updateProfileDto }) => ({
+        url: `/`,
         method: 'PATCH',
         body: updateProfileDto,
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
       }),
     }),
-    uploadFile: builder.mutation<void, { userId: string; token: string; file: File }>({
-      query: ({ userId, token, file }) => {
+    uploadFile: builder.mutation<void, { file: File }>({
+      query: ({ file }) => {
         const formData = new FormData();
         formData.append('file', file);
 
         return {
-          url: `${route.uploadFile}/${userId}`,
+          url: `${route.uploadFile}`,
           method: 'POST',
           body: formData,
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
         };
       },
     }),
-
-    createCertificate: builder.mutation<
-      CertificateResponse[],
-      { userId: string; certificates: Certificate[]; token: string }
-    >({
-      query: ({ userId, certificates, token }) => ({
-        url: `${route.certificates}/${userId}`,
+    createCertificate: builder.mutation<CertificateResponse[], { certificates: Certificate[] }>({
+      query: ({ certificates }) => ({
+        url: `${route.certificates}`,
         method: 'POST',
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
         body: { certificates },
       }),
     }),
     createWorkExperience: builder.mutation<
       WorkExperienceResponse[],
-      { userId: string; workExperiences: WorkExperience[]; token: string }
+      { workExperiences: WorkExperience[] }
     >({
-      query: ({ userId, workExperiences, token }) => ({
-        url: `${route.workExperience}/${userId}`,
+      query: ({ workExperiences }) => ({
+        url: `${route.workExperience}`,
         method: 'POST',
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
         body: { workExperiences },
+      }),
+    }),
+    updateCertificate: builder.mutation<
+      CertificateResponse,
+      { certificateId: string; certificate: Certificate }
+    >({
+      query: ({ certificateId, certificate }) => ({
+        url: `${route.certificates}/${certificateId}`,
+        method: 'PATCH',
+        body: certificate,
+      }),
+    }),
+
+    deleteCertificate: builder.mutation<void, string>({
+      query: (certificateId) => ({
+        url: `${route.certificates}/${certificateId}`,
+        method: 'DELETE',
+      }),
+    }),
+
+    updateWorkExperience: builder.mutation<
+      WorkExperienceResponse,
+      { workExperienceId: string; workExperience: WorkExperience }
+    >({
+      query: ({ workExperienceId, workExperience }) => ({
+        url: `${route.workExperience}/${workExperienceId}`,
+        method: 'PATCH',
+        body: workExperience,
+      }),
+    }),
+
+    deleteWorkExperience: builder.mutation<void, string>({
+      query: (workExperienceId) => ({
+        url: `${route.workExperience}/${workExperienceId}`,
+        method: 'DELETE',
       }),
     }),
   }),
@@ -162,6 +186,10 @@ export const {
   useUploadFileMutation,
   useCreateCertificateMutation,
   useCreateWorkExperienceMutation,
+  useUpdateCertificateMutation,
+  useDeleteCertificateMutation,
+  useUpdateWorkExperienceMutation,
+  useDeleteWorkExperienceMutation,
 } = profileApi;
 
 export default profileApi;

@@ -5,7 +5,6 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { FormControl, FilledInput, InputLabel, Button } from '@mui/material';
 import { Close } from '@mui/icons-material';
 import VideocamOutlinedIcon from '@mui/icons-material/VideocamOutlined';
-import jwt_decode from 'jwt-decode';
 
 import { useUploadFileMutation, useUpdateProfileMutation } from 'src/redux/api/profileCompleteApi';
 import { useSelector } from 'react-redux';
@@ -58,18 +57,13 @@ export function Bio(): JSX.Element {
   const video = watch('video');
 
   const onSubmit: SubmitHandler<BioFormValues> = async (data) => {
-    const decoded: { id: string } = jwt_decode(token);
     try {
       if (data.video) {
         await uploadVideoMutation({
-          userId: decoded.id,
-          token,
           file: data.video,
         });
       }
       await updateDescription({
-        userId: decoded.id,
-        token,
         updateProfileDto: { description: data.description },
       })
         .unwrap()

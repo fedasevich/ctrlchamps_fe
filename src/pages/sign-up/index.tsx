@@ -19,16 +19,16 @@ import SignUpSecondForm from 'src/components/sign-up-second';
 import SignUpThirdForm from 'src/components/sign-up-third';
 import SignUpFourthForm from 'src/components/sign-up-fourth';
 
-function capitalizeFirstLetter(string: string): string {
-  return string.charAt(0).toUpperCase() + string.slice(1);
-}
-
 const STEPS = {
   first: 1,
   second: 2,
   third: 3,
   fourth: 4,
 };
+
+function capitalizeFirstLetter(string: string): string {
+  return string.charAt(0).toUpperCase() + string.slice(1);
+}
 
 function SignUp(): JSX.Element {
   const { t } = useTranslation();

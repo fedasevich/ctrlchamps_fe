@@ -6,7 +6,7 @@ import { UseFormSetError } from 'react-hook-form';
 import { useLocales } from 'src/locales';
 import { useAccountCheckMutation } from 'src/redux/api/authApi';
 import { useTypedSelector } from 'src/redux/store';
-import { USER_DATE_BIRTH_FORMAT, EMAIL_ERROR, PHONE_ERROR } from 'src/constants';
+import { DATE_FORMAT, EMAIL_ERROR, PHONE_ERROR } from 'src/constants';
 import { SignUpSecondValues } from 'src/components/sign-up-second/validation';
 
 interface IProps {
@@ -40,7 +40,7 @@ export function useSignUpSecond(onNext: () => void): ReturnType {
   const initialDateOfBirth = useMemo(
     () =>
       initialDetailsValues.dateOfBirth
-        ? parse(initialDetailsValues.dateOfBirth, USER_DATE_BIRTH_FORMAT, new Date())
+        ? parse(initialDetailsValues.dateOfBirth, DATE_FORMAT, new Date())
         : undefined,
     [initialDetailsValues]
   );

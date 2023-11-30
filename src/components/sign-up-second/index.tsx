@@ -20,7 +20,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import { useAppDispatch } from 'src/redux/store';
 import { savePersonalDetails } from 'src/redux/slices/personalDetailsSlice';
 import { useLocales } from 'src/locales';
-import { USER_DATE_BIRTH_FORMAT, USER_ROLE } from 'src/constants';
+import { DATE_FORMAT, USER_ROLE } from 'src/constants';
 import { MAX_BIRTH_DATE } from 'src/components/sign-up-second/constants';
 
 import {
@@ -60,7 +60,7 @@ function SignUpSecond({ role, onNext }: IProps): JSX.Element {
 
   const onSubmit: SubmitHandler<SignUpSecondValues> = async (data): Promise<void> => {
     const { email, phoneNumber, dateOfBirth } = data;
-    const formattedDate = format(dateOfBirth, USER_DATE_BIRTH_FORMAT);
+    const formattedDate = format(dateOfBirth, DATE_FORMAT);
     dispatch(
       savePersonalDetails({
         ...data,
@@ -161,7 +161,7 @@ function SignUpSecond({ role, onNext }: IProps): JSX.Element {
             <DatePicker
               {...field}
               label={translate('signUpSecondForm.placeholderBirthDate')}
-              inputFormat={USER_DATE_BIRTH_FORMAT}
+              inputFormat={DATE_FORMAT}
               maxDate={MAX_BIRTH_DATE}
               openTo="year"
               renderInput={(params): JSX.Element => (

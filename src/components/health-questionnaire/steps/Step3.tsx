@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
-import { Checkbox, FormControlLabel, FormGroup, TextField, Typography } from '@mui/material';
+import { Checkbox, FormControlLabel, FormGroup, TextField } from '@mui/material';
+import { useDispatch, useSelector } from 'react-redux';
 import { useLocales } from 'src/locales';
+import { RootState } from 'src/redux/store';
+import { selectEnvChallenges } from 'src/redux/slices/healthQuestionnaireSlice';
 import { EnvironmentChallenges } from '../constants';
 import {
   QuestionnaireContainerContent,
@@ -12,7 +15,11 @@ import {
 
 const Step3 = ({ onNext, onBack }: { onNext: () => void; onBack: () => void }): JSX.Element => {
   const { translate } = useLocales();
-  const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
+  const dispatch = useDispatch();
+  const selectedEnvChallenges = useSelector(
+    (state: RootState) => state.healthQuestionnaire.selectedEnvChallenges
+  );
+  const [selectedOptions, setSelectedOptions] = useState<string[]>(selectedEnvChallenges);
 
   const handleOptionSelect = (value: string): void => {
     const updatedOptions = [...selectedOptions];
@@ -22,6 +29,7 @@ const Step3 = ({ onNext, onBack }: { onNext: () => void; onBack: () => void }): 
       updatedOptions.push(value);
     }
     setSelectedOptions(updatedOptions);
+    dispatch(selectEnvChallenges({ challenges: updatedOptions }));
   };
 
   return (
@@ -45,7 +53,7 @@ const Step3 = ({ onNext, onBack }: { onNext: () => void; onBack: () => void }): 
         </FormGroup>
         <TextField
           fullWidth
-          label="Note"
+          label={translate('health_questionnaire.note')}
           variant="standard"
           size="small"
           placeholder={translate('health_questionnaire.note_placeholder')}

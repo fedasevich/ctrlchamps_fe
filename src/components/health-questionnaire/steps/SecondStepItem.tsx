@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Typography } from '@mui/material';
+import { selectActivity } from 'src/redux/slices/healthQuestionnaireSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from 'src/redux/store';
 import { ToggleButtonGroupStyled, ToggleButtonStyled } from '../styles';
 
 const SecondStepItem = ({
@@ -11,7 +14,13 @@ const SecondStepItem = ({
   options: string[];
   onCompletion: (status: boolean) => void;
 }): JSX.Element => {
-  const [selectedOptions, setSelectedOptions] = useState<{ [key: string]: string }>({});
+  const dispatch = useDispatch();
+  const selectedActivities = useSelector(
+    (state: RootState) => state.healthQuestionnaire.selectedActivities
+  );
+  const [selectedOptions, setSelectedOptions] = useState<{ [key: string]: string }>(
+    selectedActivities
+  );
 
   const handleOptionSelect = (question: string, option: string | null): void => {
     if (option !== null) {
@@ -19,6 +28,13 @@ const SecondStepItem = ({
         ...selectedOptions,
         [question]: option,
       });
+
+      dispatch(
+        selectActivity({
+          activityName: question,
+          status: option,
+        })
+      );
     }
   };
 

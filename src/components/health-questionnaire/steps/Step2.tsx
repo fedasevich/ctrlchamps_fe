@@ -12,9 +12,10 @@ import {
 
 const Step2 = ({ onNext, onBack }: { onNext: () => void; onBack: () => void }): JSX.Element => {
   const { translate } = useLocales();
+
   const [questionsCompleted, setQuestionsCompleted] = useState<boolean>(false);
 
-  const handleCompletion = (status: boolean) => {
+  const handleCompletion = (status: boolean): void => {
     setQuestionsCompleted(status);
   };
 
@@ -30,7 +31,7 @@ const Step2 = ({ onNext, onBack }: { onNext: () => void; onBack: () => void }): 
         <TextField
           fullWidth
           id="standard-basic"
-          label="Note"
+          label={translate('health_questionnaire.note')}
           variant="standard"
           size="small"
           placeholder={translate('health_questionnaire.note_placeholder')}

@@ -293,6 +293,7 @@ const en = {
   health_questionnaire: {
     btn_next: 'Next',
     note_placeholder: 'Enter...',
+    note: 'Note',
     header_text: 'Activities of Daily Living Assessment',
     diagnoses: 'Health Concerns and Medical Diagnoses',
     activity: 'Activity',

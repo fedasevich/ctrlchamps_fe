@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Checkbox, FormControlLabel, FormGroup, TextField, Typography } from '@mui/material';
-import { useDispatch } from 'react-redux';
-
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from 'src/redux/store';
 import { useLocales } from 'src/locales';
 import { selectDiagnosis } from 'src/redux/slices/healthQuestionnaireSlice';
 import { HealthConcernsAndMedicalDiagnoses } from '../constants';
@@ -10,7 +10,10 @@ import { QuestionnaireTypeText, SubmitButton, QuestionnaireContainerContent } fr
 const Step1 = ({ onNext }: { onNext: () => void }): JSX.Element => {
   const { translate } = useLocales();
   const dispatch = useDispatch();
-  const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
+  const selectedDiagnoses = useSelector(
+    (state: RootState) => state.healthQuestionnaire.selectedDiagnoses
+  );
+  const [selectedOptions, setSelectedOptions] = useState<string[]>(selectedDiagnoses);
 
   const handleOptionSelect = (value: string): void => {
     const updatedOptions = [...selectedOptions];
@@ -20,7 +23,7 @@ const Step1 = ({ onNext }: { onNext: () => void }): JSX.Element => {
       updatedOptions.push(value);
     }
     setSelectedOptions(updatedOptions);
-    dispatch(selectDiagnosis([...selectedOptions, value]));
+    dispatch(selectDiagnosis({ diagnoses: updatedOptions }));
   };
 
   return (
@@ -51,7 +54,7 @@ const Step1 = ({ onNext }: { onNext: () => void }): JSX.Element => {
         <TextField
           fullWidth
           id="standard-basic"
-          label="Note"
+          label={translate('health_questionnaire.note')}
           variant="standard"
           size="small"
           placeholder={translate('health_questionnaire.note_placeholder')}

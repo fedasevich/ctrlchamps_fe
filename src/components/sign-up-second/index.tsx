@@ -154,7 +154,7 @@ function SignUpSecond({ role, onNext }: IProps): JSX.Element {
           defaultValue={MAX_BIRTH_DATE}
           rules={{
             validate: (value) =>
-              value <= MAX_BIRTH_DATE || 'Введена дата перевищує максимально допустиму',
+              value <= MAX_BIRTH_DATE || translate('signUpSecondForm.birthDateMax'),
           }}
           render={({ field }): JSX.Element => (
             <DatePicker

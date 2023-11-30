@@ -23,3 +23,6 @@ export function generateTimeWithInterval(start: string, end: string, interval: n
 
   return times;
 }
+
+// generateTimeWithInterval('08:00 AM', '10:00 PM', 15);
+// ['08:00 AM', '08:15 AM', '08:30 AM', '08:45 AM', '09:00 AM', '09:15 AM', '09:30 AM', '09:45 AM', '10:00 AM']

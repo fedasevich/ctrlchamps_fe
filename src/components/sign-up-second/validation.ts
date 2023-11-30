@@ -1,5 +1,6 @@
 import { useLocales } from 'src/locales';
 import { AnyObject, ObjectSchema, boolean, object, date, string } from 'yup';
+import { MAX_BIRTH_DATE } from 'src/components/sign-up-second/constants';
 
 export type SignUpSecondValues = {
   firstName: string;
@@ -40,7 +41,9 @@ export const useSignUpSecondSchema = (): ObjectSchema<
     phoneNumber: string()
       .length(12, translate('signUpSecondForm.phoneLengthInvalid'))
       .required(translate('signUpSecondForm.phoneRequired')),
-    dateOfBirth: date().required(translate('signUpSecondForm.birthDateRequired')),
+    dateOfBirth: date()
+      .max(MAX_BIRTH_DATE, translate('signUpSecondForm.birthDateMax'))
+      .required(translate('signUpSecondForm.birthDateRequired')),
     isOpenToSeekerHomeLiving: boolean(),
   });
 };

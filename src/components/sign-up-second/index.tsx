@@ -7,8 +7,11 @@ import {
   Input,
   InputLabel,
   Switch,
+  TextField,
 } from '@mui/material';
-import DatePicker from 'react-datepicker';
+import { LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { format } from 'date-fns';
@@ -18,10 +21,19 @@ import { useAppDispatch } from 'src/redux/store';
 import { savePersonalDetails } from 'src/redux/slices/personalDetailsSlice';
 import { useLocales } from 'src/locales';
 import { USER_DATE_BIRTH_FORMAT, USER_ROLE } from 'src/constants';
+import { MAX_BIRTH_DATE } from 'src/components/sign-up-second/constants';
 
-import { useSignUpSecondSchema, SignUpSecondValues } from './validation';
-import { ErrorMessage, InputWrapper, NextButton, StyledForm } from './styles';
-import { useSignUpSecond } from './hooks';
+import {
+  useSignUpSecondSchema,
+  SignUpSecondValues,
+} from 'src/components/sign-up-second/validation';
+import {
+  ErrorMessage,
+  InputWrapper,
+  NextButton,
+  StyledForm,
+} from 'src/components/sign-up-second/styles';
+import { useSignUpSecond } from 'src/components/sign-up-second/hooks';
 
 interface IProps {
   role: 'caregiver' | 'seeker';
@@ -31,7 +43,7 @@ function SignUpSecond({ role, onNext }: IProps): JSX.Element {
   const dispatch = useAppDispatch();
   const { translate } = useLocales();
   const signUpSecondSchema = useSignUpSecondSchema();
-  const { defaultValues, minBirthDate, onAccountCheck } = useSignUpSecond(onNext);
+  const { defaultValues, onAccountCheck } = useSignUpSecond(onNext);
 
   const {
     register,
@@ -135,29 +147,34 @@ function SignUpSecond({ role, onNext }: IProps): JSX.Element {
           <ErrorMessage variant="caption">{errors.phoneNumber?.message}</ErrorMessage>
         )}
       </InputWrapper>
-      <InputWrapper>
-        <FormControl sx={{ width: '100%', height: 48 }} variant="filled">
-          <InputLabel htmlFor="dateOfBirth">
-            {translate('signUpSecondForm.placeholderBirthDate')}
-          </InputLabel>
-          <Controller
-            control={control}
-            name="dateOfBirth"
-            render={({ field }): JSX.Element => (
-              <DatePicker
-                onChange={(date: Date): void => field.onChange(date)}
-                selected={field.value}
-                customInput={<FilledInput fullWidth error={!!errors.dateOfBirth} />}
-                maxDate={minBirthDate}
-                dateFormat={USER_DATE_BIRTH_FORMAT}
-              />
-            )}
-          />
-        </FormControl>
+
+      <LocalizationProvider dateAdapter={AdapterDateFns}>
+        <Controller
+          name="dateOfBirth"
+          control={control}
+          defaultValue={MAX_BIRTH_DATE}
+          rules={{
+            validate: (value) =>
+              value <= MAX_BIRTH_DATE || 'Введена дата перевищує максимально допустиму',
+          }}
+          render={({ field }): JSX.Element => (
+            <DatePicker
+              {...field}
+              label={translate('signUpSecondForm.placeholderBirthDate')}
+              inputFormat={USER_DATE_BIRTH_FORMAT}
+              maxDate={MAX_BIRTH_DATE}
+              openTo="year"
+              renderInput={(params): JSX.Element => (
+                <TextField variant="filled" {...params} fullWidth error={!!errors.dateOfBirth} />
+              )}
+            />
+          )}
+        />
         {errors?.dateOfBirth && (
           <ErrorMessage variant="caption">{errors.dateOfBirth?.message}</ErrorMessage>
         )}
-      </InputWrapper>
+      </LocalizationProvider>
+
       {role === USER_ROLE.caregiver && (
         <Controller
           control={control}

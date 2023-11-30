@@ -65,7 +65,7 @@ function SignUp(): JSX.Element {
   };
 
   const handleBackStep = (): void => {
-    if (step > 1) {
+    if (step > STEPS.first) {
       setStep((prevStep) => prevStep - 1);
     }
   };
@@ -85,12 +85,12 @@ function SignUp(): JSX.Element {
       <FlowHeader text={t('SignUp')} callback={handleBackStep} iconType="back" />
       <SignUpWrapper>
         <>
-          {step === 1 && <SignUpFirstForm onNext={handleSecondStep} />}
-          {step === 2 && (
+          {step === STEPS.first && <SignUpFirstForm onNext={handleSecondStep} />}
+          {step === STEPS.second && (
             <SignUpSecondForm role={(role as 'seeker') || 'caregiver'} onNext={handleThirdStep} />
           )}
-          {step === 3 && <SignUpThirdForm onNext={handleFourthStep} />}
-          {step === 4 && <SignUpFourthForm onNext={handleSignUp} />}
+          {step === STEPS.third && <SignUpThirdForm onNext={handleFourthStep} />}
+          {step === STEPS.fourth && <SignUpFourthForm onNext={handleSignUp} />}
           <SignUpFooter />
         </>
       </SignUpWrapper>

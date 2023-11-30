@@ -32,9 +32,13 @@ const HealthQuestionnaire = (): JSX.Element => {
   return (
     <Background>
       <QuestionnaireContainer>
-        {currentStep === STEPS.STEP_1 && <Step1 onNext={handleNext} />}
-        {currentStep === STEPS.STEP_2 && <Step2 onNext={handleNext} onBack={handleBack} />}
-        {currentStep === STEPS.STEP_3 && <Step3 onNext={handleSubmit} onBack={handleBack} />}
+        {currentStep === STEPS.STEP_1 && <Step1 onNext={handleNext} stepKey={STEPS.STEP_1} />}
+        {currentStep === STEPS.STEP_2 && (
+          <Step2 onNext={handleNext} onBack={handleBack} stepKey={STEPS.STEP_2} />
+        )}
+        {currentStep === STEPS.STEP_3 && (
+          <Step3 onNext={handleSubmit} onBack={handleBack} stepKey={STEPS.STEP_3} />
+        )}
       </QuestionnaireContainer>
     </Background>
   );

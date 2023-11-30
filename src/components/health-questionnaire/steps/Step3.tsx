@@ -3,7 +3,7 @@ import { Checkbox, FormControlLabel, FormGroup, TextField } from '@mui/material'
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocales } from 'src/locales';
 import { RootState } from 'src/redux/store';
-import { selectEnvChallenges } from 'src/redux/slices/healthQuestionnaireSlice';
+import { saveNote, selectEnvChallenges } from 'src/redux/slices/healthQuestionnaireSlice';
 import { EnvironmentChallenges } from '../constants';
 import {
   QuestionnaireContainerContent,
@@ -13,13 +13,25 @@ import {
   DescriptionBlock,
 } from '../styles';
 
-const Step3 = ({ onNext, onBack }: { onNext: () => void; onBack: () => void }): JSX.Element => {
+const Step3 = ({
+  onNext,
+  onBack,
+  stepKey,
+}: {
+  onNext: () => void;
+  onBack: () => void;
+  stepKey: string;
+}): JSX.Element => {
   const { translate } = useLocales();
   const dispatch = useDispatch();
+
   const selectedEnvChallenges = useSelector(
     (state: RootState) => state.healthQuestionnaire.selectedEnvChallenges
   );
+  const savedNote = useSelector((state: RootState) => state.healthQuestionnaire.notes[stepKey]);
+
   const [selectedOptions, setSelectedOptions] = useState<string[]>(selectedEnvChallenges);
+  const [note, setNote] = useState<string>(savedNote || '');
 
   const handleOptionSelect = (value: string): void => {
     const updatedOptions = [...selectedOptions];
@@ -30,6 +42,16 @@ const Step3 = ({ onNext, onBack }: { onNext: () => void; onBack: () => void }): 
     }
     setSelectedOptions(updatedOptions);
     dispatch(selectEnvChallenges({ challenges: updatedOptions }));
+  };
+
+  const handleNoteChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
+    const updatedNote = event.target.value;
+    setNote(updatedNote);
+  };
+
+  const handleSubmit = (): void => {
+    dispatch(saveNote({ step: stepKey, note }));
+    onNext();
   };
 
   return (
@@ -56,7 +78,9 @@ const Step3 = ({ onNext, onBack }: { onNext: () => void; onBack: () => void }): 
           label={translate('health_questionnaire.note')}
           variant="standard"
           size="small"
+          value={note}
           placeholder={translate('health_questionnaire.note_placeholder')}
+          onChange={handleNoteChange}
         />
       </QuestionnaireContainerContent>
       <CardActionsStyled>
@@ -71,7 +95,7 @@ const Step3 = ({ onNext, onBack }: { onNext: () => void; onBack: () => void }): 
         <ActionButton
           variant="contained"
           disabled={Boolean(!selectedOptions.length)}
-          onClick={onNext}
+          onClick={handleSubmit}
         >
           {translate('health_questionnaire.submit')}
         </ActionButton>

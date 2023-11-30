@@ -4,12 +4,14 @@ interface HealthQuestionnaireState {
   selectedDiagnoses: string[];
   selectedActivities: Record<string, string>;
   selectedEnvChallenges: string[];
+  notes: Record<string, string>;
 }
 
 const initialState: HealthQuestionnaireState = {
   selectedDiagnoses: [],
   selectedActivities: {},
   selectedEnvChallenges: [],
+  notes: {},
 };
 
 interface SelectDiagnosisPayload {
@@ -23,6 +25,11 @@ interface SelectActivityPayload {
 
 interface SelectEnvChallengesPayload {
   challenges: string[];
+}
+
+interface SaveNotePayload {
+  step: string;
+  note: string;
 }
 
 const healthQuestionnaireSlice = createSlice({
@@ -42,10 +49,14 @@ const healthQuestionnaireSlice = createSlice({
     selectEnvChallenges(state, action: PayloadAction<SelectEnvChallengesPayload>) {
       state.selectedEnvChallenges = action.payload.challenges;
     },
+    saveNote(state, action: PayloadAction<SaveNotePayload>) {
+      const { step, note } = action.payload;
+      state.notes[step] = note;
+    },
   },
 });
 
-export const { selectDiagnosis, selectActivity, selectEnvChallenges } =
+export const { selectDiagnosis, selectActivity, selectEnvChallenges, saveNote } =
   healthQuestionnaireSlice.actions;
 
 export default healthQuestionnaireSlice.reducer;

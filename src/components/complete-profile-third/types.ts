@@ -1,12 +1,16 @@
 export type CompleteProfileThirdValues = {
-  personalCare: boolean;
-  medicationManagement: boolean;
-  mobilitySupport: boolean;
-  mealPreparation: boolean;
-  housekeeping: boolean;
-  socialActivities: boolean;
+  PersonalCareAssistance: boolean;
+  MedicationManagement: boolean;
+  MobilitySupport: boolean;
+  MealPreparation: boolean;
+  HousekeepingAndLaundry: boolean;
+  SocialAndRecreationalActivities: boolean;
 };
 
 export interface IProps {
   onNext: () => void;
 }
+
+export type ReturnType = {
+  onUpdateServices: (data: CompleteProfileThirdValues) => void;
+};

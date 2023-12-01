@@ -2,10 +2,12 @@ import { combineReducers } from 'redux';
 
 import { addressReducer } from 'src/redux/slices/addressSlice';
 import { personalDetailsReducer } from 'src/redux/slices/personalDetailsSlice';
-import { availableDaysReducer } from './slices/availableDaysSlice';
 import { caregiverReducer } from './slices/caregiverSlice';
-import { roleReducer } from './slices/roleSlice';
-import { tokenReducer } from './slices/tokenSlice';
+import { availableDaysReducer } from 'src/redux/slices/availableDaysSlice';
+import { rateReducer } from 'src/redux/slices/rateSlice';
+import { appointmentReducer } from './slices/appointmentSlice';
+import { servicesReducer } from './slices/servicesSlice';
+
 
 const rootReducer = combineReducers({
   role: roleReducer,
@@ -14,6 +16,9 @@ const rootReducer = combineReducers({
   token: tokenReducer,
   caregiver: caregiverReducer,
   availableDays: availableDaysReducer,
+  services: servicesReducer,
+  hourlyRate: rateReducer,
+  appointment: appointmentReducer,
 });
 
 export default rootReducer;

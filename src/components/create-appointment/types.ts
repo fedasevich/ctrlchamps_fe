@@ -1,3 +1,8 @@
 type AppointmentTypeI = 'one-time' | 'recurring';
 
-export type { AppointmentTypeI };
+type AppointmentDurationI = {
+  hours: number;
+  minutes: number;
+};
+
+export type { AppointmentTypeI, AppointmentDurationI };

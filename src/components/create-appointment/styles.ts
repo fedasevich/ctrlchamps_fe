@@ -7,7 +7,7 @@ import { FilledButton } from '../reusable';
 
 const Background = styled('div')`
   background-color: ${PRIMARY.light_main};
-  min-height: 100vh;
+  min-height: calc(100vh - ${HEADER.FLOW_HEIGHT}px);
   display: flex;
   justify-content: center;
 `;
@@ -22,6 +22,11 @@ const MainText = styled(Typography)`
 const BaseText = styled(Typography)`
   color: ${SECONDARY.md_gray};
   text-align: center;
+`;
+
+const BaseBoldText = styled(BaseText)`
+  font-weight: ${typography.fontWeightMedium};
+  text-align: left;
 `;
 
 const TextContainer = styled('div')`
@@ -39,7 +44,7 @@ const Button = styled(FilledButton)`
   font-weight: ${typography.fontWeightMedium};
 `;
 
-const AppointmentTypeContainer = styled('div')`
+const Container = styled('div')`
   display: flex;
   flex-direction: column;
   gap: 16px;
@@ -47,7 +52,7 @@ const AppointmentTypeContainer = styled('div')`
   background-color: ${PRIMARY.white};
   border-radius: 4px;
   box-shadow: 0px 1px 16px 0px rgba(0, 0, 0, 0.1);
-  margin-top: calc(24px + ${HEADER.FLOW_HEIGHT}px);
+  margin-top: 24px;
   margin-bottom: 5%;
   padding: 16px;
 `;
@@ -82,10 +87,54 @@ const AppointmentTypeDetails = styled(Typography)`
   font-weight: ${typography.fontWeightMedium};
 `;
 
+const AppointmentDuration = styled('p')`
+  background-color: ${PRIMARY.light_main};
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  color: ${PRIMARY.black};
+  font-weight: ${typography.fontWeightMedium};
+  font-size: ${TYPOGRAPHY.base_xs}px;
+  padding: 16px;
+  border-radius: 4px;
+  svg {
+    width: 24px;
+    height: 16px;
+  }
+`;
+
 const IconWrapper = styled('div')`
   width: 100%;
   margin: 25px 0;
   text-align: center;
+`;
+
+const WeekSlot = styled('div')`
+  font-size: ${TYPOGRAPHY.xss};
+  background-color: ${PRIMARY.white};
+  border: 1px solid ${PRIMARY.main};
+  border-radius: 50%;
+  padding: 11px 13px;
+  cursor: pointer;
+  &.active {
+    background-color: ${PRIMARY.main};
+    color: ${PRIMARY.white};
+  }
+`;
+
+const WeekSlotContainer = styled('div')`
+  display: flex;
+  gap: 8px;
+`;
+
+const SelectContainer = styled('div')`
+  display: flex;
+  gap: 24px;
+`;
+
+const DatePickerContainer = styled('div')`
+  display: flex;
+  gap: 24px;
 `;
 
 export {
@@ -93,11 +142,17 @@ export {
   Button,
   MainText,
   BaseText,
+  BaseBoldText,
   TextContainer,
   IconWrapper,
-  AppointmentTypeContainer,
+  WeekSlot,
+  WeekSlotContainer,
+  SelectContainer,
+  Container,
+  DatePickerContainer,
   AppointmentTypeCard,
   AppointmentTypeInput,
   AppointmentTypeText,
   AppointmentTypeDetails,
+  AppointmentDuration,
 };

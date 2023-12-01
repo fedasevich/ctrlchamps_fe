@@ -1,20 +1,14 @@
-import React, { memo } from 'react';
 import { Checkbox, FormControlLabel } from '@mui/material';
-import { useForm, Controller } from 'react-hook-form';
+import { memo } from 'react';
+import { Controller, useForm } from 'react-hook-form';
 
-import { useLocales } from 'src/locales';
-import { useAppDispatch, useTypedSelector } from 'src/redux/store';
-import { saveServices } from 'src/redux/slices/servicesSlice';
 import { useCompleteProfileThird } from 'src/components/complete-profile-third/hooks';
+import { Label, StyledForm, Title, Wrapper } from 'src/components/complete-profile-third/styles';
 import { CompleteProfileThirdValues, IProps } from 'src/components/complete-profile-third/types';
-import {
-  Wrapper,
-  Title,
-  StyledForm,
-  Label,
-  NextButton,
-  ButtonWrapper,
-} from 'src/components/complete-profile-third/styles';
+import ProfileBtn from 'src/components/reusable/profile-btn/ProfileBtn';
+import { useLocales } from 'src/locales';
+import { saveServices } from 'src/redux/slices/servicesSlice';
+import { useAppDispatch, useTypedSelector } from 'src/redux/store';
 
 function CompleteProfileThird({ onNext }: IProps): JSX.Element {
   const { translate } = useLocales();
@@ -142,12 +136,7 @@ function CompleteProfileThird({ onNext }: IProps): JSX.Element {
             />
           }
         />
-
-        <ButtonWrapper>
-          <NextButton variant="contained" type="submit" disabled={!isDirty}>
-            Next
-          </NextButton>
-        </ButtonWrapper>
+        <ProfileBtn text={translate('btn_next')} disabled={!isDirty} />
       </StyledForm>
     </Wrapper>
   );

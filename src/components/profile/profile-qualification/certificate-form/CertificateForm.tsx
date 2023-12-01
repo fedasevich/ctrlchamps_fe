@@ -1,5 +1,3 @@
-import { Dispatch, SetStateAction, useEffect } from 'react';
-import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import {
   Checkbox,
@@ -9,19 +7,21 @@ import {
   InputLabel,
   Stack,
 } from '@mui/material';
+import { Dispatch, SetStateAction, useEffect } from 'react';
 import 'react-datepicker/dist/react-datepicker.css';
+import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 
-import { useLocales } from 'src/locales';
-import { ProfileQuality } from 'src/components/profile/profile-qualification/types';
-import { useProfileQualificationSchema } from 'src/components/profile/profile-qualification/certificate-form/validation';
 import { DEFAULT_PROFILE_QUALIFICATION_VALUES } from 'src/components/profile/profile-qualification/certificate-form/constants';
 import {
   ErrorMessage,
-  StyledButton,
   StyledDatePicker,
   StyledForm,
 } from 'src/components/profile/profile-qualification/certificate-form/styles';
+import { useProfileQualificationSchema } from 'src/components/profile/profile-qualification/certificate-form/validation';
+import { ProfileQuality } from 'src/components/profile/profile-qualification/types';
+import ProfileBtn from 'src/components/reusable/profile-btn/ProfileBtn';
 import { DATE_FORMAT } from 'src/constants';
+import { useLocales } from 'src/locales';
 import uuidv4 from 'src/utils/uuidv4';
 
 type Props = {
@@ -166,10 +166,7 @@ export default function CertificateForm({
           labelPlacement="start"
         />
       </Stack>
-
-      <StyledButton variant="contained" type="submit" disabled={!isValid}>
-        {translate('profileQualification.save')}
-      </StyledButton>
+      <ProfileBtn text={translate('profileQualification.save')} disabled={!isValid} />
     </StyledForm>
   );
 }

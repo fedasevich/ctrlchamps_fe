@@ -11,6 +11,8 @@ import HorizontalStepper from 'src/components/reusable/horizontal-stepper/Horizo
 import { useLocales } from 'src/locales';
 import { Bio } from 'src/components/profile/bio/Bio';
 import { FIRST_STEP_INDEX, SECOND_STEP_INDEX } from 'src/constants';
+import CompleteProfileSecond from 'src/components/complete-profile-second/CompleteProfileSecond';
+import CompleteProfileFourth from 'src/components/complete-profile-fourth/CompleteProfileFourth';
 
 function Profile(): JSX.Element {
   const { translate } = useLocales();
@@ -31,7 +33,7 @@ function Profile(): JSX.Element {
     },
     {
       label: translate('profile.workExperience'),
-      component: <div>{translate('profile.workExperience')}</div>,
+      component: <CompleteProfileSecond onNext={handleNext} />,
     },
     {
       label: translate('profile.services'),
@@ -39,7 +41,7 @@ function Profile(): JSX.Element {
     },
     {
       label: translate('profile.availability'),
-      component: <div>{translate('profile.availability')}</div>,
+      component: <CompleteProfileFourth onNext={handleNext} />,
     },
     {
       label: translate('profile.rates'),

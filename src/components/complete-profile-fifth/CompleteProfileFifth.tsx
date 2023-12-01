@@ -1,30 +1,29 @@
-import React, { memo } from 'react';
-import { Slider, FilledInput, InputLabel, FormControl } from '@mui/material';
-import { useForm, Controller, SubmitHandler } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { FilledInput, FormControl, InputLabel, Slider } from '@mui/material';
+import { memo } from 'react';
+import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 
-import { useUpdateProfileMutation } from 'src/redux/api/profileCompleteApi';
-import { useLocales } from 'src/locales';
-import { useAppDispatch, useTypedSelector } from 'src/redux/store';
-import { saveRate } from 'src/redux/slices/rateSlice';
 import {
-  RATE_MARKS,
   MAX_RATE,
   MIN_RATE,
+  RATE_MARKS,
   RATE_STEP,
 } from 'src/components/complete-profile-fifth/constants';
+import {
+  ErrorMessage,
+  InputWrapper,
+  StyledForm,
+  Wrapper,
+} from 'src/components/complete-profile-fifth/styles';
 import {
   CompleteProfileFifthValues,
   useCompleteProfileFifthSchema,
 } from 'src/components/complete-profile-fifth/validation';
-import {
-  Wrapper,
-  StyledForm,
-  NextButton,
-  ButtonWrapper,
-  ErrorMessage,
-  InputWrapper,
-} from 'src/components/complete-profile-fifth/styles';
+import { useLocales } from 'src/locales';
+import { useUpdateProfileMutation } from 'src/redux/api/profileCompleteApi';
+import { saveRate } from 'src/redux/slices/rateSlice';
+import { useAppDispatch, useTypedSelector } from 'src/redux/store';
+import ProfileBtn from 'src/components/reusable/profile-btn/ProfileBtn';
 
 interface IProps {
   onNext: () => void;
@@ -113,12 +112,7 @@ function CompleteProfileFifth({ onNext }: IProps): JSX.Element {
             <ErrorMessage variant="caption">{errors.hourlyRate?.message}</ErrorMessage>
           )}
         </InputWrapper>
-
-        <ButtonWrapper>
-          <NextButton variant="contained" type="submit" disabled={!isDirty || !isValid}>
-            Next
-          </NextButton>
-        </ButtonWrapper>
+        <ProfileBtn text={translate('btn_next')} disabled={!isDirty || !isValid} />
       </StyledForm>
     </Wrapper>
   );

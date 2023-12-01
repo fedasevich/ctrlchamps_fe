@@ -22,6 +22,7 @@ import { appointmentCreationApi } from 'src/redux/api/appointmentCreationAPI';
 import { setSelectedCaregiver } from 'src/redux/slices/caregiverSlice';
 import { useAppDispatch } from 'src/redux/store';
 
+import { FIRST_SELECTED_TAB } from './constants';
 import {
   BookButton,
   DrawerAvatar,
@@ -44,8 +45,6 @@ interface CreateAppointmentFourthDrawerProps {
   onClose: () => void;
   selectedCaregiverId: string;
 }
-
-const FIRST_SELECTED_TAB = '1';
 
 export default function CreateAppointmentFourthDrawer({
   open,

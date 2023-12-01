@@ -7,14 +7,12 @@ import rootReducer from 'src/redux/rootReducer';
 import { addressReducer } from 'src/redux/slices/addressSlice';
 import { availableDaysReducer } from 'src/redux/slices/availableDaysSlice';
 import { certificateReducer } from 'src/redux/slices/certificateSlice';
+import { healthQuestionnaireReducer } from 'src/redux/slices/healthQuestionnaireSlice';
 import { personalDetailsReducer } from 'src/redux/slices/personalDetailsSlice';
 import { rateReducer } from 'src/redux/slices/rateSlice';
 import { roleReducer } from 'src/redux/slices/roleSlice';
 import { servicesReducer } from 'src/redux/slices/servicesSlice';
 import { tokenReducer } from 'src/redux/slices/tokenSlice';
-import { availableDaysReducer } from 'src/redux/slices/availableDaysSlice';
-import { rateReducer } from 'src/redux/slices/rateSlice';
-import { healthQuestionnaireReducer } from 'src/redux/slices/healthQuestionnaireSlice';
 import { appointmentReducer } from './slices/appointmentSlice';
 
 import accountVerificationApi from 'src/redux/api/accountVerificationAPI';

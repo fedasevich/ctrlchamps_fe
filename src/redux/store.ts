@@ -11,6 +11,7 @@ import { tokenReducer } from 'src/redux/slices/tokenSlice';
 import { availableDaysReducer } from 'src/redux/slices/availableDaysSlice';
 import { rateReducer } from 'src/redux/slices/rateSlice';
 import { healthQuestionnaireReducer } from 'src/redux/slices/healthQuestionnaireSlice';
+import { appointmentReducer } from './slices/appointmentSlice';
 import { servicesReducer } from 'src/redux/slices/servicesSlice';
 
 import accountVerificationApi from 'src/redux/api/accountVerificationAPI';
@@ -35,6 +36,7 @@ const store = configureStore({
     services: servicesReducer,
     hourlyRate: rateReducer,
     healthQuestionnaire: healthQuestionnaireReducer,
+    appointment: appointmentReducer,
     [authApi.reducerPath]: authApi.reducer,
     [accountVerificationApi.reducerPath]: accountVerificationApi.reducer,
     [profileApi.reducerPath]: profileApi.reducer,

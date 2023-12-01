@@ -6,6 +6,7 @@ import { roleReducer } from 'src/redux/slices/roleSlice';
 import { tokenReducer } from 'src/redux/slices/tokenSlice';
 import { availableDaysReducer } from 'src/redux/slices/availableDaysSlice';
 import { rateReducer } from 'src/redux/slices/rateSlice';
+import { appointmentReducer } from './slices/appointmentSlice';
 import { servicesReducer } from './slices/servicesSlice';
 import { healthQuestionnaireReducer } from './slices/healthQuestionnaireSlice';
 
@@ -18,6 +19,7 @@ const rootReducer = combineReducers({
   healthQuestionnaire: healthQuestionnaireReducer,
   services: servicesReducer,
   hourlyRate: rateReducer,
+  appointment: appointmentReducer,
 });
 
 export default rootReducer;

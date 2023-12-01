@@ -1,30 +1,21 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
+type DayType = {
+  day: string;
+  startTime: string;
+  endTime: string;
+};
+
 type ActionType = {
-  weekDay: string;
-  time: {
-    from: string;
-    to: string;
-  };
+  time: DayType;
 };
 
-const initialTime = {
-  time: {
-    from: '',
-    to: '',
-  },
+type InitialState = {
+  days: DayType[];
 };
 
-const initialState = {
-  days: {
-    Monday: initialTime,
-    Tuesday: initialTime,
-    Wednesday: initialTime,
-    Thursday: initialTime,
-    Friday: initialTime,
-    Saturday: initialTime,
-    Sunday: initialTime,
-  },
+const initialState: InitialState = {
+  days: [],
 };
 
 const availableDaysSlice = createSlice({
@@ -32,13 +23,12 @@ const availableDaysSlice = createSlice({
   initialState,
   reducers: {
     chooseAvailableTime: (state, action: PayloadAction<ActionType>) => {
-      const { time, weekDay } = action.payload;
-      state.days = {
-        ...state.days,
-        [weekDay]: {
-          time: { from: time.from, to: time.to },
-        },
-      };
+      const index = state.days.findIndex(({ day }) => day === action.payload.time.day);
+      if (index !== -1) {
+        state.days[index] = action.payload.time;
+      } else {
+        state.days.push(action.payload.time);
+      }
     },
   },
 });

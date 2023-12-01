@@ -10,6 +10,7 @@ const route = {
   uploadFile: '/uploadFile',
   certificates: '/certificates',
   workExperience: '/work-experience',
+  appointment: '/appointment',
 };
 
 export { route };

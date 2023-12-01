@@ -7,7 +7,12 @@ import { saveNote, selectDiagnosis } from 'src/redux/slices/healthQuestionnaireS
 import { HealthConcernsAndMedicalDiagnoses } from '../constants';
 import { QuestionnaireTypeText, SubmitButton, QuestionnaireContainerContent } from '../styles';
 
-const Step1 = ({ onNext, stepKey }: { onNext: () => void; stepKey: string }): JSX.Element => {
+type Step1Props = {
+  onNext: () => void;
+  stepKey: string;
+};
+
+const Step1 = ({ onNext, stepKey }: Step1Props): JSX.Element => {
   const { translate } = useLocales();
   const dispatch = useDispatch();
   const selectedDiagnoses = useSelector(

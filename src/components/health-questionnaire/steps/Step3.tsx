@@ -13,15 +13,13 @@ import {
   DescriptionBlock,
 } from '../styles';
 
-const Step3 = ({
-  onNext,
-  onBack,
-  stepKey,
-}: {
+type Step3Props = {
   onNext: () => void;
   onBack: () => void;
   stepKey: string;
-}): JSX.Element => {
+};
+
+const Step3 = ({ onNext, onBack, stepKey }: Step3Props): JSX.Element => {
   const { translate } = useLocales();
   const dispatch = useDispatch();
 

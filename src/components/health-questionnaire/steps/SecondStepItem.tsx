@@ -6,15 +6,13 @@ import { RootState } from 'src/redux/store';
 import { useLocales } from 'src/locales';
 import { ToggleButtonGroupStyled, ToggleButtonStyled } from '../styles';
 
-const SecondStepItem = ({
-  questions,
-  options,
-  onCompletion,
-}: {
+type SecondStepItemProps = {
   questions: string[];
   options: string[];
   onCompletion: (status: boolean) => void;
-}): JSX.Element => {
+};
+
+const SecondStepItem = ({ questions, options, onCompletion }: SecondStepItemProps): JSX.Element => {
   const { translate } = useLocales();
   const dispatch = useDispatch();
 

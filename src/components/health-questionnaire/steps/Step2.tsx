@@ -13,15 +13,13 @@ import {
   ActionButton,
 } from '../styles';
 
-const Step2 = ({
-  onNext,
-  onBack,
-  stepKey,
-}: {
+type Step2Props = {
   onNext: () => void;
   onBack: () => void;
   stepKey: string;
-}): JSX.Element => {
+};
+
+const Step2 = ({ onNext, onBack, stepKey }: Step2Props): JSX.Element => {
   const { translate } = useLocales();
   const dispatch = useDispatch();
 

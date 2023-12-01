@@ -10,12 +10,9 @@ import { certificateReducer } from 'src/redux/slices/certificateSlice';
 import { personalDetailsReducer } from 'src/redux/slices/personalDetailsSlice';
 import { rateReducer } from 'src/redux/slices/rateSlice';
 import { roleReducer } from 'src/redux/slices/roleSlice';
-import { tokenReducer } from 'src/redux/slices/tokenSlice';
-import { availableDaysReducer } from 'src/redux/slices/availableDaysSlice';
-import { rateReducer } from 'src/redux/slices/rateSlice';
-import { appointmentReducer } from './slices/appointmentSlice';
 import { servicesReducer } from 'src/redux/slices/servicesSlice';
-
+import { tokenReducer } from 'src/redux/slices/tokenSlice';
+import { appointmentReducer } from './slices/appointmentSlice';
 
 import accountVerificationApi from 'src/redux/api/accountVerificationAPI';
 import authApi from 'src/redux/api/authApi';

@@ -5,14 +5,14 @@ import EmailInboxIcon from 'src/assets/icons/EmailInboxIcon';
 import { FilledButton } from 'src/components/reusable/FilledButton';
 import DigitTextField from 'src/components/sendOTP/DigitInputField';
 import useVerification from 'src/hooks/useVerification';
-import { ErrorText } from '../reusable';
 import {
   AccountVerificationContainer,
   IconContainer,
+  StyledErrorText,
   StyledParagraph,
   StyledParagraphMain,
   SubmitButtonContainer,
-} from './styles';
+} from 'src/components/sendOTP/styles';
 
 interface OTPMessageFieldProps {
   onSubmit: () => void;
@@ -42,7 +42,9 @@ const OTPMessageField: React.FC<OTPMessageFieldProps> = ({ onSubmit }): JSX.Elem
               />
             ))}
           </div>
-          {codeDoesNotMatch && <ErrorText>{t('reset_password.errors.invalid_code')}</ErrorText>}
+          {codeDoesNotMatch && (
+            <StyledErrorText>{t('account_verification.invalid_code')}</StyledErrorText>
+          )}
         </form>
         <StyledParagraphMain onClick={requestNewCode}>
           {t('account_verification.request_code')}

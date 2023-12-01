@@ -1,10 +1,16 @@
 import { ChangeEvent, ReactElement, useState } from 'react';
+import { useRouter } from 'next/router';
 import { useForm, Controller, ControllerRenderProps, SubmitHandler } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { FormControl, FilledInput, InputLabel, Button } from '@mui/material';
 import { Close } from '@mui/icons-material';
 import VideocamOutlinedIcon from '@mui/icons-material/VideocamOutlined';
 
+import { useUploadFileMutation, useUpdateProfileMutation } from 'src/redux/api/profileCompleteApi';
+import { useSelector } from 'react-redux';
+import { RootState } from 'src/redux/store';
+import { useLocales } from 'src/locales';
+import { ROUTES } from 'src/routes';
 import { useBioFormSchema } from 'src/components/profile/bio/validation';
 import {
   ErrorMessage,
@@ -24,12 +30,15 @@ import {
   MOV_FORMAT,
   MP4_FORMAT,
 } from 'src/components/profile/bio/constants';
-import { useLocales } from 'src/locales';
 
 export function Bio(): JSX.Element {
   const [videoPreviewURL, setVideoPreviewURL] = useState<string>('');
+  const [uploadVideoMutation] = useUploadFileMutation();
+  const [updateDescription] = useUpdateProfileMutation();
+  const token = useSelector((state: RootState) => state.token.token);
 
   const { translate } = useLocales();
+  const router = useRouter();
 
   const bioFormSchema = useBioFormSchema();
 
@@ -47,8 +56,21 @@ export function Bio(): JSX.Element {
 
   const video = watch('video');
 
-  const onSubmit: SubmitHandler<BioFormValues> = (data) => {
-    // TODO: connect to redux (B&F task)
+  const onSubmit: SubmitHandler<BioFormValues> = async (data) => {
+    try {
+      if (data.video) {
+        await uploadVideoMutation({
+          file: data.video,
+        });
+      }
+      await updateDescription({
+        updateProfileDto: { description: data.description },
+      })
+        .unwrap()
+        .then(() => router.push(ROUTES.schedule));
+    } catch (error) {
+      throw new Error(error);
+    }
   };
 
   const onFileChange = (

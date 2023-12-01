@@ -11,6 +11,7 @@ import { tokenReducer } from 'src/redux/slices/tokenSlice';
 import { accountVerificationApi } from './api/accountVerificationAPI';
 import authApi from './api/authApi';
 import { availableDaysReducer } from './slices/availableDaysSlice';
+import { caregiverReducer } from './slices/caregiverSlice';
 
 const persistConfig = {
   key: 'root',
@@ -26,6 +27,7 @@ const store = configureStore({
     personalDetails: personalDetailsReducer,
     address: addressReducer,
     token: persistedTokenReducer,
+    caregiver: caregiverReducer,
     availableDays: availableDaysReducer,
     [authApi.reducerPath]: authApi.reducer,
     [accountVerificationApi.reducerPath]: accountVerificationApi.reducer,

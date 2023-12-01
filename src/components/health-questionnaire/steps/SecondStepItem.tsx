@@ -3,6 +3,7 @@ import { Typography } from '@mui/material';
 import { selectActivity } from 'src/redux/slices/healthQuestionnaireSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'src/redux/store';
+import { useLocales } from 'src/locales';
 import { ToggleButtonGroupStyled, ToggleButtonStyled } from '../styles';
 
 const SecondStepItem = ({
@@ -14,7 +15,9 @@ const SecondStepItem = ({
   options: string[];
   onCompletion: (status: boolean) => void;
 }): JSX.Element => {
+  const { translate } = useLocales();
   const dispatch = useDispatch();
+
   const selectedActivities = useSelector(
     (state: RootState) => state.healthQuestionnaire.selectedActivities
   );
@@ -39,25 +42,27 @@ const SecondStepItem = ({
   };
 
   useEffect(() => {
-    const allQuestionsAnswered = questions.every((question) => selectedOptions[question]);
+    const allQuestionsAnswered = questions.every(
+      (question) => selectedOptions[translate(question)]
+    );
     onCompletion(allQuestionsAnswered);
-  }, [selectedOptions, questions, onCompletion]);
+  }, [selectedOptions, questions, onCompletion, translate]);
 
   return (
     <div>
       {questions.map((question, index) => (
         <div key={index}>
           <Typography variant="body2" fontWeight="bold">
-            {question}
+            {translate(question)}
           </Typography>
           <ToggleButtonGroupStyled
-            value={selectedOptions[question] || ''}
+            value={selectedOptions[translate(question)] || ''}
             exclusive
-            onChange={(event, option): void => handleOptionSelect(question, option)}
+            onChange={(event, option): void => handleOptionSelect(translate(question), option)}
           >
             {options.map((option) => (
-              <ToggleButtonStyled key={option} value={option} aria-label={option}>
-                {option}
+              <ToggleButtonStyled key={option} value={translate(option)} aria-label={option}>
+                {translate(option)}
               </ToggleButtonStyled>
             ))}
           </ToggleButtonGroupStyled>

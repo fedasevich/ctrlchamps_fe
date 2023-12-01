@@ -48,8 +48,8 @@ const Step1 = ({ onNext, stepKey }: { onNext: () => void; stepKey: string }): JS
               key={index}
               control={
                 <Checkbox
-                  checked={selectedOptions.includes(item)}
-                  onChange={(): void => handleOptionSelect(item)}
+                  checked={selectedOptions.includes(translate(item))}
+                  onChange={(): void => handleOptionSelect(translate(item))}
                 />
               }
               label={
@@ -57,7 +57,7 @@ const Step1 = ({ onNext, stepKey }: { onNext: () => void; stepKey: string }): JS
                   variant="body2"
                   fontWeight={({ typography }) => typography.fontWeightMedium}
                 >
-                  {item}
+                  {translate(item)}
                 </Typography>
               }
             />

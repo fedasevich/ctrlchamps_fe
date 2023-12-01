@@ -47,13 +47,12 @@ const Step3 = ({
   const handleNoteChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     const updatedNote = event.target.value;
     setNote(updatedNote);
+    dispatch(saveNote({ step: stepKey, note: updatedNote }));
   };
 
   const handleSubmit = (): void => {
-    dispatch(saveNote({ step: stepKey, note }));
     onNext();
   };
-
   return (
     <div>
       <QuestionnaireContainerContent>
@@ -65,11 +64,11 @@ const Step3 = ({
               key={index}
               control={
                 <Checkbox
-                  checked={selectedOptions.includes(item)}
-                  onChange={(): void => handleOptionSelect(item)}
+                  checked={selectedOptions.includes(translate(item))}
+                  onChange={(): void => handleOptionSelect(translate(item))}
                 />
               }
-              label={item}
+              label={translate(item)}
             />
           ))}
         </FormGroup>

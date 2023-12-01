@@ -2,7 +2,7 @@ import { useState } from 'react';
 import HealthQuestionnaire from 'src/components/health-questionnaire';
 import FlowHeader from 'src/components/reusable/header/FlowHeader';
 import { useLocales } from 'src/locales';
-import CancelAppointmentModal from 'src/components/modal-cancel-appointment/CancelAppointmentModal';
+import { CancelAppointmentModal } from 'src/components/modal-cancel-appointment/CancelAppointmentModal';
 
 export default function HealthQuestionnairePage(): JSX.Element {
   const { translate } = useLocales();

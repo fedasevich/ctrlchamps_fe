@@ -17,6 +17,7 @@ import { servicesReducer } from 'src/redux/slices/servicesSlice';
 import accountVerificationApi from 'src/redux/api/accountVerificationAPI';
 import authApi from 'src/redux/api/authApi';
 import profileApi from 'src/redux/api/profileCompleteApi';
+import questionnaireApi from 'src/redux/api/healthQuestionnaireApi';
 
 const persistConfig = {
   key: 'root',
@@ -40,12 +41,18 @@ const store = configureStore({
     [authApi.reducerPath]: authApi.reducer,
     [accountVerificationApi.reducerPath]: accountVerificationApi.reducer,
     [profileApi.reducerPath]: profileApi.reducer,
+    [questionnaireApi.reducerPath]: questionnaireApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: false,
       immutableCheck: false,
-    }).concat([authApi.middleware, accountVerificationApi.middleware, profileApi.middleware]),
+    }).concat([
+      authApi.middleware,
+      accountVerificationApi.middleware,
+      profileApi.middleware,
+      questionnaireApi.middleware,
+    ]),
 });
 
 const persistor = persistStore(store);

@@ -3,8 +3,10 @@ import React, { memo, useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { useRouter } from 'next/router';
 import { yupResolver } from '@hookform/resolvers/yup';
-
 import { FetchBaseQueryError } from '@reduxjs/toolkit/dist/query';
+
+import { useAppDispatch } from 'src/redux/store';
+import { setToken } from 'src/redux/slices/tokenSlice';
 import { useLocales } from 'src/locales';
 import { useSignInMutation } from 'src/redux/api/authApi';
 import Visibility from 'src/assets/icons/Visibility';
@@ -25,6 +27,7 @@ import {
 
 function LoginForm(): JSX.Element {
   const { translate } = useLocales();
+  const dispatch = useAppDispatch();
   const router = useRouter();
   const loginSchema = useLoginSchema();
   const [showPassword, setShowPassword] = useState<boolean>(false);
@@ -47,7 +50,8 @@ function LoginForm(): JSX.Element {
     try {
       await signIn(data)
         .unwrap()
-        .then(() => {
+        .then(({ token }: { token: string }) => {
+          dispatch(setToken(token));
           router.push(ROUTES.home);
         })
         .catch((error: FetchBaseQueryError) => {

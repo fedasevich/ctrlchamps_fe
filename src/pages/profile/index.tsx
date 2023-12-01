@@ -2,6 +2,7 @@ import Head from 'next/head';
 import { useState } from 'react';
 
 import ProfileQualification from 'src/components/profile/profile-qualification/ProfileQualification';
+import CompleteProfileFifth from 'src/components/complete-profile-fifth/CompleteProfileFifth';
 import { Step } from 'src/components/profile/profile-qualification/types';
 import FlowHeader from 'src/components/reusable/header/FlowHeader';
 import { ProfileWrapper } from 'src/components/reusable/profile-wrapper/ProfileWrapper';
@@ -41,7 +42,7 @@ function Profile(): JSX.Element {
     },
     {
       label: translate('profile.rates'),
-      component: <div>{translate('profile.rates')}</div>,
+      component: <CompleteProfileFifth onNext={handleNext} />,
     },
     {
       label: translate('profile.bio'),

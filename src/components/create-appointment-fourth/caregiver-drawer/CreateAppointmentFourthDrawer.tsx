@@ -4,13 +4,24 @@ import { SyntheticEvent, useState } from 'react';
 import ArrowBackFilled from 'src/assets/icons/ArrowBackFilled';
 import FreeCancellation from 'src/assets/icons/FreeCancellation';
 import MonetizationOn from 'src/assets/icons/MonetizationOn';
+import { BIG_CAREGIVER_AVATAR_SIZE } from 'src/components/create-appointment-fourth/constants';
+import {
+  formatWorkExperienceDateRange,
+  formatWorkExperienceDateRangeTenure,
+  getMockCaregiverAvatar,
+} from 'src/components/create-appointment-fourth/helpers';
+import Drawer from 'src/components/reusable/drawer/Drawer';
+import {
+  DrawerBody,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerTitle,
+} from 'src/components/reusable/drawer/styles';
 import { useLocales } from 'src/locales';
 import { appointmentCreationApi } from 'src/redux/api/appointmentCreationAPI';
 import { setSelectedCaregiver } from 'src/redux/slices/caregiverSlice';
 import { useAppDispatch } from 'src/redux/store';
-import Drawer from '../../reusable/drawer/Drawer';
-import { DrawerBody, DrawerFooter, DrawerHeader, DrawerTitle } from '../../reusable/drawer/styles';
-import { formatWorkExperienceDateRange, formatWorkExperienceDateRangeTenure } from './helpers';
+
 import {
   BookButton,
   DrawerAvatar,
@@ -34,6 +45,8 @@ interface CreateAppointmentFourthDrawerProps {
   selectedCaregiverId: string;
 }
 
+const FIRST_SELECTED_TAB = '1';
+
 export default function CreateAppointmentFourthDrawer({
   open,
   onClose,
@@ -42,7 +55,7 @@ export default function CreateAppointmentFourthDrawer({
   const { translate, currentLang } = useLocales();
   const dispatch = useAppDispatch();
 
-  const [selectedTab, setSelectedTab] = useState<string>('1');
+  const [selectedTab, setSelectedTab] = useState<string>(FIRST_SELECTED_TAB);
 
   const { data: selectedCaregiver, isLoading } =
     appointmentCreationApi.useGetCaregiverDetailsQuery(selectedCaregiverId);
@@ -70,7 +83,7 @@ export default function CreateAppointmentFourthDrawer({
       </DrawerHeader>
       <DrawerStats flexDirection="row">
         <DrawerAvatar
-          src="https://picsum.photos/96/96"
+          src={getMockCaregiverAvatar(BIG_CAREGIVER_AVATAR_SIZE)}
           alt={`${selectedCaregiver.firstName} ${selectedCaregiver.lastName}`}
         />
         <Stack alignItems="center" flexDirection="row" justifyContent="space-evenly" width="100%">
@@ -79,7 +92,7 @@ export default function CreateAppointmentFourthDrawer({
             <DrawerTextTitle>
               {translate('createAppointmentFourth.numberOfAppointments')}
             </DrawerTextTitle>
-            <DrawerTextValue>{10}</DrawerTextValue>
+            <DrawerTextValue>{selectedCaregiver.numberOfAppointments}</DrawerTextValue>
           </Stack>
           <Stack flexDirection="column" alignItems="center">
             <MonetizationOn />

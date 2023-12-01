@@ -10,12 +10,17 @@ import {
 import { useEffect } from 'react';
 import MonetizationOn from 'src/assets/icons/MonetizationOn';
 import RightAction from 'src/assets/icons/RightAction';
-import { useLocales } from 'src/locales';
-import { appointmentCreationApi } from 'src/redux/api/appointmentCreationAPI';
-import CreateAppointmentFourthAutocomplete from './CreateAppointmentFourthAutocomplete/CreateAppointmentFourthAutocomplete';
-import CreateAppointmentFourthDrawer from './CreateAppointmentFourthDrawer/CreateAppointmentFourthDrawer';
-import { serializeCaregiverFilterStateToQueryString } from './helpers';
-import { useCaregiverFilter, useCreateAppointmentFourth } from './hooks';
+import CreateAppointmentFourthDrawer from 'src/components/create-appointment-fourth/caregiver-drawer/CreateAppointmentFourthDrawer';
+import { SMALL_CAREGIVER_AVATAR_SIZE } from 'src/components/create-appointment-fourth/constants';
+import {
+  getMockCaregiverAvatar,
+  serializeCaregiverFilterStateToQueryString,
+} from 'src/components/create-appointment-fourth/helpers';
+import {
+  useCaregiverFilter,
+  useCreateAppointmentFourth,
+} from 'src/components/create-appointment-fourth/hooks';
+import CreateAppointmentFourthAutocomplete from 'src/components/create-appointment-fourth/places-autocomplete/CreateAppointmentFourthAutocomplete';
 import {
   Background,
   BaseText,
@@ -24,7 +29,9 @@ import {
   StyledAvatar,
   StyledFormControlLabel,
   StyledListItemText,
-} from './styles';
+} from 'src/components/create-appointment-fourth/styles';
+import { useLocales } from 'src/locales';
+import { appointmentCreationApi } from 'src/redux/api/appointmentCreationAPI';
 
 export default function CreateAppointmentFourth(): JSX.Element {
   const { translate } = useLocales();
@@ -106,7 +113,7 @@ export default function CreateAppointmentFourth(): JSX.Element {
               >
                 <ListItemAvatar>
                   <StyledAvatar
-                    src="https://picsum.photos/48/48"
+                    src={getMockCaregiverAvatar(SMALL_CAREGIVER_AVATAR_SIZE)}
                     alt={`${caregiver.firstName} ${caregiver.lastName}`}
                   />
                 </ListItemAvatar>

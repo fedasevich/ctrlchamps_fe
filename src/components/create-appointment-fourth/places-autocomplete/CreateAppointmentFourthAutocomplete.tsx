@@ -2,17 +2,20 @@ import { Autocomplete, AutocompleteRenderInputParams, Grid, TextField } from '@m
 import { useLoadScript } from '@react-google-maps/api';
 import { HTMLAttributes, SyntheticEvent, useState } from 'react';
 import Location from 'src/assets/icons/Location';
-import { useLocales } from 'src/locales';
-import usePlacesAutocomplete from 'use-places-autocomplete';
-import { AutocompletedLocation } from '../types';
 import {
   PLACES_API_KEY,
   PLACES_COUNTRY_RESTRICTIONS,
   PLACES_DEBOUNCE_DELAY,
   PLACES_SCRIPT_LIBRARIES,
-} from './constants';
-import { getPlaceIdDetails } from './helpers';
-import { ErrorMessage, StyledGrid } from './styles';
+} from 'src/components/create-appointment-fourth/places-autocomplete/constants';
+import { getPlaceIdDetails } from 'src/components/create-appointment-fourth/places-autocomplete/helpers';
+import {
+  ErrorMessage,
+  StyledGrid,
+} from 'src/components/create-appointment-fourth/places-autocomplete/styles';
+import { AutocompletedLocation } from 'src/components/create-appointment-fourth/types';
+import { useLocales } from 'src/locales';
+import usePlacesAutocomplete from 'use-places-autocomplete';
 
 interface CreateAppointmentFourthAutocompleteProps {
   onLocationChange: (newLocation: AutocompletedLocation) => void;

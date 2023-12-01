@@ -1,7 +1,7 @@
+import { PLACES_DETAILS_FIELDS } from 'src/components/create-appointment-fourth/places-autocomplete/constants';
+import { AddressComponent } from 'src/components/create-appointment-fourth/places-autocomplete/enums';
+import { AutocompletedLocation } from 'src/components/create-appointment-fourth/types';
 import { getDetails } from 'use-places-autocomplete';
-import { AutocompletedLocation } from '../types';
-import { PLACES_DETAILS_FIELDS } from './constants';
-import { AddressComponent } from './enums';
 
 export const getPlaceIdDetails = async (placeId: string): Promise<AutocompletedLocation> => {
   try {

@@ -1,5 +1,5 @@
 import { TFunction } from 'i18next';
-import { CaregiverFilterState } from './types';
+import { CaregiverFilterState } from 'src/components/create-appointment-fourth/types';
 
 export const getCaregiverFilterInitialState = (): CaregiverFilterState => ({
   isOpenToSeekerHomeLiving: true,
@@ -47,3 +47,6 @@ export const serializeCaregiverFilterStateToQueryString = (
 
   return searchParams;
 };
+
+export const getMockCaregiverAvatar = (size: number): string =>
+  `https://picsum.photos/${size}/${size}`;

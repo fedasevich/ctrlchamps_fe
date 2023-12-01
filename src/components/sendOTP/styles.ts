@@ -1,7 +1,9 @@
 import { TextField } from '@mui/material';
+
 import styled from '@emotion/styled';
 import typography from 'src/theme/typography';
 import { PRIMARY, SECONDARY, TEXT_COLOR } from 'src/theme/colors';
+import { ErrorText } from 'src/components/reusable';
 
 export const AccountVerificationContainer = styled.div`
   padding-top: 1em;
@@ -92,4 +94,8 @@ export const DigitInput = styled(TextField)`
       border: none;
     }
   }
+`;
+
+export const StyledErrorText = styled(ErrorText)`
+  text-align: center;
 `;

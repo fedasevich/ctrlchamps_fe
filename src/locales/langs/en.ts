@@ -129,6 +129,7 @@ const en = {
     successfully_seeker:
       'Now you can sign in your account and start seeking care givers in your area',
     successfully_seeker_btn: 'Sign In',
+    invalid_code: 'The code doesn’t match. Try again',
   },
   loading: 'Loading...',
   reset_password: {

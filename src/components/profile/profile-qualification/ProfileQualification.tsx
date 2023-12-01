@@ -1,21 +1,38 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { Title } from 'src/components/profile/profile-qualification/certificate-form/styles';
-import { ProfileQuality } from 'src/components/profile/profile-qualification/types';
 import CertificateList from 'src/components/profile/profile-qualification/certificate-list/CertificateList';
-import CertificateForm from 'src/components/profile/profile-qualification/certificate-form/CertificateForm';
+import { ProfileQuality } from 'src/components/profile/profile-qualification/types';
 import { useLocales } from 'src/locales';
+import { profileApi } from 'src/redux/api/profileCompleteApi';
+import { saveCertificates } from 'src/redux/slices/certificateSlice';
+import { useAppDispatch, useTypedSelector } from 'src/redux/store';
+import CertificateForm from './certificate-form/CertificateForm';
 
 type Props = {
   onNext: () => void;
 };
 
-export default function ProfileQualification({ onNext }: Props): JSX.Element {
-  const [certificates, setCertificates] = useState<ProfileQuality[]>([]);
+export default function ProfileQualification({ onNext }: Props): JSX.Element | null {
   const [editingCertificate, setEditingCertificate] = useState<ProfileQuality | null>(null);
   const [isModalActive, setIsModalActive] = useState<boolean>(false);
+  const certificates = useTypedSelector((state) => state.certificate.certificates);
 
+  const dispatch = useAppDispatch();
   const { translate } = useLocales();
+  const [getCertificates] = profileApi.useLazyGetCertificateQuery();
+  const [createCertificate, { isLoading }] = profileApi.useCreateCertificateMutation();
+
+  useEffect(() => {
+    getCertificates()
+      .unwrap()
+      .then((data) => dispatch(saveCertificates(data)))
+      .catch(() => {
+        dispatch(saveCertificates([]));
+      });
+  }, [dispatch, getCertificates]);
+
+  if (isLoading) return null;
 
   const onOpenModal = (): void => setIsModalActive(true);
   const onOpenEditModal = (certificate: ProfileQuality): void => {
@@ -28,7 +45,7 @@ export default function ProfileQualification({ onNext }: Props): JSX.Element {
     setIsModalActive(false);
   };
 
-  const onSaveCertificate = (updatedCertificate: ProfileQuality): void => {
+  const onSaveCertificate = async (updatedCertificate: ProfileQuality): Promise<void> => {
     const updatedCertificates = certificates.map((certificate) => {
       if (certificate.id === updatedCertificate.id) {
         return { ...certificate, ...updatedCertificate };
@@ -36,8 +53,21 @@ export default function ProfileQualification({ onNext }: Props): JSX.Element {
       return certificate;
     });
 
-    setCertificates(updatedCertificates);
-    onCloseModal();
+    try {
+      createCertificate({
+        certificates: updatedCertificates,
+      })
+        .unwrap()
+        .then(() => {
+          dispatch(saveCertificates(updatedCertificates));
+        })
+        .catch((error) => {
+          throw new Error(error);
+        })
+        .finally(() => onCloseModal());
+    } catch (error) {
+      throw new Error(error);
+    }
   };
 
   return (
@@ -45,16 +75,12 @@ export default function ProfileQualification({ onNext }: Props): JSX.Element {
       <Title>{translate('profileQualification.mainTitle')}</Title>
       {!certificates.length ? (
         <CertificateForm
-          certificates={certificates}
-          setCertificates={setCertificates}
           onSave={onSaveCertificate}
           onClose={onCloseModal}
           editingCertificate={editingCertificate}
         />
       ) : (
         <CertificateList
-          certificates={certificates}
-          setCertificates={setCertificates}
           onNext={onNext}
           onClose={onCloseModal}
           onOpen={onOpenModal}

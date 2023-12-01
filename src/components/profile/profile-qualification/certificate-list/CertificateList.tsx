@@ -1,18 +1,23 @@
-import { Dispatch, SetStateAction, useState } from 'react';
-import { Box, Divider, IconButton, List, ListItem } from '@mui/material';
 import { Create, Delete } from '@mui/icons-material';
+import { Box, Divider, IconButton, List, ListItem } from '@mui/material';
+import { parse } from 'date-fns';
+import { useState } from 'react';
 
 import CertificateForm from 'src/components/profile/profile-qualification/certificate-form/CertificateForm';
 import {
   ButtonWrapper,
+  StyledButton,
   StyledListItemButton,
   SubTitle,
-  StyledButton,
   Title,
 } from 'src/components/profile/profile-qualification/certificate-list/styles';
 import { ProfileQuality } from 'src/components/profile/profile-qualification/types';
 import Modal from 'src/components/reusable/modal/Modal';
+import { BACKEND_DATE_FORMAT } from 'src/constants';
 import { useLocales } from 'src/locales';
+import { profileApi } from 'src/redux/api/profileCompleteApi';
+import { saveCertificates } from 'src/redux/slices/certificateSlice';
+import { useAppDispatch, useTypedSelector } from 'src/redux/store';
 
 type Props = {
   onClose: () => void;
@@ -20,8 +25,6 @@ type Props = {
   onNext: () => void;
   onEdit: (certificate: ProfileQuality) => void;
   onSave: (updatedCertificate: ProfileQuality) => void;
-  setCertificates: Dispatch<SetStateAction<ProfileQuality[]>>;
-  certificates: ProfileQuality[];
   isModalActive: boolean;
   editingCertificate: ProfileQuality | null;
 };
@@ -30,9 +33,7 @@ export default function CertificateList({
   isModalActive,
   onClose,
   onOpen,
-  certificates,
   onNext,
-  setCertificates,
   onEdit,
   onSave,
   editingCertificate,
@@ -42,6 +43,10 @@ export default function CertificateList({
   const [isDeleteModalActive, setIsDeleteModalActive] = useState<boolean>(false);
   const [deleteCertificateId, setDeleteCertificateId] = useState<string>('');
 
+  const [createCertificate] = profileApi.useCreateCertificateMutation();
+  const dispatch = useAppDispatch();
+  const certificates = useTypedSelector((state) => state.certificate.certificates);
+
   const onDeleteModalClose = (): void => setIsDeleteModalActive(false);
   const onDeleteModalOpen = (): void => setIsDeleteModalActive(true);
 
@@ -49,9 +54,25 @@ export default function CertificateList({
     onDeleteModalOpen();
     setDeleteCertificateId(certificateId);
   };
-  const onDeleteCertificate = (): void => {
-    setCertificates(certificates.filter((certificate) => certificate.id !== deleteCertificateId));
-    onDeleteModalClose();
+  const onDeleteCertificate = async (): Promise<void> => {
+    const filteredCertificates = certificates.filter(
+      (certificate) => certificate.id !== deleteCertificateId
+    );
+    try {
+      await createCertificate({
+        certificates: filteredCertificates,
+      })
+        .unwrap()
+        .then(() => {
+          dispatch(saveCertificates(filteredCertificates));
+        })
+        .catch((error) => {
+          throw new Error(error);
+        })
+        .finally(() => onDeleteModalClose());
+    } catch (error) {
+      throw new Error(error);
+    }
   };
 
   return (
@@ -63,7 +84,28 @@ export default function CertificateList({
             key={certificate.id}
             secondaryAction={
               <>
-                <IconButton edge="end" color="primary" onClick={(): void => onEdit(certificate)}>
+                <IconButton
+                  edge="end"
+                  color="primary"
+                  onClick={(): void =>
+                    onEdit({
+                      ...certificate,
+                      isExpirationDateDisabled: !certificate.expirationDate,
+                      dateIssued: parse(
+                        certificate.dateIssued as string,
+                        BACKEND_DATE_FORMAT,
+                        new Date()
+                      ),
+                      expirationDate: certificate.expirationDate
+                        ? parse(
+                            certificate.expirationDate as string,
+                            BACKEND_DATE_FORMAT,
+                            new Date()
+                          )
+                        : undefined,
+                    })
+                  }
+                >
                   <Create />
                 </IconButton>
                 <IconButton
@@ -77,9 +119,7 @@ export default function CertificateList({
             }
             disablePadding
           >
-            <StyledListItemButton disableGutters>
-              {certificate.certificationName}
-            </StyledListItemButton>
+            <StyledListItemButton disableGutters>{certificate.name}</StyledListItemButton>
           </ListItem>
         ))}
       </List>
@@ -104,8 +144,6 @@ export default function CertificateList({
           editingCertificate={editingCertificate}
           onSave={onSave}
           onClose={onClose}
-          certificates={certificates}
-          setCertificates={setCertificates}
         />
       </Modal>
 

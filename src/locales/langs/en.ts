@@ -1,5 +1,5 @@
-import { MAX_APPOINTMENT_NAME_LENGTH } from 'src/components/create-appointment/constants';
 import { MAX_RATE, MIN_RATE } from 'src/components/complete-profile-fifth/constants';
+import { MAX_APPOINTMENT_NAME_LENGTH } from 'src/components/create-appointment/constants';
 
 const en = {
   app_title: 'App title',
@@ -205,6 +205,39 @@ const en = {
     errors: {
       max_type_char: `You cannot enter more than ${MAX_APPOINTMENT_NAME_LENGTH} characters`,
     },
+  },
+  createAppointmentFourth: {
+    location: 'Location',
+    area: 'Area',
+    availability: 'Availability',
+    showAvailableCaregivers: 'Show available caregivers only',
+    openToLivingInClientsHouses: 'Open to living in client’s houses',
+    servicesTitle: 'Services',
+    hourRate: '{{rate}}/h',
+    services: {
+      personalCare: 'Personal Care Assistance',
+      medicationManagement: 'Medication Management',
+      mobilitySupport: 'Mobility Support',
+      mealPreparation: 'Meal Preparation',
+      housekeeping: 'Housekeeping and Laundry',
+      socialActivities: 'Social and Recreational Activities',
+    },
+    bookAppointment: 'Book Appointment',
+    numberOfAppointments: 'Appts.',
+    rate: 'Rate',
+    tabs: {
+      bio: 'Bio',
+      qualification: 'Qualification',
+      workExperience: 'Work Experience',
+      services: 'Services',
+    },
+    period: 'Period',
+    present: 'Present',
+    certificateNumber: 'Certificate Number (ID)',
+    certificateLink: 'Certificate Link',
+    noLocations: 'No locations',
+    notPreciseLocation: 'Location provided is not precise enough',
+    addressDetailsFailed: 'Error fetching address details',
   },
 };
 

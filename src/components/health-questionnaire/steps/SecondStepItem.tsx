@@ -4,7 +4,10 @@ import { selectActivity } from 'src/redux/slices/healthQuestionnaireSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'src/redux/store';
 import { useLocales } from 'src/locales';
-import { ToggleButtonGroupStyled, ToggleButtonStyled } from '../styles';
+import {
+  ToggleButtonGroupStyled,
+  ToggleButtonStyled,
+} from 'src/components/health-questionnaire/styles';
 
 type SecondStepItemProps = {
   questions: string[];

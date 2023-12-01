@@ -4,8 +4,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'src/redux/store';
 import { useLocales } from 'src/locales';
 import { saveNote, selectDiagnosis } from 'src/redux/slices/healthQuestionnaireSlice';
-import { HealthConcernsAndMedicalDiagnoses } from '../constants';
-import { QuestionnaireTypeText, SubmitButton, QuestionnaireContainerContent } from '../styles';
+import { HealthConcernsAndMedicalDiagnoses } from 'src/components/health-questionnaire/constants';
+import {
+  QuestionnaireTypeText,
+  SubmitButton,
+  QuestionnaireContainerContent,
+} from 'src/components/health-questionnaire/styles';
 
 type Step1Props = {
   onNext: () => void;

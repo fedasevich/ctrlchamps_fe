@@ -4,14 +4,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useLocales } from 'src/locales';
 import { RootState } from 'src/redux/store';
 import { saveNote, selectEnvChallenges } from 'src/redux/slices/healthQuestionnaireSlice';
-import { EnvironmentChallenges } from '../constants';
+import { EnvironmentChallenges } from 'src/components/health-questionnaire/constants';
 import {
   QuestionnaireContainerContent,
   QuestionnaireTypeText,
   CardActionsStyled,
   ActionButton,
   DescriptionBlock,
-} from '../styles';
+} from 'src/components/health-questionnaire/styles';
 
 type Step3Props = {
   onNext: () => void;

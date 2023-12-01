@@ -5,13 +5,16 @@ import { useLocales } from 'src/locales';
 import SecondStepItem from 'src/components/health-questionnaire/steps/SecondStepItem';
 import { RootState } from 'src/redux/store';
 import { saveNote } from 'src/redux/slices/healthQuestionnaireSlice';
-import { Options, ActivitiesOfDailyLivingAssessment } from '../constants';
+import {
+  Options,
+  ActivitiesOfDailyLivingAssessment,
+} from 'src/components/health-questionnaire/constants';
 import {
   QuestionnaireContainerContent,
   QuestionnaireTypeText,
   CardActionsStyled,
   ActionButton,
-} from '../styles';
+} from 'src/components/health-questionnaire/styles';
 
 type Step2Props = {
   onNext: () => void;

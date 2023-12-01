@@ -4,7 +4,7 @@ import Step1 from 'src/components/health-questionnaire/steps/Step1';
 import Step2 from 'src/components/health-questionnaire/steps/Step2';
 import Step3 from 'src/components/health-questionnaire/steps/Step3';
 import { ROUTES } from 'src/routes';
-import { QuestionnaireContainer, Background } from './styles';
+import { QuestionnaireContainer, Background } from 'src/components/health-questionnaire/styles';
 
 const STEPS = {
   STEP_1: 'STEP_1',

@@ -11,8 +11,11 @@ import { tokenReducer } from 'src/redux/slices/tokenSlice';
 import { availableDaysReducer } from 'src/redux/slices/availableDaysSlice';
 import { rateReducer } from 'src/redux/slices/rateSlice';
 import { healthQuestionnaireReducer } from 'src/redux/slices/healthQuestionnaireSlice';
-import { accountVerificationApi } from './api/accountVerificationAPI';
+import { servicesReducer } from 'src/redux/slices/servicesSlice';
+
+import accountVerificationApi from 'src/redux/api/accountVerificationAPI';
 import authApi from 'src/redux/api/authApi';
+import profileApi from 'src/redux/api/profileCompleteApi';
 
 const persistConfig = {
   key: 'root',
@@ -29,16 +32,18 @@ const store = configureStore({
     address: addressReducer,
     token: persistedTokenReducer,
     availableDays: availableDaysReducer,
+    services: servicesReducer,
     hourlyRate: rateReducer,
     healthQuestionnaire: healthQuestionnaireReducer,
     [authApi.reducerPath]: authApi.reducer,
     [accountVerificationApi.reducerPath]: accountVerificationApi.reducer,
+    [profileApi.reducerPath]: profileApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: false,
       immutableCheck: false,
-    }).concat([authApi.middleware, accountVerificationApi.middleware]),
+    }).concat([authApi.middleware, accountVerificationApi.middleware, profileApi.middleware]),
 });
 
 const persistor = persistStore(store);

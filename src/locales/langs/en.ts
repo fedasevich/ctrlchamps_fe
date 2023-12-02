@@ -237,7 +237,7 @@ const en = {
     editWorkPlace: 'Edit work place',
     deleteWorkPlace: 'Delete a work place',
     deleteWarning: 'Are you sure you want to delete this work place? Information will not be saved',
-    workTypes: { hospital: 'Hospital', clinic: 'Clinic', agency: 'Agency', other: 'Other' },
+    qualifications: { hospital: 'Hospital', clinic: 'Clinic', agency: 'Agency', other: 'Other' },
     errors: {
       workPlaceRequired: 'Work place is required',
       workPlaceLength: `Work place must be at most ${MAX_CHARACTERS_LENGTH} characters`,

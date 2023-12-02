@@ -9,17 +9,21 @@ import {
   MenuItem,
 } from '@mui/material';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
-import { Dispatch, SetStateAction, useEffect } from 'react';
+import { useEffect } from 'react';
 import { yupResolver } from '@hookform/resolvers/yup';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import uuidv4 from 'src/utils/uuidv4';
+import { format } from 'date-fns';
 
+import { WorkExperience, profileApi } from 'src/redux/api/profileCompleteApi';
+import { saveWorkExperiences } from 'src/redux/slices/workEperienceSlice';
+import { useAppDispatch, useTypedSelector } from 'src/redux/store';
 import { ProfileExperience } from 'src/components/complete-profile-second/types';
 import { useLocales } from 'src/locales';
 import { useExperienceSelectOptions } from 'src/components/complete-profile-second/work-form/select-options';
 import { useProfileExperienceSchema } from 'src/components/complete-profile-second/work-form/validation';
-import { DATE_FORMAT } from 'src/constants';
+import { DATE_FORMAT, BACKEND_DATE_FORMAT } from 'src/constants';
 import { DEFAULT_EXPERIENCE_VALUES } from 'src/components/complete-profile-second/work-form/constants';
 import {
   ErrorMessage,
@@ -30,22 +34,22 @@ import {
 type Props = {
   onClose: () => void;
   onSave: (workPlace: ProfileExperience) => void;
-  setWorkPlaces: Dispatch<SetStateAction<ProfileExperience[]>>;
-  workPlaces: ProfileExperience[];
   editingWorkPlaces: ProfileExperience | null;
 };
 
 export default function WorkForm({
-  workPlaces,
-  setWorkPlaces,
   onClose,
   onSave,
   editingWorkPlaces,
 }: Props): JSX.Element {
   const { translate } = useLocales();
+  const dispatch = useAppDispatch();
+
+  const workPlaces = useTypedSelector((state) => state.workExperience.workExperiences);
+  const [createWorkPlace] = profileApi.useCreateWorkExperienceMutation();
 
   const profileExperienceSchema = useProfileExperienceSchema();
-  const { workTypes } = useExperienceSelectOptions();
+  const { qualifications } = useExperienceSelectOptions();
 
   const {
     register,
@@ -68,50 +72,71 @@ export default function WorkForm({
     }
   }, [isEndDateDisabled, resetField]);
 
-  const onSubmit: SubmitHandler<ProfileExperience> = (values): void => {
+  const onSubmit: SubmitHandler<ProfileExperience> = async (values): Promise<void> => {
+    const updatedWorkPlace: ProfileExperience = {
+      ...values,
+      startDate: format(values.startDate as Date, BACKEND_DATE_FORMAT),
+      endDate: values.endDate ? format(values.endDate as Date, BACKEND_DATE_FORMAT) : undefined,
+    };
+
     if (editingWorkPlaces) {
-      onSave(values);
+      onSave(updatedWorkPlace);
     } else {
-      setWorkPlaces([...workPlaces, { ...values, id: uuidv4() }]);
+      const updatedWorkPlaces: WorkExperience[] = [
+        ...workPlaces,
+        { ...updatedWorkPlace, id: uuidv4() },
+      ];
+      try {
+        await createWorkPlace({
+          workExperiences: updatedWorkPlaces,
+        })
+          .unwrap()
+          .then(() => dispatch(saveWorkExperiences(updatedWorkPlaces)))
+          .catch((error) => {
+            throw new Error(error);
+          })
+          .finally(() => onClose());
+      } catch (error) {
+        throw new Error(error);
+      }
     }
-    onClose();
   };
 
   return (
     <StyledForm onSubmit={handleSubmit(onSubmit)}>
       <FormControl fullWidth variant="filled">
-        <InputLabel htmlFor="workPlace">
+        <InputLabel htmlFor="workplace">
           {translate('completeProfileSecond.workPlaceLabel')}
         </InputLabel>
-        <FilledInput {...register('workPlace')} id="workPlace" error={!!errors.workPlace} />
-        {errors?.workPlace && <ErrorMessage>{errors.workPlace?.message}</ErrorMessage>}
+        <FilledInput {...register('workplace')} id="workplace" error={!!errors.workplace} />
+        {errors?.workplace && <ErrorMessage>{errors.workplace?.message}</ErrorMessage>}
       </FormControl>
 
       <FormControl fullWidth variant="filled">
-        <InputLabel htmlFor="workType">
+        <InputLabel htmlFor="qualifications">
           {translate('completeProfileSecond.workTypeLabel')}
         </InputLabel>
 
         <Controller
-          name="workType"
+          name="qualifications"
           control={control}
           render={({ field: { onChange, value } }): JSX.Element => (
             <Select
               value={value}
               onChange={onChange}
               label={translate('signUpThirdForm.placeholderCountry')}
-              id="workType"
+              id="qualifications"
             >
-              {workTypes.map((workType) => (
-                <MenuItem value={workType.value} key={workType.value}>
-                  {workType.label}
+              {qualifications.map((qualification) => (
+                <MenuItem value={qualification.value} key={qualification.value}>
+                  {qualification.label}
                 </MenuItem>
               ))}
             </Select>
           )}
         />
 
-        {errors?.workType && <ErrorMessage>{errors.workType?.message}</ErrorMessage>}
+        {errors?.qualifications && <ErrorMessage>{errors.qualifications?.message}</ErrorMessage>}
       </FormControl>
 
       <Stack direction="row" spacing={2}>
@@ -125,7 +150,7 @@ export default function WorkForm({
             render={({ field }): JSX.Element => (
               <DatePicker
                 onChange={(date: Date): void => field.onChange(date)}
-                selected={field.value}
+                selected={field.value as Date}
                 customInput={<FilledInput fullWidth error={!!errors.startDate} />}
                 dateFormat={DATE_FORMAT}
               />
@@ -144,7 +169,7 @@ export default function WorkForm({
             render={({ field }): JSX.Element => (
               <DatePicker
                 onChange={(date: Date): void => field.onChange(date)}
-                selected={field.value}
+                selected={field.value as Date}
                 customInput={<FilledInput fullWidth error={!!errors.endDate} />}
                 dateFormat={DATE_FORMAT}
                 disabled={isEndDateDisabled}

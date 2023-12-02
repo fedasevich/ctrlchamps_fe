@@ -50,10 +50,11 @@ export interface CertificateResponse {
 }
 
 export interface WorkExperience {
+  id: string;
   workplace: string;
   qualifications: string;
-  startDate: Date;
-  endDate: Date;
+  startDate: Date | string;
+  endDate?: Date | string;
 }
 
 export interface WorkExperienceResponse {
@@ -136,6 +137,11 @@ export const profileApi = createApi({
         url: `${route.workExperience}`,
         method: 'POST',
         body: { workExperiences },
+      }),
+    }),
+    getWorkExperience: builder.query<WorkExperienceResponse[], void>({
+      query: () => ({
+        url: `${route.workExperience}`,
       }),
     }),
   }),

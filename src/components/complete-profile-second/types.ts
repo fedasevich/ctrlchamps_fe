@@ -1,8 +1,8 @@
 export type CompleteProfileSecondValues = {
-  workPlace: string;
-  workType: string;
-  startDate: Date | null;
-  endDate?: Date | null;
+  workplace: string;
+  qualifications: string;
+  startDate: Date | string;
+  endDate?: Date | string;
   isEndDateDisabled: boolean;
 };
 
@@ -10,13 +10,13 @@ export type ProfileExperience = CompleteProfileSecondValues & {
   id: string;
 };
 
-export type SelectWorkTypes = 'Hospital' | 'Clinic' | 'Agency' | 'Other';
+export type SelectQualifications = 'Hospital' | 'Clinic' | 'Agency' | 'Other';
 
 export type SelectOptions = {
-  value: SelectWorkTypes;
+  value: SelectQualifications;
   label: string;
 };
 
-export type WorkTypes = {
-  workTypes: SelectOptions[];
+export type Qualifications = {
+  qualifications: SelectOptions[];
 };

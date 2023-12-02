@@ -2,6 +2,7 @@ import Head from 'next/head';
 import { useState } from 'react';
 
 import ProfileQualification from 'src/components/profile/profile-qualification/ProfileQualification';
+import CompleteProfileSecond from 'src/components/complete-profile-second/CompleteProfileSecond';
 import CompleteProfileThird from 'src/components/complete-profile-third/CompleteProfileThird';
 import CompleteProfileFifth from 'src/components/complete-profile-fifth/CompleteProfileFifth';
 import { Step } from 'src/components/profile/profile-qualification/types';
@@ -31,7 +32,7 @@ function Profile(): JSX.Element {
     },
     {
       label: translate('profile.workExperience'),
-      component: <div>{translate('profile.workExperience')}</div>,
+      component: <CompleteProfileSecond onNext={handleNext} />,
     },
     {
       label: translate('profile.services'),

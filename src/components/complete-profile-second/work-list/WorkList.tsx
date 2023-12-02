@@ -1,10 +1,15 @@
-import { Dispatch, SetStateAction, useState } from 'react';
+import { useState } from 'react';
 import { Box, Divider, IconButton, List, ListItem } from '@mui/material';
 import { Create, Delete } from '@mui/icons-material';
+import { parse } from 'date-fns';
 
+import { profileApi } from 'src/redux/api/profileCompleteApi';
+import { saveWorkExperiences } from 'src/redux/slices/workEperienceSlice';
+import { useAppDispatch, useTypedSelector } from 'src/redux/store';
 import WorkForm from 'src/components/complete-profile-second/work-form/WorkForm';
-import { ProfileExperience } from 'src/components/complete-profile-second/types';
 import Modal from 'src/components/reusable/modal/Modal';
+import { ProfileExperience } from 'src/components/complete-profile-second/types';
+import { BACKEND_DATE_FORMAT } from 'src/constants';
 import { useLocales } from 'src/locales';
 import {
   ButtonWrapper,
@@ -20,8 +25,6 @@ type Props = {
   onNext: () => void;
   onEdit: (workPlace: ProfileExperience) => void;
   onSave: (updatedWorkPlace: ProfileExperience) => void;
-  setWorkPlaces: Dispatch<SetStateAction<ProfileExperience[]>>;
-  workPlaces: ProfileExperience[];
   isModalActive: boolean;
   editingWorkPlaces: ProfileExperience | null;
 };
@@ -30,17 +33,19 @@ export default function WorkList({
   isModalActive,
   onClose,
   onOpen,
-  workPlaces,
   onNext,
-  setWorkPlaces,
   onEdit,
   onSave,
   editingWorkPlaces,
 }: Props): JSX.Element {
   const { translate } = useLocales();
+  const dispatch = useAppDispatch();
 
   const [isDeleteModalActive, setIsDeleteModalActive] = useState<boolean>(false);
   const [deleteWorkPlaceId, setDeleteWorkPlaceId] = useState<string>('');
+
+  const [createWorkPlace] = profileApi.useCreateWorkExperienceMutation();
+  const workplaces = useTypedSelector((state) => state.workExperience.workExperiences);
 
   const onDeleteModalClose = (): void => setIsDeleteModalActive(false);
   const onDeleteModalOpen = (): void => setIsDeleteModalActive(true);
@@ -49,21 +54,51 @@ export default function WorkList({
     onDeleteModalOpen();
     setDeleteWorkPlaceId(workPlaceId);
   };
-  const onDeleteWorkPlace = (): void => {
-    setWorkPlaces(workPlaces.filter((workPlace) => workPlace.id !== deleteWorkPlaceId));
-    onDeleteModalClose();
+
+  const onDeleteWorkPlace = async (): Promise<void> => {
+    const filteredWorkPlaces = workplaces.filter((workPlace) => workPlace.id !== deleteWorkPlaceId);
+    try {
+      await createWorkPlace({
+        workExperiences: filteredWorkPlaces,
+      })
+        .unwrap()
+        .then(() => dispatch(saveWorkExperiences(filteredWorkPlaces)))
+        .catch((error) => {
+          throw new Error(error);
+        })
+        .finally(() => onDeleteModalClose());
+    } catch (error) {
+      throw new Error(error);
+    }
   };
 
   return (
     <>
       <SubTitle>{translate('completeProfileSecond.subTitle')}</SubTitle>
       <List disablePadding>
-        {workPlaces.map((workPlace) => (
+        {workplaces.map((workPlace) => (
           <ListItem
             key={workPlace.id}
             secondaryAction={
               <>
-                <IconButton edge="end" color="primary" onClick={(): void => onEdit(workPlace)}>
+                <IconButton
+                  edge="end"
+                  color="primary"
+                  onClick={(): void =>
+                    onEdit({
+                      ...workPlace,
+                      isEndDateDisabled: !workPlace.endDate,
+                      startDate: parse(
+                        workPlace.startDate as string,
+                        BACKEND_DATE_FORMAT,
+                        new Date()
+                      ),
+                      endDate: workPlace.endDate
+                        ? parse(workPlace.endDate as string, BACKEND_DATE_FORMAT, new Date())
+                        : undefined,
+                    })
+                  }
+                >
                   <Create />
                 </IconButton>
                 <IconButton
@@ -77,7 +112,7 @@ export default function WorkList({
             }
             disablePadding
           >
-            <StyledListItemButton disableGutters>{workPlace.workPlace}</StyledListItemButton>
+            <StyledListItemButton disableGutters>{workPlace.workplace}</StyledListItemButton>
           </ListItem>
         ))}
       </List>
@@ -98,13 +133,7 @@ export default function WorkList({
         onClose={onClose}
         isActive={isModalActive}
       >
-        <WorkForm
-          editingWorkPlaces={editingWorkPlaces}
-          onSave={onSave}
-          onClose={onClose}
-          workPlaces={workPlaces}
-          setWorkPlaces={setWorkPlaces}
-        />
+        <WorkForm editingWorkPlaces={editingWorkPlaces} onSave={onSave} onClose={onClose} />
       </Modal>
 
       <Modal

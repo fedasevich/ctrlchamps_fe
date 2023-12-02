@@ -5,18 +5,20 @@ import storage from 'redux-persist/lib/storage';
 
 import rootReducer from 'src/redux/rootReducer';
 import { addressReducer } from 'src/redux/slices/addressSlice';
-import { personalDetailsReducer } from 'src/redux/slices/personalDetailsSlice';
-import { roleReducer } from 'src/redux/slices/roleSlice';
-import { tokenReducer } from 'src/redux/slices/tokenSlice';
 import { availableDaysReducer } from 'src/redux/slices/availableDaysSlice';
-import { rateReducer } from 'src/redux/slices/rateSlice';
+import { certificateReducer } from 'src/redux/slices/certificateSlice';
 import { healthQuestionnaireReducer } from 'src/redux/slices/healthQuestionnaireSlice';
-import { appointmentReducer } from './slices/appointmentSlice';
+import { personalDetailsReducer } from 'src/redux/slices/personalDetailsSlice';
+import { rateReducer } from 'src/redux/slices/rateSlice';
+import { roleReducer } from 'src/redux/slices/roleSlice';
 import { servicesReducer } from 'src/redux/slices/servicesSlice';
+import { tokenReducer } from 'src/redux/slices/tokenSlice';
+import { appointmentReducer } from './slices/appointmentSlice';
 
 import accountVerificationApi from 'src/redux/api/accountVerificationAPI';
 import authApi from 'src/redux/api/authApi';
 import profileApi from 'src/redux/api/profileCompleteApi';
+
 import questionnaireApi from 'src/redux/api/healthQuestionnaireApi';
 
 const persistConfig = {
@@ -36,6 +38,7 @@ const store = configureStore({
     availableDays: availableDaysReducer,
     services: servicesReducer,
     hourlyRate: rateReducer,
+    certificate: certificateReducer,
     healthQuestionnaire: healthQuestionnaireReducer,
     appointment: appointmentReducer,
     [authApi.reducerPath]: authApi.reducer,

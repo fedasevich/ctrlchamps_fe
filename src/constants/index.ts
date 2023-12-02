@@ -5,6 +5,8 @@ export const PHONE_ERROR = 'phone';
 export const USER_MIN_AGE = 18;
 export const MAX_CHARACTERS_LENGTH = 100;
 export const DATE_FORMAT = 'MM/dd/yyyy';
+export const BACKEND_DATE_FORMAT = 'yyyy-MM-dd';
+
 export const TIMEZONE_FORMAT = Intl.DateTimeFormat().resolvedOptions().timeZone;
 export const URL_PATTERN = /^https:\/\/.+$/;
 

@@ -1,22 +1,33 @@
 import Head from 'next/head';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
-import ProfileQualification from 'src/components/profile/profile-qualification/ProfileQualification';
-import CompleteProfileThird from 'src/components/complete-profile-third/CompleteProfileThird';
 import CompleteProfileFifth from 'src/components/complete-profile-fifth/CompleteProfileFifth';
+import CompleteProfileThird from 'src/components/complete-profile-third/CompleteProfileThird';
+import { Bio } from 'src/components/profile/bio/Bio';
+import ProfileQualification from 'src/components/profile/profile-qualification/ProfileQualification';
 import { Step } from 'src/components/profile/profile-qualification/types';
 import FlowHeader from 'src/components/reusable/header/FlowHeader';
-import { ProfileWrapper } from 'src/components/reusable/profile-wrapper/ProfileWrapper';
 import HorizontalStepper from 'src/components/reusable/horizontal-stepper/HorizontalStepper';
-import { useLocales } from 'src/locales';
-import { Bio } from 'src/components/profile/bio/Bio';
+import { ProfileWrapper } from 'src/components/reusable/profile-wrapper/ProfileWrapper';
 import { FIRST_STEP_INDEX, SECOND_STEP_INDEX } from 'src/constants';
+import { useLocales } from 'src/locales';
+import { profileApi } from 'src/redux/api/profileCompleteApi';
 
-function Profile(): JSX.Element {
+function Profile(): JSX.Element | null {
   const { translate } = useLocales();
 
   const [activeStepIndex, setActiveStepIndex] = useState<number>(FIRST_STEP_INDEX);
   const [completed, setCompleted] = useState<Record<string, boolean>>({});
+
+  const [createProfile, { isLoading }] = profileApi.useCreateProfileMutation();
+
+  useEffect(() => {
+    createProfile()
+      .unwrap()
+      .catch(() => {});
+  }, [createProfile]);
+
+  if (isLoading) return null;
 
   const handleNext = (): void => {
     setCompleted({ ...completed, [activeStepIndex]: true });

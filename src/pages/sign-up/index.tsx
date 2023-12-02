@@ -1,14 +1,11 @@
-import jwt_decode from 'jwt-decode';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 
-import { useRequestNewVerificationCodeMutation } from 'src/redux/api/accountVerificationAPI';
 import { useSignUpMutation } from 'src/redux/api/authApi';
 import { RootState, useAppDispatch } from 'src/redux/store';
 import { setToken } from 'src/redux/slices/tokenSlice';
-import { ROUTES } from 'src/routes';
 
 import SignUpFooter from 'src/components/reusable/footer';
 import FlowHeader from 'src/components/reusable/header/FlowHeader';
@@ -36,7 +33,6 @@ function SignUp(): JSX.Element {
   const personalDetails = useSelector((state: RootState) => state.personalDetails.personalDetails);
 
   const [signUp] = useSignUpMutation();
-  const [requestNewCode] = useRequestNewVerificationCodeMutation();
 
   const userInfo = {
     role: capitalizeFirstLetter(role),
@@ -49,17 +45,6 @@ function SignUp(): JSX.Element {
       const { token }: { token: string } = await signUp({ ...userInfo, password }).unwrap();
 
       dispatch(setToken(token));
-
-      const decoded: { id: string; iat: number; exp: number } = jwt_decode(token);
-      try {
-        await requestNewCode({ userId: decoded.id })
-          .unwrap()
-          .then(() => {
-            router.push(ROUTES.account_verification);
-          });
-      } catch (error) {
-        throw new Error(error);
-      }
     } catch (error) {
       throw new Error(error);
     }

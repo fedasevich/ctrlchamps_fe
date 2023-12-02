@@ -19,7 +19,12 @@ import SignUpSecondForm from 'src/components/sign-up-second';
 import SignUpThirdForm from 'src/components/sign-up-third';
 import SignUpFourthForm from 'src/components/sign-up-fourth';
 
-const FIRST_STEP = 1;
+const STEPS = {
+  first: 1,
+  second: 2,
+  third: 3,
+  fourth: 4,
+};
 
 function capitalizeFirstLetter(string: string): string {
   return string.charAt(0).toUpperCase() + string.slice(1);
@@ -30,7 +35,7 @@ function SignUp(): JSX.Element {
   const router = useRouter();
   const dispatch = useAppDispatch();
 
-  const [step, setStep] = useState<number>(FIRST_STEP);
+  const [step, setStep] = useState<number>(STEPS.first);
   const role = useSelector((state: RootState) => state.role.role);
   const addressData = useSelector((state: RootState) => state.address.addressData);
   const personalDetails = useSelector((state: RootState) => state.personalDetails.personalDetails);
@@ -66,13 +71,19 @@ function SignUp(): JSX.Element {
   };
 
   const handleBackStep = (): void => {
-    if (step > 1) {
+    if (step > STEPS.first) {
       setStep((prevStep) => prevStep - 1);
     }
   };
 
-  const handleNextStep = (): void => {
-    setStep((prevStep) => prevStep + 1);
+  const handleSecondStep = (): void => {
+    setStep(STEPS.second);
+  };
+  const handleThirdStep = (): void => {
+    setStep(STEPS.third);
+  };
+  const handleFourthStep = (): void => {
+    setStep(STEPS.fourth);
   };
 
   return (
@@ -80,12 +91,12 @@ function SignUp(): JSX.Element {
       <FlowHeader text={t('SignUp')} callback={handleBackStep} iconType="back" />
       <SignUpWrapper>
         <>
-          {step === 1 && <SignUpFirstForm onNext={handleNextStep} />}
-          {step === 2 && (
-            <SignUpSecondForm role={(role as 'seeker') || 'caregiver'} onNext={handleNextStep} />
+          {step === STEPS.first && <SignUpFirstForm onNext={handleSecondStep} />}
+          {step === STEPS.second && (
+            <SignUpSecondForm role={(role as 'seeker') || 'caregiver'} onNext={handleThirdStep} />
           )}
-          {step === 3 && <SignUpThirdForm onNext={handleNextStep} />}
-          {step === 4 && <SignUpFourthForm onNext={handleSignUp} />}
+          {step === STEPS.third && <SignUpThirdForm onNext={handleFourthStep} />}
+          {step === STEPS.fourth && <SignUpFourthForm onNext={handleSignUp} />}
           <SignUpFooter />
         </>
       </SignUpWrapper>

@@ -36,7 +36,9 @@ export default function AppointmentType(): JSX.Element {
   const selectRecurring = (): void => setType(Appointment.recurring);
   const changeAppointmentName = (
     e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
-  ): void => setName(e.target.value);
+  ): void => {
+    setName(e.target.value);
+  };
 
   const goNext = (): void => {
     dispatch(setAppointmentName(name));
@@ -62,6 +64,9 @@ export default function AppointmentType(): JSX.Element {
               value={name}
               onChange={changeAppointmentName}
             />
+            {name.length > 0 && name.length <= MIN_APPOINTMENT_NAME_LENGTH && (
+              <ErrorText>{translate('create_appointment.errors.min_type_char')}</ErrorText>
+            )}
             {name.length > MAX_APPOINTMENT_NAME_LENGTH && (
               <ErrorText>{translate('create_appointment.errors.max_type_char')}</ErrorText>
             )}
@@ -96,8 +101,8 @@ export default function AppointmentType(): JSX.Element {
               onClick={goNext}
               disabled={
                 type === null ||
-                name.length <= MIN_APPOINTMENT_NAME_LENGTH ||
-                name.length > MAX_APPOINTMENT_NAME_LENGTH
+                name.trim().length <= MIN_APPOINTMENT_NAME_LENGTH ||
+                name.trim().length > MAX_APPOINTMENT_NAME_LENGTH
               }
             >
               {translate('create_appointment.btn_next')}

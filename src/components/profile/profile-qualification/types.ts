@@ -1,9 +1,9 @@
 export type ProfileQualityFormValues = {
-  certificationName: string;
-  certificationNumber: string;
-  certificationLink?: string;
-  startDate: Date | null;
-  expirationDate?: Date;
+  name: string;
+  certificateId: string;
+  link: string;
+  dateIssued: Date | string;
+  expirationDate?: Date | string;
   isExpirationDateDisabled: boolean;
 };
 

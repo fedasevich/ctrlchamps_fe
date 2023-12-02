@@ -1,31 +1,28 @@
+import { yupResolver } from '@hookform/resolvers/yup';
 import {
   Checkbox,
   FilledInput,
   FormControl,
   FormControlLabel,
   InputLabel,
+  MenuItem,
   Select,
   Stack,
-  MenuItem,
 } from '@mui/material';
-import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { Dispatch, SetStateAction, useEffect } from 'react';
-import { yupResolver } from '@hookform/resolvers/yup';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import uuidv4 from 'src/utils/uuidv4';
 
 import { ProfileExperience } from 'src/components/complete-profile-second/types';
-import { useLocales } from 'src/locales';
-import { useExperienceSelectOptions } from 'src/components/complete-profile-second/work-form/select-options';
-import { useProfileExperienceSchema } from 'src/components/complete-profile-second/work-form/validation';
-import { DATE_FORMAT } from 'src/constants';
 import { DEFAULT_EXPERIENCE_VALUES } from 'src/components/complete-profile-second/work-form/constants';
-import {
-  ErrorMessage,
-  StyledButton,
-  StyledForm,
-} from 'src/components/complete-profile-second/work-form/styles';
+import { useExperienceSelectOptions } from 'src/components/complete-profile-second/work-form/select-options';
+import { ErrorMessage, StyledForm } from 'src/components/complete-profile-second/work-form/styles';
+import { useProfileExperienceSchema } from 'src/components/complete-profile-second/work-form/validation';
+import ProfileBtn from 'src/components/reusable/profile-btn/ProfileBtn';
+import { DATE_FORMAT } from 'src/constants';
+import { useLocales } from 'src/locales';
 
 type Props = {
   onClose: () => void;
@@ -162,10 +159,7 @@ export default function WorkForm({
           labelPlacement="end"
         />
       </Stack>
-
-      <StyledButton variant="contained" type="submit" disabled={!isValid}>
-        {translate('profileQualification.save')}
-      </StyledButton>
+      <ProfileBtn text={translate('profileQualification.save')} disabled={!isValid} />
     </StyledForm>
   );
 }

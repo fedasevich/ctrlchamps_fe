@@ -7,5 +7,5 @@ export const Wrapper = styled('div')`
   gap: 16px;
   width: 405px;
   margin: 0 auto;
-  padding: 24px 0;
+  padding: 24px 0 5px;
 `;

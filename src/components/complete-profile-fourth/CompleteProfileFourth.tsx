@@ -1,17 +1,16 @@
 import { Alert, FormControl, InputLabel, MenuItem, Select, Snackbar } from '@mui/material';
 import { useEffect, useState } from 'react';
+import ProfileBtn from 'src/components/reusable/profile-btn/ProfileBtn';
 import { TIMEZONE_FORMAT, weekDays } from 'src/constants';
 import { daySelectedType } from 'src/constants/types';
 import { useLocales } from 'src/locales';
+import { useUpdateProfileMutation } from 'src/redux/api/profileCompleteApi';
 import { chooseAvailableTime } from 'src/redux/slices/availableDaysSlice';
 import { useAppDispatch, useTypedSelector } from 'src/redux/store';
-import { useUpdateProfileMutation } from 'src/redux/api/profileCompleteApi';
 import { availableTimeOptions } from './constants';
 import {
   BaseText,
-  BtnWrapper,
   Container,
-  NextBtn,
   SelectContainer,
   WeekSlot,
   WeekSlotContainer,
@@ -137,14 +136,11 @@ export default function CompleteProfileFourth({ onNext }: { onNext: () => void }
         >
           <Alert severity="error">{translate('unexpected_error')}</Alert>
         </Snackbar>
-        <BtnWrapper>
-          <NextBtn
-            onClick={defineAvailableDays}
-            disabled={!daySelected || !availableFrom || !availableTo}
-          >
-            {translate('btn_next')}
-          </NextBtn>
-        </BtnWrapper>
+        <ProfileBtn
+          text={translate('btn_next')}
+          onClick={defineAvailableDays}
+          disabled={!daySelected || !availableFrom || !availableTo}
+        />
       </Container>
     </Wrapper>
   );

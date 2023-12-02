@@ -21,6 +21,7 @@ import {
   Background,
   Container,
   IconWrapper,
+  StyledForm,
 } from './styles';
 
 export default function AppointmentType(): JSX.Element {
@@ -51,54 +52,57 @@ export default function AppointmentType(): JSX.Element {
       />
       <Background>
         <Container>
-          <AppointmentTypeInput
-            label={translate('create_appointment.placeholder.name')}
-            variant="standard"
-            autoComplete="off"
-            fullWidth
-            size="small"
-            value={name}
-            onChange={changeAppointmentName}
-          />
-          {name.length > MAX_APPOINTMENT_NAME_LENGTH && (
-            <ErrorText>{translate('create_appointment.errors.max_type_char')}</ErrorText>
-          )}
-          <AppointmentTypeCard
-            className={type === Appointment.oneTime ? 'active' : ''}
-            onClick={selectOneTime}
-          >
-            <IconWrapper>
-              <OneTimeIcon />
-            </IconWrapper>
-            <AppointmentTypeText>{translate('create_appointment.type.one')}</AppointmentTypeText>
-            <AppointmentTypeDetails>
-              {translate('create_appointment.type.one_desc')}
-            </AppointmentTypeDetails>
-          </AppointmentTypeCard>
-          <AppointmentTypeCard
-            className={type === Appointment.recurring ? 'active' : ''}
-            onClick={selectRecurring}
-          >
-            <IconWrapper>
-              <RecurringIcon />
-            </IconWrapper>
-            <AppointmentTypeText>
-              {translate('create_appointment.type.recurring')}
-            </AppointmentTypeText>
-            <AppointmentTypeDetails>
-              {translate('create_appointment.type.recurring_desc')}
-            </AppointmentTypeDetails>
-          </AppointmentTypeCard>
-          <FilledButton
-            onClick={goNext}
-            disabled={
-              type === null ||
-              name.length <= MIN_APPOINTMENT_NAME_LENGTH ||
-              name.length > MAX_APPOINTMENT_NAME_LENGTH
-            }
-          >
-            {translate('create_appointment.btn_next')}
-          </FilledButton>
+          <StyledForm>
+            <AppointmentTypeInput
+              label={translate('create_appointment.placeholder.name')}
+              variant="standard"
+              autoComplete="off"
+              fullWidth
+              size="small"
+              value={name}
+              onChange={changeAppointmentName}
+            />
+            {name.length > MAX_APPOINTMENT_NAME_LENGTH && (
+              <ErrorText>{translate('create_appointment.errors.max_type_char')}</ErrorText>
+            )}
+            <AppointmentTypeCard
+              className={type === Appointment.oneTime ? 'active' : ''}
+              onClick={selectOneTime}
+            >
+              <IconWrapper>
+                <OneTimeIcon />
+              </IconWrapper>
+              <AppointmentTypeText>{translate('create_appointment.type.one')}</AppointmentTypeText>
+              <AppointmentTypeDetails>
+                {translate('create_appointment.type.one_desc')}
+              </AppointmentTypeDetails>
+            </AppointmentTypeCard>
+            <AppointmentTypeCard
+              className={type === Appointment.recurring ? 'active' : ''}
+              onClick={selectRecurring}
+            >
+              <IconWrapper>
+                <RecurringIcon />
+              </IconWrapper>
+              <AppointmentTypeText>
+                {translate('create_appointment.type.recurring')}
+              </AppointmentTypeText>
+              <AppointmentTypeDetails>
+                {translate('create_appointment.type.recurring_desc')}
+              </AppointmentTypeDetails>
+            </AppointmentTypeCard>
+            <FilledButton
+              type="submit"
+              onClick={goNext}
+              disabled={
+                type === null ||
+                name.length <= MIN_APPOINTMENT_NAME_LENGTH ||
+                name.length > MAX_APPOINTMENT_NAME_LENGTH
+              }
+            >
+              {translate('create_appointment.btn_next')}
+            </FilledButton>
+          </StyledForm>
         </Container>
       </Background>
       <CancelAppointmentModal open={modalOpen} setOpen={setModalOpen} />

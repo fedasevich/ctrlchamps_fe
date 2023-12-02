@@ -25,7 +25,6 @@ function Profile(): JSX.Element {
     setActiveStepIndex(activeStepIndex + SECOND_STEP_INDEX);
   };
 
-  // TODO: fill in the rest of the steps components
   const STEPS: Step[] = [
     {
       label: translate('profile.qualification'),

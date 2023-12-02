@@ -10,6 +10,8 @@ import FlowHeader from 'src/components/reusable/header/FlowHeader';
 import HorizontalStepper from 'src/components/reusable/horizontal-stepper/HorizontalStepper';
 import { ProfileWrapper } from 'src/components/reusable/profile-wrapper/ProfileWrapper';
 import { FIRST_STEP_INDEX, SECOND_STEP_INDEX } from 'src/constants';
+import CompleteProfileSecond from 'src/components/complete-profile-second/CompleteProfileSecond';
+import CompleteProfileFourth from 'src/components/complete-profile-fourth/CompleteProfileFourth';
 import { useLocales } from 'src/locales';
 import { profileApi } from 'src/redux/api/profileCompleteApi';
 
@@ -34,7 +36,6 @@ function Profile(): JSX.Element | null {
     setActiveStepIndex(activeStepIndex + SECOND_STEP_INDEX);
   };
 
-  // TODO: fill in the rest of the steps components
   const STEPS: Step[] = [
     {
       label: translate('profile.qualification'),
@@ -42,7 +43,7 @@ function Profile(): JSX.Element | null {
     },
     {
       label: translate('profile.workExperience'),
-      component: <div>{translate('profile.workExperience')}</div>,
+      component: <CompleteProfileSecond onNext={handleNext} />,
     },
     {
       label: translate('profile.services'),
@@ -50,7 +51,7 @@ function Profile(): JSX.Element | null {
     },
     {
       label: translate('profile.availability'),
-      component: <div>{translate('profile.availability')}</div>,
+      component: <CompleteProfileFourth onNext={handleNext} />,
     },
     {
       label: translate('profile.rates'),

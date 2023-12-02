@@ -7,6 +7,7 @@ import {
   InputLabel,
   Stack,
 } from '@mui/material';
+import { Dispatch, SetStateAction, useEffect } from 'react';
 import { format } from 'date-fns';
 import { useEffect } from 'react';
 import 'react-datepicker/dist/react-datepicker.css';
@@ -15,14 +16,14 @@ import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { DEFAULT_PROFILE_QUALIFICATION_VALUES } from 'src/components/profile/profile-qualification/certificate-form/constants';
 import {
   ErrorMessage,
-  StyledButton,
   StyledDatePicker,
   StyledForm,
 } from 'src/components/profile/profile-qualification/certificate-form/styles';
 import { useProfileQualificationSchema } from 'src/components/profile/profile-qualification/certificate-form/validation';
 import { ProfileQuality } from 'src/components/profile/profile-qualification/types';
-import { BACKEND_DATE_FORMAT, DATE_FORMAT } from 'src/constants';
+import ProfileBtn from 'src/components/reusable/profile-btn/ProfileBtn';
 import { useLocales } from 'src/locales';
+import { BACKEND_DATE_FORMAT, DATE_FORMAT } from 'src/constants';
 import { Certificate, profileApi } from 'src/redux/api/profileCompleteApi';
 import { saveCertificates } from 'src/redux/slices/certificateSlice';
 import { useAppDispatch, useTypedSelector } from 'src/redux/store';
@@ -178,10 +179,7 @@ export default function CertificateForm({
           labelPlacement="start"
         />
       </Stack>
-
-      <StyledButton variant="contained" type="submit" disabled={!isValid}>
-        {translate('profileQualification.save')}
-      </StyledButton>
+      <ProfileBtn text={translate('profileQualification.save')} disabled={!isValid} />
     </StyledForm>
   );
 }

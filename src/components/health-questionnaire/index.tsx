@@ -1,9 +1,7 @@
 import { useState } from 'react';
-import { useRouter } from 'next/router';
 import Step1 from 'src/components/health-questionnaire/steps/Step1';
 import Step2 from 'src/components/health-questionnaire/steps/Step2';
 import Step3 from 'src/components/health-questionnaire/steps/Step3';
-import { ROUTES } from 'src/routes';
 import { QuestionnaireContainer, Background } from 'src/components/health-questionnaire/styles';
 
 const STEPS = {
@@ -12,9 +10,11 @@ const STEPS = {
   STEP_3: 'STEP_3',
 };
 
-const HealthQuestionnaire = (): JSX.Element => {
-  const router = useRouter();
+type Props = {
+  onNext: () => void;
+};
 
+const HealthQuestionnaire = ({ onNext }: Props): JSX.Element => {
   const [currentStep, setCurrentStep] = useState(STEPS.STEP_1);
 
   const handleNext = (): void => {
@@ -26,7 +26,7 @@ const HealthQuestionnaire = (): JSX.Element => {
   };
 
   const handleSubmit = (): void => {
-    router.push(ROUTES.appointment_caregiver_list);
+    onNext();
   };
 
   return (

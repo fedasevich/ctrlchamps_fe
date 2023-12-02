@@ -268,6 +268,13 @@ const en = {
     rateRequired: 'rate is required',
   },
   complete_profile: 'complete profile',
+  appointmentSteps: {
+    appointmentType: 'Appointment Type',
+    scheduling: 'Scheduling',
+    healthQuestioner: 'Health Questioner',
+    findCaregiver: 'Find Caregiver',
+    confirm: 'Confirm',
+  },
   create_appointment: {
     duration: 'Appointment duration is {{hours}}h {{minutes}}m',
     header_text: 'new appointment',

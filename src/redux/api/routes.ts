@@ -10,6 +10,9 @@ const route = {
   uploadFile: '/uploadFile',
   certificates: '/certificates',
   workExperience: '/work-experience',
+  questionnaire_activity: '/activity',
+  questionnaire_capability: '/capability',
+  questionnaire_diagnosis: '/diagnosis',
 };
 
 export { route };

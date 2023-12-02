@@ -9,7 +9,7 @@ import { setRecurringAppointmentTime } from 'src/redux/slices/appointmentSlice';
 import { useAppDispatch } from 'src/redux/store';
 import { setCustomTime } from 'src/utils/defineCustomTime';
 import useShowDuration from './useShowDuration';
-import { selectTimeOptions } from './constants';
+import { ONE_DAY_PERIOD, selectTimeOptions } from './constants';
 import {
   AppointmentDuration,
   BaseBoldText,
@@ -84,7 +84,7 @@ export default function RecurringAppointment(): JSX.Element {
           <DatePicker
             label={translate('create_appointment.end_date')}
             disabled={!startDate}
-            minDate={startDate}
+            minDate={startDate && new Date(startDate.getTime() + ONE_DAY_PERIOD)}
             value={endDate}
             inputFormat={DATE_FORMAT}
             onChange={(newValue): void => {

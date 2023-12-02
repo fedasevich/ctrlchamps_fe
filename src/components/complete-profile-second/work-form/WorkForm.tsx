@@ -16,7 +16,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import uuidv4 from 'src/utils/uuidv4';
 import { format } from 'date-fns';
 
-import { WorkExperience, profileApi } from 'src/redux/api/profileCompleteApi';
+import { WorkExperience, useCreateWorkExperienceMutation } from 'src/redux/api/profileCompleteApi';
 import { saveWorkExperiences } from 'src/redux/slices/workEperienceSlice';
 import { useAppDispatch, useTypedSelector } from 'src/redux/store';
 import { ProfileExperience } from 'src/components/complete-profile-second/types';
@@ -37,16 +37,12 @@ type Props = {
   editingWorkPlaces: ProfileExperience | null;
 };
 
-export default function WorkForm({
-  onClose,
-  onSave,
-  editingWorkPlaces,
-}: Props): JSX.Element {
+export default function WorkForm({ onClose, onSave, editingWorkPlaces }: Props): JSX.Element {
   const { translate } = useLocales();
   const dispatch = useAppDispatch();
 
   const workPlaces = useTypedSelector((state) => state.workExperience.workExperiences);
-  const [createWorkPlace] = profileApi.useCreateWorkExperienceMutation();
+  const [createWorkPlace] = useCreateWorkExperienceMutation();
 
   const profileExperienceSchema = useProfileExperienceSchema();
   const { qualifications } = useExperienceSelectOptions();

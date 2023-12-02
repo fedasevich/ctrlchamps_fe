@@ -3,7 +3,9 @@ import { Box, Divider, IconButton, List, ListItem } from '@mui/material';
 import { Create, Delete } from '@mui/icons-material';
 import { parse } from 'date-fns';
 
-import { profileApi } from 'src/redux/api/profileCompleteApi';
+import {
+  useCreateWorkExperienceMutation,
+} from 'src/redux/api/profileCompleteApi';
 import { saveWorkExperiences } from 'src/redux/slices/workEperienceSlice';
 import { useAppDispatch, useTypedSelector } from 'src/redux/store';
 import WorkForm from 'src/components/complete-profile-second/work-form/WorkForm';
@@ -44,7 +46,7 @@ export default function WorkList({
   const [isDeleteModalActive, setIsDeleteModalActive] = useState<boolean>(false);
   const [deleteWorkPlaceId, setDeleteWorkPlaceId] = useState<string>('');
 
-  const [createWorkPlace] = profileApi.useCreateWorkExperienceMutation();
+  const [createWorkPlace] = useCreateWorkExperienceMutation();
   const workplaces = useTypedSelector((state) => state.workExperience.workExperiences);
 
   const onDeleteModalClose = (): void => setIsDeleteModalActive(false);

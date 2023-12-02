@@ -3,7 +3,10 @@ import { memo, useState, useEffect } from 'react';
 import { useLocales } from 'src/locales';
 import WorkForm from 'src/components/complete-profile-second/work-form/WorkForm';
 import WorkList from 'src/components/complete-profile-second/work-list/WorkList';
-import { profileApi } from 'src/redux/api/profileCompleteApi';
+import {
+  useLazyGetWorkExperienceQuery,
+  useCreateWorkExperienceMutation,
+} from 'src/redux/api/profileCompleteApi';
 import { saveWorkExperiences } from 'src/redux/slices/workEperienceSlice';
 import { useAppDispatch, useTypedSelector } from 'src/redux/store';
 import { ProfileExperience } from 'src/components/complete-profile-second/types';
@@ -21,8 +24,8 @@ function CompleteProfileSecond({ onNext }: IProps): JSX.Element | null {
   const { translate } = useLocales();
   const dispatch = useAppDispatch();
 
-  const [getWorkExperiences] = profileApi.useLazyGetWorkExperienceQuery();
-  const [createWorkPlace, { isLoading }] = profileApi.useCreateWorkExperienceMutation();
+  const [getWorkExperiences] = useLazyGetWorkExperienceQuery();
+  const [createWorkPlace, { isLoading }] = useCreateWorkExperienceMutation();
 
   useEffect(() => {
     getWorkExperiences()

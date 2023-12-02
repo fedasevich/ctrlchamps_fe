@@ -154,6 +154,7 @@ export const {
   useUploadFileMutation,
   useCreateCertificateMutation,
   useCreateWorkExperienceMutation,
+  useLazyGetWorkExperienceQuery,
 } = profileApi;
 
 export default profileApi;

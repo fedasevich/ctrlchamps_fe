@@ -46,4 +46,9 @@ const InfoButton = styled.button`
   cursor: pointer;
 `;
 
-export { Header, Container, Text, Icon, InfoButton };
+const EmptyIcon = styled('div')`
+  width: 24px;
+  heigth: 24px;
+`;
+
+export { Header, Container, Text, Icon, InfoButton, EmptyIcon };

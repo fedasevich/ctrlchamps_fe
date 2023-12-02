@@ -30,7 +30,7 @@ const AccountVerification: React.FC<AccountVerificationProps> = (): JSX.Element 
       <FlowHeader
         text={t('account_verification.account_verification')}
         callback={(): Promise<boolean> => router.push(ROUTES.sign_up)}
-        iconType="back"
+        iconType="empty"
       />
       {isSubmitted ? (
         <SuccessfulVerification profile={role} />

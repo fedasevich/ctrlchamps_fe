@@ -14,6 +14,7 @@ import { roleReducer } from 'src/redux/slices/roleSlice';
 import { servicesReducer } from 'src/redux/slices/servicesSlice';
 import { tokenReducer } from 'src/redux/slices/tokenSlice';
 import { appointmentReducer } from './slices/appointmentSlice';
+import { caregiverReducer } from './slices/caregiverSlice';
 
 import accountVerificationApi from 'src/redux/api/accountVerificationAPI';
 import authApi from 'src/redux/api/authApi';
@@ -35,6 +36,7 @@ const store = configureStore({
     personalDetails: personalDetailsReducer,
     address: addressReducer,
     token: persistedTokenReducer,
+    caregiver: caregiverReducer,
     availableDays: availableDaysReducer,
     services: servicesReducer,
     hourlyRate: rateReducer,

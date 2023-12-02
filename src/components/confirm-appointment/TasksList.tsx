@@ -71,14 +71,14 @@ export default function TasksList({
   };
 
   const editTask = (task: string): void => {
-    const custom = customTasks.map((el) => {
+    const customFilteredTasks = customTasks.map((el) => {
       if (el === taskToEditValue) el = task;
       return el;
     });
 
-    const filtered = chosenTasks.filter((el) => el !== taskToEditValue);
-    setCustomTasks(custom);
-    setChosenTasks([...filtered, task]);
+    const filteredTasks = chosenTasks.filter((el) => el !== taskToEditValue);
+    setCustomTasks(customFilteredTasks);
+    setChosenTasks([...filteredTasks, task]);
     onEditModalClose();
   };
 
@@ -96,8 +96,7 @@ export default function TasksList({
   };
 
   const deleteCustomTask = (task: string): void => {
-    const filtered = customTasks.filter((el) => el !== task);
-    setCustomTasks(filtered);
+    setCustomTasks(customTasks.filter((el) => el !== task));
   };
 
   return (

@@ -14,7 +14,7 @@ const PageBackground = styled('div')`
 const Container = styled('div')`
   margin: 24px 0;
   height: fit-content;
-  box-shadow: 0px 1px 16px 0px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 1px 16px 0px ${SECONDARY.gray_shadow};
 `;
 
 const InnerContainer = styled('div')`

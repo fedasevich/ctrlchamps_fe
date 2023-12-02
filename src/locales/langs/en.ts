@@ -1,6 +1,9 @@
 import { MAX_RATE, MIN_RATE } from 'src/components/complete-profile-fifth/constants';
 
-import { MAX_APPOINTMENT_NAME_LENGTH } from 'src/components/create-appointment/constants';
+import {
+  MAX_APPOINTMENT_NAME_LENGTH,
+  MIN_APPOINTMENT_NAME_LENGTH,
+} from 'src/components/create-appointment/constants';
 
 import { MAX_CHARACTERS_LENGTH } from 'src/constants';
 import { CONFIRM_NOTE_MAX_LENGTH } from 'src/components/confirm-appointment/constants';
@@ -293,7 +296,8 @@ const en = {
     },
     modal: {
       header: 'Cancel appointment creation',
-      confirmation: 'Are you sure you would like to cancel this appointment creation?',
+      confirmation:
+        "Are you sure you want to cancel appointment creation? The appointment won't be saved",
       positive_confirm: 'Yes, cancel',
       aria_label: 'cancel-appointment-modal',
       aria_description: 'modal-to-cancel-appointment',
@@ -302,6 +306,7 @@ const en = {
       name: 'Appointment Name',
     },
     errors: {
+      min_type_char: `Appointment name should contain more than ${MIN_APPOINTMENT_NAME_LENGTH} characters`,
       max_type_char: `You cannot enter more than ${MAX_APPOINTMENT_NAME_LENGTH} characters`,
     },
   },

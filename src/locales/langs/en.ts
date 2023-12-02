@@ -46,6 +46,7 @@ const en = {
     emailRequired: 'Email is required',
     phoneLengthInvalid: 'Phone length must be 10 numbers',
     phoneInvalid: 'Phone can`t start with 0',
+    phoneInvalid1: 'Phone can`t start with 1',
     phoneExist: 'User with this phone number already exists',
     phoneRequired: 'Phone is required',
     birthDateRequired: 'Birth date is required',

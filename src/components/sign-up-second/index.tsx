@@ -8,8 +8,6 @@ import {
   Switch,
   TextField,
 } from '@mui/material';
-import { LocalizationProvider } from '@mui/x-date-pickers';
-import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -20,7 +18,7 @@ import { useAppDispatch } from 'src/redux/store';
 import { savePersonalDetails } from 'src/redux/slices/personalDetailsSlice';
 import { useLocales } from 'src/locales';
 import { DATE_FORMAT, USER_ROLE } from 'src/constants';
-import { MAX_BIRTH_DATE } from 'src/components/sign-up-second/constants';
+import { MAX_BIRTH_DATE, MAX_PHONE_CHARACTERS } from 'src/components/sign-up-second/constants';
 
 import {
   useSignUpSecondSchema,
@@ -50,6 +48,8 @@ function SignUpSecond({ role, onNext }: IProps): JSX.Element {
     handleSubmit,
     setError,
     clearErrors,
+    getValues,
+    setValue,
     formState: { errors, isValid },
   } = useForm<SignUpSecondValues>({
     resolver: yupResolver(signUpSecondSchema),
@@ -118,12 +118,34 @@ function SignUpSecond({ role, onNext }: IProps): JSX.Element {
               <MuiTelInput
                 {...field}
                 onChange={(value: string): void => {
+                  const currentValue = getValues('phoneNumber');
                   field.onChange(value);
                   if (value.slice(2, 3) === '0') {
                     field.onChange('');
                     setError('phoneNumber', {
                       type: 'manual',
                       message: `${translate('signUpSecondForm.phoneInvalid')}`,
+                    });
+                    return;
+                  }
+                  if (value.slice(2, 3) === '') {
+                    field.onChange('');
+                    setError('phoneNumber', {
+                      type: 'manual',
+                      message: `${translate('signUpSecondForm.phoneInvalid1')}`,
+                    });
+                    return;
+                  }
+                  if (value.length <= MAX_PHONE_CHARACTERS) {
+                    field.onChange(value);
+                    setValue('phoneNumber', value);
+                    return;
+                  }
+                  if (value.length > MAX_PHONE_CHARACTERS) {
+                    field.onChange(currentValue);
+                    setError('phoneNumber', {
+                      type: 'manual',
+                      message: `${translate('signUpSecondForm.phoneLengthInvalid')}`,
                     });
                     return;
                   }

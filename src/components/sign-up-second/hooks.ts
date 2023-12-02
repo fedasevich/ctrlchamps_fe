@@ -1,14 +1,13 @@
 import { useMemo } from 'react';
-import { parse, subYears } from 'date-fns';
+import { parse } from 'date-fns';
 import { FetchBaseQueryError } from '@reduxjs/toolkit/dist/query';
 import { UseFormSetError } from 'react-hook-form';
 
+import { useLocales } from 'src/locales';
 import { useAccountCheckMutation } from 'src/redux/api/authApi';
 import { useTypedSelector } from 'src/redux/store';
-import { USER_DATE_BIRTH_FORMAT, USER_MIN_AGE, EMAIL_ERROR, PHONE_ERROR } from 'src/constants';
-import { useLocales } from 'src/locales';
-
-import { SignUpSecondValues } from './validation';
+import { DATE_FORMAT, EMAIL_ERROR, PHONE_ERROR } from 'src/constants';
+import { SignUpSecondValues } from 'src/components/sign-up-second/validation';
 
 interface IProps {
   email: string;
@@ -26,7 +25,6 @@ type DefaultValuesType = {
 
 type ReturnType = {
   defaultValues: DefaultValuesType;
-  minBirthDate: Date;
   onAccountCheck: (
     { email, phoneNumber }: IProps,
     setError: UseFormSetError<SignUpSecondValues>
@@ -37,14 +35,12 @@ export function useSignUpSecond(onNext: () => void): ReturnType {
   const { translate } = useLocales();
   const [accountCheck] = useAccountCheckMutation();
 
-  const minBirthDate = useMemo(() => subYears(new Date(), USER_MIN_AGE), []);
-
   const initialDetailsValues = useTypedSelector((state) => state.personalDetails.personalDetails);
 
   const initialDateOfBirth = useMemo(
     () =>
       initialDetailsValues.dateOfBirth
-        ? parse(initialDetailsValues.dateOfBirth, USER_DATE_BIRTH_FORMAT, new Date())
+        ? parse(initialDetailsValues.dateOfBirth, DATE_FORMAT, new Date())
         : undefined,
     [initialDetailsValues]
   );
@@ -86,5 +82,5 @@ export function useSignUpSecond(onNext: () => void): ReturnType {
     }
   };
 
-  return { defaultValues, minBirthDate, onAccountCheck };
+  return { defaultValues, onAccountCheck };
 }

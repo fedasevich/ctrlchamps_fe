@@ -11,7 +11,7 @@ import { useLocales } from 'src/locales';
 import CreditCardIcon from 'src/assets/icons/CreditCardIcon';
 import CheckIcon from 'src/assets/icons/Check';
 import EditIcon from 'src/assets/icons/EditIcon';
-import ConfirmModal from './Modal';
+import ConfirmModal from 'src/components/confirm-appointment/Modal';
 import { CONFIRM_NOTE_MAX_LENGTH, suggestedTasks } from './constants';
 import {
   Background,

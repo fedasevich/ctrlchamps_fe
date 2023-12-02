@@ -4,7 +4,7 @@ import { useState } from 'react';
 import ArrowForward from 'src/assets/icons/ArrowForward';
 import { useLocales } from 'src/locales';
 import { useTypedSelector } from 'src/redux/store';
-import TasksList from './TasksList';
+import TasksList from 'src/components/confirm-appointment/TasksList';
 import {
   Container,
   Header,

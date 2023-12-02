@@ -1,6 +1,7 @@
 import { MAX_APPOINTMENT_NAME_LENGTH } from 'src/components/create-appointment/constants';
 import { MAX_RATE, MIN_RATE } from 'src/components/complete-profile-fifth/constants';
 import { MAX_CHARACTERS_LENGTH } from 'src/constants';
+import { CONFIRM_NOTE_MAX_LENGTH } from 'src/components/confirm-appointment/constants';
 
 const en = {
   app_title: 'App title',
@@ -315,6 +316,7 @@ const en = {
     add_custom: 'add custom task',
     edit: 'edit custom task',
     charge_message: "We'll charge 1 hour payment in advance to protect the appointment parties",
+    max_length_message: `You cannot enter more than ${CONFIRM_NOTE_MAX_LENGTH} characters`,
   },
 };
 

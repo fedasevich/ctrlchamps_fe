@@ -191,6 +191,12 @@ const BtnContainer = styled('div')`
   gap: 4px;
 `;
 
+const StyledForm = styled('form')`
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+`;
+
 const EditButton = styled(Button)`
   &:hover {
     background: none;
@@ -252,6 +258,7 @@ export {
   TasksContainer,
   Background,
   BackDrop,
+  StyledForm,
   StyledListItemButton,
   StyledButton,
   ModalWrapper,

@@ -5,14 +5,14 @@ import {
   ButtonWrapper,
   StyledButton,
 } from 'src/components/profile/profile-qualification/certificate-list/styles';
-import { FilledButton } from 'src/components/reusable';
+import { ErrorText, FilledButton } from 'src/components/reusable';
 import Modal from 'src/components/reusable/modal/Modal';
 import { useLocales } from 'src/locales';
 import CreditCardIcon from 'src/assets/icons/CreditCardIcon';
 import CheckIcon from 'src/assets/icons/Check';
 import EditIcon from 'src/assets/icons/EditIcon';
 import ConfirmModal from './Modal';
-import { suggestedTasks } from './constants';
+import { CONFIRM_NOTE_MAX_LENGTH, suggestedTasks } from './constants';
 import {
   Background,
   BtnContainer,
@@ -26,6 +26,7 @@ import {
   TasksBtns,
   TasksContainer,
   Typography,
+  StyledForm,
 } from './style';
 import { Props } from './types';
 
@@ -115,13 +116,20 @@ export default function TasksList({
           onChange={(e): void => setDetails(e.target.value)}
           placeholder={translate('confirm_appointment.details')}
         />
+        {details.length > CONFIRM_NOTE_MAX_LENGTH && (
+          <ErrorText>{translate('confirm_appointment.max_length_message')}</ErrorText>
+        )}
         {tasks.length > 0 && (
           <ChargeMessage>
             <CreditCardIcon />
             {translate('confirm_appointment.charge_message')}
           </ChargeMessage>
         )}
-        <StyledButton variant="contained" disabled={!tasks.length} onClick={onNext}>
+        <StyledButton
+          variant="contained"
+          disabled={!tasks.length || details.length > CONFIRM_NOTE_MAX_LENGTH}
+          onClick={onNext}
+        >
           {translate('confirm_appointment.confirm')}
         </StyledButton>
       </ButtonWrapper>
@@ -182,20 +190,23 @@ export default function TasksList({
       >
         <ModalContainer>
           <ModalContent>
-            <TextField
-              label={translate('confirm_appointment.task_label')}
-              variant="standard"
-              value={newTask}
-              onChange={(e): void => setNewTask(e.target.value)}
-            />
-
-            <StyledButton
-              onClick={addCustomTask}
-              disabled={!newTask.trim().length}
-              variant="contained"
-            >
-              {translate('confirm_appointment.add')}
-            </StyledButton>
+            <StyledForm>
+              <TextField
+                fullWidth
+                label={translate('confirm_appointment.task_label')}
+                variant="standard"
+                value={newTask}
+                onChange={(e): void => setNewTask(e.target.value)}
+              />
+              <StyledButton
+                type="submit"
+                onClick={addCustomTask}
+                disabled={!newTask.trim().length}
+                variant="contained"
+              >
+                {translate('confirm_appointment.add')}
+              </StyledButton>
+            </StyledForm>
           </ModalContent>
         </ModalContainer>
       </Modal>
@@ -207,15 +218,21 @@ export default function TasksList({
       >
         <ModalContainer>
           <ModalContent>
-            <TextField
-              label={translate('confirm_appointment.task_label')}
-              variant="standard"
-              value={taskToEdit}
-              onChange={(e): void => setTaskToEdit(e.target.value)}
-            />
-            <StyledButton onClick={(): void => editTask(taskToEdit)} variant="contained">
-              {translate('confirm_appointment.save')}
-            </StyledButton>
+            <StyledForm>
+              <TextField
+                label={translate('confirm_appointment.task_label')}
+                variant="standard"
+                value={taskToEdit}
+                onChange={(e): void => setTaskToEdit(e.target.value)}
+              />
+              <StyledButton
+                type="submit"
+                onClick={(): void => editTask(taskToEdit)}
+                variant="contained"
+              >
+                {translate('confirm_appointment.save')}
+              </StyledButton>
+            </StyledForm>
           </ModalContent>
         </ModalContainer>
       </Modal>

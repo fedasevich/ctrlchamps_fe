@@ -13,16 +13,14 @@ import { rateReducer } from 'src/redux/slices/rateSlice';
 import { roleReducer } from 'src/redux/slices/roleSlice';
 import { servicesReducer } from 'src/redux/slices/servicesSlice';
 import { tokenReducer } from 'src/redux/slices/tokenSlice';
-import { healthQuestionnaireReducer } from 'src/redux/slices/healthQuestionnaireSlice';
-import { caregiverReducer } from './slices/caregiverSlice';
 import { appointmentReducer } from './slices/appointmentSlice';
+import { caregiverReducer } from './slices/caregiverSlice';
 
 import accountVerificationApi from 'src/redux/api/accountVerificationAPI';
 import authApi from 'src/redux/api/authApi';
 import profileApi from 'src/redux/api/profileCompleteApi';
 
 import questionnaireApi from 'src/redux/api/healthQuestionnaireApi';
-
 
 const persistConfig = {
   key: 'root',

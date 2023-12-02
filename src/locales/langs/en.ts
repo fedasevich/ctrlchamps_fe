@@ -300,6 +300,22 @@ const en = {
       max_type_char: `You cannot enter more than ${MAX_APPOINTMENT_NAME_LENGTH} characters`,
     },
   },
+  confirm_appointment: {
+    caregiver: 'caregiver',
+    task_label: 'Task',
+    tasks: 'tasks',
+    add_task: 'add task',
+    add_more: 'add more tasks',
+    custom: 'custom tasks',
+    additional: 'additional details',
+    confirm: 'confirm',
+    details: 'Additional Details',
+    save: 'save',
+    add: 'add',
+    add_custom: 'add custom task',
+    edit: 'edit custom task',
+    charge_message: "We'll charge 1 hour payment in advance to protect the appointment parties",
+  },
 };
 
 export default en;

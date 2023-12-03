@@ -21,7 +21,11 @@ import {
   WeekSlotContainer,
 } from './styles';
 
-export default function RecurringAppointment(): JSX.Element {
+type Props = {
+  onNext: () => void;
+};
+
+export default function RecurringAppointment({ onNext }: Props): JSX.Element {
   const { t: translate } = useTranslation();
   const dispatch = useAppDispatch();
 
@@ -58,6 +62,7 @@ export default function RecurringAppointment(): JSX.Element {
         weekDays: appointmentDays,
       })
     );
+    onNext();
   };
 
   return (

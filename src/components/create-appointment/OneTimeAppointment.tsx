@@ -12,7 +12,11 @@ import { selectTimeOptions } from './constants';
 import { AppointmentDuration, Container, SelectContainer } from './styles';
 import useShowDuration from './useShowDuration';
 
-export default function OneTimeAppointment(): JSX.Element {
+type Props = {
+  onNext: () => void;
+};
+
+export default function OneTimeAppointment({onNext}: Props): JSX.Element {
   const { t: translate } = useTranslation();
   const dispatch = useAppDispatch();
 
@@ -33,6 +37,7 @@ export default function OneTimeAppointment(): JSX.Element {
         endTime: setCustomTime(date, endTime),
       })
     );
+    onNext()
   };
 
   return (

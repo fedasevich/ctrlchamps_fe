@@ -3,7 +3,7 @@ import ArrowBackFilled from 'src/assets/icons/ArrowBackFilled';
 import NeedHelpIcon from 'src/assets/icons/NeedHelpIcon';
 import NeedHelpModal from 'src/components/modal-need-help/NeedHelpModal';
 import CloseIcon from 'src/assets/icons/CloseIcon';
-import { Container, Header, Text, InfoButton, Icon, EmptyIcon } from './styles';
+import { Container, Header, Text, InfoButton, Icon } from './styles';
 
 enum IconType {
   close = 'close',
@@ -17,8 +17,8 @@ export default function FlowHeader({
   callback,
 }: {
   text: string;
-  iconType: 'back' | 'close' | 'empty';
-  callback: () => void;
+  iconType?: 'back' | 'close';
+  callback?: () => void;
 }): JSX.Element {
   const [showModal, setShowModal] = useState<boolean>(false);
 
@@ -35,12 +35,10 @@ export default function FlowHeader({
       <Header>
         <Container>
           <>
-            {iconType !== IconType.empty ? (
+            {iconType && (
               <Icon type="button" onClick={callback}>
                 {iconType === IconType.back ? <ArrowBackFilled /> : <CloseIcon />}
               </Icon>
-            ) : (
-              <EmptyIcon />
             )}
             <Text>{text}</Text>
           </>

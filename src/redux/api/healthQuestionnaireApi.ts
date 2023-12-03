@@ -1,6 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-// eslint-disable-next-line import/no-cycle
-import { RootState } from 'src/redux/store';
+import type { RootState } from 'src/redux/store';
 import { route } from 'src/redux/api/routes';
 
 export interface Activity {

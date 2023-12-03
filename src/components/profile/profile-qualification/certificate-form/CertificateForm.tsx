@@ -6,16 +6,16 @@ import {
   FormControlLabel,
   InputLabel,
   Stack,
+  TextField,
 } from '@mui/material';
-import { Dispatch, SetStateAction, useEffect } from 'react';
+import { useEffect } from 'react';
 import { format } from 'date-fns';
-import 'react-datepicker/dist/react-datepicker.css';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 
 import { DEFAULT_PROFILE_QUALIFICATION_VALUES } from 'src/components/profile/profile-qualification/certificate-form/constants';
 import {
   ErrorMessage,
-  StyledDatePicker,
   StyledForm,
 } from 'src/components/profile/profile-qualification/certificate-form/styles';
 import { useProfileQualificationSchema } from 'src/components/profile/profile-qualification/certificate-form/validation';
@@ -51,11 +51,12 @@ export default function CertificateForm({
     control,
     handleSubmit,
     watch,
-    resetField,
+    setValue,
+    trigger,
     formState: { errors, isValid },
   } = useForm<ProfileQuality>({
     resolver: yupResolver(profileQualificationSchema),
-    mode: 'onBlur',
+    mode: 'onChange',
     defaultValues: editingCertificate ?? DEFAULT_PROFILE_QUALIFICATION_VALUES,
   });
 
@@ -63,9 +64,10 @@ export default function CertificateForm({
 
   useEffect(() => {
     if (isExpirationDateDisabled) {
-      resetField('expirationDate');
+      setValue('expirationDate', undefined);
+      trigger('expirationDate');
     }
-  }, [isExpirationDateDisabled, resetField]);
+  }, [isExpirationDateDisabled, setValue, trigger]);
 
   const onSubmit: SubmitHandler<ProfileQuality> = async (values): Promise<void> => {
     const updatedCertificate: ProfileQuality = {
@@ -135,12 +137,17 @@ export default function CertificateForm({
             control={control}
             name="dateIssued"
             render={({ field }): JSX.Element => (
-              <StyledDatePicker
-                placeholderText={translate('profileQualification.placeholderStartDate')}
-                onChange={(date): void => field.onChange(date)}
-                selected={field.value as Date}
-                customInput={<FilledInput fullWidth error={!!errors.dateIssued} />}
-                dateFormat={DATE_FORMAT}
+              <DatePicker
+                {...field}
+                label={translate('profileQualification.placeholderStartDate')}
+                openTo="year"
+                inputFormat={DATE_FORMAT}
+                PopperProps={{
+                  placement: 'top',
+                }}
+                renderInput={(params): JSX.Element => (
+                  <TextField variant="filled" {...params} fullWidth error={!!errors.dateIssued} />
+                )}
               />
             )}
           />
@@ -152,13 +159,25 @@ export default function CertificateForm({
             control={control}
             name="expirationDate"
             render={({ field }): JSX.Element => (
-              <StyledDatePicker
-                placeholderText={translate('profileQualification.placeholderExpirationDate')}
+              <DatePicker
+                {...field}
+                label={translate('profileQualification.placeholderExpirationDate')}
+                inputFormat={DATE_FORMAT}
+                openTo="year"
+                value={isExpirationDateDisabled ? null : field.value}
                 onChange={(date): void => field.onChange(date)}
-                selected={field.value as Date}
-                customInput={<FilledInput fullWidth error={!!errors.expirationDate} />}
-                dateFormat={DATE_FORMAT}
                 disabled={isExpirationDateDisabled}
+                PopperProps={{
+                  placement: 'top',
+                }}
+                renderInput={(params): JSX.Element => (
+                  <TextField
+                    variant="filled"
+                    {...params}
+                    fullWidth
+                    error={!!errors.expirationDate}
+                  />
+                )}
               />
             )}
           />

@@ -21,7 +21,7 @@ export default function ProfileQualification({ onNext }: Props): JSX.Element | n
   const dispatch = useAppDispatch();
   const { translate } = useLocales();
   const [getCertificates] = profileApi.useLazyGetCertificateQuery();
-  const [createCertificate, { isLoading }] = profileApi.useCreateCertificateMutation();
+  const [createCertificate] = profileApi.useCreateCertificateMutation();
 
   useEffect(() => {
     getCertificates()
@@ -31,8 +31,6 @@ export default function ProfileQualification({ onNext }: Props): JSX.Element | n
         dispatch(saveCertificates([]));
       });
   }, [dispatch, getCertificates]);
-
-  if (isLoading) return null;
 
   const onOpenModal = (): void => setIsModalActive(true);
   const onOpenEditModal = (certificate: ProfileQuality): void => {

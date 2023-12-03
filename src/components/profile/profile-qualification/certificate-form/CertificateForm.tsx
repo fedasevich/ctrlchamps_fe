@@ -185,7 +185,7 @@ export default function CertificateForm({
         </FormControl>
       </Stack>
 
-      <Stack alignItems="end">
+      <Stack alignItems="end" spacing={1}>
         <FormControlLabel
           control={
             <Checkbox

@@ -1,5 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { route } from './routes';
+// eslint-disable-next-line import/no-cycle
+import { RootState } from 'src/redux/store';
+import { route } from 'src/redux/api/routes';
 
 export interface Activity {
   id: string;
@@ -20,11 +22,12 @@ export const questionnaireApi = createApi({
   reducerPath: 'questionnaireApi',
   baseQuery: fetchBaseQuery({
     baseUrl: `${process.env.NEXT_PUBLIC_API_URL}`,
-    prepareHeaders: (headers) => {
-      const token = localStorage.getItem('token');
+    prepareHeaders: (headers, { getState }) => {
+      const { token } = getState() as RootState;
+      const currentToken: string = token.token;
 
-      if (token) {
-        headers.set('Authorization', `Bearer ${token}`);
+      if (currentToken) {
+        headers.set('Authorization', `Bearer ${currentToken}`);
       }
 
       return headers;

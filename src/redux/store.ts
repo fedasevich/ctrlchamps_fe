@@ -13,14 +13,14 @@ import { rateReducer } from 'src/redux/slices/rateSlice';
 import { roleReducer } from 'src/redux/slices/roleSlice';
 import { servicesReducer } from 'src/redux/slices/servicesSlice';
 import { tokenReducer } from 'src/redux/slices/tokenSlice';
-import { appointmentReducer } from './slices/appointmentSlice';
+import { appointmentReducer } from 'src/redux/slices/appointmentSlice';
 import { caregiverReducer } from './slices/caregiverSlice';
 
 import accountVerificationApi from 'src/redux/api/accountVerificationAPI';
 import authApi from 'src/redux/api/authApi';
 import profileApi from 'src/redux/api/profileCompleteApi';
-
 import questionnaireApi from 'src/redux/api/healthQuestionnaireApi';
+import appointmentApi from 'src/redux/api/appointmentApi';
 
 const persistConfig = {
   key: 'root',
@@ -47,6 +47,7 @@ const store = configureStore({
     [accountVerificationApi.reducerPath]: accountVerificationApi.reducer,
     [profileApi.reducerPath]: profileApi.reducer,
     [questionnaireApi.reducerPath]: questionnaireApi.reducer,
+    [appointmentApi.reducerPath]: appointmentApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
@@ -56,6 +57,7 @@ const store = configureStore({
       authApi.middleware,
       accountVerificationApi.middleware,
       profileApi.middleware,
+      appointmentApi.middleware,
       questionnaireApi.middleware,
     ]),
 });

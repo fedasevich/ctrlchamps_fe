@@ -8,6 +8,7 @@ import {
   Switch,
 } from '@mui/material';
 import { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import MonetizationOn from 'src/assets/icons/MonetizationOn';
 import RightAction from 'src/assets/icons/RightAction';
 import CreateAppointmentFourthDrawer from 'src/components/create-appointment-fourth/caregiver-drawer/CreateAppointmentFourthDrawer';
@@ -30,7 +31,6 @@ import {
   StyledFormControlLabel,
   StyledListItemText,
 } from 'src/components/create-appointment-fourth/styles';
-import { useLocales } from 'src/locales';
 import { appointmentApi } from 'src/redux/api/appointmentApi';
 
 interface CreateAppointmentFourthProps {
@@ -40,7 +40,7 @@ interface CreateAppointmentFourthProps {
 export default function CreateAppointmentFourth({
   onNext,
 }: CreateAppointmentFourthProps): JSX.Element {
-  const { translate } = useLocales();
+  const { t: translate } = useTranslation();
 
   const { handleDrawerClose, handleDrawerOpen, isDrawerOpen, selectedCaregiverId } =
     useCreateAppointmentFourth();

@@ -21,15 +21,6 @@ export default function AppointmentScheduling({ onNext }: Props): JSX.Element {
 
   return (
     <>
-      <FlowHeader
-        text={
-          appointmentType === Appointment.oneTime
-            ? translate('create_appointment.header_one_time')
-            : translate('create_appointment.header_recurring')
-        }
-        iconType="close"
-        callback={handleOpen}
-      />
       <Background>
         {appointmentType === Appointment.oneTime ? (
           <OneTimeAppointment onNext={onNext} />

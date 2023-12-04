@@ -21,13 +21,12 @@ export default function AppointmentScheduling({ onNext }: Props): JSX.Element {
 
   return (
     <>
-      <Background>
-        {appointmentType === Appointment.oneTime ? (
-          <OneTimeAppointment onNext={onNext} />
-        ) : (
-          <RecurringAppointment onNext={onNext} />
-        )}
-      </Background>
+      {appointmentType === Appointment.oneTime ? (
+        <OneTimeAppointment onNext={onNext} />
+      ) : (
+        <RecurringAppointment onNext={onNext} />
+      )}
+
       <CancelAppointmentModal open={modalOpen} setOpen={setModalOpen} />
     </>
   );

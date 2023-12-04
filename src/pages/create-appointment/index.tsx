@@ -5,6 +5,10 @@ import CreateAppointmentFourth from 'src/components/create-appointment-fourth/Cr
 import AppointmentScheduling from 'src/components/create-appointment/AppointmentScheduling';
 import AppointmentType from 'src/components/create-appointment/AppointmentType';
 import HealthQuestionnaire from 'src/components/health-questionnaire';
+import {
+  CancelAppointmentModal,
+  useCancelAppointmentModal,
+} from 'src/components/modal-cancel-appointment';
 import { Step } from 'src/components/profile/profile-qualification/types';
 import FlowHeader from 'src/components/reusable/header/FlowHeader';
 import HorizontalStepper from 'src/components/reusable/horizontal-stepper/HorizontalStepper';
@@ -18,10 +22,17 @@ export default function CreateAppointmentPage(): JSX.Element {
   const { appointmentType } = useTypedSelector((state) => state.appointment);
   const [activeStepIndex, setActiveStepIndex] = useState<number>(FIRST_STEP_INDEX);
   const [completed, setCompleted] = useState<Record<string, boolean>>({});
+  const { modalOpen, setModalOpen, handleOpen } = useCancelAppointmentModal();
 
   const handleNext = (): void => {
     setCompleted({ ...completed, [activeStepIndex]: true });
     setActiveStepIndex(activeStepIndex + SECOND_STEP_INDEX);
+  };
+
+  const handleBack = (): void => {
+    if (activeStepIndex > FIRST_STEP_INDEX) {
+      setActiveStepIndex(activeStepIndex - SECOND_STEP_INDEX);
+    }
   };
 
   const STEPS: Step[] = [
@@ -43,15 +54,9 @@ export default function CreateAppointmentPage(): JSX.Element {
     },
     {
       label: translate('appointmentSteps.confirm'),
-      component: <ConfirmAppointment />,
+      component: <ConfirmAppointment onBack={handleBack} />,
     },
   ];
-
-  const handleBack = (): void => {
-    if (activeStepIndex > FIRST_STEP_INDEX) {
-      setActiveStepIndex(activeStepIndex - SECOND_STEP_INDEX);
-    }
-  };
 
   const handleStep = (stepIndex: number) => () => {
     if (stepIndex === FIRST_STEP_INDEX || completed[stepIndex - SECOND_STEP_INDEX]) {
@@ -66,18 +71,21 @@ export default function CreateAppointmentPage(): JSX.Element {
         <title>{translate('create_appointment.create')}</title>
       </Head>
       <FlowHeader
-        text={translate('create_appointment.create')}
-        iconType="back"
-        callback={handleBack}
+        text={translate('create_appointment.header_text')}
+        iconType="close"
+        callback={handleOpen}
         showIcon
       />
-      <HorizontalStepper
-        activeStep={activeStepIndex}
-        completed={completed}
-        onStep={handleStep}
-        steps={STEPS}
-      />
-      {ActiveStepComponent}
+      <Background sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'start' }}>
+        <HorizontalStepper
+          activeStep={activeStepIndex}
+          completed={completed}
+          onStep={handleStep}
+          steps={STEPS}
+        />
+        {ActiveStepComponent}
+      </Background>
+      <CancelAppointmentModal open={modalOpen} setOpen={setModalOpen} />
     </>
   );
 }

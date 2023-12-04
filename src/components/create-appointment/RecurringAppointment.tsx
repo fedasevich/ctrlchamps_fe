@@ -100,7 +100,6 @@ export default function RecurringAppointment({ onNext }: Props): JSX.Element {
           />
           <DatePicker
             label={translate('create_appointment.end_date')}
-            disabled={!startDate}
             minDate={startDate && addDays(startDate, ONE_DAY)}
             value={endDate}
             inputFormat={DATE_FORMAT}

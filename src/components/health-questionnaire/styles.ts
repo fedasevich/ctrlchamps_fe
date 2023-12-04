@@ -28,7 +28,6 @@ export const QuestionnaireContainer = styled('div')`
   background-color: ${PRIMARY.white};
   border-radius: 4px;
   box-shadow: 0px 1px 16px 0px rgba(0, 0, 0, 0.1);
-  margin-top: calc(24px + ${HEADER.FLOW_HEIGHT}px);
   margin-bottom: 5%;
 
   @media (max-width: 600px) {

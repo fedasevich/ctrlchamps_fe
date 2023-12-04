@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Box, FormControl, InputLabel, MenuItem, Select, TextField } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
@@ -6,11 +6,12 @@ import OneTimeIcon from 'src/assets/icons/OneTimeIcon';
 import { FilledButton } from 'src/components/reusable';
 import { DATE_FORMAT } from 'src/constants';
 import { setOneAppointmentTime } from 'src/redux/slices/appointmentSlice';
-import { useAppDispatch } from 'src/redux/store';
+import { useAppDispatch, useTypedSelector } from 'src/redux/store';
 import { setCustomTime } from 'src/utils/defineCustomTime';
 import { selectTimeOptions } from './constants';
 import { AppointmentDuration, Container, SelectContainer } from './styles';
 import useShowDuration from './useShowDuration';
+import { convertToTime } from './convertToTime';
 
 type Props = {
   onNext: () => void;
@@ -19,11 +20,21 @@ type Props = {
 export default function OneTimeAppointment({ onNext }: Props): JSX.Element {
   const { t: translate } = useTranslation();
   const dispatch = useAppDispatch();
+  const { oneTimeDate } = useTypedSelector((state) => state.appointment);
 
-  const [date, setDate] = useState<Date | null>(null);
+  const [date, setDate] = useState<Date | null>(oneTimeDate.startTime);
   const [startTime, setStartTime] = useState<string>('');
   const [endTime, setEndTime] = useState<string>('');
   const { hours, minutes } = useShowDuration(startTime, endTime);
+
+  useEffect(() => {
+    if (oneTimeDate.startTime && oneTimeDate.endTime) {
+      const start = convertToTime(oneTimeDate.startTime);
+      const end = convertToTime(oneTimeDate.endTime);
+      setStartTime(start);
+      setEndTime(end);
+    }
+  }, [oneTimeDate.startTime, oneTimeDate.endTime]);
 
   const chooseStartTime = (value: string): void => setStartTime(value);
   const chooseEndTime = (value: string): void => setEndTime(value);

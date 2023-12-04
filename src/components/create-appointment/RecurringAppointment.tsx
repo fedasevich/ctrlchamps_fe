@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { addDays, isBefore } from 'date-fns';
 import { Box, FormControl, InputLabel, MenuItem, Select, TextField } from '@mui/material';
@@ -7,7 +7,7 @@ import OneTimeIcon from 'src/assets/icons/OneTimeIcon';
 import { FilledButton } from 'src/components/reusable';
 import { DATE_FORMAT, weekDays } from 'src/constants';
 import { setRecurringAppointmentTime } from 'src/redux/slices/appointmentSlice';
-import { useAppDispatch } from 'src/redux/store';
+import { useAppDispatch, useTypedSelector } from 'src/redux/store';
 import { setCustomTime } from 'src/utils/defineCustomTime';
 import useShowDuration from './useShowDuration';
 import { ONE_DAY, selectTimeOptions } from './constants';
@@ -20,6 +20,7 @@ import {
   WeekSlot,
   WeekSlotContainer,
 } from './styles';
+import { convertToTime } from './convertToTime';
 
 type Props = {
   onNext: () => void;
@@ -28,13 +29,23 @@ type Props = {
 export default function RecurringAppointment({ onNext }: Props): JSX.Element {
   const { t: translate } = useTranslation();
   const dispatch = useAppDispatch();
+  const { recurringDate } = useTypedSelector((state) => state.appointment);
 
-  const [startDate, setStartDate] = useState<Date | null>(null);
-  const [endDate, setEndDate] = useState<Date | null>(null);
+  const [startDate, setStartDate] = useState<Date | null>(recurringDate.startDate);
+  const [endDate, setEndDate] = useState<Date | null>(recurringDate.endDate);
   const [startTime, setStartTime] = useState<string>('');
   const [endTime, setEndTime] = useState<string>('');
-  const [appointmentDays, setAppointmentDays] = useState<string[]>([]);
+  const [appointmentDays, setAppointmentDays] = useState<string[]>(recurringDate.weekDays);
   const { hours, minutes } = useShowDuration(startTime, endTime);
+
+  useEffect(() => {
+    if (recurringDate.startDate && recurringDate.endDate) {
+      const start = convertToTime(recurringDate.startDate);
+      const end = convertToTime(recurringDate.endDate);
+      setStartTime(start);
+      setEndTime(end);
+    }
+  }, [recurringDate.startDate, recurringDate.endDate]);
 
   const chooseStartTime = (value: string): void => setStartTime(value);
   const chooseEndTime = (value: string): void => setEndTime(value);

@@ -6,7 +6,7 @@ import FlowHeader from 'src/components/reusable/header/FlowHeader';
 import { AppointmentType as AppointmentTypeI } from 'src/constants/types';
 import { useLocales } from 'src/locales';
 import { setAppointmentName, setAppointmentType } from 'src/redux/slices/appointmentSlice';
-import { useAppDispatch } from 'src/redux/store';
+import { useAppDispatch, useTypedSelector } from 'src/redux/store';
 import {
   CancelAppointmentModal,
   useCancelAppointmentModal,
@@ -28,9 +28,10 @@ export default function AppointmentType({ onNext }: { onNext: () => void }): JSX
   const { translate } = useLocales();
   const dispatch = useAppDispatch();
   const { modalOpen, setModalOpen, handleOpen } = useCancelAppointmentModal();
+  const { appointmentName, appointmentType } = useTypedSelector((state) => state.appointment);
 
-  const [name, setName] = useState<string>('');
-  const [type, setType] = useState<AppointmentTypeI>(null);
+  const [name, setName] = useState<string>(appointmentName);
+  const [type, setType] = useState<AppointmentTypeI>(appointmentType);
 
   const selectOneTime = (): void => setType(Appointment.oneTime);
   const selectRecurring = (): void => setType(Appointment.recurring);

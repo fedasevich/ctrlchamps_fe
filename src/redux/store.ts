@@ -11,9 +11,10 @@ import { healthQuestionnaireReducer } from 'src/redux/slices/healthQuestionnaire
 import { personalDetailsReducer } from 'src/redux/slices/personalDetailsSlice';
 import { rateReducer } from 'src/redux/slices/rateSlice';
 import { roleReducer } from 'src/redux/slices/roleSlice';
-import { servicesReducer } from 'src/redux/slices/servicesSlice';
 import { tokenReducer } from 'src/redux/slices/tokenSlice';
-import { appointmentReducer } from 'src/redux/slices/appointmentSlice';
+import { appointmentReducer } from './slices/appointmentSlice';
+import { servicesReducer } from 'src/redux/slices/servicesSlice';
+import { workExperienceReducer } from 'src/redux/slices/workEperienceSlice';
 import { caregiverReducer } from './slices/caregiverSlice';
 
 import accountVerificationApi from 'src/redux/api/accountVerificationAPI';
@@ -38,6 +39,7 @@ const store = configureStore({
     token: persistedTokenReducer,
     caregiver: caregiverReducer,
     availableDays: availableDaysReducer,
+    workExperience: workExperienceReducer,
     services: servicesReducer,
     hourlyRate: rateReducer,
     certificate: certificateReducer,

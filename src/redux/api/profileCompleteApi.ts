@@ -52,10 +52,11 @@ export interface CertificateResponse {
 }
 
 export interface WorkExperience {
+  id: string;
   workplace: string;
   qualifications: string;
-  startDate: Date;
-  endDate: Date;
+  startDate: Date | string;
+  endDate?: Date | string;
 }
 
 export interface WorkExperienceResponse {
@@ -146,6 +147,11 @@ export const profileApi = createApi({
         body: { workExperiences },
       }),
     }),
+    getWorkExperience: builder.query<WorkExperienceResponse[], void>({
+      query: () => ({
+        url: `${route.workExperience}`,
+      }),
+    }),
   }),
 });
 
@@ -156,6 +162,7 @@ export const {
   useUploadFileMutation,
   useCreateCertificateMutation,
   useCreateWorkExperienceMutation,
+  useLazyGetWorkExperienceQuery,
 } = profileApi;
 
 export default profileApi;

@@ -1,8 +1,8 @@
 import { CompleteProfileSecondValues } from 'src/components/complete-profile-second/types';
 
 export const DEFAULT_EXPERIENCE_VALUES: CompleteProfileSecondValues = {
-  workPlace: '',
-  workType: '',
-  startDate: null,
+  workplace: '',
+  qualifications: '',
+  startDate: '',
   isEndDateDisabled: false,
 };

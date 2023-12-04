@@ -7,10 +7,10 @@ export const useProfileExperienceSchema = (): ObjectSchema<CompleteProfileSecond
   const { translate } = useLocales();
 
   return object({
-    workPlace: string()
+    workplace: string()
       .required(translate('completeProfileSecond.errors.workPlaceRequired'))
       .max(MAX_CHARACTERS_LENGTH, translate('completeProfileSecond.errors.workPlaceLength')),
-    workType: string().required(translate('completeProfileSecond.errors.workTypeRequired')),
+    qualifications: string().required(translate('completeProfileSecond.errors.workTypeRequired')),
     startDate: date().required(translate('completeProfileSecond.errors.startDateRequired')),
     isEndDateDisabled: boolean().required(),
     endDate: date().when('isEndDateDisabled', {

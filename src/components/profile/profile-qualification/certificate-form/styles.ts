@@ -1,5 +1,4 @@
 import { Button, styled, Typography } from '@mui/material';
-import DatePicker from 'react-datepicker';
 
 import { SECONDARY } from 'src/theme/colors';
 import { TYPOGRAPHY } from 'src/theme/fonts';
@@ -21,11 +20,6 @@ export const Title = styled(Typography)`
   color: ${SECONDARY.md_gray};
   padding-bottom: 10px;
   max-width: 405px;
-`;
-
-export const StyledDatePicker = styled(DatePicker)`
-  height: 56px;
-  padding-bottom: 15px;
 `;
 
 export const ErrorMessage = styled(Typography)`

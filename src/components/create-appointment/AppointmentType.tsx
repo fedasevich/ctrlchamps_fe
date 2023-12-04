@@ -47,11 +47,6 @@ export default function AppointmentType(): JSX.Element {
 
   return (
     <>
-      <FlowHeader
-        text={translate('create_appointment.header_text')}
-        iconType="close"
-        callback={handleOpen}
-      />
       <Background>
         <Container>
           <StyledForm>

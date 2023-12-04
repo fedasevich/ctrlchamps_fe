@@ -19,7 +19,7 @@ import {
   Typography,
 } from './style';
 
-export default function ConfirmAppointment(): JSX.Element {
+export default function ConfirmAppointment({ onBack }: { onBack: () => void }): JSX.Element {
   const { translate } = useLocales();
   const caregiver = useTypedSelector((state) => state.caregiver.selectedCaregiver);
   const appointment = useTypedSelector((state) => state.appointment);
@@ -39,7 +39,7 @@ export default function ConfirmAppointment(): JSX.Element {
   };
 
   const goToProfileStep = (): void => {
-    // go to 4th step
+    onBack();
   };
 
   const confirmAppointment = async (): Promise<void> => {

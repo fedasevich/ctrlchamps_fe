@@ -25,6 +25,12 @@ export default function CreateAppointmentPage(): JSX.Element {
     setActiveStepIndex(activeStepIndex + SECOND_STEP_INDEX);
   };
 
+  const handleBack = (): void => {
+    if (activeStepIndex > FIRST_STEP_INDEX) {
+      setActiveStepIndex(activeStepIndex - SECOND_STEP_INDEX);
+    }
+  };
+
   const STEPS: Step[] = [
     {
       label: translate('appointmentSteps.appointmentType'),
@@ -44,15 +50,9 @@ export default function CreateAppointmentPage(): JSX.Element {
     },
     {
       label: translate('appointmentSteps.confirm'),
-      component: <ConfirmAppointment />,
+      component: <ConfirmAppointment onBack={handleBack} />,
     },
   ];
-
-  const handleBack = (): void => {
-    if (activeStepIndex > FIRST_STEP_INDEX) {
-      setActiveStepIndex(activeStepIndex - SECOND_STEP_INDEX);
-    }
-  };
 
   const handleStep = (stepIndex: number) => () => {
     if (stepIndex === FIRST_STEP_INDEX || completed[stepIndex - SECOND_STEP_INDEX]) {
@@ -72,13 +72,15 @@ export default function CreateAppointmentPage(): JSX.Element {
         callback={handleBack}
         showIcon
       />
-      <HorizontalStepper
-        activeStep={activeStepIndex}
-        completed={completed}
-        onStep={handleStep}
-        steps={STEPS}
-      />
-      {ActiveStepComponent}
+      <Background sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'start' }}>
+        <HorizontalStepper
+          activeStep={activeStepIndex}
+          completed={completed}
+          onStep={handleStep}
+          steps={STEPS}
+        />
+        {ActiveStepComponent}
+      </Background>
     </>
   );
 }

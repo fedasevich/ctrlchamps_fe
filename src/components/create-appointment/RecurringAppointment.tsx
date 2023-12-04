@@ -117,7 +117,7 @@ export default function RecurringAppointment({ onNext }: Props): JSX.Element {
             >
               {selectTimeOptions.map((option) => (
                 <MenuItem key={option} value={option}>
-                  {option}
+                  {option.slice(0, -3)}
                 </MenuItem>
               ))}
             </Select>
@@ -131,7 +131,7 @@ export default function RecurringAppointment({ onNext }: Props): JSX.Element {
             >
               {selectTimeOptions.map((option) => (
                 <MenuItem key={option} value={option}>
-                  {option}
+                  {option.slice(0, -3)}
                 </MenuItem>
               ))}
             </Select>

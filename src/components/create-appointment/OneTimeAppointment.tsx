@@ -16,7 +16,7 @@ type Props = {
   onNext: () => void;
 };
 
-export default function OneTimeAppointment({onNext}: Props): JSX.Element {
+export default function OneTimeAppointment({ onNext }: Props): JSX.Element {
   const { t: translate } = useTranslation();
   const dispatch = useAppDispatch();
 
@@ -37,7 +37,7 @@ export default function OneTimeAppointment({onNext}: Props): JSX.Element {
         endTime: setCustomTime(date, endTime),
       })
     );
-    onNext()
+    onNext();
   };
 
   return (
@@ -49,7 +49,7 @@ export default function OneTimeAppointment({onNext}: Props): JSX.Element {
             <Select value={startTime} onChange={(e): void => chooseStartTime(e.target.value)}>
               {selectTimeOptions.map((option) => (
                 <MenuItem key={option} value={option}>
-                  {option}
+                  {option.slice(0, -3)}
                 </MenuItem>
               ))}
             </Select>
@@ -59,7 +59,7 @@ export default function OneTimeAppointment({onNext}: Props): JSX.Element {
             <Select value={endTime} onChange={(e): void => chooseEndTime(e.target.value)}>
               {selectTimeOptions.map((option) => (
                 <MenuItem key={option} value={option}>
-                  {option}
+                  {option.slice(0, -3)}
                 </MenuItem>
               ))}
             </Select>

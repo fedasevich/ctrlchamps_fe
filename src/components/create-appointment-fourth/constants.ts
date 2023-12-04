@@ -1,2 +1,1 @@
 export const SMALL_CAREGIVER_AVATAR_SIZE = 48;
-export const BIG_CAREGIVER_AVATAR_SIZE = 96;

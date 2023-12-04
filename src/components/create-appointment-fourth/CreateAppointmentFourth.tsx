@@ -31,9 +31,15 @@ import {
   StyledListItemText,
 } from 'src/components/create-appointment-fourth/styles';
 import { useLocales } from 'src/locales';
-import { appointmentCreationApi } from 'src/redux/api/appointmentCreationAPI';
+import { appointmentApi } from 'src/redux/api/appointmentApi';
 
-export default function CreateAppointmentFourth(): JSX.Element {
+interface CreateAppointmentFourthProps {
+  onNext: () => void;
+}
+
+export default function CreateAppointmentFourth({
+  onNext,
+}: CreateAppointmentFourthProps): JSX.Element {
   const { translate } = useLocales();
 
   const { handleDrawerClose, handleDrawerOpen, isDrawerOpen, selectedCaregiverId } =
@@ -42,7 +48,7 @@ export default function CreateAppointmentFourth(): JSX.Element {
     useCaregiverFilter();
 
   const [getFilteredCaregivers, { data: filteredCaregivers }] =
-    appointmentCreationApi.useLazyGetFilteredCaregiversQuery();
+    appointmentApi.useLazyGetFilteredCaregiversQuery();
 
   useEffect(() => {
     if (!caregiverFilter.location.address) return;
@@ -137,6 +143,7 @@ export default function CreateAppointmentFourth(): JSX.Element {
           open={isDrawerOpen}
           onClose={handleDrawerClose}
           selectedCaregiverId={selectedCaregiverId}
+          onNext={onNext}
         />
       )}
     </Background>

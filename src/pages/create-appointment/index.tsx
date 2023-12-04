@@ -1,8 +1,7 @@
 import Head from 'next/head';
 import { useState } from 'react';
-import BookAppointment from 'src/components/book-appointment/BookAppointment';
-import { Background } from 'src/components/book-appointment/styles';
 import ConfirmAppointment from 'src/components/confirm-appointment/ConfirmAppointment';
+import CreateAppointmentFourth from 'src/components/create-appointment-fourth/CreateAppointmentFourth';
 import AppointmentScheduling from 'src/components/create-appointment/AppointmentScheduling';
 import AppointmentType from 'src/components/create-appointment/AppointmentType';
 import HealthQuestionnaire from 'src/components/health-questionnaire';
@@ -40,7 +39,7 @@ export default function CreateAppointmentPage(): JSX.Element {
     },
     {
       label: translate('appointmentSteps.findCaregiver'),
-      component: <div>{/* <button onClick={handleNext}>findCaregiver</button> */}</div>,
+      component: <CreateAppointmentFourth onNext={handleNext} />,
     },
     {
       label: translate('appointmentSteps.confirm'),

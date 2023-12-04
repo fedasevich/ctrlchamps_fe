@@ -117,9 +117,7 @@ function PlacesAutocomplete({
         )}
         renderOption={AutocompleteOption}
       />
-      {!!autocompleteError && (
-        <ErrorMessage data-testid="country-error">{autocompleteError}</ErrorMessage>
-      )}
+      {!!autocompleteError && <ErrorMessage>{autocompleteError}</ErrorMessage>}
     </>
   );
 }

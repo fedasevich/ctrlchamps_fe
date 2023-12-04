@@ -6,7 +6,7 @@ import typography from 'src/theme/typography';
 
 export const Background = styled('div')`
   background-color: ${PRIMARY.light_main};
-  min-height: calc(100vh - ${HEADER.FLOW_HEIGHT}px - 1px);
+  min-height: calc(100vh - ${HEADER.FLOW_HEIGHT}px - 65px);
   padding: 24px;
   gap: 24px;
   display: flex;

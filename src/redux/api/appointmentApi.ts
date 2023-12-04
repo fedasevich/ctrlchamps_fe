@@ -1,8 +1,9 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import type { RootState } from 'src/redux/store';
-import { route } from 'src/redux/api/routes';
-import { CaregiverInfo } from 'src/types/Caregiver.type';
+import { PreviewCaregiver } from 'src/components/create-appointment-fourth/types';
 import { AppointmentType } from 'src/constants/types';
+import { route } from 'src/redux/api/routes';
+import type { RootState } from 'src/redux/store';
+import { Caregiver } from 'src/types/Caregiver.type';
 
 export interface AppointmentPayload {
   caregiverInfoId: string | undefined;
@@ -49,6 +50,12 @@ export const appointmentApi = createApi({
         method: 'POST',
         body,
       }),
+    }),
+    getFilteredCaregivers: builder.query<PreviewCaregiver[], URLSearchParams>({
+      query: (params) => ({ url: `${route.caregivers}/filter`, method: 'GET', params }),
+    }),
+    getCaregiverDetails: builder.query<Caregiver, string>({
+      query: (caregiverId) => ({ url: `${route.caregivers}/${caregiverId}`, method: 'GET' }),
     }),
   }),
 });

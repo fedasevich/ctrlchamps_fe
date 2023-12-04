@@ -1,23 +1,24 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { route } from './routes';
-// eslint-disable-next-line import/no-cycle
-import { RootState } from '../store';
+import type { RootState } from 'src/redux/store';
+import { route } from 'src/redux/api/routes';
+import { CaregiverInfo } from 'src/types/Caregiver.type';
+import { AppointmentType } from 'src/constants/types';
 
 export interface AppointmentPayload {
-  caregiverInfoId: string;
+  caregiverInfoId: string | undefined;
   name: string;
-  type: string;
+  type: AppointmentType;
   status: string;
-  details: string;
+  details?: string;
   location: string;
-  activityNote: string;
-  diagnosisNote: string;
-  capabilityNote: string;
-  startDate: string;
-  endDate: string;
+  activityNote?: string;
+  diagnosisNote?: string;
+  capabilityNote?: string;
+  startDate: Date | null;
+  endDate: Date | null;
   timezone: string;
-  weekdays: string[];
-  seekerTasks: string[];
+  weekdays?: string[];
+  seekerTasks?: string[];
   seekerCapabilities: string[];
   seekerDiagnoses: string[];
   seekerActivities: {

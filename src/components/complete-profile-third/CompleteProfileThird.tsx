@@ -1,14 +1,21 @@
-import React, { memo } from 'react';
 import { Checkbox, FormControlLabel } from '@mui/material';
-import { useForm, Controller } from 'react-hook-form';
+import { memo } from 'react';
+import { Controller, useForm } from 'react-hook-form';
 
+import { useCompleteProfileThird } from 'src/components/complete-profile-third/hooks';
+import { Label, StyledForm, Title, Wrapper } from 'src/components/complete-profile-third/styles';
+import { CompleteProfileThirdValues, IProps } from 'src/components/complete-profile-third/types';
+import ProfileBtn from 'src/components/reusable/profile-btn/ProfileBtn';
 import { useLocales } from 'src/locales';
-
-import { Wrapper, Title, StyledForm, Label, NextButton, ButtonWrapper } from './styles';
-import { CompleteProfileThirdValues, IProps } from './types';
+import { saveServices } from 'src/redux/slices/servicesSlice';
+import { useAppDispatch, useTypedSelector } from 'src/redux/store';
 
 function CompleteProfileThird({ onNext }: IProps): JSX.Element {
   const { translate } = useLocales();
+  const dispatch = useAppDispatch();
+  const { onUpdateServices } = useCompleteProfileThird(onNext);
+
+  const initialServicesValues = useTypedSelector((state) => state.services.services);
 
   const {
     control,
@@ -16,18 +23,12 @@ function CompleteProfileThird({ onNext }: IProps): JSX.Element {
     formState: { isDirty },
   } = useForm<CompleteProfileThirdValues>({
     mode: 'onBlur',
-    defaultValues: {
-      personalCare: false,
-      medicationManagement: false,
-      mobilitySupport: false,
-      mealPreparation: false,
-      housekeeping: false,
-      socialActivities: false,
-    },
+    defaultValues: initialServicesValues,
   });
 
-  const onSubmit = handleSubmit(() => {
-    onNext();
+  const onSubmit = handleSubmit((data) => {
+    dispatch(saveServices(data));
+    onUpdateServices(data);
   });
 
   return (
@@ -38,7 +39,7 @@ function CompleteProfileThird({ onNext }: IProps): JSX.Element {
           label={<Label>{translate('completeProfileThird.personalCare')}</Label>}
           control={
             <Controller
-              name="personalCare"
+              name="PersonalCareAssistance"
               control={control}
               render={({ field }): JSX.Element => (
                 <Checkbox
@@ -55,7 +56,7 @@ function CompleteProfileThird({ onNext }: IProps): JSX.Element {
           label={<Label>{translate('completeProfileThird.medicationManagement')}</Label>}
           control={
             <Controller
-              name="medicationManagement"
+              name="MedicationManagement"
               control={control}
               render={({ field }): JSX.Element => (
                 <Checkbox
@@ -72,7 +73,7 @@ function CompleteProfileThird({ onNext }: IProps): JSX.Element {
           label={<Label>{translate('completeProfileThird.mobilitySupport')}</Label>}
           control={
             <Controller
-              name="mobilitySupport"
+              name="MobilitySupport"
               control={control}
               render={({ field }): JSX.Element => (
                 <Checkbox
@@ -89,7 +90,7 @@ function CompleteProfileThird({ onNext }: IProps): JSX.Element {
           label={<Label>{translate('completeProfileThird.mealPreparation')}</Label>}
           control={
             <Controller
-              name="mealPreparation"
+              name="MealPreparation"
               control={control}
               render={({ field }): JSX.Element => (
                 <Checkbox
@@ -106,7 +107,7 @@ function CompleteProfileThird({ onNext }: IProps): JSX.Element {
           label={<Label>{translate('completeProfileThird.housekeeping')}</Label>}
           control={
             <Controller
-              name="housekeeping"
+              name="HousekeepingAndLaundry"
               control={control}
               render={({ field }): JSX.Element => (
                 <Checkbox
@@ -123,7 +124,7 @@ function CompleteProfileThird({ onNext }: IProps): JSX.Element {
           label={<Label>{translate('completeProfileThird.socialActivities')}</Label>}
           control={
             <Controller
-              name="socialActivities"
+              name="SocialAndRecreationalActivities"
               control={control}
               render={({ field }): JSX.Element => (
                 <Checkbox
@@ -135,12 +136,7 @@ function CompleteProfileThird({ onNext }: IProps): JSX.Element {
             />
           }
         />
-
-        <ButtonWrapper>
-          <NextButton variant="contained" type="submit" disabled={!isDirty}>
-            Next
-          </NextButton>
-        </ButtonWrapper>
+        <ProfileBtn text={translate('btn_next')} disabled={!isDirty} />
       </StyledForm>
     </Wrapper>
   );

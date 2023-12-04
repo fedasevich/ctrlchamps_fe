@@ -1,4 +1,3 @@
-import { memo } from 'react';
 import { MuiTelInput } from 'mui-tel-input';
 import {
   FilledInput,
@@ -7,8 +6,9 @@ import {
   Input,
   InputLabel,
   Switch,
+  TextField,
 } from '@mui/material';
-import DatePicker from 'react-datepicker';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { format } from 'date-fns';
@@ -17,11 +17,20 @@ import 'react-datepicker/dist/react-datepicker.css';
 import { useAppDispatch } from 'src/redux/store';
 import { savePersonalDetails } from 'src/redux/slices/personalDetailsSlice';
 import { useLocales } from 'src/locales';
-import { USER_DATE_BIRTH_FORMAT, USER_ROLE } from 'src/constants';
+import { DATE_FORMAT, USER_ROLE } from 'src/constants';
+import { MAX_BIRTH_DATE, MAX_PHONE_CHARACTERS } from 'src/components/sign-up-second/constants';
 
-import { useSignUpSecondSchema, SignUpSecondValues } from './validation';
-import { ErrorMessage, InputWrapper, NextButton, StyledForm } from './styles';
-import { useSignUpSecond } from './hooks';
+import {
+  useSignUpSecondSchema,
+  SignUpSecondValues,
+} from 'src/components/sign-up-second/validation';
+import {
+  ErrorMessage,
+  InputWrapper,
+  NextButton,
+  StyledForm,
+} from 'src/components/sign-up-second/styles';
+import { useSignUpSecond } from 'src/components/sign-up-second/hooks';
 
 interface IProps {
   role: 'caregiver' | 'seeker';
@@ -31,7 +40,7 @@ function SignUpSecond({ role, onNext }: IProps): JSX.Element {
   const dispatch = useAppDispatch();
   const { translate } = useLocales();
   const signUpSecondSchema = useSignUpSecondSchema();
-  const { defaultValues, minBirthDate, onAccountCheck } = useSignUpSecond(onNext);
+  const { defaultValues, onAccountCheck } = useSignUpSecond(onNext);
 
   const {
     register,
@@ -39,6 +48,8 @@ function SignUpSecond({ role, onNext }: IProps): JSX.Element {
     handleSubmit,
     setError,
     clearErrors,
+    getValues,
+    setValue,
     formState: { errors, isValid },
   } = useForm<SignUpSecondValues>({
     resolver: yupResolver(signUpSecondSchema),
@@ -48,7 +59,7 @@ function SignUpSecond({ role, onNext }: IProps): JSX.Element {
 
   const onSubmit: SubmitHandler<SignUpSecondValues> = async (data): Promise<void> => {
     const { email, phoneNumber, dateOfBirth } = data;
-    const formattedDate = format(dateOfBirth, USER_DATE_BIRTH_FORMAT);
+    const formattedDate = format(dateOfBirth, DATE_FORMAT);
     dispatch(
       savePersonalDetails({
         ...data,
@@ -107,12 +118,34 @@ function SignUpSecond({ role, onNext }: IProps): JSX.Element {
               <MuiTelInput
                 {...field}
                 onChange={(value: string): void => {
+                  const currentValue = getValues('phoneNumber');
                   field.onChange(value);
                   if (value.slice(2, 3) === '0') {
                     field.onChange('');
                     setError('phoneNumber', {
                       type: 'manual',
                       message: `${translate('signUpSecondForm.phoneInvalid')}`,
+                    });
+                    return;
+                  }
+                  if (value.slice(2, 3) === '') {
+                    field.onChange('');
+                    setError('phoneNumber', {
+                      type: 'manual',
+                      message: `${translate('signUpSecondForm.phoneInvalid1')}`,
+                    });
+                    return;
+                  }
+                  if (value.length <= MAX_PHONE_CHARACTERS) {
+                    field.onChange(value);
+                    setValue('phoneNumber', value);
+                    return;
+                  }
+                  if (value.length > MAX_PHONE_CHARACTERS) {
+                    field.onChange(currentValue);
+                    setError('phoneNumber', {
+                      type: 'manual',
+                      message: `${translate('signUpSecondForm.phoneLengthInvalid')}`,
                     });
                     return;
                   }
@@ -135,29 +168,34 @@ function SignUpSecond({ role, onNext }: IProps): JSX.Element {
           <ErrorMessage variant="caption">{errors.phoneNumber?.message}</ErrorMessage>
         )}
       </InputWrapper>
+
       <InputWrapper>
-        <FormControl sx={{ width: '100%', height: 48 }} variant="filled">
-          <InputLabel htmlFor="dateOfBirth">
-            {translate('signUpSecondForm.placeholderBirthDate')}
-          </InputLabel>
-          <Controller
-            control={control}
-            name="dateOfBirth"
-            render={({ field }): JSX.Element => (
-              <DatePicker
-                onChange={(date: Date): void => field.onChange(date)}
-                selected={field.value}
-                customInput={<FilledInput fullWidth error={!!errors.dateOfBirth} />}
-                maxDate={minBirthDate}
-                dateFormat={USER_DATE_BIRTH_FORMAT}
-              />
-            )}
-          />
-        </FormControl>
+        <Controller
+          name="dateOfBirth"
+          control={control}
+          defaultValue={MAX_BIRTH_DATE}
+          rules={{
+            validate: (value) =>
+              value <= MAX_BIRTH_DATE || translate('signUpSecondForm.birthDateMax'),
+          }}
+          render={({ field }): JSX.Element => (
+            <DatePicker
+              {...field}
+              label={translate('signUpSecondForm.placeholderBirthDate')}
+              inputFormat={DATE_FORMAT}
+              maxDate={MAX_BIRTH_DATE}
+              openTo="year"
+              renderInput={(params): JSX.Element => (
+                <TextField variant="filled" {...params} fullWidth error={!!errors.dateOfBirth} />
+              )}
+            />
+          )}
+        />
         {errors?.dateOfBirth && (
           <ErrorMessage variant="caption">{errors.dateOfBirth?.message}</ErrorMessage>
         )}
       </InputWrapper>
+
       {role === USER_ROLE.caregiver && (
         <Controller
           control={control}
@@ -182,4 +220,4 @@ function SignUpSecond({ role, onNext }: IProps): JSX.Element {
     </StyledForm>
   );
 }
-export default memo(SignUpSecond);
+export default SignUpSecond;

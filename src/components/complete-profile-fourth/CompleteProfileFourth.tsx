@@ -1,16 +1,16 @@
-import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
+import { Alert, FormControl, InputLabel, MenuItem, Select, Snackbar } from '@mui/material';
 import { useEffect, useState } from 'react';
-import { weekDays } from 'src/constants';
+import ProfileBtn from 'src/components/reusable/profile-btn/ProfileBtn';
+import { TIMEZONE_FORMAT, weekDays } from 'src/constants';
 import { daySelectedType } from 'src/constants/types';
 import { useLocales } from 'src/locales';
+import { useUpdateProfileMutation } from 'src/redux/api/profileCompleteApi';
 import { chooseAvailableTime } from 'src/redux/slices/availableDaysSlice';
 import { useAppDispatch, useTypedSelector } from 'src/redux/store';
 import { availableTimeOptions } from './constants';
 import {
   BaseText,
-  BtnWrapper,
   Container,
-  NextBtn,
   SelectContainer,
   WeekSlot,
   WeekSlotContainer,
@@ -19,53 +19,68 @@ import {
 
 export default function CompleteProfileFourth({ onNext }: { onNext: () => void }): JSX.Element {
   const { translate } = useLocales();
-
-  const availableDays = useTypedSelector((state) => state.availableDays);
   const dispatch = useAppDispatch();
+  const { days: availableDays } = useTypedSelector((state) => state.availableDays);
+  const [specifyAvailability] = useUpdateProfileMutation();
 
   const [daySelected, setDaySelected] = useState<daySelectedType | null>(null);
   const [chosenDays, setChosenDays] = useState<string[]>([]);
   const [availableFrom, setAvailableFrom] = useState<string>('');
   const [availableTo, setAvailableTo] = useState<string>('');
+  const [error, setError] = useState<boolean>(false);
+
+  useEffect(() => {
+    const selectedDays = availableDays.map(({ day }) => day);
+    setChosenDays(selectedDays);
+  }, [availableDays]);
 
   useEffect(() => {
     if (daySelected && availableFrom && availableTo) {
       dispatch(
         chooseAvailableTime({
           time: {
-            from: availableFrom,
-            to: availableTo,
+            startTime: availableFrom,
+            endTime: availableTo,
+            day: daySelected,
           },
-          weekDay: daySelected,
         })
       );
     }
   }, [daySelected, availableFrom, availableTo, dispatch]);
 
   const chooseDay = (selectedDay: daySelectedType): void => {
-    const previousDay = daySelected;
-    const dayAlreadyChosen = chosenDays.find((day: string) => day === selectedDay);
-
+    const dayAlreadyChosen = availableDays.find(({ day }) => day === selectedDay);
     setDaySelected(selectedDay);
-    setAvailableFrom(availableDays.days[selectedDay].time.from);
-    setAvailableTo(availableDays.days[selectedDay].time.to);
 
-    if (dayAlreadyChosen && previousDay && !availableDays.days[previousDay].time.from) {
-      const filtered = chosenDays.filter((day) => day !== previousDay);
-      setChosenDays(filtered);
+    if (dayAlreadyChosen) {
+      setAvailableFrom(dayAlreadyChosen.startTime);
+      setAvailableTo(dayAlreadyChosen.endTime);
+    } else {
+      setAvailableFrom('');
+      setAvailableTo('');
     }
+
+    const filtered = availableDays.map(({ day }) => day);
+    setChosenDays(filtered);
 
     if (!dayAlreadyChosen) {
       setChosenDays((prev) => [...prev, selectedDay]);
     }
   };
 
-  const chooseFromDate = (value: string): void => {
-    setAvailableFrom(value);
-  };
-
-  const chooseToDate = (value: string): void => {
-    setAvailableTo(value);
+  const defineAvailableDays = async (): Promise<void> => {
+    try {
+      setError(false);
+      await specifyAvailability({
+        updateProfileDto: {
+          availability: [...availableDays],
+          timeZone: TIMEZONE_FORMAT,
+        },
+      }).unwrap();
+      onNext();
+    } catch (err) {
+      setError(true);
+    }
   };
 
   return (
@@ -89,7 +104,7 @@ export default function CompleteProfileFourth({ onNext }: { onNext: () => void }
             <Select
               disabled={daySelected === null}
               value={availableFrom}
-              onChange={(e): void => chooseFromDate(e.target.value)}
+              onChange={(e): void => setAvailableFrom(e.target.value)}
             >
               {availableTimeOptions.map((option) => (
                 <MenuItem key={option} value={option}>
@@ -103,7 +118,7 @@ export default function CompleteProfileFourth({ onNext }: { onNext: () => void }
             <Select
               disabled={daySelected === null}
               value={availableTo}
-              onChange={(e): void => chooseToDate(e.target.value)}
+              onChange={(e): void => setAvailableTo(e.target.value)}
             >
               {availableTimeOptions.map((option) => (
                 <MenuItem key={option} value={option}>
@@ -113,11 +128,19 @@ export default function CompleteProfileFourth({ onNext }: { onNext: () => void }
             </Select>
           </FormControl>
         </SelectContainer>
-        <BtnWrapper>
-          <NextBtn onClick={onNext} disabled={!daySelected || !availableFrom || !availableTo}>
-            {translate('btn_next')}
-          </NextBtn>
-        </BtnWrapper>
+        <Snackbar
+          open={error}
+          autoHideDuration={2500}
+          onClose={(): void => setError(false)}
+          anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+        >
+          <Alert severity="error">{translate('unexpected_error')}</Alert>
+        </Snackbar>
+        <ProfileBtn
+          text={translate('btn_next')}
+          onClick={defineAvailableDays}
+          disabled={!daySelected || !availableFrom || !availableTo}
+        />
       </Container>
     </Wrapper>
   );

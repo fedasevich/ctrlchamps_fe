@@ -6,4 +6,6 @@ export const ROUTES = {
   home: '/',
   sign_up: 'sign-up',
   create_appointment: '/create-appointment',
+  appointment_caregiver_list: '/caregiver-list',
+  schedule: '/schedule',
 };

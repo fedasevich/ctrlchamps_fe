@@ -51,7 +51,6 @@ export default function CreateAppointmentFourth({
     appointmentApi.useLazyGetFilteredCaregiversQuery();
 
   useEffect(() => {
-    if (!caregiverFilter.location.address) return;
     getFilteredCaregivers(serializeCaregiverFilterStateToQueryString(caregiverFilter, translate));
   }, [caregiverFilter, getFilteredCaregivers, translate]);
 

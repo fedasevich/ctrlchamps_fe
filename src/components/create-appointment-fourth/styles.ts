@@ -5,10 +5,10 @@ import { TYPOGRAPHY } from 'src/theme/fonts';
 import typography from 'src/theme/typography';
 
 export const Background = styled('div')`
-  background-color: ${PRIMARY.light_main};
-  min-height: calc(100vh - ${HEADER.FLOW_HEIGHT}px - 65px);
-  padding: 24px;
+  min-height: calc(100vh - ${HEADER.FLOW_HEIGHT}px - 65px - 65px);
+  padding-inline: 24px;
   gap: 24px;
+  width: 100%;
   display: flex;
 `;
 

@@ -25,6 +25,7 @@ type Props = {
   onClose: () => void;
   onOpen: () => void;
   onNext: () => void;
+  onBack: () => void;
   onEdit: (workPlace: ProfileExperience) => void;
   onSave: (updatedWorkPlace: ProfileExperience) => void;
   isModalActive: boolean;
@@ -36,6 +37,7 @@ export default function WorkList({
   onClose,
   onOpen,
   onNext,
+  onBack,
   onEdit,
   onSave,
   editingWorkPlaces,
@@ -124,10 +126,14 @@ export default function WorkList({
         <StyledButton variant="outlined" onClick={onOpen}>
           {translate('completeProfileSecond.addWorkPlace')}
         </StyledButton>
-
-        <StyledButton variant="contained" onClick={onNext}>
-          {translate('completeProfileSecond.next')}
-        </StyledButton>
+        <Box display="flex" gap={1}>
+          <StyledButton variant="outlined" onClick={onBack}>
+            {translate('profileQualification.back')}
+          </StyledButton>
+          <StyledButton variant="contained" onClick={onNext}>
+            {translate('profileQualification.next')}
+          </StyledButton>
+        </Box>
       </ButtonWrapper>
 
       <Modal

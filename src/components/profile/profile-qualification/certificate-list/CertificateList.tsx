@@ -129,7 +129,6 @@ export default function CertificateList({
         <StyledButton variant="outlined" onClick={onOpen}>
           {translate('profileQualification.addCertificate')}
         </StyledButton>
-
         <StyledButton variant="contained" onClick={onNext}>
           {translate('profileQualification.next')}
         </StyledButton>

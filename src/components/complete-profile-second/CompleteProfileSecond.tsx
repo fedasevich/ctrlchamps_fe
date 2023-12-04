@@ -14,9 +14,10 @@ import { Title } from 'src/components/complete-profile-second/styles';
 
 interface IProps {
   onNext: () => void;
+  onBack: () => void;
 }
 
-function CompleteProfileSecond({ onNext }: IProps): JSX.Element | null {
+function CompleteProfileSecond({ onNext, onBack }: IProps): JSX.Element | null {
   const [editingWorkPlaces, setEditingWorkPlaces] = useState<ProfileExperience | null>(null);
   const [isModalActive, setIsModalActive] = useState<boolean>(false);
   const workPlaces = useTypedSelector((state) => state.workExperience.workExperiences);
@@ -87,6 +88,7 @@ function CompleteProfileSecond({ onNext }: IProps): JSX.Element | null {
       ) : (
         <WorkList
           onNext={onNext}
+          onBack={onBack}
           onClose={onCloseModal}
           onOpen={onOpenModal}
           isModalActive={isModalActive}

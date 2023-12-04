@@ -28,9 +28,14 @@ export const ErrorMessage = styled(Typography)`
   font-weight: ${typography.fontWeightMedium};
 `;
 
+export const ButtonWrapper = styled('div')`
+  border-top: 1px solid var(--divider, rgba(0, 0, 0, 0.12));
+  padding: 16px 0 0;
+  margin-top: auto;
+`;
+
 export const StyledButton = styled(Button)`
   border-radius: 4px;
   width: 100%;
   height: 40px;
-  margin-top: auto;
 `;

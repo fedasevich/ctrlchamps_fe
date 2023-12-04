@@ -7,12 +7,12 @@ import {
   MenuItem,
   Select,
   Stack,
+  TextField,
 } from '@mui/material';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { useEffect } from 'react';
 import { yupResolver } from '@hookform/resolvers/yup';
-import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
+import { DatePicker } from '@mui/x-date-pickers';
 import uuidv4 from 'src/utils/uuidv4';
 import { format } from 'date-fns';
 
@@ -20,12 +20,19 @@ import { WorkExperience, useCreateWorkExperienceMutation } from 'src/redux/api/p
 import { saveWorkExperiences } from 'src/redux/slices/workEperienceSlice';
 import { useAppDispatch, useTypedSelector } from 'src/redux/store';
 import { ProfileExperience } from 'src/components/complete-profile-second/types';
-import { DEFAULT_EXPERIENCE_VALUES } from 'src/components/complete-profile-second/work-form/constants';
+import {
+  DEFAULT_EXPERIENCE_VALUES,
+  MAX_WORK_DATE,
+} from 'src/components/complete-profile-second/work-form/constants';
 import { useExperienceSelectOptions } from 'src/components/complete-profile-second/work-form/select-options';
-import { ErrorMessage, StyledForm } from 'src/components/complete-profile-second/work-form/styles';
+import {
+  ErrorMessage,
+  StyledForm,
+  StyledButton,
+  ButtonWrapper,
+} from 'src/components/complete-profile-second/work-form/styles';
 import { useProfileExperienceSchema } from 'src/components/complete-profile-second/work-form/validation';
 import { DATE_FORMAT, BACKEND_DATE_FORMAT } from 'src/constants';
-import ProfileBtn from 'src/components/reusable/profile-btn/ProfileBtn';
 import { useLocales } from 'src/locales';
 
 type Props = {
@@ -49,7 +56,9 @@ export default function WorkForm({ onClose, onSave, editingWorkPlaces }: Props):
     control,
     handleSubmit,
     watch,
-    resetField,
+    setValue,
+    trigger,
+    getValues,
     formState: { errors, isValid },
   } = useForm<ProfileExperience>({
     resolver: yupResolver(profileExperienceSchema),
@@ -61,9 +70,10 @@ export default function WorkForm({ onClose, onSave, editingWorkPlaces }: Props):
 
   useEffect(() => {
     if (isEndDateDisabled) {
-      resetField('endDate');
+      setValue('endDate', undefined);
+      trigger('endDate');
     }
-  }, [isEndDateDisabled, resetField]);
+  }, [isEndDateDisabled, setValue, trigger]);
 
   const onSubmit: SubmitHandler<ProfileExperience> = async (values): Promise<void> => {
     const updatedWorkPlace: ProfileExperience = {
@@ -104,12 +114,10 @@ export default function WorkForm({ onClose, onSave, editingWorkPlaces }: Props):
         <FilledInput {...register('workplace')} id="workplace" error={!!errors.workplace} />
         {errors?.workplace && <ErrorMessage>{errors.workplace?.message}</ErrorMessage>}
       </FormControl>
-
       <FormControl fullWidth variant="filled">
         <InputLabel htmlFor="qualifications">
           {translate('completeProfileSecond.workTypeLabel')}
         </InputLabel>
-
         <Controller
           name="qualifications"
           control={control}
@@ -131,21 +139,24 @@ export default function WorkForm({ onClose, onSave, editingWorkPlaces }: Props):
 
         {errors?.qualifications && <ErrorMessage>{errors.qualifications?.message}</ErrorMessage>}
       </FormControl>
-
       <Stack direction="row" spacing={2}>
         <FormControl fullWidth variant="filled">
-          <InputLabel htmlFor="startDate">
-            {translate('completeProfileSecond.startDateLabel')}
-          </InputLabel>
           <Controller
             control={control}
             name="startDate"
             render={({ field }): JSX.Element => (
               <DatePicker
-                onChange={(date: Date): void => field.onChange(date)}
-                selected={field.value as Date}
-                customInput={<FilledInput fullWidth error={!!errors.startDate} />}
-                dateFormat={DATE_FORMAT}
+                {...field}
+                label={translate('completeProfileSecond.startDateLabel')}
+                maxDate={MAX_WORK_DATE}
+                openTo="year"
+                inputFormat={DATE_FORMAT}
+                PopperProps={{
+                  placement: 'top',
+                }}
+                renderInput={(params): JSX.Element => (
+                  <TextField variant="filled" {...params} fullWidth error={!!errors.startDate} />
+                )}
               />
             )}
           />
@@ -153,26 +164,32 @@ export default function WorkForm({ onClose, onSave, editingWorkPlaces }: Props):
         </FormControl>
 
         <FormControl fullWidth variant="filled">
-          <InputLabel htmlFor="startDate">
-            {translate('completeProfileSecond.endDateLabel')}
-          </InputLabel>
           <Controller
             control={control}
             name="endDate"
             render={({ field }): JSX.Element => (
               <DatePicker
-                onChange={(date: Date): void => field.onChange(date)}
-                selected={field.value as Date}
-                customInput={<FilledInput fullWidth error={!!errors.endDate} />}
-                dateFormat={DATE_FORMAT}
+                {...field}
+                label={translate('completeProfileSecond.endDateLabel')}
+                inputFormat={DATE_FORMAT}
+                maxDate={isEndDateDisabled ? null : MAX_WORK_DATE}
+                minDate={isEndDateDisabled ? null : getValues('startDate')}
+                openTo="year"
+                value={isEndDateDisabled ? null : field.value}
+                onChange={(date): void => field.onChange(date)}
                 disabled={isEndDateDisabled}
+                PopperProps={{
+                  placement: 'top',
+                }}
+                renderInput={(params): JSX.Element => (
+                  <TextField variant="filled" {...params} fullWidth error={!!errors.endDate} />
+                )}
               />
             )}
           />
           {errors?.endDate && <ErrorMessage>{errors.endDate?.message}</ErrorMessage>}
         </FormControl>
       </Stack>
-
       <Stack>
         <FormControlLabel
           control={<Checkbox {...register('isEndDateDisabled')} checked={isEndDateDisabled} />}
@@ -180,7 +197,11 @@ export default function WorkForm({ onClose, onSave, editingWorkPlaces }: Props):
           labelPlacement="end"
         />
       </Stack>
-      <ProfileBtn text={translate('profileQualification.save')} disabled={!isValid} />
+      <ButtonWrapper>
+        <StyledButton type="submit" disabled={!isValid} variant="contained">
+          {translate('profileQualification.save')}
+        </StyledButton>
+      </ButtonWrapper>
     </StyledForm>
   );
 }

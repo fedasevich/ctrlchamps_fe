@@ -70,6 +70,7 @@ export default function CreateAppointmentPage(): JSX.Element {
         text={translate('create_appointment.create')}
         iconType="back"
         callback={handleBack}
+        showIcon
       />
       <HorizontalStepper
         activeStep={activeStepIndex}

@@ -13,11 +13,13 @@ enum IconType {
 export default function FlowHeader({
   text,
   iconType,
+  showIcon,
   callback,
 }: {
   text: string;
-  iconType: 'back' | 'close';
-  callback: () => void;
+  iconType?: 'back' | 'close';
+  showIcon: boolean;
+  callback?: () => void;
 }): JSX.Element {
   const [showModal, setShowModal] = useState<boolean>(false);
 
@@ -33,9 +35,11 @@ export default function FlowHeader({
     <>
       <Header>
         <Container>
-          <Icon type="button" onClick={callback}>
-            {iconType === IconType.back ? <ArrowBackFilled /> : <CloseIcon />}
-          </Icon>
+          {showIcon && (
+            <Icon type="button" onClick={callback}>
+              {iconType === IconType.back ? <ArrowBackFilled /> : <CloseIcon />}
+            </Icon>
+          )}
           <Text>{text}</Text>
         </Container>
         <InfoButton type="button" onClick={handleClick}>

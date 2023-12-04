@@ -16,6 +16,7 @@ export default function HealthQuestionnairePage(): JSX.Element {
         text={translate('health_questionnaire.header_text')}
         iconType="close"
         callback={handleOpen}
+        showIcon
       />
       <HealthQuestionnaire />
       <CancelAppointmentModal open={modalOpen} setOpen={setModalOpen} />

@@ -6,11 +6,11 @@ import { availableDaysReducer } from 'src/redux/slices/availableDaysSlice';
 import { caregiverReducer } from 'src/redux/slices/caregiverSlice';
 import { certificateReducer } from 'src/redux/slices/certificateSlice';
 import { personalDetailsReducer } from 'src/redux/slices/personalDetailsSlice';
-import { rateReducer } from 'src/redux/slices/rateSlice';
 import { roleReducer } from 'src/redux/slices/roleSlice';
-import { servicesReducer } from 'src/redux/slices/servicesSlice';
 import { tokenReducer } from 'src/redux/slices/tokenSlice';
-
+import { workExperienceReducer } from 'src/redux/slices/workEperienceSlice';
+import { rateReducer } from 'src/redux/slices/rateSlice';
+import { servicesReducer } from './slices/servicesSlice';
 import { healthQuestionnaireReducer } from './slices/healthQuestionnaireSlice';
 
 const rootReducer = combineReducers({
@@ -22,6 +22,7 @@ const rootReducer = combineReducers({
   certificate: certificateReducer,
   availableDays: availableDaysReducer,
   healthQuestionnaire: healthQuestionnaireReducer,
+  workExperience: workExperienceReducer,
   services: servicesReducer,
   hourlyRate: rateReducer,
   appointment: appointmentReducer,

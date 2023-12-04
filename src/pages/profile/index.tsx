@@ -1,17 +1,17 @@
 import Head from 'next/head';
 import { useEffect, useState } from 'react';
 
-import CompleteProfileFifth from 'src/components/complete-profile-fifth/CompleteProfileFifth';
-import CompleteProfileThird from 'src/components/complete-profile-third/CompleteProfileThird';
-import { Bio } from 'src/components/profile/bio/Bio';
 import ProfileQualification from 'src/components/profile/profile-qualification/ProfileQualification';
+import CompleteProfileSecond from 'src/components/complete-profile-second/CompleteProfileSecond';
+import CompleteProfileThird from 'src/components/complete-profile-third/CompleteProfileThird';
+import CompleteProfileFourth from 'src/components/complete-profile-fourth/CompleteProfileFourth';
+import CompleteProfileFifth from 'src/components/complete-profile-fifth/CompleteProfileFifth';
+import { Bio } from 'src/components/profile/bio/Bio';
 import { Step } from 'src/components/profile/profile-qualification/types';
 import FlowHeader from 'src/components/reusable/header/FlowHeader';
 import HorizontalStepper from 'src/components/reusable/horizontal-stepper/HorizontalStepper';
 import { ProfileWrapper } from 'src/components/reusable/profile-wrapper/ProfileWrapper';
 import { FIRST_STEP_INDEX, SECOND_STEP_INDEX } from 'src/constants';
-import CompleteProfileSecond from 'src/components/complete-profile-second/CompleteProfileSecond';
-import CompleteProfileFourth from 'src/components/complete-profile-fourth/CompleteProfileFourth';
 import { useLocales } from 'src/locales';
 import { profileApi } from 'src/redux/api/profileCompleteApi';
 

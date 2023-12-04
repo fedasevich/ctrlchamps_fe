@@ -1,27 +1,27 @@
 import { useLocales } from 'src/locales';
-import { SelectOptions, WorkTypes } from 'src/components/complete-profile-second/types';
+import { SelectOptions, Qualifications } from 'src/components/complete-profile-second/types';
 
-export const useExperienceSelectOptions = (): WorkTypes => {
+export const useExperienceSelectOptions = (): Qualifications => {
   const { translate } = useLocales();
 
-  const workTypes: SelectOptions[] = [
+  const qualifications: SelectOptions[] = [
     {
-      label: translate('completeProfileSecond.workTypes.hospital'),
+      label: translate('completeProfileSecond.qualifications.hospital'),
       value: 'Hospital',
     },
     {
-      label: translate('completeProfileSecond.workTypes.clinic'),
+      label: translate('completeProfileSecond.qualifications.clinic'),
       value: 'Clinic',
     },
     {
-      label: translate('completeProfileSecond.workTypes.agency'),
+      label: translate('completeProfileSecond.qualifications.agency'),
       value: 'Agency',
     },
     {
-      label: translate('completeProfileSecond.workTypes.other'),
+      label: translate('completeProfileSecond.qualifications.other'),
       value: 'Other',
     },
   ];
 
-  return { workTypes };
+  return { qualifications };
 };

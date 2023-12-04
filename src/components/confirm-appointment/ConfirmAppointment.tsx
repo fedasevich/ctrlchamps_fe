@@ -46,15 +46,15 @@ export default function ConfirmAppointment(): JSX.Element {
     try {
       await createAppointment({
         // У нас не подключен 4й степ, там и происходит выбор caregiver'а, для проверки работы запроса ставим свой caregiverId
-        caregiverInfoId: String(caregiver?.caregiverInfo),
+        caregiverInfoId: String(caregiver?.caregiverInfo.id),
         name: appointment.appointmentName,
         type: appointment.appointmentType,
         status: 'Pending confirmation',
         details: details || undefined,
         location: 'Location Address',
-        diagnosisNote: healthQuestionnaire.notes[0],
-        activityNote: healthQuestionnaire.notes[1],
-        capabilityNote: healthQuestionnaire.notes[2],
+        diagnosisNote: healthQuestionnaire.notes.STEP_1,
+        activityNote: healthQuestionnaire.notes.STEP_2,
+        capabilityNote: healthQuestionnaire.notes.STEP_3,
         startDate:
           appointment.appointmentType === 'One time'
             ? appointment.oneTimeDate.startTime

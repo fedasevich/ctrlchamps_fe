@@ -24,11 +24,12 @@ export interface UpdateProfileResponse {
 }
 
 export interface Certificate {
+  id: string;
   name: string;
   certificateId: string;
   link: string;
-  dateIssued: Date;
-  expirationDate?: Date;
+  dateIssued: Date | string;
+  expirationDate?: Date | string;
 }
 
 export interface CertificateResponse {
@@ -127,6 +128,11 @@ export const profileApi = createApi({
         url: `${route.certificates}`,
         method: 'POST',
         body: { certificates },
+      }),
+    }),
+    getCertificate: builder.query<CertificateResponse[], void>({
+      query: () => ({
+        url: `${route.certificates}`,
       }),
     }),
     createWorkExperience: builder.mutation<

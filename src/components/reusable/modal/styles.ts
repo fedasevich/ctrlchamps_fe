@@ -31,6 +31,7 @@ export const ModalHeader = styled('div')`
   align-items: center;
   width: 100%;
   padding: 8px 12px;
+  text-transform: capitalize;
   border-bottom: 1px solid ${SECONDARY.light_gray};
 `;
 
@@ -54,4 +55,3 @@ export const TextContainer = styled('div')`
   flex-direction: column;
   padding: 24px 16px;
 `;
-

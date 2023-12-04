@@ -5,15 +5,17 @@ import storage from 'redux-persist/lib/storage';
 
 import rootReducer from 'src/redux/rootReducer';
 import { addressReducer } from 'src/redux/slices/addressSlice';
+import { availableDaysReducer } from 'src/redux/slices/availableDaysSlice';
+import { certificateReducer } from 'src/redux/slices/certificateSlice';
+import { healthQuestionnaireReducer } from 'src/redux/slices/healthQuestionnaireSlice';
 import { personalDetailsReducer } from 'src/redux/slices/personalDetailsSlice';
+import { rateReducer } from 'src/redux/slices/rateSlice';
 import { roleReducer } from 'src/redux/slices/roleSlice';
 import { tokenReducer } from 'src/redux/slices/tokenSlice';
-import { availableDaysReducer } from 'src/redux/slices/availableDaysSlice';
-import { rateReducer } from 'src/redux/slices/rateSlice';
-import { healthQuestionnaireReducer } from 'src/redux/slices/healthQuestionnaireSlice';
 import { appointmentReducer } from './slices/appointmentSlice';
 import { servicesReducer } from 'src/redux/slices/servicesSlice';
 import { workExperienceReducer } from 'src/redux/slices/workEperienceSlice';
+import { caregiverReducer } from './slices/caregiverSlice';
 
 import accountVerificationApi from 'src/redux/api/accountVerificationAPI';
 import authApi from 'src/redux/api/authApi';
@@ -34,10 +36,12 @@ const store = configureStore({
     personalDetails: personalDetailsReducer,
     address: addressReducer,
     token: persistedTokenReducer,
+    caregiver: caregiverReducer,
     availableDays: availableDaysReducer,
     workExperience: workExperienceReducer,
     services: servicesReducer,
     hourlyRate: rateReducer,
+    certificate: certificateReducer,
     healthQuestionnaire: healthQuestionnaireReducer,
     appointment: appointmentReducer,
     [authApi.reducerPath]: authApi.reducer,

@@ -1,5 +1,5 @@
-import { Theme } from '@mui/material/styles';
 import { TabProps } from '@mui/material';
+import { Theme } from '@mui/material/styles';
 
 // ----------------------------------------------------------------------
 
@@ -27,16 +27,15 @@ export default function Tabs(theme: Theme) {
         root: ({ ownerState }: { ownerState: TabProps }) => ({
           padding: 0,
           opacity: 1,
-          minWidth: 48,
           fontWeight: theme.typography.fontWeightMedium,
           '&:not(:last-of-type)': {
-            marginRight: theme.spacing(3),
-            [theme.breakpoints.up('sm')]: {
-              marginRight: theme.spacing(5),
-            },
+            padding: theme.spacing(2),
           },
           '&:not(.Mui-selected)': {
             color: theme.palette.text.secondary,
+          },
+          '&.Mui-selected': {
+            color: theme.palette.secondary.main,
           },
           ...((ownerState.iconPosition === 'start' || ownerState.iconPosition === 'end') && {
             minHeight: 48,

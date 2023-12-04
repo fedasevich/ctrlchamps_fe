@@ -1,20 +1,20 @@
 import { ObjectSchema, boolean, date, object, string } from 'yup';
 
 import { ProfileQualityFormValues } from 'src/components/profile/profile-qualification/types';
-import { useLocales } from 'src/locales';
 import { MAX_CHARACTERS_LENGTH, URL_PATTERN } from 'src/constants';
+import { useLocales } from 'src/locales';
 
 export const useProfileQualificationSchema = (): ObjectSchema<ProfileQualityFormValues> => {
   const { translate } = useLocales();
 
   return object({
-    certificationName: string()
+    name: string()
       .required(translate('profileQualification.certificationNameRequired'))
       .max(MAX_CHARACTERS_LENGTH, translate('profileQualification.certificationNameMaxLength')),
-    certificationNumber: string()
+    certificateId: string()
       .required(translate('profileQualification.certificationNumberRequired'))
       .max(MAX_CHARACTERS_LENGTH, translate('profileQualification.certificationNumberMaxLength')),
-    certificationLink: string()
+    link: string()
       .max(MAX_CHARACTERS_LENGTH, translate('profileQualification.certificationLinkMaxLength'))
       .test(
         'is-url-valid',
@@ -24,7 +24,7 @@ export const useProfileQualificationSchema = (): ObjectSchema<ProfileQualityForm
           return URL_PATTERN.test(value);
         }
       ),
-    startDate: date().required(translate('profileQualification.startDateRequired')),
+    dateIssued: date().required(translate('profileQualification.startDateRequired')),
     isExpirationDateDisabled: boolean().required(),
     expirationDate: date().when('isExpirationDateDisabled', {
       is: false,

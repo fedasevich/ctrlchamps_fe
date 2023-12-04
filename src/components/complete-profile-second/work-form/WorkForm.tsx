@@ -4,9 +4,9 @@ import {
   FormControl,
   FormControlLabel,
   InputLabel,
+  MenuItem,
   Select,
   Stack,
-  MenuItem,
 } from '@mui/material';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { useEffect } from 'react';
@@ -20,16 +20,13 @@ import { WorkExperience, useCreateWorkExperienceMutation } from 'src/redux/api/p
 import { saveWorkExperiences } from 'src/redux/slices/workEperienceSlice';
 import { useAppDispatch, useTypedSelector } from 'src/redux/store';
 import { ProfileExperience } from 'src/components/complete-profile-second/types';
-import { useLocales } from 'src/locales';
+import { DEFAULT_EXPERIENCE_VALUES } from 'src/components/complete-profile-second/work-form/constants';
 import { useExperienceSelectOptions } from 'src/components/complete-profile-second/work-form/select-options';
+import { ErrorMessage, StyledForm } from 'src/components/complete-profile-second/work-form/styles';
 import { useProfileExperienceSchema } from 'src/components/complete-profile-second/work-form/validation';
 import { DATE_FORMAT, BACKEND_DATE_FORMAT } from 'src/constants';
-import { DEFAULT_EXPERIENCE_VALUES } from 'src/components/complete-profile-second/work-form/constants';
-import {
-  ErrorMessage,
-  StyledButton,
-  StyledForm,
-} from 'src/components/complete-profile-second/work-form/styles';
+import ProfileBtn from 'src/components/reusable/profile-btn/ProfileBtn';
+import { useLocales } from 'src/locales';
 
 type Props = {
   onClose: () => void;
@@ -183,10 +180,7 @@ export default function WorkForm({ onClose, onSave, editingWorkPlaces }: Props):
           labelPlacement="end"
         />
       </Stack>
-
-      <StyledButton variant="contained" type="submit" disabled={!isValid}>
-        {translate('profileQualification.save')}
-      </StyledButton>
+      <ProfileBtn text={translate('profileQualification.save')} disabled={!isValid} />
     </StyledForm>
   );
 }

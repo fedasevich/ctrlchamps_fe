@@ -5,8 +5,8 @@ import typography from 'src/theme/typography';
 import { FilledButton } from 'src/components/reusable/FilledButton';
 
 const Wrapper = styled('div')`
-  height: calc(100% - 140px);
-  margin-top: 72px;
+  height: 100%;
+  margin-top: 48px;
 `;
 
 const Container = styled('div')`

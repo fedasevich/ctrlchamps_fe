@@ -137,6 +137,12 @@ const DatePickerContainer = styled('div')`
   gap: 24px;
 `;
 
+const StyledForm = styled('form')`
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+`;
+
 export {
   Background,
   Button,
@@ -149,6 +155,7 @@ export {
   WeekSlotContainer,
   SelectContainer,
   Container,
+  StyledForm,
   DatePickerContainer,
   AppointmentTypeCard,
   AppointmentTypeInput,

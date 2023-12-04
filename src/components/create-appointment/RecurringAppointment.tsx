@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { addDays, isBefore } from 'date-fns';
 import { Box, FormControl, InputLabel, MenuItem, Select, TextField } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import OneTimeIcon from 'src/assets/icons/OneTimeIcon';
@@ -9,7 +10,7 @@ import { setRecurringAppointmentTime } from 'src/redux/slices/appointmentSlice';
 import { useAppDispatch } from 'src/redux/store';
 import { setCustomTime } from 'src/utils/defineCustomTime';
 import useShowDuration from './useShowDuration';
-import { selectTimeOptions } from './constants';
+import { ONE_DAY, selectTimeOptions } from './constants';
 import {
   AppointmentDuration,
   BaseBoldText,
@@ -84,7 +85,7 @@ export default function RecurringAppointment(): JSX.Element {
           <DatePicker
             label={translate('create_appointment.end_date')}
             disabled={!startDate}
-            minDate={startDate}
+            minDate={startDate && addDays(startDate, ONE_DAY)}
             value={endDate}
             inputFormat={DATE_FORMAT}
             onChange={(newValue): void => {
@@ -154,7 +155,14 @@ export default function RecurringAppointment(): JSX.Element {
         )}
         <FilledButton
           onClick={goNext}
-          disabled={!startDate || !endDate || !startTime || !endTime || !appointmentDays.length}
+          disabled={
+            !startDate ||
+            !endDate ||
+            !startTime ||
+            !endTime ||
+            !appointmentDays.length ||
+            isBefore(endDate, startDate)
+          }
         >
           {translate('create_appointment.btn_next')}
         </FilledButton>

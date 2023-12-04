@@ -24,7 +24,7 @@ import {
   StyledForm,
 } from './styles';
 
-export default function AppointmentType(): JSX.Element {
+export default function AppointmentType({ onNext }: { onNext: () => void }): JSX.Element {
   const { translate } = useLocales();
   const dispatch = useAppDispatch();
   const { modalOpen, setModalOpen, handleOpen } = useCancelAppointmentModal();
@@ -43,6 +43,7 @@ export default function AppointmentType(): JSX.Element {
   const goNext = (): void => {
     dispatch(setAppointmentName(name));
     dispatch(setAppointmentType(type));
+    onNext();
   };
 
   return (

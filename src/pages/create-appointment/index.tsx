@@ -1,6 +1,7 @@
 import Head from 'next/head';
 import { useState } from 'react';
 import BookAppointment from 'src/components/book-appointment/BookAppointment';
+import { Background } from 'src/components/book-appointment/styles';
 import ConfirmAppointment from 'src/components/confirm-appointment/ConfirmAppointment';
 import AppointmentScheduling from 'src/components/create-appointment/AppointmentScheduling';
 import AppointmentType from 'src/components/create-appointment/AppointmentType';
@@ -27,16 +28,11 @@ export default function CreateAppointmentPage(): JSX.Element {
   const STEPS: Step[] = [
     {
       label: translate('appointmentSteps.appointmentType'),
-      component: <BookAppointment onNext={handleNext} />,
+      component: <AppointmentType onNext={handleNext} />,
     },
     {
       label: translate('appointmentSteps.scheduling'),
-      component:
-        appointmentType === null ? (
-          <AppointmentType />
-        ) : (
-          <AppointmentScheduling onNext={handleNext} />
-        ),
+      component: <AppointmentScheduling onNext={handleNext} />,
     },
     {
       label: translate('appointmentSteps.healthQuestioner'),
@@ -44,11 +40,7 @@ export default function CreateAppointmentPage(): JSX.Element {
     },
     {
       label: translate('appointmentSteps.findCaregiver'),
-      component: (
-        <div>
-          <button onClick={handleNext}>findCaregiver</button>
-        </div>
-      ),
+      component: <div>{/* <button onClick={handleNext}>findCaregiver</button> */}</div>,
     },
     {
       label: translate('appointmentSteps.confirm'),

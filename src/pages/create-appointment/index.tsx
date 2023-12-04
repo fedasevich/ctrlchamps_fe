@@ -6,6 +6,10 @@ import ConfirmAppointment from 'src/components/confirm-appointment/ConfirmAppoin
 import AppointmentScheduling from 'src/components/create-appointment/AppointmentScheduling';
 import AppointmentType from 'src/components/create-appointment/AppointmentType';
 import HealthQuestionnaire from 'src/components/health-questionnaire';
+import {
+  CancelAppointmentModal,
+  useCancelAppointmentModal,
+} from 'src/components/modal-cancel-appointment';
 import { Step } from 'src/components/profile/profile-qualification/types';
 import FlowHeader from 'src/components/reusable/header/FlowHeader';
 import HorizontalStepper from 'src/components/reusable/horizontal-stepper/HorizontalStepper';
@@ -19,6 +23,7 @@ export default function CreateAppointmentPage(): JSX.Element {
   const { appointmentType } = useTypedSelector((state) => state.appointment);
   const [activeStepIndex, setActiveStepIndex] = useState<number>(FIRST_STEP_INDEX);
   const [completed, setCompleted] = useState<Record<string, boolean>>({});
+  const { modalOpen, setModalOpen, handleOpen } = useCancelAppointmentModal();
 
   const handleNext = (): void => {
     setCompleted({ ...completed, [activeStepIndex]: true });
@@ -67,9 +72,9 @@ export default function CreateAppointmentPage(): JSX.Element {
         <title>{translate('create_appointment.create')}</title>
       </Head>
       <FlowHeader
-        text={translate('create_appointment.create')}
-        iconType="back"
-        callback={handleBack}
+        text={translate('create_appointment.header_text')}
+        iconType="close"
+        callback={handleOpen}
         showIcon
       />
       <Background sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'start' }}>
@@ -81,6 +86,7 @@ export default function CreateAppointmentPage(): JSX.Element {
         />
         {ActiveStepComponent}
       </Background>
+      <CancelAppointmentModal open={modalOpen} setOpen={setModalOpen} />
     </>
   );
 }

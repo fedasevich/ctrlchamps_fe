@@ -1,5 +1,6 @@
 import Head from 'next/head';
 import { useState } from 'react';
+import { Background } from 'src/components/book-appointment/styles';
 import ConfirmAppointment from 'src/components/confirm-appointment/ConfirmAppointment';
 import CreateAppointmentFourth from 'src/components/create-appointment-fourth/CreateAppointmentFourth';
 import AppointmentScheduling from 'src/components/create-appointment/AppointmentScheduling';

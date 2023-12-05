@@ -266,7 +266,8 @@ const en = {
     specify_time: ' Please specify your preferred time and your availability throughout the week',
     from: 'From',
     to: 'To',
-    invalid_time: 'Invalid time selection. Please choose a time later than {{startTime}}. ',
+    invalid_time:
+      'Appointment cannot be ended before the start. Please choose another value in To field.',
     equal_time_error: 'You cannot choose identical time',
   },
   completeProfileFifth: {

@@ -79,9 +79,7 @@ export default function CompleteProfileFourth({ onNext }: { onNext: () => void }
           </FormControl>
         </SelectContainer>
         {invalidTimeError && (
-          <ErrorText>
-            {translate('completeProfileFourth.invalid_time', { startTime: availableFrom })}
-          </ErrorText>
+          <ErrorText>{translate('completeProfileFourth.invalid_time')}</ErrorText>
         )}
         {identicalTimeError && (
           <ErrorText> {translate('completeProfileFourth.equal_time_error')}</ErrorText>

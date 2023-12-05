@@ -266,6 +266,8 @@ const en = {
     specify_time: ' Please specify your preferred time and your availability throughout the week',
     from: 'From',
     to: 'To',
+    invalid_time: 'Invalid time selection. Please choose a time later than {{startTime}}. ',
+    equal_time_error: 'You cannot choose identical time',
   },
   completeProfileFifth: {
     placeholderRate: 'Rate ($/h)',

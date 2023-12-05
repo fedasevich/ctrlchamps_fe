@@ -171,8 +171,8 @@ export default function WorkForm({ onClose, onSave, editingWorkPlaces }: Props):
                 {...field}
                 label={translate('completeProfileSecond.endDateLabel')}
                 inputFormat={DATE_FORMAT}
-                maxDate={isEndDateDisabled ? null : MAX_WORK_DATE}
-                minDate={isEndDateDisabled ? null : getValues('startDate')}
+                maxDate={MAX_WORK_DATE}
+                minDate={getValues('startDate')}
                 openTo="year"
                 value={isEndDateDisabled ? null : field.value}
                 onChange={(date): void => field.onChange(date)}

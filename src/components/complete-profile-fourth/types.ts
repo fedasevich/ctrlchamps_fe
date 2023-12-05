@@ -6,6 +6,7 @@ export type HookReturnType = {
   chosenDays: string[];
   availableFrom: string;
   availableTo: string;
+  isButtonDisabled: boolean;
   chooseDay: (selectedDay: daySelectedType) => void;
   chooseFromTime: (value: string) => void;
   chooseToTime: (value: string) => void;

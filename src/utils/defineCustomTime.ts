@@ -1,3 +1,8 @@
+// function to combine specified date and time in a single date
+//  @param date - Thu Dec 21 2023 00:00:00 GMT+0200
+//  @param timeString - '01:15'
+//  @return - Thu Dec 21 2023 01:15:00 GMT+0200
+
 export function setCustomTime(date: Date, timeString: string): Date {
   const newDate = new Date(date);
 

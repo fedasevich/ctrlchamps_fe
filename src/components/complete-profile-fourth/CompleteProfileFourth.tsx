@@ -26,9 +26,8 @@ export default function CompleteProfileFourth({ onNext }: { onNext: () => void }
     chooseToTime,
     defineAvailableDays,
     invalidTimeError,
-    invalidTimeErrors,
     identicalTimeError,
-    identicalTimeErrors,
+    isButtonDisabled,
     serverError,
     setServerError,
   } = useCompleteProfileFourth(onNext);
@@ -95,15 +94,7 @@ export default function CompleteProfileFourth({ onNext }: { onNext: () => void }
         <ProfileBtn
           text={translate('btn_next')}
           onClick={defineAvailableDays}
-          disabled={
-            invalidTimeErrors.length > 0 ||
-            identicalTimeErrors.length > 0 ||
-            !daySelected ||
-            !availableFrom ||
-            !availableTo ||
-            invalidTimeError ||
-            availableFrom === availableTo
-          }
+          disabled={isButtonDisabled}
         />
       </Container>
     </Wrapper>

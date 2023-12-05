@@ -1,3 +1,8 @@
+// function to calculate time difference between two time values
+//  @param startTime - "10:00"
+//  @param endTime - "12:20"
+//  @return - {hours: 2, minutes: 20}
+
 export function calculateTimeDifference(
   startTime: string,
   endTime: string

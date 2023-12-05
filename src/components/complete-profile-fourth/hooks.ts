@@ -22,6 +22,15 @@ export default function useCompleteProfileFourth(onNext: () => void): HookReturn
   const [identicalTimeErrors, setIdenticalTimeErrors] = useState<string[]>([]);
   const [serverError, setServerError] = useState<boolean>(false);
 
+  const isButtonDisabled =
+    invalidTimeErrors.length > 0 ||
+    identicalTimeErrors.length > 0 ||
+    !daySelected ||
+    !availableFrom ||
+    !availableTo ||
+    invalidTimeError ||
+    availableFrom === availableTo;
+
   useEffect(() => {
     const selectedDays = availableDays.map(({ day }) => day);
     setChosenDays(selectedDays);
@@ -168,5 +177,6 @@ export default function useCompleteProfileFourth(onNext: () => void): HookReturn
     identicalTimeErrors,
     serverError,
     setServerError,
+    isButtonDisabled,
   };
 }

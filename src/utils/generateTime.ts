@@ -1,6 +1,8 @@
-// generate array of time periods with defined interval:
-// input: generateTimeWithInterval('08:00', '10:00', 15);
-// output: ['08:00', '08:15', '08:30', '08:45', '09:00', '09:15', '09:30', '09:45', '10:00']
+// function to generate an array of time periods with defined interval
+//  @param startTime - '08:00'
+//  @param endTime - '10:00'
+//  @param intervalMinutes - 15
+//  @return -  ['08:00', '08:15', '08:30', '08:45', '09:00', '09:15', '09:30', '09:45', '10:00']
 
 const DATE_CONSTANT = '1970-01-01T';
 

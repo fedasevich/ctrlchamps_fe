@@ -1,5 +1,7 @@
-import { useLocales } from 'src/locales';
 import { AnyObject, ObjectSchema, object, ref, string } from 'yup';
+
+import { MIN_PASSWORD_LENGTH, PASSWORD_PATTERN } from 'src/components/sign-up-fourth/constants';
+import { useLocales } from 'src/locales';
 
 export type SignUpFourthFormValues = {
   password: string;
@@ -19,10 +21,20 @@ export const useSignUpFourthSchema = (): ObjectSchema<
 
   return object({
     password: string()
-      .min(8, translate('signUpFourthForm.passwordInvalid'))
-      .required(translate('signUpFourthForm.passwordRequired')),
+      .min(MIN_PASSWORD_LENGTH, translate('signUpFourthForm.passwordInvalid'))
+      .required(translate('signUpFourthForm.passwordRequired'))
+      .test(
+        'no-spaces',
+        translate('signUpFourthForm.passwordNoSpaces'),
+        (value) => !PASSWORD_PATTERN.test(value)
+      ),
     confirmPassword: string()
       .oneOf([ref('password'), undefined], translate('signUpFourthForm.passwordsNotMatching'))
-      .required(translate('signUpFourthForm.confirmPasswordRequired')),
+      .required(translate('signUpFourthForm.confirmPasswordRequired'))
+      .test(
+        'no-spaces',
+        translate('signUpFourthForm.passwordNoSpaces'),
+        (value) => !PASSWORD_PATTERN.test(value)
+      ),
   });
 };

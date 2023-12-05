@@ -30,11 +30,6 @@ export const useSignUpFourthSchema = (): ObjectSchema<
       ),
     confirmPassword: string()
       .oneOf([ref('password'), undefined], translate('signUpFourthForm.passwordsNotMatching'))
-      .required(translate('signUpFourthForm.confirmPasswordRequired'))
-      .test(
-        'no-spaces',
-        translate('signUpFourthForm.passwordNoSpaces'),
-        (value) => !PASSWORD_PATTERN.test(value)
-      ),
+      .required(translate('signUpFourthForm.confirmPasswordRequired')),
   });
 };

@@ -4,12 +4,14 @@ import { SyntheticEvent, useState } from 'react';
 import ArrowBackFilled from 'src/assets/icons/ArrowBackFilled';
 import FreeCancellation from 'src/assets/icons/FreeCancellation';
 import MonetizationOn from 'src/assets/icons/MonetizationOn';
-import { BIG_CAREGIVER_AVATAR_SIZE } from 'src/components/create-appointment-fourth/constants';
+import {
+  BIG_CAREGIVER_AVATAR_SIZE,
+  FIRST_SELECTED_TAB,
+} from 'src/components/create-appointment-fourth/caregiver-drawer/constants';
 import {
   formatWorkExperienceDateRange,
   formatWorkExperienceDateRangeTenure,
-  getMockCaregiverAvatar,
-} from 'src/components/create-appointment-fourth/helpers';
+} from 'src/components/create-appointment-fourth/caregiver-drawer/helpers';
 import Drawer from 'src/components/reusable/drawer/Drawer';
 import {
   DrawerBody,
@@ -18,11 +20,11 @@ import {
   DrawerTitle,
 } from 'src/components/reusable/drawer/styles';
 import { useLocales } from 'src/locales';
-import { appointmentCreationApi } from 'src/redux/api/appointmentCreationAPI';
+import { appointmentApi } from 'src/redux/api/appointmentApi';
 import { setSelectedCaregiver } from 'src/redux/slices/caregiverSlice';
 import { useAppDispatch } from 'src/redux/store';
 
-import { FIRST_SELECTED_TAB } from './constants';
+import { getMockCaregiverAvatar } from 'src/components/create-appointment-fourth/helpers';
 import {
   BookButton,
   DrawerAvatar,
@@ -44,12 +46,14 @@ interface CreateAppointmentFourthDrawerProps {
   open: boolean;
   onClose: () => void;
   selectedCaregiverId: string;
+  onNext: () => void;
 }
 
 export default function CreateAppointmentFourthDrawer({
   open,
   onClose,
   selectedCaregiverId,
+  onNext,
 }: CreateAppointmentFourthDrawerProps): JSX.Element | null {
   const { translate, currentLang } = useLocales();
   const dispatch = useAppDispatch();
@@ -57,7 +61,7 @@ export default function CreateAppointmentFourthDrawer({
   const [selectedTab, setSelectedTab] = useState<string>(FIRST_SELECTED_TAB);
 
   const { data: selectedCaregiver, isLoading } =
-    appointmentCreationApi.useGetCaregiverDetailsQuery(selectedCaregiverId);
+    appointmentApi.useGetCaregiverDetailsQuery(selectedCaregiverId);
 
   if (isLoading) return null;
   if (!selectedCaregiver) return null;
@@ -68,6 +72,7 @@ export default function CreateAppointmentFourthDrawer({
 
   const handleBookClick = (): void => {
     dispatch(setSelectedCaregiver(selectedCaregiver));
+    onNext();
   };
 
   return (

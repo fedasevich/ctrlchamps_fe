@@ -112,14 +112,12 @@ function PlacesAutocomplete({
         noOptionsText={translate('createAppointmentFourth.noLocations')}
         onChange={handleAutocompleteChange}
         onInputChange={handleInputChange}
-        renderInput={(params): React.ReactNode => (
+        renderInput={(params): JSX.Element => (
           <AutocompleteInput error={!!autocompleteError} params={params} />
         )}
         renderOption={AutocompleteOption}
       />
-      {!!autocompleteError && (
-        <ErrorMessage data-testid="country-error">{autocompleteError}</ErrorMessage>
-      )}
+      {!!autocompleteError && <ErrorMessage>{autocompleteError}</ErrorMessage>}
     </>
   );
 }
@@ -130,7 +128,7 @@ function AutocompleteInput({
 }: {
   error: boolean;
   params: AutocompleteRenderInputParams;
-}): React.ReactNode {
+}): JSX.Element {
   const { translate } = useLocales();
   return (
     <TextField

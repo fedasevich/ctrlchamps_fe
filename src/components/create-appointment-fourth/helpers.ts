@@ -1,4 +1,3 @@
-import { TFunction } from 'i18next';
 import { CaregiverFilterState } from 'src/components/create-appointment-fourth/types';
 
 export const getCaregiverFilterInitialState = (): CaregiverFilterState => ({
@@ -24,7 +23,7 @@ export const getCaregiverFilterInitialState = (): CaregiverFilterState => ({
 
 export const serializeCaregiverFilterStateToQueryString = (
   filterState: CaregiverFilterState,
-  translate: TFunction<'translation', undefined, 'translation'>
+  translate: (translate: string) => string
 ): URLSearchParams => {
   const services = JSON.stringify(
     filterState.services

@@ -3,12 +3,11 @@ import { Avatar } from '@mui/material';
 import { useState } from 'react';
 import AppointmentsIcon from 'src/assets/icons/AppointmentsIcon';
 import ChatIcon from 'src/assets/icons/ChatIcon';
-import LogoIcon from 'src/assets/icons/LogoIcon';
 import NotificationIcon from 'src/assets/icons/NotificationIcon';
 import { IconWrapper } from 'src/components/confirm-appointment/style';
-import { ROUTES } from 'src/routes';
 import { useLocales } from 'src/locales';
 import { useTypedSelector } from 'src/redux/store';
+import { ROUTES } from 'src/routes';
 import {
   AppointmentsSection,
   AppointmentsText,
@@ -16,13 +15,14 @@ import {
   AvatarWrapper,
   ChatSection,
   ChatText,
+  FirstPart,
   Logo,
-  LogoName,
   LogoSection,
   MainHeaderWrapper,
   MenuSection,
   ProfileName,
   ProfileSection,
+  SecondPart,
 } from './styles';
 
 export default function MainHeader(): JSX.Element {
@@ -39,8 +39,8 @@ export default function MainHeader(): JSX.Element {
     <MainHeaderWrapper>
       <LogoSection>
         <Logo href={ROUTES.home}>
-          <LogoIcon />
-          <LogoName>{translate('logo_name')}</LogoName>
+          <FirstPart>{translate('logo_first_part')}</FirstPart>
+          <SecondPart>{translate('logo_second_part')}</SecondPart>
         </Logo>
         <AppointmentsSection>
           <AppointmentsIcon />

@@ -51,7 +51,7 @@ const MainHeaderWrapper = styled.header`
   position: absolute;
   width: 100%;
   background-color: ${PRIMARY.white};
-  padding: 16px 24px;
+  padding: 14px 24px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -106,6 +106,20 @@ const Logo = styled(Link)`
   margin-right: 24px;
 `;
 
+const FirstPart = styled.p`
+  background: ${PRIMARY.navy};
+  color: ${PRIMARY.white};
+  font-size: ${TYPOGRAPHY.sm}px;
+  font-weight: ${typography.fontWeightMedium};
+  padding: 5px 2px;
+`;
+
+const SecondPart = styled.p`
+  color: ${PRIMARY.navy};
+  font-size: ${TYPOGRAPHY.sm}px;
+  font-weight: ${typography.fontWeightMedium};
+`;
+
 const MenuSection = styled.div`
   display: flex;
   align-items: center;
@@ -155,6 +169,8 @@ export {
   MenuSection,
   LogoName,
   Logo,
+  FirstPart,
+  SecondPart,
   AppointmentsSection,
   AppointmentsText,
   ChatText,

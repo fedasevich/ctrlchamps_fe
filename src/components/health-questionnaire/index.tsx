@@ -11,7 +11,7 @@ import {
 
 const STEPS = {
   STEP_1: 'DIAGNOSIS',
-  STEP_2: 'ACTIVITY',
+  STEP_2: 'ACTIVITIES',
   STEP_3: 'CAPABILITIES',
 };
 

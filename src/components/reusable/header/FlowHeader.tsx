@@ -8,6 +8,7 @@ import { Container, Header, Text, InfoButton, Icon } from './styles';
 enum IconType {
   close = 'close',
   back = 'back',
+  empty = 'empty',
 }
 
 export default function FlowHeader({
@@ -16,8 +17,8 @@ export default function FlowHeader({
   callback,
 }: {
   text: string;
-  iconType: 'back' | 'close';
-  callback: () => void;
+  iconType?: 'back' | 'close';
+  callback?: () => void;
 }): JSX.Element {
   const [showModal, setShowModal] = useState<boolean>(false);
 
@@ -33,10 +34,14 @@ export default function FlowHeader({
     <>
       <Header>
         <Container>
-          <Icon type="button" onClick={callback}>
-            {iconType === IconType.back ? <ArrowBackFilled /> : <CloseIcon />}
-          </Icon>
-          <Text>{text}</Text>
+          <>
+            {iconType && (
+              <Icon type="button" onClick={callback}>
+                {iconType === IconType.back ? <ArrowBackFilled /> : <CloseIcon />}
+              </Icon>
+            )}
+            <Text>{text}</Text>
+          </>
         </Container>
         <InfoButton type="button" onClick={handleClick}>
           <NeedHelpIcon />

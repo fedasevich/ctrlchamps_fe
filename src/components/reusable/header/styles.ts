@@ -3,7 +3,7 @@ import { PRIMARY, SECONDARY } from 'src/theme/colors';
 import { TYPOGRAPHY } from 'src/theme/fonts';
 
 const Header = styled.header`
-  padding: 8px 12px;
+  padding: 20px 25px;
   border-bottom: 1px solid ${SECONDARY.light_gray};
   display: flex;
   align-items: center;
@@ -30,7 +30,6 @@ const Icon = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 12px;
   &:hover {
     cursor: pointer;
   }
@@ -42,8 +41,8 @@ const InfoButton = styled.button`
   justify-content: center;
   background-color: transparent;
   border: none;
-  padding: 12px;
   cursor: pointer;
+  padding: 0;
 `;
 
 export { Header, Container, Text, Icon, InfoButton };

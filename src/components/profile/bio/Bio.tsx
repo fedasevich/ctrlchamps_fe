@@ -31,7 +31,11 @@ import {
 } from 'src/components/profile/bio/constants';
 import ProfileBtn from 'src/components/reusable/profile-btn/ProfileBtn';
 
-export function Bio({ onBack }: { onBack: () => void }): JSX.Element {
+interface IProps {
+  onBack: () => void;
+}
+
+export function Bio({ onBack }: IProps): JSX.Element {
   const [videoPreviewURL, setVideoPreviewURL] = useState<string>('');
   const [uploadVideoMutation] = useUploadFileMutation();
   const [updateDescription] = useUpdateProfileMutation();

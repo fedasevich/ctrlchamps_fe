@@ -17,13 +17,12 @@ import {
   Wrapper,
 } from './styles';
 
-export default function CompleteProfileFourth({
-  onNext,
-  onBack,
-}: {
+interface IProps {
   onNext: () => void;
   onBack: () => void;
-}): JSX.Element {
+}
+
+export default function CompleteProfileFourth({ onNext, onBack }: IProps): JSX.Element {
   const { translate } = useLocales();
   const dispatch = useAppDispatch();
   const { days: availableDays } = useTypedSelector((state) => state.availableDays);

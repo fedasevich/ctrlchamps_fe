@@ -25,10 +25,14 @@ import {
   MAX_WORK_DATE,
 } from 'src/components/complete-profile-second/work-form/constants';
 import { useExperienceSelectOptions } from 'src/components/complete-profile-second/work-form/select-options';
-import { ErrorMessage, StyledForm } from 'src/components/complete-profile-second/work-form/styles';
+import {
+  ErrorMessage,
+  StyledForm,
+  StyledButton,
+  ButtonWrapper,
+} from 'src/components/complete-profile-second/work-form/styles';
 import { useProfileExperienceSchema } from 'src/components/complete-profile-second/work-form/validation';
 import { DATE_FORMAT, BACKEND_DATE_FORMAT } from 'src/constants';
-import ProfileBtn from 'src/components/reusable/profile-btn/ProfileBtn';
 import { useLocales } from 'src/locales';
 
 type Props = {
@@ -197,7 +201,11 @@ export default function WorkForm({ onClose, onSave, editingWorkPlaces }: Props):
           labelPlacement="end"
         />
       </Stack>
-      <ProfileBtn text={translate('profileQualification.save')} disabled={!isValid} />
+      <ButtonWrapper>
+        <StyledButton type="submit" disabled={!isValid} variant="contained">
+          {translate('profileQualification.save')}
+        </StyledButton>
+      </ButtonWrapper>
     </StyledForm>
   );
 }

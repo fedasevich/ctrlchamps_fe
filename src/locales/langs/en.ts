@@ -202,6 +202,7 @@ const en = {
     save: 'Save',
     return: 'Return',
     delete: 'Delete',
+    back: 'Back',
 
     addCertificate: 'Add Another Certificate',
 

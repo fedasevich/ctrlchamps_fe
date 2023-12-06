@@ -112,7 +112,7 @@ export function Bio(): JSX.Element {
           name="description"
           control={control}
           render={({ field }): ReactElement => (
-            <FilledInput {...field} error={!!errors.description} />
+            <FilledInput {...field} multiline maxRows={4} error={!!errors.description} />
           )}
         />
         {errors?.description && <ErrorMessage>{errors.description?.message}</ErrorMessage>}

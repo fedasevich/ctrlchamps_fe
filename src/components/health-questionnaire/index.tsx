@@ -10,9 +10,9 @@ import {
 } from 'src/redux/api/healthQuestionnaireApi';
 
 const STEPS = {
-  STEP_1: 'STEP_1',
-  STEP_2: 'STEP_2',
-  STEP_3: 'STEP_3',
+  STEP_1: 'DIAGNOSIS',
+  STEP_2: 'ACTIVITY',
+  STEP_3: 'CAPABILITIES',
 };
 
 type Props = {

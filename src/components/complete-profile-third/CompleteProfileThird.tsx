@@ -20,7 +20,7 @@ function CompleteProfileThird({ onNext, onBack }: IProps): JSX.Element {
   const {
     control,
     handleSubmit,
-    formState: { isDirty },
+    formState: { isDirty, isValid },
   } = useForm<CompleteProfileThirdValues>({
     mode: 'onBlur',
     defaultValues: initialServicesValues,
@@ -139,7 +139,7 @@ function CompleteProfileThird({ onNext, onBack }: IProps): JSX.Element {
         <ProfileBtn
           nextText={translate('btn_next')}
           backText={translate('profileQualification.back')}
-          disabled={!isDirty}
+          disabled={!isDirty || !isValid}
           onBack={onBack}
         />
       </StyledForm>

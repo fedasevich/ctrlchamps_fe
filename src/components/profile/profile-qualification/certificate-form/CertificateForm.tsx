@@ -13,7 +13,10 @@ import { format } from 'date-fns';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 
-import { DEFAULT_PROFILE_QUALIFICATION_VALUES } from 'src/components/profile/profile-qualification/certificate-form/constants';
+import {
+  DEFAULT_PROFILE_QUALIFICATION_VALUES,
+  MAX_CERTIFICATE_DATE,
+} from 'src/components/profile/profile-qualification/certificate-form/constants';
 import {
   ErrorMessage,
   StyledForm,
@@ -53,6 +56,7 @@ export default function CertificateForm({
     watch,
     setValue,
     trigger,
+    getValues,
     formState: { errors, isValid },
   } = useForm<ProfileQuality>({
     resolver: yupResolver(profileQualificationSchema),
@@ -140,6 +144,7 @@ export default function CertificateForm({
               <DatePicker
                 {...field}
                 label={translate('profileQualification.placeholderStartDate')}
+                maxDate={MAX_CERTIFICATE_DATE}
                 openTo="year"
                 inputFormat={DATE_FORMAT}
                 PopperProps={{
@@ -163,6 +168,7 @@ export default function CertificateForm({
                 {...field}
                 label={translate('profileQualification.placeholderExpirationDate')}
                 inputFormat={DATE_FORMAT}
+                minDate={getValues('dateIssued')}
                 openTo="year"
                 value={isExpirationDateDisabled ? null : field.value}
                 onChange={(date): void => field.onChange(date)}

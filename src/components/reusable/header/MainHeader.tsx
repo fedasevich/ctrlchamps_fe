@@ -8,6 +8,7 @@ import { IconWrapper } from 'src/components/confirm-appointment/style';
 import { useLocales } from 'src/locales';
 import { useTypedSelector } from 'src/redux/store';
 import { ROUTES } from 'src/routes';
+import { USER_ROLE } from 'src/constants';
 import {
   AppointmentsSection,
   AppointmentsText,
@@ -24,16 +25,21 @@ import {
   ProfileSection,
   SecondPart,
 } from './styles';
+import { ActiveTab } from './types';
+import { TabType } from './enums';
 
 export default function MainHeader(): JSX.Element {
   const { translate } = useLocales();
   const { firstName, lastName } = useTypedSelector(
     (state) => state.personalDetails.personalDetails
   );
+  const { role } = useTypedSelector((state) => state.role);
 
+  const [activeTab, setActiveTab] = useState<ActiveTab>(null);
   const [isMenuVisible, setIsMenuVisible] = useState<boolean>(false);
 
   const openMenu = (): void => setIsMenuVisible(!isMenuVisible);
+  const chooseActiveTab = (value: ActiveTab): void => setActiveTab(value);
 
   return (
     <MainHeaderWrapper>
@@ -42,11 +48,19 @@ export default function MainHeader(): JSX.Element {
           <FirstPart>{translate('logo_first_part')}</FirstPart>
           <SecondPart>{translate('logo_second_part')}</SecondPart>
         </Logo>
-        <AppointmentsSection>
+        <AppointmentsSection
+          onClick={(): void => chooseActiveTab(TabType.appointment)}
+          className={activeTab === TabType.appointment ? 'active_tab' : ''}
+        >
           <AppointmentsIcon />
-          <AppointmentsText>{translate('appointments')}</AppointmentsText>
+          <AppointmentsText>
+            {role === USER_ROLE.seeker ? translate('appointments') : translate('schedule')}
+          </AppointmentsText>
         </AppointmentsSection>
-        <ChatSection>
+        <ChatSection
+          onClick={(): void => chooseActiveTab(TabType.chat)}
+          className={activeTab === TabType.chat ? 'active_tab' : ''}
+        >
           <ChatIcon />
           <ChatText>{translate('chats')}</ChatText>
         </ChatSection>

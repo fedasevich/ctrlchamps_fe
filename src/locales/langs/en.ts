@@ -15,6 +15,7 @@ const en = {
   logo_first_part: 'Ctrl',
   logo_second_part: 'Champs',
   appointments: 'Appointments',
+  schedule: 'Schedule',
   chats: 'Chats',
   unexpected_error: 'Something went wrong, try again later...',
   loginForm: {

@@ -51,7 +51,7 @@ const MainHeaderWrapper = styled.header`
   position: absolute;
   width: 100%;
   background-color: ${PRIMARY.white};
-  padding: 14px 24px;
+  padding: 0 24px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -82,13 +82,23 @@ const AppointmentsSection = styled.div`
   display: flex;
   align-items: center;
   cursor: pointer;
+  padding: 15px 0;
+  border-bottom: 3px solid transparent;
+  &.active_tab {
+    border-bottom: 3px solid ${PRIMARY.navy};
+  }
 `;
 
 const ChatSection = styled.div`
   display: flex;
   align-items: center;
-  cursor: pointer;
   gap: 12px;
+  padding: 16px 5px;
+  border-bottom: 3px solid transparent;
+  cursor: pointer;
+  &.active_tab {
+    border-bottom: 3px solid ${SECONDARY.semi_gray};
+  }
 `;
 
 const ChatText = styled.p`

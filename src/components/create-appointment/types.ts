@@ -1,4 +1,4 @@
-type AppointmentTypeI = 'one-time' | 'recurring';
+type AppointmentTypeI = 'One time' | 'Recurring';
 
 type AppointmentDurationI = {
   hours: number;

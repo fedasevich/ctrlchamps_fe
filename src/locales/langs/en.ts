@@ -90,6 +90,7 @@ const en = {
     passwordsNotMatching: 'Passwords field and Confirm password field must match',
     passwordRequired: 'Password is required',
     confirmPasswordRequired: 'Confirm password is required',
+    passwordNoSpaces: 'Password must not contain spaces',
     placeholderPassword: 'Password',
     placeholderConfirmPassword: 'Confirm Password',
   },

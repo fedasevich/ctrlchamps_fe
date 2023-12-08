@@ -13,14 +13,18 @@ import { format } from 'date-fns';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 
-import { DEFAULT_PROFILE_QUALIFICATION_VALUES } from 'src/components/profile/profile-qualification/certificate-form/constants';
+import {
+  DEFAULT_PROFILE_QUALIFICATION_VALUES,
+  MAX_CERTIFICATE_DATE,
+} from 'src/components/profile/profile-qualification/certificate-form/constants';
 import {
   ErrorMessage,
   StyledForm,
+  StyledButton,
+  ButtonWrapper,
 } from 'src/components/profile/profile-qualification/certificate-form/styles';
 import { useProfileQualificationSchema } from 'src/components/profile/profile-qualification/certificate-form/validation';
 import { ProfileQuality } from 'src/components/profile/profile-qualification/types';
-import ProfileBtn from 'src/components/reusable/profile-btn/ProfileBtn';
 import { useLocales } from 'src/locales';
 import { BACKEND_DATE_FORMAT, DATE_FORMAT } from 'src/constants';
 import { Certificate, profileApi } from 'src/redux/api/profileCompleteApi';
@@ -53,6 +57,7 @@ export default function CertificateForm({
     watch,
     setValue,
     trigger,
+    getValues,
     formState: { errors, isValid },
   } = useForm<ProfileQuality>({
     resolver: yupResolver(profileQualificationSchema),
@@ -140,6 +145,7 @@ export default function CertificateForm({
               <DatePicker
                 {...field}
                 label={translate('profileQualification.placeholderStartDate')}
+                maxDate={MAX_CERTIFICATE_DATE}
                 openTo="year"
                 inputFormat={DATE_FORMAT}
                 PopperProps={{
@@ -163,6 +169,7 @@ export default function CertificateForm({
                 {...field}
                 label={translate('profileQualification.placeholderExpirationDate')}
                 inputFormat={DATE_FORMAT}
+                minDate={getValues('dateIssued')}
                 openTo="year"
                 value={isExpirationDateDisabled ? null : field.value}
                 onChange={(date): void => field.onChange(date)}
@@ -197,7 +204,11 @@ export default function CertificateForm({
           labelPlacement="start"
         />
       </Stack>
-      <ProfileBtn text={translate('profileQualification.save')} disabled={!isValid} />
+      <ButtonWrapper>
+        <StyledButton type="submit" disabled={!isValid} variant="contained">
+          {translate('profileQualification.save')}
+        </StyledButton>
+      </ButtonWrapper>
     </StyledForm>
   );
 }

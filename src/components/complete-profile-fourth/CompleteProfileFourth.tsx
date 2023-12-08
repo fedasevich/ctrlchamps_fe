@@ -14,7 +14,12 @@ import {
   Wrapper,
 } from './styles';
 
-export default function CompleteProfileFourth({ onNext }: { onNext: () => void }): JSX.Element {
+interface IProps {
+  onNext: () => void;
+  onBack: () => void;
+}
+
+export default function CompleteProfileFourth({ onNext, onBack }: IProps): JSX.Element {
   const { t: translate } = useTranslation();
   const {
     daySelected,
@@ -92,9 +97,11 @@ export default function CompleteProfileFourth({ onNext }: { onNext: () => void }
           <Alert severity="error">{translate('unexpected_error')}</Alert>
         </Snackbar>
         <ProfileBtn
-          text={translate('btn_next')}
+          nextText={translate('btn_next')}
+          backText={translate('profileQualification.back')}
           onClick={defineAvailableDays}
           disabled={isButtonDisabled}
+          onBack={onBack}
         />
       </Container>
     </Wrapper>

@@ -10,10 +10,13 @@ import { CONFIRM_NOTE_MAX_LENGTH } from 'src/components/confirm-appointment/cons
 
 const en = {
   app_title: 'App title',
-  app: `this application`,
-  example: 'text for demo purposes',
   btn_next: 'next',
   date: 'Date',
+  logo_first_part: 'Ctrl',
+  logo_second_part: 'Champs',
+  appointments: 'Appointments',
+  schedule: 'Schedule',
+  chats: 'Chats',
   unexpected_error: 'Something went wrong, try again later...',
   loginForm: {
     emailInvalid: 'Email is incorrect',
@@ -90,6 +93,7 @@ const en = {
     passwordsNotMatching: 'Passwords field and Confirm password field must match',
     passwordRequired: 'Password is required',
     confirmPasswordRequired: 'Confirm password is required',
+    passwordNoSpaces: 'Password must not contain spaces',
     placeholderPassword: 'Password',
     placeholderConfirmPassword: 'Confirm Password',
   },
@@ -202,6 +206,7 @@ const en = {
     save: 'Save',
     return: 'Return',
     delete: 'Delete',
+    back: 'Back',
 
     addCertificate: 'Add Another Certificate',
 
@@ -250,6 +255,7 @@ const en = {
       workPlaceLength: `Work place must be at most ${MAX_CHARACTERS_LENGTH} characters`,
       workTypeRequired: 'Work type is required',
       startDateRequired: 'Start date is required',
+      startDateMax: 'Start date cannot exceed today`s date',
       endDateRequired: 'End date is required',
     },
   },

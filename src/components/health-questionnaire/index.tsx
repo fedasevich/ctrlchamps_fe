@@ -39,7 +39,7 @@ const HealthQuestionnaire = ({ onNext }: Props): JSX.Element => {
 
   return (
     <>
-      {diagnoses && activities && capabilities ? (
+      {diagnoses && activities && capabilities && (
         <QuestionnaireContainer>
           {currentStep === STEPS.STEP_1 && (
             <Step1 onNext={handleNext} stepKey={STEPS.STEP_1} diagnoses={diagnoses} />
@@ -61,7 +61,7 @@ const HealthQuestionnaire = ({ onNext }: Props): JSX.Element => {
             />
           )}
         </QuestionnaireContainer>
-      ) : null}
+      )}
     </>
   );
 };

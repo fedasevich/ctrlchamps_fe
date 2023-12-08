@@ -17,7 +17,12 @@ import {
   Wrapper,
 } from './styles';
 
-export default function CompleteProfileFourth({ onNext }: { onNext: () => void }): JSX.Element {
+interface IProps {
+  onNext: () => void;
+  onBack: () => void;
+}
+
+export default function CompleteProfileFourth({ onNext, onBack }: IProps): JSX.Element {
   const { translate } = useLocales();
   const dispatch = useAppDispatch();
   const { days: availableDays } = useTypedSelector((state) => state.availableDays);
@@ -137,9 +142,11 @@ export default function CompleteProfileFourth({ onNext }: { onNext: () => void }
           <Alert severity="error">{translate('unexpected_error')}</Alert>
         </Snackbar>
         <ProfileBtn
-          text={translate('btn_next')}
+          nextText={translate('btn_next')}
+          backText={translate('profileQualification.back')}
           onClick={defineAvailableDays}
           disabled={!daySelected || !availableFrom || !availableTo}
+          onBack={onBack}
         />
       </Container>
     </Wrapper>

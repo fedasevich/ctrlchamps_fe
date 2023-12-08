@@ -10,7 +10,7 @@ import { useLocales } from 'src/locales';
 import { saveServices } from 'src/redux/slices/servicesSlice';
 import { useAppDispatch, useTypedSelector } from 'src/redux/store';
 
-function CompleteProfileThird({ onNext }: IProps): JSX.Element {
+function CompleteProfileThird({ onNext, onBack }: IProps): JSX.Element {
   const { translate } = useLocales();
   const dispatch = useAppDispatch();
   const { onUpdateServices } = useCompleteProfileThird(onNext);
@@ -20,7 +20,7 @@ function CompleteProfileThird({ onNext }: IProps): JSX.Element {
   const {
     control,
     handleSubmit,
-    formState: { isDirty },
+    formState: { isDirty, isValid },
   } = useForm<CompleteProfileThirdValues>({
     mode: 'onBlur',
     defaultValues: initialServicesValues,
@@ -136,7 +136,12 @@ function CompleteProfileThird({ onNext }: IProps): JSX.Element {
             />
           }
         />
-        <ProfileBtn text={translate('btn_next')} disabled={!isDirty} />
+        <ProfileBtn
+          nextText={translate('btn_next')}
+          backText={translate('profileQualification.back')}
+          disabled={!isDirty || !isValid}
+          onBack={onBack}
+        />
       </StyledForm>
     </Wrapper>
   );

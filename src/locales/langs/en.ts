@@ -10,10 +10,13 @@ import { CONFIRM_NOTE_MAX_LENGTH } from 'src/components/confirm-appointment/cons
 
 const en = {
   app_title: 'App title',
-  app: `this application`,
-  example: 'text for demo purposes',
   btn_next: 'next',
   date: 'Date',
+  logo_first_part: 'Ctrl',
+  logo_second_part: 'Champs',
+  appointments: 'Appointments',
+  schedule: 'Schedule',
+  chats: 'Chats',
   unexpected_error: 'Something went wrong, try again later...',
   loginForm: {
     emailInvalid: 'Email is incorrect',

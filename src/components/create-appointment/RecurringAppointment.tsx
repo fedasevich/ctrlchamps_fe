@@ -1,14 +1,15 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { addDays, isBefore } from 'date-fns';
+import { addDays, isBefore, isSameDay } from 'date-fns';
 import { Box, FormControl, InputLabel, MenuItem, Select, TextField } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import OneTimeIcon from 'src/assets/icons/OneTimeIcon';
 import { FilledButton } from 'src/components/reusable';
 import { DATE_FORMAT, weekDays } from 'src/constants';
 import { setRecurringAppointmentTime } from 'src/redux/slices/appointmentSlice';
-import { useAppDispatch } from 'src/redux/store';
+import { useAppDispatch, useTypedSelector } from 'src/redux/store';
 import { setCustomTime } from 'src/utils/defineCustomTime';
+import { extractTimeFromDate } from 'src/utils/extractTimeFromDate';
 import useShowDuration from './useShowDuration';
 import { ONE_DAY, selectTimeOptions } from './constants';
 import {
@@ -21,16 +22,29 @@ import {
   WeekSlotContainer,
 } from './styles';
 
-export default function RecurringAppointment(): JSX.Element {
+export default function RecurringAppointment({ onNext }: { onNext: () => void }): JSX.Element {
   const { t: translate } = useTranslation();
   const dispatch = useAppDispatch();
+  const { recurringDate } = useTypedSelector((state) => state.appointment);
 
-  const [startDate, setStartDate] = useState<Date | null>(null);
-  const [endDate, setEndDate] = useState<Date | null>(null);
+  const [startDate, setStartDate] = useState<Date | null>(recurringDate.startDate);
+  const [endDate, setEndDate] = useState<Date | null>(recurringDate.endDate);
   const [startTime, setStartTime] = useState<string>('');
   const [endTime, setEndTime] = useState<string>('');
-  const [appointmentDays, setAppointmentDays] = useState<string[]>([]);
+  const [appointmentDays, setAppointmentDays] = useState<string[]>(recurringDate.weekDays);
   const { hours, minutes } = useShowDuration(startTime, endTime);
+
+  useEffect(() => {
+    if (!recurringDate.startDate || !recurringDate.endDate) return;
+
+    const startDateTime = extractTimeFromDate(recurringDate.startDate);
+    const endDateTime = extractTimeFromDate(recurringDate.endDate);
+
+    if (startDateTime && endDateTime) {
+      setStartTime(startDateTime);
+      setEndTime(endDateTime);
+    }
+  }, [recurringDate.startDate, recurringDate.endDate]);
 
   const chooseStartTime = (value: string): void => setStartTime(value);
   const chooseEndTime = (value: string): void => setEndTime(value);
@@ -58,6 +72,7 @@ export default function RecurringAppointment(): JSX.Element {
         weekDays: appointmentDays,
       })
     );
+    onNext();
   };
 
   return (
@@ -84,7 +99,6 @@ export default function RecurringAppointment(): JSX.Element {
           />
           <DatePicker
             label={translate('create_appointment.end_date')}
-            disabled={!startDate}
             minDate={startDate && addDays(startDate, ONE_DAY)}
             value={endDate}
             inputFormat={DATE_FORMAT}
@@ -161,7 +175,8 @@ export default function RecurringAppointment(): JSX.Element {
             !startTime ||
             !endTime ||
             !appointmentDays.length ||
-            isBefore(endDate, startDate)
+            isBefore(endDate, startDate) ||
+            isSameDay(startDate, endDate)
           }
         >
           {translate('create_appointment.btn_next')}

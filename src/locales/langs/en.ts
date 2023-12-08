@@ -9,7 +9,7 @@ import { MAX_CHARACTERS_LENGTH } from 'src/constants';
 import { CONFIRM_NOTE_MAX_LENGTH } from 'src/components/confirm-appointment/constants';
 
 const en = {
-  app_title: 'App title',
+  app_title: 'CtrlChamps',
   btn_next: 'next',
   date: 'Date',
   logo_first_part: 'Ctrl',
@@ -483,6 +483,33 @@ const en = {
           completely_dependent: 'Completly Dependent',
         },
       },
+    },
+  },
+  appointments_page: {
+    page_title: 'Appointments',
+    create_button: 'Create an Appointment',
+    cancel_button: 'Cancel',
+    cancel_appointment_button: 'Cancel appointment',
+    virtual_button: 'Virtual assessment',
+    signIn_button: 'Sign in the contract',
+    back_button: 'Back to the appointment',
+    modal_title: 'Cancel the appointment',
+    modal_subtitle: 'Are you sure you would like to cancel the appointment?',
+    status: {
+      pending: 'Pending confirmation',
+      rejected: 'Rejected',
+      accepted: 'Accepted',
+      virtual: 'Virtual assessment',
+      active: 'Active',
+      ongoing: 'Ongoing',
+      completed: 'Completed',
+    },
+    drawer: {
+      caregiver: 'Caregiver',
+      date: 'Date & Time',
+      tasks: 'Tasks',
+      details: 'Additional Details',
+      details_empty: 'Nothing specific',
     },
   },
 };

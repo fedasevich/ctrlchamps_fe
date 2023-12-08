@@ -1,9 +1,10 @@
 import { format } from 'date-fns';
+import { DRAWER_DATE_FORMAT } from './constants';
 
 export const getMockCaregiverAvatar = (size: number): string =>
   `https://picsum.photos/${size}/${size}`;
 
-export const getFormattedDate = (date: Date): string => format(date, 'dd MMM, HH:mm');
+export const getFormattedDate = (date: Date): string => format(date, DRAWER_DATE_FORMAT);
 
 export const mockedTasks = [
   { id: 1, name: 'Task 1' },

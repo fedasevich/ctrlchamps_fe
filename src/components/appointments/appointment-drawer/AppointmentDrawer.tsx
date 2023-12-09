@@ -66,6 +66,34 @@ export default function AppointmentDrawer({
     setIsDrawerOpen(true);
   };
 
+  const DRAWER_FOOTERS = {
+    [APPOINTMENT_STATUS.Pending]: (
+      <CancelBtn type="button" variant="outlined" onClick={handleModalOpen}>
+        {translate('appointments_page.cancel_button')}
+      </CancelBtn>
+    ),
+    [APPOINTMENT_STATUS.Accepted]: (
+      <StyledButton type="button" variant="contained">
+        {translate('appointments_page.virtual_button')}
+      </StyledButton>
+    ),
+    [APPOINTMENT_STATUS.Active]: (
+      <DoubleButtonBox>
+        <StyledButton type="button" variant="contained">
+          {translate('appointments_page.signIn_button')}
+        </StyledButton>
+        <CancelBtn type="button" variant="outlined">
+          {translate('appointments_page.cancel_appointment_button')}
+        </CancelBtn>
+      </DoubleButtonBox>
+    ),
+    [APPOINTMENT_STATUS.Virtual]: (
+      <StyledButton type="button" variant="contained">
+        {translate('appointments_page.virtual_button')}
+      </StyledButton>
+    ),
+  };
+
   return (
     <>
       <Drawer open={isOpen} onClose={onClose}>
@@ -116,39 +144,7 @@ export default function AppointmentDrawer({
             )}
           </Block>
         </DrawerBody>
-        {selectedAppointment.status === APPOINTMENT_STATUS.Pending && (
-          <DrawerFooter>
-            <CancelBtn type="button" variant="outlined" onClick={handleModalOpen}>
-              {translate('appointments_page.cancel_button')}
-            </CancelBtn>
-          </DrawerFooter>
-        )}
-        {selectedAppointment.status === APPOINTMENT_STATUS.Accepted && (
-          <DrawerFooter>
-            <StyledButton type="button" variant="contained">
-              {translate('appointments_page.virtual_button')}
-            </StyledButton>
-          </DrawerFooter>
-        )}
-        {selectedAppointment.status === APPOINTMENT_STATUS.Virtual && (
-          <DrawerFooter>
-            <StyledButton type="button" variant="contained">
-              {translate('appointments_page.virtual_button')}
-            </StyledButton>
-          </DrawerFooter>
-        )}
-        {selectedAppointment.status === APPOINTMENT_STATUS.Active && (
-          <DrawerFooter>
-            <DoubleButtonBox>
-              <StyledButton type="button" variant="contained">
-                {translate('appointments_page.signIn_button')}
-              </StyledButton>
-              <CancelBtn type="button" variant="outlined">
-                {translate('appointments_page.cancel_appointment_button')}
-              </CancelBtn>
-            </DoubleButtonBox>
-          </DrawerFooter>
-        )}
+        <DrawerFooter>{DRAWER_FOOTERS[selectedAppointment.status]}</DrawerFooter>
       </Drawer>
       <Modal
         onClose={handleModalClose}

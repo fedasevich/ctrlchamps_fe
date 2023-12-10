@@ -10,8 +10,8 @@ export type Appointment = {
   activityNote?: string;
   diagnosisNote?: string;
   capabilityNote?: string;
-  startDate: Date;
-  endDate: Date;
+  startDate: string;
+  endDate: string;
   timezone: string;
   weekdays?: string[];
   payment?: number;

@@ -26,14 +26,15 @@ export const appointmentApi = createApi({
       }),
     }),
     getAppointment: builder.query<DetailedAppointment, string>({
-      query: (appointmentId: string) => ({
+      query: (appointmentId) => ({
         url: `/${appointmentId}`,
       }),
     }),
     updateAppointment: builder.mutation<void, Partial<Appointment>>({
-      query: () => ({
+      query: (appointment) => ({
         url: '',
         method: 'PATCH',
+        body: appointment,
       }),
     }),
   }),

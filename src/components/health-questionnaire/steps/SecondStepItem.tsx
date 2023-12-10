@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Typography } from '@mui/material';
 import { selectActivity } from 'src/redux/slices/healthQuestionnaireSlice';
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from 'src/redux/store';
+import { RootState } from 'src/redux/rootReducer';
 import { useLocales } from 'src/locales';
 import {
   ToggleButtonGroupStyled,

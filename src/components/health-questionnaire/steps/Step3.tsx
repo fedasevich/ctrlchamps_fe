@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Checkbox, FormControlLabel, FormGroup, TextField } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocales } from 'src/locales';
-import { RootState } from 'src/redux/store';
+import { RootState } from 'src/redux/rootReducer';
 import { saveNote, selectEnvChallenges } from 'src/redux/slices/healthQuestionnaireSlice';
 import { EnvironmentChallenges } from 'src/components/health-questionnaire/constants';
 import {

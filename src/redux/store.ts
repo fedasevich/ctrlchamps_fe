@@ -3,7 +3,6 @@ import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 import { persistReducer, persistStore } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 
-import rootReducer from 'src/redux/rootReducer';
 import { addressReducer } from 'src/redux/slices/addressSlice';
 import { availableDaysReducer } from 'src/redux/slices/availableDaysSlice';
 import { certificateReducer } from 'src/redux/slices/certificateSlice';
@@ -21,6 +20,8 @@ import accountVerificationApi from 'src/redux/api/accountVerificationAPI';
 import authApi from 'src/redux/api/authApi';
 import profileApi from 'src/redux/api/profileCompleteApi';
 import questionnaireApi from 'src/redux/api/healthQuestionnaireApi';
+import appointmentApi from 'src/redux/api/appointmantApi';
+import { RootState } from 'src/redux/rootReducer';
 
 const persistConfig = {
   key: 'root',
@@ -48,6 +49,7 @@ const store = configureStore({
     [accountVerificationApi.reducerPath]: accountVerificationApi.reducer,
     [profileApi.reducerPath]: profileApi.reducer,
     [questionnaireApi.reducerPath]: questionnaireApi.reducer,
+    [appointmentApi.reducerPath]: appointmentApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
@@ -58,12 +60,12 @@ const store = configureStore({
       accountVerificationApi.middleware,
       profileApi.middleware,
       questionnaireApi.middleware,
+      appointmentApi.middleware,
     ]),
 });
 
 const persistor = persistStore(store);
 
-export type RootState = ReturnType<typeof rootReducer>;
 export const useTypedSelector: TypedUseSelectorHook<RootState> = useSelector;
 export type AppDispatch = typeof store.dispatch;
 export const useAppDispatch = () => useDispatch<AppDispatch>();

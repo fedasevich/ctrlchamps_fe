@@ -2,7 +2,7 @@ import { useCallback, useState } from 'react';
 import { useRouter } from 'next/router';
 import jwt_decode from 'jwt-decode';
 import { useSelector } from 'react-redux';
-import { RootState } from 'src/redux/store';
+import { RootState } from 'src/redux/rootReducer';
 import {
   ACCOUNT_VERIFIED_RESPONSE_MESSAGE,
   NO_ACCOUNT_TO_VERIFY_RESPONSE_MESSAGE,

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Checkbox, FormControlLabel, FormGroup, TextField, Typography } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from 'src/redux/store';
+import { RootState } from 'src/redux/rootReducer';
 import { useLocales } from 'src/locales';
 import { saveNote, selectDiagnosis } from 'src/redux/slices/healthQuestionnaireSlice';
 import { HealthConcernsAndMedicalDiagnoses } from 'src/components/health-questionnaire/constants';

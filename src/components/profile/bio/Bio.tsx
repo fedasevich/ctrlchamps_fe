@@ -8,7 +8,7 @@ import VideocamOutlinedIcon from '@mui/icons-material/VideocamOutlined';
 
 import { useUploadFileMutation, useUpdateProfileMutation } from 'src/redux/api/profileCompleteApi';
 import { useSelector } from 'react-redux';
-import { RootState } from 'src/redux/store';
+import { RootState } from 'src/redux/rootReducer';
 import { useLocales } from 'src/locales';
 import { ROUTES } from 'src/routes';
 import { useBioFormSchema } from 'src/components/profile/bio/validation';

@@ -19,23 +19,23 @@ export const appointmentApi = createApi({
       return headers;
     },
   }),
+  tagTypes: ['Appointments'],
   endpoints: (builder) => ({
     getAllAppointments: builder.query<Appointment[], void>({
-      query: () => ({
-        url: '',
-      }),
+      query: () => ({ url: '' }),
+      providesTags: ['Appointments'],
     }),
     getAppointment: builder.query<DetailedAppointment, string>({
-      query: (appointmentId) => ({
-        url: `/${appointmentId}`,
-      }),
+      query: (id) => ({ url: `/${id}` }),
+      providesTags: (result, error, id) => [{ type: 'Appointments', id }],
     }),
-    updateAppointment: builder.mutation<void, Partial<Appointment>>({
-      query: (appointment) => ({
-        url: '',
+    updateAppointment: builder.mutation<void, Partial<Appointment> & Pick<Appointment, 'id'>>({
+      query: ({ id, ...appointment }) => ({
+        url: `/${id}`,
         method: 'PATCH',
         body: appointment,
       }),
+      invalidatesTags: (result, error, { id }) => [{ type: 'Appointments', id }, 'Appointments'],
     }),
   }),
 });

@@ -20,7 +20,7 @@ import accountVerificationApi from 'src/redux/api/accountVerificationAPI';
 import authApi from 'src/redux/api/authApi';
 import profileApi from 'src/redux/api/profileCompleteApi';
 import questionnaireApi from 'src/redux/api/healthQuestionnaireApi';
-import appointmentApi from 'src/redux/api/appointmantApi';
+import appointmentApi from 'src/redux/api/appointmentApi';
 import { RootState } from 'src/redux/rootReducer';
 
 const persistConfig = {

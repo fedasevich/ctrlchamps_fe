@@ -4,18 +4,18 @@ import { IconButton } from '@mui/material';
 import RightAction from 'src/assets/icons/RightAction';
 import AppointmentStatus from 'src/components/appointments/appointment-status/AppointmentStatus';
 import AppointmentDrawer from 'src/components/appointments/appointment-drawer/AppointmentDrawer';
-import { PropsType, AppointmentType } from 'src/components/appointments/types';
+import { AppointmentsProps} from 'src/components/appointments/types';
 import { APPOINTMENT_STATUS } from 'src/constants';
 
 import { Item, RejectedTitle, TextContainer, Title } from './styles';
 
-export default function AppointmentsList({ appointments }: PropsType): JSX.Element {
+export default function AppointmentsList({ appointments }: AppointmentsProps): JSX.Element {
   const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(false);
-  const [selectedAppointment, setSelectedAppointment] = useState<AppointmentType | null>(null);
+  const [selectedAppointmentId, setSelectedAppointmentId] = useState<string | null>(null);
 
-  const handleDrawerOpen = (appointment: AppointmentType): void => {
+  const handleDrawerOpen = (appointmentId: string): void => {
     setIsDrawerOpen(true);
-    setSelectedAppointment(appointment);
+    setSelectedAppointmentId(appointmentId);
   };
   const handleDrawerClose = (): void => setIsDrawerOpen(false);
 
@@ -36,19 +36,19 @@ export default function AppointmentsList({ appointments }: PropsType): JSX.Eleme
             <IconButton
               edge="end"
               aria-label="open-drawer"
-              onClick={(): void => handleDrawerOpen(appointment)}
+              onClick={(): void => handleDrawerOpen(appointment.id)}
             >
               <RightAction />
             </IconButton>
           </Item>
         ))}
       </ul>
-      {selectedAppointment && (
+      {selectedAppointmentId && (
         <AppointmentDrawer
           isOpen={isDrawerOpen}
           setIsDrawerOpen={setIsDrawerOpen}
           onClose={handleDrawerClose}
-          selectedAppointment={selectedAppointment}
+          selectedAppointmentId={selectedAppointmentId}
         />
       )}
     </>

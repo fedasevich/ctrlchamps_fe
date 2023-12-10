@@ -4,10 +4,10 @@ import { useLocales } from 'src/locales';
 import { ROUTES } from 'src/routes';
 
 import AppointmentsList from './appointments-list/AppointmentsList';
-import { PropsType } from './types';
+import { AppointmentsProps } from './types';
 import { Background, Container, HeadContainer, Title, StyledButton } from './styles';
 
-export default function Appointments({ appointments }: PropsType): JSX.Element {
+export default function Appointments({ appointments }: AppointmentsProps): JSX.Element {
   const { translate } = useLocales();
   const router = useRouter();
 

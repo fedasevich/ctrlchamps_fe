@@ -491,7 +491,7 @@ const en = {
     cancel_button: 'Cancel',
     cancel_appointment_button: 'Cancel appointment',
     virtual_button: 'Virtual assessment',
-    signIn_button: 'Sign in the contract',
+    contract_button: 'View the signed contract',
     back_button: 'Back to the appointment',
     modal_title: 'Cancel the appointment',
     modal_subtitle: 'Are you sure you would like to cancel the appointment?',

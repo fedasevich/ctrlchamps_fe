@@ -1,4 +1,4 @@
-export type AppointmentType = {
+export type Appointment = {
   id: string;
   userId: string;
   caregiverInfoId: string;
@@ -17,6 +17,41 @@ export type AppointmentType = {
   payment?: number;
 };
 
-export type PropsType = {
-  appointments: AppointmentType[];
+export type AppointmentsProps = {
+  appointments: Appointment[];
+};
+
+export type SeekerTask = {
+  appointmentId: string;
+  name: string;
+};
+
+export type CaregiverInfo = {
+  id: string;
+  user: {
+    id: string;
+    firstName: string;
+    lastName: string;
+  };
+};
+
+export type DetailedAppointment = {
+  id: string;
+  userId: string;
+  caregiverInfoId: string;
+  name: string;
+  type: string;
+  status: string;
+  details?: string;
+  location: string;
+  activityNote?: string;
+  diagnosisNote?: string;
+  capabilityNote?: string;
+  startDate: Date;
+  endDate: Date;
+  timezone: string;
+  weekdays?: string[];
+  payment?: number;
+  seekerTasks: SeekerTask[];
+  caregiverInfo: CaregiverInfo;
 };

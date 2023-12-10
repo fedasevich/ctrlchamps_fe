@@ -12,10 +12,8 @@ import { SMALL_CAREGIVER_AVATAR_SIZE } from 'src/components/appointments/constan
 import {
   getMockCaregiverAvatar,
   getFormattedDate,
-  mockedTasks,
-  mockedCaregiver,
+  mockedAppointment,
 } from 'src/components/appointments/helpers';
-import { AppointmentType } from 'src/components/appointments/types';
 
 import ArrowBackFilled from 'src/assets/icons/ArrowBackFilled';
 import RightAction from 'src/assets/icons/RightAction';
@@ -40,20 +38,17 @@ interface AppointmentsDrawerProps {
   isOpen: boolean;
   onClose: () => void;
   setIsDrawerOpen: Dispatch<SetStateAction<boolean>>;
-  selectedAppointment: AppointmentType;
+  selectedAppointmentId: string;
 }
 
 export default function AppointmentDrawer({
   isOpen,
   onClose,
   setIsDrawerOpen,
-  selectedAppointment,
+  selectedAppointmentId,
 }: AppointmentsDrawerProps): JSX.Element {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-  const formattedStartDate = useMemo(
-    () => getFormattedDate(selectedAppointment.startDate),
-    [selectedAppointment.startDate]
-  );
+  const formattedStartDate = useMemo(() => getFormattedDate(mockedAppointment.startDate), []);
 
   const { translate } = useLocales();
 
@@ -80,7 +75,7 @@ export default function AppointmentDrawer({
     [APPOINTMENT_STATUS.Active]: (
       <DoubleButtonBox>
         <StyledButton type="button" variant="contained">
-          {translate('appointments_page.signIn_button')}
+          {translate('appointments_page.contract_button')}
         </StyledButton>
         <CancelBtn type="button" variant="outlined">
           {translate('appointments_page.cancel_appointment_button')}
@@ -105,18 +100,19 @@ export default function AppointmentDrawer({
         </DrawerHeader>
         <DrawerBody>
           <Block>
-            <AppointmentName>{selectedAppointment.name}</AppointmentName>
-            <AppointmentStatus status={selectedAppointment.status} />
+            <AppointmentName>{mockedAppointment.name}</AppointmentName>
+            <AppointmentStatus status={mockedAppointment.status} />
           </Block>
           <Block>
             <SubTitle>{translate('appointments_page.drawer.caregiver')}</SubTitle>
             <CaregiverBlock>
               <DrawerAvatar
                 src={getMockCaregiverAvatar(SMALL_CAREGIVER_AVATAR_SIZE)}
-                alt={`${mockedCaregiver.firstName} ${mockedCaregiver.lastName}`}
+                alt={`${mockedAppointment.caregiverInfo.user.firstName} ${mockedAppointment.caregiverInfo.user.lastName}`}
               />
               <CaregiverName>
-                {mockedCaregiver.firstName} {mockedCaregiver.lastName}
+                {mockedAppointment.caregiverInfo.user.firstName}
+                {mockedAppointment.caregiverInfo.user.lastName}
               </CaregiverName>
               <StyledIconButton edge="end" aria-label="open-drawer">
                 <RightAction />
@@ -130,21 +126,21 @@ export default function AppointmentDrawer({
           <Block>
             <SubTitle>{translate('appointments_page.drawer.tasks')}</SubTitle>
             <TaskList>
-              {mockedTasks.map((task) => (
-                <Task key={task.id}>{task.name}</Task>
+              {mockedAppointment.seekerTasks.map((task) => (
+                <Task key={task.appointmentId}>{task.name}</Task>
               ))}
             </TaskList>
           </Block>
           <Block>
             <SubTitle>{translate('appointments_page.drawer.details')}</SubTitle>
-            {selectedAppointment.details ? (
-              <DateText>{selectedAppointment.details}</DateText>
+            {mockedAppointment.details ? (
+              <DateText>{mockedAppointment.details}</DateText>
             ) : (
               <DateText>{translate('appointments_page.drawer.details_empty')}</DateText>
             )}
           </Block>
         </DrawerBody>
-        <DrawerFooter>{DRAWER_FOOTERS[selectedAppointment.status]}</DrawerFooter>
+        <DrawerFooter>{DRAWER_FOOTERS[mockedAppointment.status]}</DrawerFooter>
       </Drawer>
       <Modal
         onClose={handleModalClose}

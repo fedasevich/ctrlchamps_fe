@@ -9,11 +9,14 @@ import { MAX_CHARACTERS_LENGTH } from 'src/constants';
 import { CONFIRM_NOTE_MAX_LENGTH } from 'src/components/confirm-appointment/constants';
 
 const en = {
-  app_title: 'App title',
-  app: `this application`,
-  example: 'text for demo purposes',
+  app_title: 'CtrlChamps',
   btn_next: 'next',
   date: 'Date',
+  logo_first_part: 'Ctrl',
+  logo_second_part: 'Champs',
+  appointments: 'Appointments',
+  schedule: 'Schedule',
+  chats: 'Chats',
   unexpected_error: 'Something went wrong, try again later...',
   loginForm: {
     emailInvalid: 'Email is incorrect',
@@ -90,6 +93,7 @@ const en = {
     passwordsNotMatching: 'Passwords field and Confirm password field must match',
     passwordRequired: 'Password is required',
     confirmPasswordRequired: 'Confirm password is required',
+    passwordNoSpaces: 'Password must not contain spaces',
     placeholderPassword: 'Password',
     placeholderConfirmPassword: 'Confirm Password',
   },
@@ -202,6 +206,7 @@ const en = {
     save: 'Save',
     return: 'Return',
     delete: 'Delete',
+    back: 'Back',
 
     addCertificate: 'Add Another Certificate',
 
@@ -250,6 +255,7 @@ const en = {
       workPlaceLength: `Work place must be at most ${MAX_CHARACTERS_LENGTH} characters`,
       workTypeRequired: 'Work type is required',
       startDateRequired: 'Start date is required',
+      startDateMax: 'Start date cannot exceed today`s date',
       endDateRequired: 'End date is required',
     },
   },
@@ -266,6 +272,9 @@ const en = {
     specify_time: ' Please specify your preferred time and your availability throughout the week',
     from: 'From',
     to: 'To',
+    invalid_time:
+      'Appointment cannot be ended before the start. Please choose another value in To field.',
+    equal_time_error: 'You cannot choose identical time',
   },
   completeProfileFifth: {
     placeholderRate: 'Rate ($/h)',
@@ -413,6 +422,33 @@ const en = {
     noLocations: 'No locations',
     notPreciseLocation: 'Location provided is not precise enough',
     addressDetailsFailed: 'Error fetching address details',
+  },
+  appointments_page: {
+    page_title: 'Appointments',
+    create_button: 'Create an Appointment',
+    cancel_button: 'Cancel',
+    cancel_appointment_button: 'Cancel appointment',
+    virtual_button: 'Virtual assessment',
+    contract_button: 'View the signed contract',
+    back_button: 'Back to the appointment',
+    modal_title: 'Cancel the appointment',
+    modal_subtitle: 'Are you sure you would like to cancel the appointment?',
+    status: {
+      pending: 'Pending confirmation',
+      rejected: 'Rejected',
+      accepted: 'Accepted',
+      virtual: 'Virtual assessment',
+      active: 'Active',
+      ongoing: 'Ongoing',
+      completed: 'Completed',
+    },
+    drawer: {
+      caregiver: 'Caregiver',
+      date: 'Date & Time',
+      tasks: 'Tasks',
+      details: 'Additional Details',
+      details_empty: 'Nothing specific',
+    },
   },
 };
 

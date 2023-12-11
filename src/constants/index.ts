@@ -30,3 +30,13 @@ export const weekDays = [
   abbr: string;
   value: daySelectedType;
 }[];
+
+export const APPOINTMENT_STATUS = {
+  Pending: 'Pending confirmation',
+  Rejected: 'Rejected',
+  Accepted: 'Accepted',
+  Virtual: 'Virtual assessment',
+  Active: 'Active',
+  Ongoing: 'Ongoing',
+  Completed: 'Completed',
+};

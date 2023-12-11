@@ -15,7 +15,6 @@ import { useBioFormSchema } from 'src/components/profile/bio/validation';
 import {
   ErrorMessage,
   MediaWrapper,
-  StyledSubmitButton,
   StyledForm,
   StyledIconButton,
   StyledVideo,
@@ -30,8 +29,13 @@ import {
   MOV_FORMAT,
   MP4_FORMAT,
 } from 'src/components/profile/bio/constants';
+import ProfileBtn from 'src/components/reusable/profile-btn/ProfileBtn';
 
-export function Bio(): JSX.Element {
+interface IProps {
+  onBack: () => void;
+}
+
+export function Bio({ onBack }: IProps): JSX.Element {
   const [videoPreviewURL, setVideoPreviewURL] = useState<string>('');
   const [uploadVideoMutation] = useUploadFileMutation();
   const [updateDescription] = useUpdateProfileMutation();
@@ -112,7 +116,7 @@ export function Bio(): JSX.Element {
           name="description"
           control={control}
           render={({ field }): ReactElement => (
-            <FilledInput {...field} error={!!errors.description} />
+            <FilledInput {...field} multiline maxRows={4} error={!!errors.description} />
           )}
         />
         {errors?.description && <ErrorMessage>{errors.description?.message}</ErrorMessage>}
@@ -153,9 +157,12 @@ export function Bio(): JSX.Element {
         )}
       </StyledFormControl>
 
-      <StyledSubmitButton type="submit" disabled={!isValid} variant="contained" color="primary">
-        {translate('profileBio.submit')}
-      </StyledSubmitButton>
+      <ProfileBtn
+        nextText={translate('profileBio.submit')}
+        backText={translate('profileQualification.back')}
+        disabled={!isValid}
+        onBack={onBack}
+      />
     </StyledForm>
   );
 }

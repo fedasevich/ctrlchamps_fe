@@ -8,3 +8,5 @@ export const DEFAULT_PROFILE_QUALIFICATION_VALUES: ProfileQualityFormValues = {
   expirationDate: '',
   isExpirationDateDisabled: false,
 };
+
+export const MAX_CERTIFICATE_DATE = new Date();

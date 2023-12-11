@@ -6,6 +6,7 @@ export const TYPOGRAPHY = {
   base_sm: 18,
   sm: 20,
   md: 24,
+  l: 32,
   lg: 34,
   xl: 48,
   xxl: 60,

@@ -1,7 +1,7 @@
 import { PLACES_DETAILS_FIELDS } from 'src/components/create-appointment-fourth/places-autocomplete/constants';
 import { AddressComponent } from 'src/components/create-appointment-fourth/places-autocomplete/enums';
 import { AutocompletedLocation } from 'src/components/create-appointment-fourth/types';
-import { getDetails } from 'use-places-autocomplete';
+import { GeocodeResult, getDetails, getLatLng } from 'use-places-autocomplete';
 
 export const getPlaceIdDetails = async (placeId: string): Promise<AutocompletedLocation> => {
   try {
@@ -21,6 +21,7 @@ export const getPlaceIdDetails = async (placeId: string): Promise<AutocompletedL
       state: '',
       zipCode: '',
       utcOffset: 0,
+      latLng: '',
     };
 
     if (typeof placeResult === 'string' || !placeResult.address_components) {
@@ -51,6 +52,9 @@ export const getPlaceIdDetails = async (placeId: string): Promise<AutocompletedL
     });
 
     addressInfo.utcOffset = placeResult.utc_offset_minutes || 0;
+
+    const latLng = getLatLng(placeResult as GeocodeResult);
+    addressInfo.latLng = `${latLng.lat},${latLng.lng}`;
 
     return addressInfo;
   } catch (error) {

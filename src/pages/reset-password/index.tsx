@@ -47,7 +47,12 @@ export default function ResetPassword(): JSX.Element {
       <Head>
         <title>{translate('reset_password.title')}</title>
       </Head>
-      <FlowHeader text={translate('reset_password.title')} callback={pushBack} iconType="back" />
+      <FlowHeader
+        text={translate('reset_password.title')}
+        callback={pushBack}
+        infoButton
+        iconType="back"
+      />
       {handleSteps(currentStep)}
     </>
   );

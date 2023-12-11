@@ -15,6 +15,7 @@ export default function HealthQuestionnairePage(): JSX.Element {
       <FlowHeader
         text={translate('health_questionnaire.header_text')}
         iconType="close"
+        infoButton
         callback={handleOpen}
       />
       <HealthQuestionnaire />

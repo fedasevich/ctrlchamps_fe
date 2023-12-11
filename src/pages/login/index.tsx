@@ -19,6 +19,7 @@ export default function Login(): JSX.Element {
       </Head>
       <FlowHeader
         text={translate('loginForm.title')}
+        infoButton
         callback={(): Promise<boolean> => router.push(ROUTES.home)}
         iconType="back"
       />

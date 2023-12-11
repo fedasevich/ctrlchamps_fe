@@ -24,7 +24,7 @@ const AccountVerification: React.FC<AccountVerificationProps> = (): JSX.Element 
 
   return (
     <>
-      <FlowHeader text={t('account_verification.account_verification')} />
+      <FlowHeader text={t('account_verification.account_verification')} infoButton />
       {isSubmitted ? (
         <SuccessfulVerification profile={role} />
       ) : (

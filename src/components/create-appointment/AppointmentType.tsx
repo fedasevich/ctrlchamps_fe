@@ -50,6 +50,7 @@ export default function AppointmentType(): JSX.Element {
       <FlowHeader
         text={translate('create_appointment.header_text')}
         iconType="close"
+        infoButton
         callback={handleOpen}
       />
       <Background>

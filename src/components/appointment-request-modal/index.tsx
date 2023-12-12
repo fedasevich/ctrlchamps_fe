@@ -1,10 +1,17 @@
 import React from 'react';
-import { Avatar, Button, Grid, List, ListItem, ListItemText } from '@mui/material';
+import { Avatar, Button, Grid, List, ListItemText } from '@mui/material';
+import { format } from 'date-fns';
 import { useLocales } from 'src/locales';
 import CheckCircle from 'src/assets/icons/CheckCircle';
-import FlowHeader from 'src/components/reusable/header/FlowHeader';
+import { useUpdateAppointmentMutation } from 'src/redux/api/appointmentApi';
+import { APPOINTMENT_STATUS } from 'src/constants';
 import { FilledButton } from 'src/components/reusable';
+import FlowHeader from 'src/components/reusable/header/FlowHeader';
 import { ChildModal } from 'src/components/appointment-request-modal/HealthQuestionnaireModal';
+import { DRAWER_DATE_FORMAT } from 'src/components/appointments/constants';
+import { Steps } from 'src/components/health-questionnaire/constants';
+import AppointmentStatus from 'src/components/appointments/appointment-status/AppointmentStatus';
+import { AppointmentRequestModalProps } from './types';
 import {
   AppointmentModal,
   AppointmentModalBlock,
@@ -15,26 +22,7 @@ import {
   InlineBlock,
   ListItemStyled,
   NameParagraph,
-  StatusParagraph,
 } from './styles';
-
-type appointmentProps = {
-  name: string;
-  status: string;
-  seeker: string;
-  appointmentDate: string;
-  appointmentTime: string;
-  health_questionnaire: { diagnoses: string[]; activity: string[]; env: string[] };
-  tasks: string[];
-  details: string;
-  notes: string[];
-};
-
-type AppointmentRequestModalProps = {
-  appointment: appointmentProps;
-  isOpen: boolean;
-  switchModalVisibility: () => void;
-};
 
 const AppointmentRequestModal = ({
   appointment,
@@ -42,6 +30,19 @@ const AppointmentRequestModal = ({
   switchModalVisibility,
 }: AppointmentRequestModalProps): JSX.Element => {
   const { translate } = useLocales();
+  const [updateAppointment] = useUpdateAppointmentMutation();
+
+  const handleUpdateAppointment = async (status: string): Promise<void> => {
+    try {
+      await updateAppointment({
+        id: appointment.id,
+        status,
+      });
+      switchModalVisibility();
+    } catch (error) {
+      throw new Error(error);
+    }
+  };
 
   return (
     <AppointmentModal open={isOpen} onClose={switchModalVisibility} anchor="right">
@@ -56,7 +57,7 @@ const AppointmentRequestModal = ({
         <AppointmentModalBlock>
           <AppointmentParagraph>{appointment.name}</AppointmentParagraph>
 
-          <StatusParagraph>{appointment.status}</StatusParagraph>
+          <AppointmentStatus status={appointment.status} />
         </AppointmentModalBlock>
 
         <AppointmentModalBlock>
@@ -65,7 +66,7 @@ const AppointmentRequestModal = ({
           </AppointmentModalBlockParagraph>
           <InlineBlock>
             <Avatar />
-            <NameParagraph>{appointment.seeker}</NameParagraph>
+            <NameParagraph>{appointment.userName}</NameParagraph>
           </InlineBlock>
         </AppointmentModalBlock>
 
@@ -73,7 +74,7 @@ const AppointmentRequestModal = ({
           <AppointmentModalBlockParagraph>
             {translate('request_appointment.date_and_time')}
           </AppointmentModalBlockParagraph>
-          {appointment.appointmentDate}, {appointment.appointmentTime}
+          {format(new Date(appointment.startDate), DRAWER_DATE_FORMAT)}
         </AppointmentModalBlock>
 
         <AppointmentModalBlock>
@@ -81,31 +82,31 @@ const AppointmentRequestModal = ({
             {translate('request_appointment.health_questionnaire')}
           </AppointmentModalBlockParagraph>
           <HealthQuestionnaireBlock>
-            {Object.keys(appointment.health_questionnaire).map((item, index) => {
-              if (item === 'diagnoses' || item === 'activity' || item === 'env') {
-                return (
-                  <Grid container key={index} sx={{ padding: '5px 0', alignItems: 'center' }}>
-                    <Grid item xs={2}>
-                      <CheckCircle />
-                    </Grid>
-                    <Grid item xs={8}>
-                      {translate(`health_questionnaire.${item}`)}
-                    </Grid>
-                    <Grid item xs={2}>
-                      <ChildModal
-                        name={item}
-                        list={
-                          appointment.health_questionnaire[
-                            item as keyof typeof appointment.health_questionnaire
-                          ]
-                        }
-                        note={appointment.notes[index]}
-                      />
-                    </Grid>
+            {Steps.map((text, index) => {
+              const data = [
+                appointment.seekerDiagnosis.map((diagnosis) => diagnosis.name),
+                appointment.seekerActivities.map((activity) => activity),
+                appointment.seekerCapabilities.map((capability) => capability.name),
+              ][index];
+              const noteData = [
+                appointment.diagnosisNote,
+                appointment.activityNote,
+                appointment.capabilityNote,
+              ][index];
+
+              return (
+                <Grid container key={index} alignItems="center" padding="5px 0">
+                  <Grid item xs={2}>
+                    <CheckCircle />
                   </Grid>
-                );
-              }
-              return null;
+                  <Grid item xs={8}>
+                    {translate(text)}
+                  </Grid>
+                  <Grid item xs={2}>
+                    <ChildModal name={translate(text)} list={data} note={noteData} />
+                  </Grid>
+                </Grid>
+              );
             })}
           </HealthQuestionnaireBlock>
         </AppointmentModalBlock>
@@ -115,9 +116,9 @@ const AppointmentRequestModal = ({
             {translate('request_appointment.tasks')}
           </AppointmentModalBlockParagraph>
           <List>
-            {appointment.tasks.map((value) => (
-              <ListItemStyled key={value} disableGutters>
-                <ListItemText primary={value} />
+            {appointment.seekerTasks.map((value) => (
+              <ListItemStyled key={value.name} disableGutters>
+                <ListItemText primary={value.name} />
               </ListItemStyled>
             ))}
           </List>
@@ -132,10 +133,20 @@ const AppointmentRequestModal = ({
 
         <AppointmentModalBlock>
           <InlineBlock>
-            <Button variant="outlined" color="error" fullWidth>
+            <Button
+              variant="outlined"
+              color="error"
+              fullWidth
+              onClick={(): Promise<void> => handleUpdateAppointment(APPOINTMENT_STATUS.Rejected)}
+            >
               {translate('request_appointment.btns.reject')}
             </Button>
-            <FilledButton fullWidth>{translate('request_appointment.btns.accept')}</FilledButton>
+            <FilledButton
+              fullWidth
+              onClick={(): Promise<void> => handleUpdateAppointment(APPOINTMENT_STATUS.Accepted)}
+            >
+              {translate('request_appointment.btns.accept')}
+            </FilledButton>
           </InlineBlock>
         </AppointmentModalBlock>
       </DrawerBody>

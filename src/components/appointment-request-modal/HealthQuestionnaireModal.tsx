@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { Button, List, ListItem, ListItemText, Modal, TextField } from '@mui/material';
+import { Button, List, Modal, TextField } from '@mui/material';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
-import FlowHeader from 'src/components/reusable/header/FlowHeader';
 import { useLocales } from 'src/locales';
-import { SECONDARY } from 'src/theme/colors';
+import FlowHeader from 'src/components/reusable/header/FlowHeader';
+import { Activity } from './types';
 
 import {
   HealthQuestionnaireBlock,
@@ -11,12 +11,13 @@ import {
   ModalBlock,
   ListItemTextStyled,
   ListItemStyled,
+  InactiveStyledButton,
 } from './styles';
 
 type ChildModalProps = {
   name: string;
   note: string;
-  list: string[];
+  list: string[] | Activity[];
 };
 
 export function ChildModal({ name, note, list }: ChildModalProps): JSX.Element {
@@ -26,6 +27,7 @@ export function ChildModal({ name, note, list }: ChildModalProps): JSX.Element {
   const handleOpen = (): void => {
     setOpen(true);
   };
+
   const handleClose = (): void => {
     setOpen(false);
   };
@@ -37,17 +39,18 @@ export function ChildModal({ name, note, list }: ChildModalProps): JSX.Element {
       </Button>
       <Modal open={open} onClose={handleClose} aria-labelledby="child-modal-title">
         <HealthQuestionnaireModal>
-          <FlowHeader
-            text={translate(`health_questionnaire.${name}`)}
-            iconType="close"
-            callback={handleClose}
-          />
+          <FlowHeader text={translate(name)} iconType="close" callback={handleClose} />
           <ModalBlock>
             <List>
-              {list.map((value) => (
-                <ListItemStyled key={value} disableGutters>
+              {list.map((value, index) => (
+                <ListItemStyled key={index} disableGutters>
                   <CheckBoxIcon fontSize="medium" color="primary" />
-                  <ListItemTextStyled primary={value} />
+                  <ListItemTextStyled primary={typeof value === 'string' ? value : value.name} />
+                  {typeof value !== 'string' && (
+                    <InactiveStyledButton variant="contained" disabled>
+                      {value.answer}
+                    </InactiveStyledButton>
+                  )}
                 </ListItemStyled>
               ))}
             </List>
@@ -59,7 +62,7 @@ export function ChildModal({ name, note, list }: ChildModalProps): JSX.Element {
                   label={translate('health_questionnaire.note')}
                   variant="standard"
                   size="small"
-                  value={note}
+                  value={translate(note)}
                   InputProps={{
                     readOnly: true,
                   }}

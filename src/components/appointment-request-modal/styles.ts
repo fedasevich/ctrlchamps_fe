@@ -1,4 +1,4 @@
-import { Drawer, ListItem, ListItemText, styled } from '@mui/material';
+import { Button, Drawer, ListItem, ListItemText, styled } from '@mui/material';
 import typography from 'src/theme/typography';
 import { PRIMARY, SECONDARY } from 'src/theme/colors';
 import { TYPOGRAPHY } from 'src/theme/fonts';
@@ -17,7 +17,7 @@ export const DrawerBody = styled('div')`
   flex-direction: column;
   overflow-y: auto;
   height: 100%;
-  background-color: rgba(8, 188, 184, 0.04);
+  background-color: ${SECONDARY.drawer_background};
   width: 360px;
 `;
 
@@ -47,10 +47,6 @@ export const AppointmentParagraph = styled('p')`
   line-height: 1.5;
 `;
 
-export const StatusParagraph = styled('p')`
-  color: #ffa500;
-`;
-
 export const NameParagraph = styled('p')`
   font-size: ${TYPOGRAPHY.base_sm}px;
   padding-left: 10px;
@@ -73,8 +69,13 @@ export const ModalBlock = styled('div')`
 
 export const ListItemStyled = styled(ListItem)`
   border-bottom: 1px solid ${SECONDARY.light_gray};
+  padding-bottom: 5px;
 `;
 
 export const ListItemTextStyled = styled(ListItemText)`
   padding-left: 10px;
+`;
+
+export const InactiveStyledButton = styled(Button)`
+  min-width: 180px;
 `;

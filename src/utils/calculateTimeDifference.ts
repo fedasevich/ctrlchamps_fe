@@ -1,48 +1,29 @@
+// function to calculate time difference between two time values
+//  @param startTime - "10:00"
+//  @param endTime - "12:20"
+//  @return - {hours: 2, minutes: 20}
+
 export function calculateTimeDifference(
   startTime: string,
   endTime: string
-): {
-  hours: number;
-  minutes: number;
-} {
-  const timeRegex = /(\d{2}):(\d{2}) (AM|PM)/;
+): { hours: number; minutes: number } {
+  const [hours1, minutes1] = startTime.split(':').map(Number);
+  const [hours2, minutes2] = endTime.split(':').map(Number);
 
-  const startTimeMatch = timeRegex.exec(startTime);
-  const endTimeMatch = timeRegex.exec(endTime);
+  const totalMinutes1 = hours1 * 60 + minutes1;
+  const totalMinutes2 = hours2 * 60 + minutes2;
 
-  if (!startTimeMatch || !endTimeMatch) {
-    throw new Error('Invalid time format');
-  }
+  const adjustedTotalMinutes2 =
+    totalMinutes2 < totalMinutes1 ? totalMinutes2 + 24 * 60 : totalMinutes2;
 
-  const startHours = parseInt(startTimeMatch[1], 10);
-  const startMinutes = parseInt(startTimeMatch[2], 10);
-  const startPeriod = startTimeMatch[3];
+  const differenceInMinutes = Math.abs(adjustedTotalMinutes2 - totalMinutes1);
 
-  const endHours = parseInt(endTimeMatch[1], 10);
-  const endMinutes = parseInt(endTimeMatch[2], 10);
-  const endPeriod = endTimeMatch[3];
-
-  const adjustedStartHours = (startHours % 12) + (startPeriod === 'PM' ? 12 : 0);
-  const adjustedEndHours = (endHours % 12) + (endPeriod === 'PM' ? 12 : 0);
-
-  let hours = adjustedEndHours - adjustedStartHours;
-  let minutes = endMinutes - startMinutes;
-
-  if (hours < 0) {
-    hours += 24;
-  }
-
-  if (minutes < 0) {
-    minutes += 60;
-    hours -= 1;
-  }
+  let hours = Math.floor(differenceInMinutes / 60);
+  const minutes = differenceInMinutes % 60;
 
   if (startTime === endTime) {
     hours = 24;
   }
 
-  return {
-    hours,
-    minutes,
-  };
+  return { hours, minutes };
 }

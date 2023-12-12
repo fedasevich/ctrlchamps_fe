@@ -27,9 +27,10 @@ import ProfileBtn from 'src/components/reusable/profile-btn/ProfileBtn';
 
 interface IProps {
   onNext: () => void;
+  onBack: () => void;
 }
 
-function CompleteProfileFifth({ onNext }: IProps): JSX.Element {
+function CompleteProfileFifth({ onNext, onBack }: IProps): JSX.Element {
   const { translate } = useLocales();
   const dispatch = useAppDispatch();
   const completeProfileFifthSchema = useCompleteProfileFifthSchema();
@@ -112,7 +113,12 @@ function CompleteProfileFifth({ onNext }: IProps): JSX.Element {
             <ErrorMessage variant="caption">{errors.hourlyRate?.message}</ErrorMessage>
           )}
         </InputWrapper>
-        <ProfileBtn text={translate('btn_next')} disabled={!isDirty || !isValid} />
+        <ProfileBtn
+          nextText={translate('btn_next')}
+          backText={translate('profileQualification.back')}
+          disabled={!isDirty || !isValid}
+          onBack={onBack}
+        />
       </StyledForm>
     </Wrapper>
   );

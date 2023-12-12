@@ -36,6 +36,12 @@ function Profile(): JSX.Element | null {
     setActiveStepIndex(activeStepIndex + SECOND_STEP_INDEX);
   };
 
+  const handleBack = (): void => {
+    if (activeStepIndex > FIRST_STEP_INDEX) {
+      setActiveStepIndex(activeStepIndex - SECOND_STEP_INDEX);
+    }
+  };
+
   const STEPS: Step[] = [
     {
       label: translate('profile.qualification'),
@@ -43,33 +49,27 @@ function Profile(): JSX.Element | null {
     },
     {
       label: translate('profile.workExperience'),
-      component: <CompleteProfileSecond onNext={handleNext} />,
+      component: <CompleteProfileSecond onNext={handleNext} onBack={handleBack} />,
     },
     {
       label: translate('profile.services'),
-      component: <CompleteProfileThird onNext={handleNext} />,
+      component: <CompleteProfileThird onNext={handleNext} onBack={handleBack} />,
     },
     {
       label: translate('profile.availability'),
-      component: <CompleteProfileFourth onNext={handleNext} />,
+      component: <CompleteProfileFourth onNext={handleNext} onBack={handleBack} />,
     },
     {
       label: translate('profile.rates'),
-      component: <CompleteProfileFifth onNext={handleNext} />,
+      component: <CompleteProfileFifth onNext={handleNext} onBack={handleBack} />,
     },
     {
       label: translate('profile.bio'),
-      component: <Bio />,
+      component: <Bio onBack={handleBack} />,
     },
   ];
 
   const ActiveStepComponent = STEPS[activeStepIndex].component;
-
-  const handleBack = (): void => {
-    if (activeStepIndex > FIRST_STEP_INDEX) {
-      setActiveStepIndex(activeStepIndex - SECOND_STEP_INDEX);
-    }
-  };
 
   const handleStep = (stepIndex: number) => () => {
     if (stepIndex === FIRST_STEP_INDEX || completed[stepIndex - SECOND_STEP_INDEX]) {
@@ -82,12 +82,16 @@ function Profile(): JSX.Element | null {
       <Head>
         <title>{translate('profile.pageTitle')}</title>
       </Head>
+<<<<<<< HEAD
       <FlowHeader
         text={translate('profile.headerTitle')}
         iconType="back"
         infoButton
         callback={handleBack}
       />
+=======
+      <FlowHeader text={translate('profile.headerTitle')} />
+>>>>>>> develop
       <HorizontalStepper
         activeStep={activeStepIndex}
         completed={completed}

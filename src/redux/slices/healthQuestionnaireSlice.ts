@@ -2,14 +2,14 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface HealthQuestionnaireState {
   selectedDiagnoses: string[];
-  selectedActivities: Record<string, string>;
+  selectedActivities: { id: string; answer: string }[];
   selectedEnvChallenges: string[];
   notes: Record<string, string>;
 }
 
 const initialState: HealthQuestionnaireState = {
   selectedDiagnoses: [],
-  selectedActivities: {},
+  selectedActivities: [],
   selectedEnvChallenges: [],
   notes: {},
 };
@@ -19,8 +19,7 @@ interface SelectDiagnosisPayload {
 }
 
 interface SelectActivityPayload {
-  activityName: string;
-  status: string;
+  activities: { id: string; answer: string }[];
 }
 
 interface SelectEnvChallengesPayload {
@@ -40,11 +39,7 @@ const healthQuestionnaireSlice = createSlice({
       state.selectedDiagnoses = action.payload.diagnoses;
     },
     selectActivity(state, action: PayloadAction<SelectActivityPayload>) {
-      const { activityName, status } = action.payload;
-      state.selectedActivities = {
-        ...state.selectedActivities,
-        [activityName]: status,
-      };
+      state.selectedActivities = action.payload.activities;
     },
     selectEnvChallenges(state, action: PayloadAction<SelectEnvChallengesPayload>) {
       state.selectedEnvChallenges = action.payload.challenges;

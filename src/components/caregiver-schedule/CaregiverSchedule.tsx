@@ -5,7 +5,7 @@ import CreateAppointmentIcon from 'src/assets/icons/CreateAppointmentIcon';
 import AppointmentDrawer from 'src/components/appointments/appointment-drawer/AppointmentDrawer';
 import { useLocales } from 'src/locales';
 import CaregiverAppointment from './CaregiverAppointment';
-import { ONE_DAY, currentDay } from './constants';
+import { CURRENT_DAY, ONE_DAY } from './constants';
 import { mocksChosenDay, mokcsNextDay } from './mocks';
 import {
   AppointmentsContainer,
@@ -28,7 +28,7 @@ export default function CaregiverSchedule({
   const { translate } = useLocales();
 
   const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(false);
-  const [chosenDay, setChosenDay] = useState<Date>(currentDay);
+  const [chosenDay, setChosenDay] = useState<Date>(CURRENT_DAY);
   const [nextDay, setNextDay] = useState<Date>(addDays(chosenDay, ONE_DAY));
   const [chosenDayAppointments, setChosenDayAppointments] = useState<CaregiverAppointmentI[]>([]);
   const [nextDayAppointments, setNextDayAppointments] = useState<CaregiverAppointmentI[]>([]);
@@ -47,8 +47,8 @@ export default function CaregiverSchedule({
   };
 
   const chooseCurrentDate = (): void => {
-    setChosenDay(currentDay);
-    setNextDay(addDays(currentDay, ONE_DAY));
+    setChosenDay(CURRENT_DAY);
+    setNextDay(addDays(CURRENT_DAY, ONE_DAY));
   };
 
   const openDrawer = (): void => setIsDrawerOpen(true);

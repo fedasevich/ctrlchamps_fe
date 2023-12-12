@@ -28,6 +28,82 @@ export interface AppointmentPayload {
   }[];
 }
 
+type AppointmentUser = {
+  id: string;
+  firstName: string;
+  lastName: string;
+};
+
+export interface Capability {
+  id: string;
+  name: string;
+}
+
+export interface Activity {
+  id: string;
+  name: string;
+}
+
+export interface Diagnosis {
+  id: string;
+  name: string;
+}
+
+export interface SeekerActivity {
+  appointmentId: string;
+  activityId: string;
+  answer: string;
+  activity: Activity;
+}
+
+export interface SeekerCapability {
+  appointmentId: string;
+  capabilityId: string;
+  capability: Capability;
+}
+
+export interface SeekerDiagnosis {
+  appointmentId: string;
+  diagnosisId: string;
+  diagnosis: Diagnosis;
+}
+
+export interface SeekerTask {
+  appointmentId: string;
+  name: string;
+}
+
+interface AppointmentCaregiverInfo {
+  id: string;
+  timeZone: string;
+  user: AppointmentUser;
+}
+
+export interface DetailedAppointment {
+  id: string;
+  userId: string;
+  caregiverInfoId: string;
+  name: string;
+  type: string;
+  status: string;
+  details: string;
+  payment: number;
+  location: string;
+  activityNote: string;
+  diagnosisNote: string;
+  capabilityNote: string;
+  startDate: string;
+  endDate: string;
+  timezone: string;
+  weekday: string[];
+  caregiverInfo: AppointmentCaregiverInfo;
+  user: AppointmentUser;
+  seekerActivities: SeekerActivity[];
+  seekerCapabilities: SeekerCapability[];
+  seekerDiagnoses: SeekerDiagnosis[];
+  seekerTasks: SeekerTask[];
+}
+
 export const appointmentApi = createApi({
   reducerPath: 'appointmentApi',
   baseQuery: fetchBaseQuery({
@@ -56,6 +132,9 @@ export const appointmentApi = createApi({
     }),
     getCaregiverDetails: builder.query<Caregiver, string>({
       query: (caregiverId) => ({ url: `${route.caregivers}/${caregiverId}`, method: 'GET' }),
+    }),
+    getAppointmentDetails: builder.query<DetailedAppointment, string>({
+      query: (appointmentId) => ({ url: `${route.appointment}/${appointmentId}`, method: 'GET' }),
     }),
   }),
 });

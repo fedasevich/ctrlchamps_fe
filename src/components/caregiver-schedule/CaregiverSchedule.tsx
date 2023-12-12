@@ -4,8 +4,8 @@ import { useEffect, useState } from 'react';
 import CreateAppointmentIcon from 'src/assets/icons/CreateAppointmentIcon';
 import AppointmentDrawer from 'src/components/appointments/appointment-drawer/AppointmentDrawer';
 import { useLocales } from 'src/locales';
+import { CURRENT_DAY, ONE_DAY } from 'src/constants';
 import CaregiverAppointment from './CaregiverAppointment';
-import { CURRENT_DAY, ONE_DAY } from './constants';
 import { mocksChosenDay, mokcsNextDay } from './mocks';
 import {
   AppointmentsContainer,

@@ -20,11 +20,7 @@ export default function HomePage(): JSX.Element {
         <title>{translate('app_title')}</title>
       </Head>
       <MainHeader activeTab={activeTab} setActiveTab={setActiveTab} />
-      {/* {mockedAppointments.length > 0 ? (
-        <Appointments appointments={mockedAppointments} />
-      ) : (
-        <BookAppointment />
-      )} */}
+
       <CaregiverSchedule isCalendarVisible={activeTab === TabType.appointment} />
     </>
   );

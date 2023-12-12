@@ -3,7 +3,7 @@ import { format } from 'date-fns';
 import AccessTimeIcon from 'src/assets/icons/AccessTimeIcon';
 import AppointmentStatus from 'src/components/appointments/appointment-status/AppointmentStatus';
 import { formatTimeToTimezone } from 'src/utils/formatTime';
-import { DISPLAY_DATE_FORMAT, DISPLAY_TIME_FORMAT } from './constants';
+import { DISPLAY_DATE_FORMAT, DISPLAY_TIME_FORMAT } from 'src/constants';
 import {
   AppointmentDay,
   AppointmentDetails,

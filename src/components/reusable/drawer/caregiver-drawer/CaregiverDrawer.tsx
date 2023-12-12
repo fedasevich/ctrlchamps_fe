@@ -27,6 +27,7 @@ import {
   DrawerTextTitle,
   DrawerTextValue,
   StyledLink,
+  StyledStack,
   StyledTab,
   StyledTabPanel,
   StyledTabs,
@@ -76,7 +77,7 @@ export default function CaregiverDrawer({
           src={getMockCaregiverAvatar(BIG_CAREGIVER_AVATAR_SIZE)}
           alt={`${selectedCaregiver.firstName} ${selectedCaregiver.lastName}`}
         />
-        <Stack alignItems="center" flexDirection="row" justifyContent="space-evenly" width="100%">
+        <StyledStack>
           <Stack flexDirection="column" alignItems="center">
             <FreeCancellation />
             <DrawerTextTitle>
@@ -89,7 +90,7 @@ export default function CaregiverDrawer({
             <DrawerTextTitle>{translate('createAppointmentFourth.rate')}</DrawerTextTitle>
             <DrawerTextValue>{selectedCaregiver.caregiverInfo.hourlyRate}</DrawerTextValue>
           </Stack>
-        </Stack>
+        </StyledStack>
       </DrawerStats>
       <TabContext value={selectedTab}>
         <StyledTabs

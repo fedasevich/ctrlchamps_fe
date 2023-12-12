@@ -450,6 +450,10 @@ const en = {
       details_empty: 'Nothing specific',
     },
   },
+  schedule_page: {
+    choose_today: 'Go to Today',
+    no_appointments: 'No appointments',
+  },
 };
 
 export default en;

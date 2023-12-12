@@ -1,6 +1,6 @@
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { Avatar } from '@mui/material';
-import { useState } from 'react';
+import { Dispatch, SetStateAction, useState } from 'react';
 import AppointmentsIcon from 'src/assets/icons/AppointmentsIcon';
 import ChatIcon from 'src/assets/icons/ChatIcon';
 import NotificationIcon from 'src/assets/icons/NotificationIcon';
@@ -28,14 +28,18 @@ import {
 import { ActiveTab } from './types';
 import { TabType } from './enums';
 
-export default function MainHeader(): JSX.Element {
+type Props = {
+  activeTab: ActiveTab;
+  setActiveTab: Dispatch<SetStateAction<ActiveTab>>;
+};
+
+export default function MainHeader({ activeTab, setActiveTab }: Props): JSX.Element {
   const { translate } = useLocales();
   const { firstName, lastName } = useTypedSelector(
     (state) => state.personalDetails.personalDetails
   );
   const { role } = useTypedSelector((state) => state.role);
 
-  const [activeTab, setActiveTab] = useState<ActiveTab>(null);
   const [isMenuVisible, setIsMenuVisible] = useState<boolean>(false);
 
   const openMenu = (): void => setIsMenuVisible(!isMenuVisible);

@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useLocales } from 'src/locales';
 import { RootState } from 'src/redux/rootReducer';
 import { saveNote, selectEnvChallenges } from 'src/redux/slices/healthQuestionnaireSlice';
-import { EnvironmentChallenges } from 'src/components/health-questionnaire/constants';
 import {
   QuestionnaireContainerContent,
   QuestionnaireTypeText,
@@ -17,9 +16,13 @@ type Step3Props = {
   onNext: () => void;
   onBack: () => void;
   stepKey: string;
+  capabilities: {
+    id: string;
+    name: string;
+  }[];
 };
 
-const Step3 = ({ onNext, onBack, stepKey }: Step3Props): JSX.Element => {
+const Step3 = ({ onNext, onBack, stepKey, capabilities }: Step3Props): JSX.Element => {
   const { translate } = useLocales();
   const dispatch = useDispatch();
 
@@ -28,7 +31,9 @@ const Step3 = ({ onNext, onBack, stepKey }: Step3Props): JSX.Element => {
   );
   const savedNote = useSelector((state: RootState) => state.healthQuestionnaire.notes[stepKey]);
 
-  const [selectedOptions, setSelectedOptions] = useState<string[]>(selectedEnvChallenges);
+  const [selectedOptions, setSelectedOptions] = useState<string[]>(
+    selectedEnvChallenges.map((challenge) => challenge)
+  );
   const [note, setNote] = useState<string>(savedNote || '');
 
   const handleOptionSelect = (value: string): void => {
@@ -51,22 +56,23 @@ const Step3 = ({ onNext, onBack, stepKey }: Step3Props): JSX.Element => {
   const handleSubmit = (): void => {
     onNext();
   };
+
   return (
     <div>
       <QuestionnaireContainerContent>
         <DescriptionBlock>{translate('health_questionnaire.env_description')}</DescriptionBlock>
         <QuestionnaireTypeText>{translate('health_questionnaire.env')}</QuestionnaireTypeText>
         <FormGroup>
-          {EnvironmentChallenges.map((item, index) => (
+          {capabilities.map((item, index) => (
             <FormControlLabel
               key={index}
               control={
                 <Checkbox
-                  checked={selectedOptions.includes(translate(item))}
-                  onChange={(): void => handleOptionSelect(translate(item))}
+                  checked={selectedOptions.includes(item.id)}
+                  onChange={(): void => handleOptionSelect(item.id)}
                 />
               }
-              label={translate(item)}
+              label={translate(item.name)}
             />
           ))}
         </FormGroup>
@@ -76,7 +82,7 @@ const Step3 = ({ onNext, onBack, stepKey }: Step3Props): JSX.Element => {
           variant="standard"
           size="small"
           value={note}
-          placeholder={translate('health_questionnaire.note_placeholder')}
+          placeholder={String(translate('health_questionnaire.note_placeholder'))}
           onChange={handleNoteChange}
         />
       </QuestionnaireContainerContent>

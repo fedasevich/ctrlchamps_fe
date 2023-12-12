@@ -1,13 +1,10 @@
 import { Alert, FormControl, InputLabel, MenuItem, Select, Snackbar } from '@mui/material';
-import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { ErrorText } from 'src/components/reusable';
 import ProfileBtn from 'src/components/reusable/profile-btn/ProfileBtn';
-import { TIMEZONE_FORMAT, weekDays } from 'src/constants';
-import { daySelectedType } from 'src/constants/types';
-import { useLocales } from 'src/locales';
-import { useUpdateProfileMutation } from 'src/redux/api/profileCompleteApi';
-import { chooseAvailableTime } from 'src/redux/slices/availableDaysSlice';
-import { useAppDispatch, useTypedSelector } from 'src/redux/store';
+import { weekDays } from 'src/constants';
 import { availableTimeOptions } from './constants';
+import useCompleteProfileFourth from './hooks';
 import {
   BaseText,
   Container,
@@ -23,70 +20,22 @@ interface IProps {
 }
 
 export default function CompleteProfileFourth({ onNext, onBack }: IProps): JSX.Element {
-  const { translate } = useLocales();
-  const dispatch = useAppDispatch();
-  const { days: availableDays } = useTypedSelector((state) => state.availableDays);
-  const [specifyAvailability] = useUpdateProfileMutation();
-
-  const [daySelected, setDaySelected] = useState<daySelectedType | null>(null);
-  const [chosenDays, setChosenDays] = useState<string[]>([]);
-  const [availableFrom, setAvailableFrom] = useState<string>('');
-  const [availableTo, setAvailableTo] = useState<string>('');
-  const [error, setError] = useState<boolean>(false);
-
-  useEffect(() => {
-    const selectedDays = availableDays.map(({ day }) => day);
-    setChosenDays(selectedDays);
-  }, [availableDays]);
-
-  useEffect(() => {
-    if (daySelected && availableFrom && availableTo) {
-      dispatch(
-        chooseAvailableTime({
-          time: {
-            startTime: availableFrom,
-            endTime: availableTo,
-            day: daySelected,
-          },
-        })
-      );
-    }
-  }, [daySelected, availableFrom, availableTo, dispatch]);
-
-  const chooseDay = (selectedDay: daySelectedType): void => {
-    const dayAlreadyChosen = availableDays.find(({ day }) => day === selectedDay);
-    setDaySelected(selectedDay);
-
-    if (dayAlreadyChosen) {
-      setAvailableFrom(dayAlreadyChosen.startTime);
-      setAvailableTo(dayAlreadyChosen.endTime);
-    } else {
-      setAvailableFrom('');
-      setAvailableTo('');
-    }
-
-    const filtered = availableDays.map(({ day }) => day);
-    setChosenDays(filtered);
-
-    if (!dayAlreadyChosen) {
-      setChosenDays((prev) => [...prev, selectedDay]);
-    }
-  };
-
-  const defineAvailableDays = async (): Promise<void> => {
-    try {
-      setError(false);
-      await specifyAvailability({
-        updateProfileDto: {
-          availability: [...availableDays],
-          timeZone: TIMEZONE_FORMAT,
-        },
-      }).unwrap();
-      onNext();
-    } catch (err) {
-      setError(true);
-    }
-  };
+  const { t: translate } = useTranslation();
+  const {
+    daySelected,
+    chosenDays,
+    availableFrom,
+    availableTo,
+    chooseDay,
+    chooseFromTime,
+    chooseToTime,
+    defineAvailableDays,
+    invalidTimeError,
+    identicalTimeError,
+    isButtonDisabled,
+    serverError,
+    setServerError,
+  } = useCompleteProfileFourth(onNext);
 
   return (
     <Wrapper>
@@ -109,7 +58,7 @@ export default function CompleteProfileFourth({ onNext, onBack }: IProps): JSX.E
             <Select
               disabled={daySelected === null}
               value={availableFrom}
-              onChange={(e): void => setAvailableFrom(e.target.value)}
+              onChange={(e): void => chooseFromTime(e.target.value)}
             >
               {availableTimeOptions.map((option) => (
                 <MenuItem key={option} value={option}>
@@ -123,7 +72,7 @@ export default function CompleteProfileFourth({ onNext, onBack }: IProps): JSX.E
             <Select
               disabled={daySelected === null}
               value={availableTo}
-              onChange={(e): void => setAvailableTo(e.target.value)}
+              onChange={(e): void => chooseToTime(e.target.value)}
             >
               {availableTimeOptions.map((option) => (
                 <MenuItem key={option} value={option}>
@@ -133,10 +82,16 @@ export default function CompleteProfileFourth({ onNext, onBack }: IProps): JSX.E
             </Select>
           </FormControl>
         </SelectContainer>
+        {invalidTimeError && (
+          <ErrorText>{translate('completeProfileFourth.invalid_time')}</ErrorText>
+        )}
+        {identicalTimeError && (
+          <ErrorText> {translate('completeProfileFourth.equal_time_error')}</ErrorText>
+        )}
         <Snackbar
-          open={error}
+          open={serverError}
           autoHideDuration={2500}
-          onClose={(): void => setError(false)}
+          onClose={(): void => setServerError(false)}
           anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
         >
           <Alert severity="error">{translate('unexpected_error')}</Alert>
@@ -145,7 +100,7 @@ export default function CompleteProfileFourth({ onNext, onBack }: IProps): JSX.E
           nextText={translate('btn_next')}
           backText={translate('profileQualification.back')}
           onClick={defineAvailableDays}
-          disabled={!daySelected || !availableFrom || !availableTo}
+          disabled={isButtonDisabled}
           onBack={onBack}
         />
       </Container>

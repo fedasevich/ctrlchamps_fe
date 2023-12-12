@@ -52,7 +52,7 @@ export const appointmentApi = createApi({
       }),
     }),
     getFilteredCaregivers: builder.query<PreviewCaregiver[], URLSearchParams>({
-      query: (params) => ({ url: `${route.caregivers}/filter`, method: 'GET', params }),
+      query: (params) => ({ url: `${route.caregivers}${route.filter}`, method: 'GET', params }),
     }),
     getCaregiverDetails: builder.query<Caregiver, string>({
       query: (caregiverId) => ({ url: `${route.caregivers}/${caregiverId}`, method: 'GET' }),

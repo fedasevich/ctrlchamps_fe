@@ -1,5 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { GOOGLE_MAP_API } from 'src/constants';
+import { route } from './routes';
 
 export interface TimezonePayload {
   language: string;
@@ -23,7 +24,7 @@ export const timezoneApi = createApi({
   }),
   endpoints: (builder) => ({
     getTimezone: builder.query<TimeZoneInfo, TimezonePayload>({
-      query: (params) => ({ url: `/timezone/json`, method: 'GET', params }),
+      query: (params) => ({ url: route.timezoneJson, method: 'GET', params }),
     }),
   }),
 });

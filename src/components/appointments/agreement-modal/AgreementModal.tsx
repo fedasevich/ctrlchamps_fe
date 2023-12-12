@@ -21,7 +21,9 @@ export default function AgreementModal({ appointment }: IProps): JSX.Element | n
 
   if (!appointment) return null;
 
-  const hoursPerWeek = getHoursForWeek(appointment.endDate, appointment.startDate);
+  const hoursPerWeek =
+    appointment.type === APPOINTMENT_TYPE.Recurring &&
+    getHoursForWeek(appointment.endDate, appointment.startDate) * appointment.weekdays!.length;
 
   return (
     <Container>
@@ -46,7 +48,7 @@ export default function AgreementModal({ appointment }: IProps): JSX.Element | n
           ))}
         </TaskList>
       </div>
-      {appointment.type === APPOINTMENT_TYPE.Recurring && (
+      {hoursPerWeek && (
         <div>
           <SubTitle>{translate('appointments_page.terms.schedule_title')}</SubTitle>
           <Text>

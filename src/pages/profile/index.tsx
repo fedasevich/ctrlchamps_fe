@@ -82,16 +82,7 @@ function Profile(): JSX.Element | null {
       <Head>
         <title>{translate('profile.pageTitle')}</title>
       </Head>
-<<<<<<< HEAD
-      <FlowHeader
-        text={translate('profile.headerTitle')}
-        iconType="back"
-        infoButton
-        callback={handleBack}
-      />
-=======
-      <FlowHeader text={translate('profile.headerTitle')} />
->>>>>>> develop
+      <FlowHeader text={translate('profile.headerTitle')} infoButton />
       <HorizontalStepper
         activeStep={activeStepIndex}
         completed={completed}

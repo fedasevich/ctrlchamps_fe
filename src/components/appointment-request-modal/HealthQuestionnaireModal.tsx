@@ -22,7 +22,7 @@ type ChildModalProps = {
 
 export function ChildModal({ name, note, list }: ChildModalProps): JSX.Element {
   const { translate } = useLocales();
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState<boolean>(false);
 
   const handleOpen = (): void => {
     setOpen(true);

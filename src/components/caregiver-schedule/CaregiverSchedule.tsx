@@ -33,10 +33,6 @@ export default function CaregiverSchedule({
   const [chosenDayAppointments, setChosenDayAppointments] = useState<CaregiverAppointmentI[]>([]);
   const [nextDayAppointments, setNextDayAppointments] = useState<CaregiverAppointmentI[]>([]);
 
-  useEffect(() => {
-    // get data for chosen day and the next day
-  }, []);
-
   const chooseDay = (date: Date | null): void => {
     if (date) {
       setChosenDay(date);

@@ -428,11 +428,17 @@ const en = {
     create_button: 'Create an Appointment',
     cancel_button: 'Cancel',
     cancel_appointment_button: 'Cancel appointment',
-    virtual_button: 'Virtual assessment',
+    virtual_button: 'View virtual assessment',
+    complete_button: 'Complete appointment',
     contract_button: 'View the signed contract',
+    sign_in_button: 'Sign in the contract',
+    sign_agreement_button: 'Sign agreement',
     back_button: 'Back to the appointment',
     modal_title: 'Cancel the appointment',
     modal_subtitle: 'Are you sure you would like to cancel the appointment?',
+    complete_modal_title: 'Complete appointment',
+    complete_modal_subtitle: 'Open original appointment',
+    agreement_modal_title: 'Personal Care Agreement',
     status: {
       pending: 'Pending confirmation',
       rejected: 'Rejected',
@@ -448,6 +454,34 @@ const en = {
       tasks: 'Tasks',
       details: 'Additional Details',
       details_empty: 'Nothing specific',
+    },
+    terms: {
+      term_of_agreement_title: 'Term Of Agreement',
+      term_of_agreement_text1: 'This agreement shall commence on ',
+      term_of_agreement_text2:
+        ' and may be terminated by either party on reasonable notice to the other party.',
+      purpose_title: 'Purpose',
+      purpose_text:
+        'The purpose of this Agreement is to set forth the terms and conditions under which CAREGIVER will assist CARE RECIPIENT with instrumental activities of daily living and/or activities of daily living in exchange for a mutually agreed upon reasonable compensation.',
+      services_title: 'Services to be provided by Caregiver',
+      services_text:
+        'Services to be provided by CAREGIVER will include, but shall not necessarily be limited to:',
+      schedule_title: 'Schedule And Compensation',
+      schedule_text1:
+        'CAREGIVER will provide CARE RECIPIENT with the services outlined herein as mutually agreed upon by both parties, for no less than ',
+      schedule_text2:
+        ' hours per week. CAREGIVER will maintain a detailed log with documentation of hours used for the provision of care.',
+      payment_text1: 'CARE RECIPIENT shall pay CAREGIVER $',
+      payment_text2: ' per hour on each ',
+      payment_text3: ' of the week/month.',
+      mileage_text1:
+        'CARE RECIPIENT shall reimburse CAREGIVER for all out-of-pocket expenses borne by CAREGIVER that are directly related to the provision of services outlined herein. Such expenses shall include mileage at the rate of $',
+      mileage_text2: ' cents per mile.',
+      home_living_text1:
+        'If CARE RECIPIENT lives in the CAREGIVER’s home: In addition, CARE RECIPIENT shall pay CAREGIVER $',
+      home_living_text2:
+        ' per month for room and board (which consists of a proportional share of mortgage, taxes, insurance, heat, electricity, water, sewer and groceries).',
+      checkbox_label: 'I have read and agree to the terms',
     },
   },
 };

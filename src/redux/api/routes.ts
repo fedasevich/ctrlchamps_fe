@@ -13,6 +13,7 @@ const route = {
   questionnaire_activity: '/activity',
   questionnaire_capability: '/capability',
   questionnaire_diagnosis: '/diagnosis',
+  appointment: 'appointment',
 };
 
 export { route };

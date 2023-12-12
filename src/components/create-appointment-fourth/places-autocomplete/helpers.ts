@@ -1,7 +1,8 @@
+import { getDetails, getLatLng, GeocodeResult } from 'use-places-autocomplete';
 import { PLACES_DETAILS_FIELDS } from 'src/components/create-appointment-fourth/places-autocomplete/constants';
 import { AddressComponent } from 'src/components/create-appointment-fourth/places-autocomplete/enums';
 import { AutocompletedLocation } from 'src/components/create-appointment-fourth/types';
-import { GeocodeResult, getDetails, getLatLng } from 'use-places-autocomplete';
+
 
 export const getPlaceIdDetails = async (placeId: string): Promise<AutocompletedLocation> => {
   try {

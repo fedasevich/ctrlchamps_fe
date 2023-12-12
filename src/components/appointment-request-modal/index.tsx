@@ -9,7 +9,7 @@ import { FilledButton } from 'src/components/reusable';
 import FlowHeader from 'src/components/reusable/header/FlowHeader';
 import { ChildModal } from 'src/components/appointment-request-modal/HealthQuestionnaireModal';
 import { DRAWER_DATE_FORMAT } from 'src/components/appointments/constants';
-import { Steps } from 'src/components/health-questionnaire/constants';
+import { STEPS } from 'src/components/health-questionnaire/constants';
 import AppointmentStatus from 'src/components/appointments/appointment-status/AppointmentStatus';
 import { AppointmentRequestModalProps } from './types';
 import {
@@ -82,7 +82,7 @@ const AppointmentRequestModal = ({
             {translate('request_appointment.health_questionnaire')}
           </AppointmentModalBlockParagraph>
           <HealthQuestionnaireBlock>
-            {Steps.map((text, index) => {
+            {STEPS.map((text, index) => {
               const data = [
                 appointment.seekerDiagnosis.map((diagnosis) => diagnosis.name),
                 appointment.seekerActivities.map((activity) => activity),

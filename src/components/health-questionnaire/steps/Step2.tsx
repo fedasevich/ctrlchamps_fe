@@ -5,7 +5,7 @@ import { useLocales } from 'src/locales';
 import SecondStepItem from 'src/components/health-questionnaire/steps/SecondStepItem';
 import { RootState } from 'src/redux/store';
 import { saveNote } from 'src/redux/slices/healthQuestionnaireSlice';
-import { Options } from 'src/components/health-questionnaire/constants';
+import { OPTIONS } from 'src/components/health-questionnaire/constants';
 import {
   QuestionnaireContainerContent,
   QuestionnaireTypeText,
@@ -49,7 +49,7 @@ const Step2 = ({ onNext, onBack, stepKey, activities }: Step2Props): JSX.Element
     <div>
       <QuestionnaireContainerContent>
         <QuestionnaireTypeText>{translate('health_questionnaire.activity')}</QuestionnaireTypeText>
-        <SecondStepItem questions={activities} options={Options} onCompletion={handleCompletion} />
+        <SecondStepItem questions={activities} options={OPTIONS} onCompletion={handleCompletion} />
         <TextField
           fullWidth
           id="standard-basic"

@@ -10,6 +10,8 @@ export const BACKEND_DATE_FORMAT = 'yyyy-MM-dd';
 export const TIMEZONE_FORMAT = Intl.DateTimeFormat().resolvedOptions().timeZone;
 export const URL_PATTERN = /^https:\/\/.+$/;
 
+export const GOOGLE_MAP_API = 'https://maps.googleapis.com/maps/api';
+
 export const USER_ROLE = {
   caregiver: 'caregiver',
   seeker: 'seeker',
@@ -41,9 +43,14 @@ export const APPOINTMENT_STATUS = {
   Completed: 'Completed',
 };
 
+
 export const VIRTUAL_ASSESSMENT_STATUS = {
   Proposed: 'Proposed',
   Accepted: 'Accepted',
   Rejected: 'Rejected',
   Finished: 'Finished',
+
+export const APPOINTMENT_TYPE = {
+  OneTime: 'One time',
+  Recurring: 'Recurring',
 };

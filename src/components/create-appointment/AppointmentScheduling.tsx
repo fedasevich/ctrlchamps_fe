@@ -23,6 +23,7 @@ export default function AppointmentScheduling({ onNext }: { onNext: () => void }
             ? translate('create_appointment.header_one_time')
             : translate('create_appointment.header_recurring')
         }
+        infoButton
         iconType="close"
         callback={handleOpen}
       />

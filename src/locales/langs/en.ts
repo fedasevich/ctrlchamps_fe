@@ -578,6 +578,19 @@ const en = {
       checkbox_label: 'I have read and agree to the terms',
     },
   },
+  request_appointment: {
+    appointment: 'Appointment',
+    client: 'Client',
+    date_and_time: 'Date & Time',
+    health_questionnaire: 'Health questionnaire',
+    tasks: 'Tasks',
+    additional_details: 'Additional details',
+    btns: {
+      reject: 'Reject',
+      accept: 'Accept',
+      view: 'View',
+    },
+  },
 };
 
 export default en;

@@ -52,6 +52,7 @@ export default function AppointmentType({ onNext }: { onNext: () => void }): JSX
       <FlowHeader
         text={translate('create_appointment.header_text')}
         iconType="close"
+        infoButton
         callback={handleOpen}
       />
       <Background>

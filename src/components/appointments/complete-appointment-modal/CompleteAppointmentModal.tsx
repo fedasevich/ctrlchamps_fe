@@ -91,7 +91,7 @@ export default function CompleteAppointmentModal({
             <SubTitle>{translate('appointments_page.drawer.tasks')}</SubTitle>
             <TaskList>
               {appointment.seekerTasks.map((task) => (
-                <Task key={task.appointmentId}>{task.name}</Task>
+                <Task key={task.name}>{task.name}</Task>
               ))}
             </TaskList>
           </Block>

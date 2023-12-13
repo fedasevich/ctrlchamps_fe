@@ -14,8 +14,8 @@ type ReturnType = {
   isAgreementModalOpen: boolean;
   isTermsAccepted: boolean;
   isLoading: boolean;
-  isVirtualAssesmentAccepted: boolean;
-  isVirtualAssesmentDone: boolean;
+  isVirtualAssessmentAccepted: boolean;
+  isVirtualAssessmentDone: boolean;
   appointment: DetailedAppointment | undefined;
   formattedStartDate: string | undefined;
   handleCancelModalOpen: () => void;
@@ -34,8 +34,8 @@ export function useAppointmentDrawer({
   const [isCancelModalOpen, setIsCancelModalOpen] = useState<boolean>(false);
   const [isCompleteModalOpen, setIsCompleteModalOpen] = useState<boolean>(false);
   const [isAgreementModalOpen, setIsAgreementModalOpen] = useState<boolean>(false);
-  const [isVirtualAssesmentDone, setVirtualAssesmentDone] = useState<boolean>(true);
-  const [isVirtualAssesmentAccepted, setIsVirtualAssesmentAccepted] = useState<boolean>(false);
+  const [isVirtualAssessmentDone, setVirtualAssessmentDone] = useState<boolean>(true);
+  const [isVirtualAssessmentAccepted, setIsVirtualAssessmentAccepted] = useState<boolean>(false);
   const [isTermsAccepted, setIsTermsAccepted] = useState<boolean>(false);
 
   const { data: appointment, isLoading } = useGetAppointmentQuery(selectedAppointmentId);
@@ -78,8 +78,8 @@ export function useAppointmentDrawer({
     isAgreementModalOpen,
     isTermsAccepted,
     isLoading,
-    isVirtualAssesmentAccepted,
-    isVirtualAssesmentDone,
+    isVirtualAssessmentAccepted,
+    isVirtualAssessmentDone,
     appointment,
     formattedStartDate,
     handleCancelModalOpen,

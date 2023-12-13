@@ -44,7 +44,7 @@ export default function AgreementModal({ appointment }: IProps): JSX.Element | n
         <Text>{translate('appointments_page.terms.services_text')}</Text>
         <TaskList>
           {appointment.seekerTasks.map((task) => (
-            <Task key={task.appointmentId}>{task.name}</Task>
+            <Task key={task.name}>{task.name}</Task>
           ))}
         </TaskList>
       </div>

@@ -18,11 +18,11 @@ import { caregiverReducer } from './slices/caregiverSlice';
 import { locationReducer } from './slices/locationSlice';
 
 import accountVerificationApi from 'src/redux/api/accountVerificationAPI';
+import appointmentApi from 'src/redux/api/appointmentApi';
 import authApi from 'src/redux/api/authApi';
 import questionnaireApi from 'src/redux/api/healthQuestionnaireApi';
 import profileApi from 'src/redux/api/profileCompleteApi';
 import timezoneApi from 'src/redux/api/timezoneApi';
-import appointmentApi from 'src/redux/api/appointmentApi';
 import { RootState } from 'src/redux/rootReducer';
 
 const persistConfig = {

@@ -3,7 +3,7 @@ import { TextField } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocales } from 'src/locales';
 import SecondStepItem from 'src/components/health-questionnaire/steps/SecondStepItem';
-import { RootState } from 'src/redux/store';
+import { RootState } from 'src/redux/rootReducer';
 import { saveNote } from 'src/redux/slices/healthQuestionnaireSlice';
 import { OPTIONS } from 'src/components/health-questionnaire/constants';
 import {

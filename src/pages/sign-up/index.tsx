@@ -4,7 +4,8 @@ import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 
 import { useSignUpMutation } from 'src/redux/api/authApi';
-import { RootState, useAppDispatch } from 'src/redux/store';
+import { RootState } from 'src/redux/rootReducer';
+import { useAppDispatch } from 'src/redux/store';
 import { setToken } from 'src/redux/slices/tokenSlice';
 
 import SignUpFooter from 'src/components/reusable/footer';

@@ -30,4 +30,5 @@ export type AutocompletedLocation = {
   state: string;
   zipCode: string;
   utcOffset: number;
+  latLng: string;
 };

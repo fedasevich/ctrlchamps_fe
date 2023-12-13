@@ -31,5 +31,5 @@ export const useProfileQualificationSchema = (): ObjectSchema<ProfileQualityForm
       then: (schema) => schema.required(translate('profileQualification.expirationDateRequired')),
       otherwise: (schema) => schema.notRequired(),
     }),
-  });
+  }) as ObjectSchema<ProfileQualityFormValues>;
 };

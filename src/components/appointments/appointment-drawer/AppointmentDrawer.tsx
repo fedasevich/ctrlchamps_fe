@@ -1,4 +1,4 @@
-import { useMemo, useState, Dispatch, SetStateAction } from 'react';
+import { useState, Dispatch, SetStateAction } from 'react';
 import { IconButton } from '@mui/material';
 
 import { useLocales } from 'src/locales';
@@ -9,14 +9,11 @@ import Modal from 'src/components/reusable/modal/Modal';
 import CancelModal from 'src/components/appointments/cancel-modal/CancelModal';
 import AppointmentStatus from 'src/components/appointments/appointment-status/AppointmentStatus';
 import { SMALL_CAREGIVER_AVATAR_SIZE } from 'src/components/appointments/constants';
-import {
-  getMockCaregiverAvatar,
-  getFormattedDate,
-  mockedAppointment,
-} from 'src/components/appointments/helpers';
-
+import { getMockCaregiverAvatar, getFormattedDate } from 'src/components/appointments/helpers';
 import ArrowBackFilled from 'src/assets/icons/ArrowBackFilled';
 import RightAction from 'src/assets/icons/RightAction';
+import { useGetAppointmentQuery } from 'src/redux/api/appointmentApi';
+
 import {
   DrawerBody,
   Block,
@@ -46,11 +43,16 @@ export default function AppointmentDrawer({
   onClose,
   setIsDrawerOpen,
   selectedAppointmentId,
-}: AppointmentsDrawerProps): JSX.Element {
+}: AppointmentsDrawerProps): JSX.Element | null {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-  const formattedStartDate = useMemo(() => getFormattedDate(mockedAppointment.startDate), []);
 
   const { translate } = useLocales();
+
+  const { data: appointment, isLoading } = useGetAppointmentQuery(selectedAppointmentId);
+
+  if (isLoading) return null;
+
+  const formattedStartDate = appointment && getFormattedDate(appointment.startDate);
 
   const handleModalOpen = (): void => {
     setIsModalOpen(true);
@@ -77,7 +79,7 @@ export default function AppointmentDrawer({
         <StyledButton type="button" variant="contained">
           {translate('appointments_page.contract_button')}
         </StyledButton>
-        <CancelBtn type="button" variant="outlined">
+        <CancelBtn type="button" variant="outlined" onClick={handleModalOpen}>
           {translate('appointments_page.cancel_appointment_button')}
         </CancelBtn>
       </DoubleButtonBox>
@@ -100,19 +102,19 @@ export default function AppointmentDrawer({
         </DrawerHeader>
         <DrawerBody>
           <Block>
-            <AppointmentName>{mockedAppointment.name}</AppointmentName>
-            <AppointmentStatus status={mockedAppointment.status} />
+            <AppointmentName>{appointment?.name}</AppointmentName>
+            <AppointmentStatus status={appointment!.status} />
           </Block>
           <Block>
             <SubTitle>{translate('appointments_page.drawer.caregiver')}</SubTitle>
             <CaregiverBlock>
               <DrawerAvatar
                 src={getMockCaregiverAvatar(SMALL_CAREGIVER_AVATAR_SIZE)}
-                alt={`${mockedAppointment.caregiverInfo.user.firstName} ${mockedAppointment.caregiverInfo.user.lastName}`}
+                alt={`${appointment?.caregiverInfo.user.firstName} ${appointment?.caregiverInfo.user.lastName}`}
               />
               <CaregiverName>
-                {mockedAppointment.caregiverInfo.user.firstName}
-                {mockedAppointment.caregiverInfo.user.lastName}
+                {appointment?.caregiverInfo.user.firstName}{' '}
+                {appointment?.caregiverInfo.user.lastName}
               </CaregiverName>
               <StyledIconButton edge="end" aria-label="open-drawer">
                 <RightAction />
@@ -126,28 +128,29 @@ export default function AppointmentDrawer({
           <Block>
             <SubTitle>{translate('appointments_page.drawer.tasks')}</SubTitle>
             <TaskList>
-              {mockedAppointment.seekerTasks.map((task) => (
-                <Task key={task.appointmentId}>{task.name}</Task>
+              {appointment?.seekerTasks.map((task) => (
+                <Task key={task.name}>{task.name}</Task>
               ))}
             </TaskList>
           </Block>
           <Block>
             <SubTitle>{translate('appointments_page.drawer.details')}</SubTitle>
-            {mockedAppointment.details ? (
-              <DateText>{mockedAppointment.details}</DateText>
+            {appointment?.details ? (
+              <DateText>{appointment?.details}</DateText>
             ) : (
               <DateText>{translate('appointments_page.drawer.details_empty')}</DateText>
             )}
           </Block>
         </DrawerBody>
-        <DrawerFooter>{DRAWER_FOOTERS[mockedAppointment.status]}</DrawerFooter>
+        <DrawerFooter>{DRAWER_FOOTERS[appointment!.status]}</DrawerFooter>
       </Drawer>
       <Modal
         onClose={handleModalClose}
         title={translate('appointments_page.modal_title')}
         isActive={isModalOpen}
-        children={<CancelModal onClose={handleModalClose} />}
-      />
+      >
+        <CancelModal selectedAppointmentId={selectedAppointmentId} onClose={handleModalClose} />
+      </Modal>
     </>
   );
 }

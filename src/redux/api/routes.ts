@@ -13,6 +13,10 @@ const route = {
   questionnaire_activity: '/activity',
   questionnaire_capability: '/capability',
   questionnaire_diagnosis: '/diagnosis',
+  appointment: '/appointment',
+  caregivers: '/caregivers',
+  filter: '/filter',
+  timezoneJson: '/timezone/json',
 };
 
 export { route };

@@ -1,12 +1,17 @@
 import Head from 'next/head';
+
 import Appointments from 'src/components/appointments/Appointments';
 import BookAppointment from 'src/components/book-appointment/BookAppointment';
 import MainHeader from 'src/components/reusable/header/MainHeader';
 import { useLocales } from 'src/locales';
-import { mockedAppointments } from 'src/components/appointments/helpers';
+import { useGetAllAppointmentsQuery } from 'src/redux/api/appointmentApi';
 
-export default function HomePage(): JSX.Element {
+export default function HomePage(): JSX.Element | null {
   const { translate } = useLocales();
+
+  const { data: appointments, isSuccess, isLoading } = useGetAllAppointmentsQuery();
+
+  if (isLoading) return null;
 
   return (
     <>
@@ -14,8 +19,8 @@ export default function HomePage(): JSX.Element {
         <title>{translate('app_title')}</title>
       </Head>
       <MainHeader />
-      {mockedAppointments.length > 0 ? (
-        <Appointments appointments={mockedAppointments} />
+      {isSuccess && appointments.length > 0 ? (
+        <Appointments appointments={appointments} />
       ) : (
         <BookAppointment />
       )}

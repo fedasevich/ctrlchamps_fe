@@ -1,8 +1,8 @@
 import { format, parseISO, differenceInHours } from 'date-fns';
-import { DRAWER_DATE_FORMAT } from './constants';
+import { DRAWER_DATE_FORMAT, MOCK_USER_AVATAR_URL } from './constants';
 
 export const getMockCaregiverAvatar = (size: number): string =>
-  `https://picsum.photos/${size}/${size}`;
+  `${MOCK_USER_AVATAR_URL}/${size}/${size}`;
 
 export const getFormattedDate = (date: string): string =>
   format(parseISO(date), DRAWER_DATE_FORMAT);

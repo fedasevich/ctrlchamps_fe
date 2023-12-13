@@ -114,8 +114,14 @@ const WeekSlot = styled('div')`
   background-color: ${PRIMARY.white};
   border: 1px solid ${PRIMARY.main};
   border-radius: 50%;
-  padding: 11px 13px;
+  padding: 11px 13.7px;
   cursor: pointer;
+
+  &:nth-child(1),
+  &:nth-child(3) {
+    padding: 11px 12.7px;
+  }
+
   &.active {
     background-color: ${PRIMARY.main};
     color: ${PRIMARY.white};

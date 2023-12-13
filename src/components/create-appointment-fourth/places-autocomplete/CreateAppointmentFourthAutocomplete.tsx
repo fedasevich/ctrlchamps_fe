@@ -1,10 +1,12 @@
 import { Autocomplete, AutocompleteRenderInputParams, Grid, TextField } from '@mui/material';
 import { useLoadScript } from '@react-google-maps/api';
+import { format } from 'date-fns';
 import { HTMLAttributes, SyntheticEvent, useState } from 'react';
 import Location from 'src/assets/icons/Location';
 import {
   PLACES_API_KEY,
   PLACES_COUNTRY_RESTRICTIONS,
+  PLACES_DATE_FORMAT,
   PLACES_DEBOUNCE_DELAY,
   PLACES_SCRIPT_LIBRARIES,
 } from 'src/components/create-appointment-fourth/places-autocomplete/constants';
@@ -15,6 +17,9 @@ import {
 } from 'src/components/create-appointment-fourth/places-autocomplete/styles';
 import { AutocompletedLocation } from 'src/components/create-appointment-fourth/types';
 import { useLocales } from 'src/locales';
+import { timezoneApi } from 'src/redux/api/timezoneApi';
+import { setLocation as setCareseekerLocation, setTimezone } from 'src/redux/slices/locationSlice';
+import { useAppDispatch } from 'src/redux/store';
 import usePlacesAutocomplete from 'use-places-autocomplete';
 
 interface CreateAppointmentFourthAutocompleteProps {
@@ -41,7 +46,8 @@ export default function CreateAppointmentFourthAutocomplete({
 function PlacesAutocomplete({
   onLocationChange,
 }: CreateAppointmentFourthAutocompleteProps): JSX.Element {
-  const { translate } = useLocales();
+  const { translate, currentLang } = useLocales();
+  const dispatch = useAppDispatch();
   const {
     value: location,
     setValue: setLocation,
@@ -54,6 +60,8 @@ function PlacesAutocomplete({
   const [autocompleteValue, setAutocompleteValue] =
     useState<google.maps.places.AutocompletePrediction | null>(null);
   const [autocompleteError, setAutocompleteError] = useState<string | null>(null);
+
+  const [getTimeZone] = timezoneApi.useLazyGetTimezoneQuery();
 
   const handleAutocompleteChange = async (
     _event: SyntheticEvent<Element, Event>,
@@ -69,7 +77,7 @@ function PlacesAutocomplete({
 
     try {
       await getPlaceIdDetails(placeId)
-        .then((data) => {
+        .then(async (data) => {
           if (!Object.values(data).every((value) => Boolean(value))) {
             setAutocompleteError(translate('createAppointmentFourth.notPreciseLocation'));
             return;
@@ -77,6 +85,20 @@ function PlacesAutocomplete({
 
           setLocation(description, false);
           onLocationChange(data);
+          const unixEpochTimeInSeconds = format(new Date(), PLACES_DATE_FORMAT);
+
+          await getTimeZone({
+            key: PLACES_API_KEY,
+            language: currentLang.value,
+            location: data.latLng,
+            timestamp: unixEpochTimeInSeconds,
+          })
+            .unwrap()
+            .then((timeZoneInfo) => {
+              dispatch(setTimezone(timeZoneInfo.timeZoneId));
+              dispatch(setCareseekerLocation(placeId));
+            });
+
           setAutocompleteError(null);
         })
         .catch(() => {

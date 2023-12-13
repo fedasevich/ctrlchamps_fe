@@ -4,7 +4,8 @@ import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 
 import { useSignUpMutation } from 'src/redux/api/authApi';
-import { RootState, useAppDispatch } from 'src/redux/store';
+import { RootState } from 'src/redux/rootReducer';
+import { useAppDispatch } from 'src/redux/store';
 import { setToken } from 'src/redux/slices/tokenSlice';
 
 import SignUpFooter from 'src/components/reusable/footer';
@@ -73,7 +74,7 @@ function SignUp(): JSX.Element {
 
   return (
     <>
-      <FlowHeader text={t('SignUp')} callback={handleBackStep} iconType="back" />
+      <FlowHeader text={t('SignUp')} callback={handleBackStep} infoButton iconType="back" />
       <SignUpWrapper>
         <>
           {step === STEPS.first && <SignUpFirstForm onNext={handleSecondStep} />}

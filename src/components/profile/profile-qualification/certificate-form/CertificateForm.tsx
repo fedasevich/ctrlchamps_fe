@@ -20,10 +20,11 @@ import {
 import {
   ErrorMessage,
   StyledForm,
+  StyledButton,
+  ButtonWrapper,
 } from 'src/components/profile/profile-qualification/certificate-form/styles';
 import { useProfileQualificationSchema } from 'src/components/profile/profile-qualification/certificate-form/validation';
 import { ProfileQuality } from 'src/components/profile/profile-qualification/types';
-import ProfileBtn from 'src/components/reusable/profile-btn/ProfileBtn';
 import { useLocales } from 'src/locales';
 import { BACKEND_DATE_FORMAT, DATE_FORMAT } from 'src/constants';
 import { Certificate, profileApi } from 'src/redux/api/profileCompleteApi';
@@ -203,7 +204,11 @@ export default function CertificateForm({
           labelPlacement="start"
         />
       </Stack>
-      <ProfileBtn text={translate('profileQualification.save')} disabled={!isValid} />
+      <ButtonWrapper>
+        <StyledButton type="submit" disabled={!isValid} variant="contained">
+          {translate('profileQualification.save')}
+        </StyledButton>
+      </ButtonWrapper>
     </StyledForm>
   );
 }

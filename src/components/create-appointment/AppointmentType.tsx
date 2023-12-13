@@ -6,7 +6,7 @@ import FlowHeader from 'src/components/reusable/header/FlowHeader';
 import { AppointmentType as AppointmentTypeI } from 'src/constants/types';
 import { useLocales } from 'src/locales';
 import { setAppointmentName, setAppointmentType } from 'src/redux/slices/appointmentSlice';
-import { useAppDispatch } from 'src/redux/store';
+import { useAppDispatch, useTypedSelector } from 'src/redux/store';
 import {
   CancelAppointmentModal,
   useCancelAppointmentModal,
@@ -24,13 +24,14 @@ import {
   StyledForm,
 } from './styles';
 
-export default function AppointmentType(): JSX.Element {
+export default function AppointmentType({ onNext }: { onNext: () => void }): JSX.Element {
   const { translate } = useLocales();
   const dispatch = useAppDispatch();
+  const { appointmentName, appointmentType } = useTypedSelector((state) => state.appointment);
   const { modalOpen, setModalOpen, handleOpen } = useCancelAppointmentModal();
 
-  const [name, setName] = useState<string>('');
-  const [type, setType] = useState<AppointmentTypeI>(null);
+  const [name, setName] = useState<string>(appointmentName);
+  const [type, setType] = useState<AppointmentTypeI>(appointmentType);
 
   const selectOneTime = (): void => setType(Appointment.oneTime);
   const selectRecurring = (): void => setType(Appointment.recurring);
@@ -43,6 +44,7 @@ export default function AppointmentType(): JSX.Element {
   const goNext = (): void => {
     dispatch(setAppointmentName(name));
     dispatch(setAppointmentType(type));
+    onNext();
   };
 
   return (
@@ -50,6 +52,7 @@ export default function AppointmentType(): JSX.Element {
       <FlowHeader
         text={translate('create_appointment.header_text')}
         iconType="close"
+        infoButton
         callback={handleOpen}
       />
       <Background>

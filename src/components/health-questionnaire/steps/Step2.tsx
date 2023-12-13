@@ -3,12 +3,9 @@ import { TextField } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocales } from 'src/locales';
 import SecondStepItem from 'src/components/health-questionnaire/steps/SecondStepItem';
-import { RootState } from 'src/redux/store';
+import { RootState } from 'src/redux/rootReducer';
 import { saveNote } from 'src/redux/slices/healthQuestionnaireSlice';
-import {
-  Options,
-  ActivitiesOfDailyLivingAssessment,
-} from 'src/components/health-questionnaire/constants';
+import { OPTIONS } from 'src/components/health-questionnaire/constants';
 import {
   QuestionnaireContainerContent,
   QuestionnaireTypeText,
@@ -20,9 +17,13 @@ type Step2Props = {
   onNext: () => void;
   onBack: () => void;
   stepKey: string;
+  activities: {
+    id: string;
+    name: string;
+  }[];
 };
 
-const Step2 = ({ onNext, onBack, stepKey }: Step2Props): JSX.Element => {
+const Step2 = ({ onNext, onBack, stepKey, activities }: Step2Props): JSX.Element => {
   const { translate } = useLocales();
   const dispatch = useDispatch();
 
@@ -37,10 +38,10 @@ const Step2 = ({ onNext, onBack, stepKey }: Step2Props): JSX.Element => {
   const handleNoteChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     const updatedNote = event.target.value;
     setNote(updatedNote);
+    dispatch(saveNote({ step: stepKey, note: updatedNote }));
   };
 
   const handleSubmit = (): void => {
-    dispatch(saveNote({ step: stepKey, note }));
     onNext();
   };
 
@@ -48,11 +49,7 @@ const Step2 = ({ onNext, onBack, stepKey }: Step2Props): JSX.Element => {
     <div>
       <QuestionnaireContainerContent>
         <QuestionnaireTypeText>{translate('health_questionnaire.activity')}</QuestionnaireTypeText>
-        <SecondStepItem
-          questions={ActivitiesOfDailyLivingAssessment}
-          options={Options}
-          onCompletion={handleCompletion}
-        />
+        <SecondStepItem questions={activities} options={OPTIONS} onCompletion={handleCompletion} />
         <TextField
           fullWidth
           id="standard-basic"
@@ -60,7 +57,7 @@ const Step2 = ({ onNext, onBack, stepKey }: Step2Props): JSX.Element => {
           variant="standard"
           size="small"
           value={note}
-          placeholder={translate('health_questionnaire.note_placeholder')}
+          placeholder={String(translate('health_questionnaire.note_placeholder'))}
           onChange={handleNoteChange}
         />
       </QuestionnaireContainerContent>

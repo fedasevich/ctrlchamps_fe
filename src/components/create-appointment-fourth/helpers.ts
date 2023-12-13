@@ -10,6 +10,7 @@ export const getCaregiverFilterInitialState = (): CaregiverFilterState => ({
     state: '',
     utcOffset: 0,
     zipCode: '',
+    latLng: '',
   },
   services: [
     { label: 'personalCare', checked: false },
@@ -25,24 +26,22 @@ export const serializeCaregiverFilterStateToQueryString = (
   filterState: CaregiverFilterState,
   translate: (translate: string) => string
 ): URLSearchParams => {
-  const services = JSON.stringify(
-    filterState.services
-      .filter((service) => service.checked)
-      .map((service) => translate(translate(`createAppointmentFourth.services.${service.label}`)))
-  );
+  const services = filterState.services
+    .filter((service) => service.checked)
+    .map((service) => translate(translate(`createAppointmentFourth.services.${service.label}`)));
 
   const dataToSerialize = {
     isOpenToSeekerHomeLiving: filterState.isOpenToSeekerHomeLiving,
     isShowAvailableCaregivers: filterState.isShowAvailableCaregivers,
     ...filterState.location,
     utcOffset: filterState.location.utcOffset.toString(),
-    services,
   };
 
   const searchParams = Object.entries(dataToSerialize).reduce((params, [key, value]) => {
     params.append(key, value as string);
     return params;
   }, new URLSearchParams());
+  services.forEach((item) => searchParams.append('services', item));
 
   return searchParams;
 };

@@ -8,14 +8,13 @@ import VideocamOutlinedIcon from '@mui/icons-material/VideocamOutlined';
 
 import { useUploadFileMutation, useUpdateProfileMutation } from 'src/redux/api/profileCompleteApi';
 import { useSelector } from 'react-redux';
-import { RootState } from 'src/redux/store';
+import { RootState } from 'src/redux/rootReducer';
 import { useLocales } from 'src/locales';
 import { ROUTES } from 'src/routes';
 import { useBioFormSchema } from 'src/components/profile/bio/validation';
 import {
   ErrorMessage,
   MediaWrapper,
-  StyledSubmitButton,
   StyledForm,
   StyledIconButton,
   StyledVideo,
@@ -30,8 +29,13 @@ import {
   MOV_FORMAT,
   MP4_FORMAT,
 } from 'src/components/profile/bio/constants';
+import ProfileBtn from 'src/components/reusable/profile-btn/ProfileBtn';
 
-export function Bio(): JSX.Element {
+interface IProps {
+  onBack: () => void;
+}
+
+export function Bio({ onBack }: IProps): JSX.Element {
   const [videoPreviewURL, setVideoPreviewURL] = useState<string>('');
   const [uploadVideoMutation] = useUploadFileMutation();
   const [updateDescription] = useUpdateProfileMutation();
@@ -153,9 +157,12 @@ export function Bio(): JSX.Element {
         )}
       </StyledFormControl>
 
-      <StyledSubmitButton type="submit" disabled={!isValid} variant="contained" color="primary">
-        {translate('profileBio.submit')}
-      </StyledSubmitButton>
+      <ProfileBtn
+        nextText={translate('profileBio.submit')}
+        backText={translate('profileQualification.back')}
+        disabled={!isValid}
+        onBack={onBack}
+      />
     </StyledForm>
   );
 }

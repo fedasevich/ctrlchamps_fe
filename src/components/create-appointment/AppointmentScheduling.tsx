@@ -10,7 +10,7 @@ import RecurringAppointment from './RecurringAppointment';
 import { Background } from './styles';
 import { Appointment } from './enums';
 
-export default function AppointmentScheduling(): JSX.Element {
+export default function AppointmentScheduling({ onNext }: { onNext: () => void }): JSX.Element {
   const { translate } = useLocales();
   const { appointmentType } = useTypedSelector((state) => state.appointment);
   const { modalOpen, setModalOpen, handleOpen } = useCancelAppointmentModal();
@@ -23,14 +23,15 @@ export default function AppointmentScheduling(): JSX.Element {
             ? translate('create_appointment.header_one_time')
             : translate('create_appointment.header_recurring')
         }
+        infoButton
         iconType="close"
         callback={handleOpen}
       />
       <Background>
         {appointmentType === Appointment.oneTime ? (
-          <OneTimeAppointment />
+          <OneTimeAppointment onNext={onNext} />
         ) : (
-          <RecurringAppointment />
+          <RecurringAppointment onNext={onNext} />
         )}
       </Background>
       <CancelAppointmentModal open={modalOpen} setOpen={setModalOpen} />

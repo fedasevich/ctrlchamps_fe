@@ -7,6 +7,7 @@ import {
   CloseButton,
   HeaderTitle,
   TextContainer,
+  ModalFooter,
 } from './styles';
 
 type Props = {
@@ -14,9 +15,16 @@ type Props = {
   onClose: () => void;
   children: ReactElement;
   isActive: boolean;
+  footerChildren?: ReactElement;
 };
 
-export default function Modal({ onClose, title, children, isActive }: Props): JSX.Element | null {
+export default function Modal({
+  onClose,
+  title,
+  children,
+  isActive,
+  footerChildren,
+}: Props): JSX.Element | null {
   if (!isActive) return null;
 
   const handleBackdropClick = (): void => {
@@ -37,6 +45,7 @@ export default function Modal({ onClose, title, children, isActive }: Props): JS
           <HeaderTitle>{title}</HeaderTitle>
         </ModalHeader>
         <TextContainer>{children}</TextContainer>
+        {footerChildren && <ModalFooter>{footerChildren}</ModalFooter>}
       </ModalWrapper>
     </BackDrop>
   );

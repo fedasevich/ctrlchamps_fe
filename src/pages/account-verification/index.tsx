@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux';
 import FlowHeader from 'src/components/reusable/header/FlowHeader';
 import OTPMessageField from 'src/components/sendOTP/AccountVerification';
 import SuccessfulVerification from 'src/components/sendOTP/SuccessfulVerification';
-import { RootState } from 'src/redux/store';
+import { RootState } from 'src/redux/rootReducer';
 
 interface AccountVerificationProps {
   onSubmit: () => void;
@@ -24,7 +24,7 @@ const AccountVerification: React.FC<AccountVerificationProps> = (): JSX.Element 
 
   return (
     <>
-      <FlowHeader text={t('account_verification.account_verification')} />
+      <FlowHeader text={t('account_verification.account_verification')} infoButton />
       {isSubmitted ? (
         <SuccessfulVerification profile={role} />
       ) : (

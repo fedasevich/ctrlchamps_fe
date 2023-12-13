@@ -38,7 +38,7 @@ export type appointmentProps = {
   timezone: string;
   weekday: string;
   seekerTasks: Task[];
-  seekerDiagnosis: Diagnosis[];
+  seekerDiagnoses: Diagnosis[];
   seekerActivities: Activity[];
   seekerCapabilities: Capability[];
 };

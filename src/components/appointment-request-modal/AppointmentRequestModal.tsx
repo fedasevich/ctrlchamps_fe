@@ -84,7 +84,7 @@ const AppointmentRequestModal = ({
           <HealthQuestionnaireBlock>
             {STEPS.map((text, index) => {
               const data = [
-                appointment.seekerDiagnosis.map((diagnosis) => diagnosis.name),
+                appointment.seekerDiagnoses.map((diagnosis) => diagnosis.name),
                 appointment.seekerActivities.map((activity) => activity),
                 appointment.seekerCapabilities.map((capability) => capability.name),
               ][index];

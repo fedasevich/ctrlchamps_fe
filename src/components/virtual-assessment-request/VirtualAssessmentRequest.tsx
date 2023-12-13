@@ -11,6 +11,9 @@ import { VIRTUAL_ASSESSMENT_STATUS } from 'src/constants';
 import { useLocales } from 'src/locales';
 import { virtualAssessmentApi } from 'src/redux/api/virtualAssessmentApi';
 
+import jwt_decode from 'jwt-decode';
+import { useMemo } from 'react';
+import { useTypedSelector } from 'src/redux/store';
 import { VirtualAssessmentRequestModalProps } from './types';
 
 import {
@@ -26,6 +29,11 @@ import {
   NotificationMessage,
 } from './styles';
 
+const decodeToken = (tokenToDecode: string): string => {
+  const decoded: { id: string } = jwt_decode(tokenToDecode);
+  return decoded.id;
+};
+
 const VirtualAssessmentRequestModal = ({
   appointment,
   isOpen,
@@ -33,8 +41,12 @@ const VirtualAssessmentRequestModal = ({
 }: VirtualAssessmentRequestModalProps): JSX.Element => {
   const { translate } = useLocales();
 
+  const token = useTypedSelector((state) => state.token.token);
+
   const [updateVirtualAssessmentStatus] =
     virtualAssessmentApi.useUpdateVirtualAssessmentStatusMutation();
+
+  const userId = useMemo(() => decodeToken(token), [token]);
 
   const copyMeetingLink = (): void => {
     if (!appointment.virtualAssessment) return;
@@ -89,20 +101,20 @@ const VirtualAssessmentRequestModal = ({
           </AppointmentModalBlockParagraph>
           {format(new Date(appointment.startDate), DRAWER_DATE_FORMAT)}
         </AppointmentModalBlock>
-
-        <AppointmentModalBlock>
-          <AppointmentModalBlockParagraph>
-            {translate('request_appointment.tasks')}
-          </AppointmentModalBlockParagraph>
-          <List disablePadding>
-            {appointment.seekerTasks.map((value) => (
-              <ListItemStyled key={value.name} disableGutters>
-                <ListItemText primary={value.name} />
-              </ListItemStyled>
-            ))}
-          </List>
-        </AppointmentModalBlock>
-
+        {userId === appointment.caregiverInfo.user.id && (
+          <AppointmentModalBlock>
+            <AppointmentModalBlockParagraph>
+              {translate('request_appointment.tasks')}
+            </AppointmentModalBlockParagraph>
+            <List disablePadding>
+              {appointment.seekerTasks.map((value) => (
+                <ListItemStyled key={value.name} disableGutters>
+                  <ListItemText primary={value.name} />
+                </ListItemStyled>
+              ))}
+            </List>
+          </AppointmentModalBlock>
+        )}
         <AppointmentModalBlock>
           <AppointmentModalBlockParagraph>
             {translate('request_appointment.meeting_link')}

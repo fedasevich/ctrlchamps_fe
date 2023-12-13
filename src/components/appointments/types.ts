@@ -28,7 +28,8 @@ export type SeekerTask = {
 
 export type CaregiverInfo = {
   id: string;
-  hourlyRate: number;
+  hourlyRate?: number;
+  timeZone?: string;
   user: {
     id: string;
     firstName: string;

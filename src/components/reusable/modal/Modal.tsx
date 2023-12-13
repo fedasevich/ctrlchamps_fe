@@ -16,7 +16,7 @@ type Props = {
   children: ReactElement;
   isActive: boolean;
   isFooter?: boolean;
-  footerChildren?: ReactElement;
+  footerChildren?: ReactElement | boolean;
 };
 
 export default function Modal({

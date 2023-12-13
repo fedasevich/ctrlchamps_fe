@@ -111,7 +111,7 @@ export default function AppointmentDrawer({
     ),
     [APPOINTMENT_STATUS.Active]: (
       <DoubleButtonBox>
-        <StyledButton type="button" variant="contained">
+        <StyledButton type="button" variant="contained" onClick={handleAgreementModalOpen}>
           {translate('appointments_page.contract_button')}
         </StyledButton>
         <CancelBtn type="button" variant="outlined" onClick={handleCancelModalOpen}>
@@ -121,11 +121,6 @@ export default function AppointmentDrawer({
     ),
     [APPOINTMENT_STATUS.Virtual]: VIRTUAL_COMPONENT,
     [APPOINTMENT_STATUS.SignedCaregiver]: VIRTUAL_COMPONENT,
-    [APPOINTMENT_STATUS.SignedSeeker]: (
-      <StyledButton type="button" variant="contained">
-        {translate('appointments_page.contract_button')}
-      </StyledButton>
-    ),
   };
 
   const handleSignInAgreement = async (): Promise<void> => {
@@ -223,22 +218,24 @@ export default function AppointmentDrawer({
         isFooter
         children={<AgreementModal appointment={appointment} />}
         footerChildren={
-          <ModalFooter>
-            <FormControlLabel
-              control={<Checkbox onChange={(): void => setIsTermsAccepted(!isTermsAccepted)} />}
-              label={
-                <StyledLabel>{translate('appointments_page.terms.checkbox_label')}</StyledLabel>
-              }
-            />
-            <StyledButton
-              type="button"
-              variant="contained"
-              onClick={handleSignInAgreement}
-              disabled={!isTermsAccepted}
-            >
-              {translate('appointments_page.sign_agreement_button')}
-            </StyledButton>
-          </ModalFooter>
+          appointment?.status !== APPOINTMENT_STATUS.Active && (
+            <ModalFooter>
+              <FormControlLabel
+                control={<Checkbox onChange={(): void => setIsTermsAccepted(!isTermsAccepted)} />}
+                label={
+                  <StyledLabel>{translate('appointments_page.terms.checkbox_label')}</StyledLabel>
+                }
+              />
+              <StyledButton
+                type="button"
+                variant="contained"
+                onClick={handleSignInAgreement}
+                disabled={!isTermsAccepted}
+              >
+                {translate('appointments_page.sign_agreement_button')}
+              </StyledButton>
+            </ModalFooter>
+          )
         }
       />
       <CompleteAppointmentModal

@@ -65,7 +65,6 @@ const store = configureStore({
       profileApi.middleware,
       appointmentApi.middleware,
       questionnaireApi.middleware,
-      appointmentApi.middleware,
       timezoneApi.middleware,
     ]),
 });

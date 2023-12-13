@@ -1,11 +1,16 @@
+import { useState } from 'react';
+import { useRouter } from 'next/router';
 import CloseIcon from '@mui/icons-material/Close';
 import { Avatar } from '@mui/material';
-import { useState } from 'react';
+
 import ArrowForward from 'src/assets/icons/ArrowForward';
+import TasksList from 'src/components/confirm-appointment/TasksList';
 import { useLocales } from 'src/locales';
 import { useTypedSelector } from 'src/redux/store';
 import { useCreateAppointmentMutation } from 'src/redux/api/appointmentApi';
-import TasksList from 'src/components/confirm-appointment/TasksList';
+import { APPOINTMENT_STATUS } from 'src/constants';
+import { Appointment } from 'src/components/create-appointment/enums';
+import { ROUTES } from 'src/routes';
 import {
   Container,
   Header,
@@ -18,12 +23,13 @@ import {
   TasksWrapper,
   Typography,
 } from './style';
-import { Appointment } from '../create-appointment/enums';
 
 export default function ConfirmAppointment({ onBack }: { onBack: () => void }): JSX.Element {
   const { translate } = useLocales();
+  const router = useRouter();
   const caregiver = useTypedSelector((state) => state.caregiver.selectedCaregiver);
   const appointment = useTypedSelector((state) => state.appointment);
+  const location = useTypedSelector((state) => state.location);
   const healthQuestionnaire = useTypedSelector((state) => state.healthQuestionnaire);
 
   const [tasks, setTasks] = useState<string[]>([]);
@@ -49,9 +55,9 @@ export default function ConfirmAppointment({ onBack }: { onBack: () => void }): 
         caregiverInfoId: caregiver?.caregiverInfo.id,
         name: appointment.appointmentName,
         type: appointment.appointmentType,
-        status: 'Pending confirmation',
+        status: APPOINTMENT_STATUS.Pending,
         details: details || undefined,
-        location: 'Location Address',
+        location: location.location,
         diagnosisNote: healthQuestionnaire.notes.DIAGNOSIS,
         activityNote: healthQuestionnaire.notes.ACTIVITIES,
         capabilityNote: healthQuestionnaire.notes.CAPABILITIES,
@@ -63,7 +69,7 @@ export default function ConfirmAppointment({ onBack }: { onBack: () => void }): 
           appointment.appointmentType === Appointment.oneTime
             ? appointment.oneTimeDate.endTime
             : appointment.recurringDate.endDate,
-        timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+        timezone: location.timezone,
         weekdays:
           appointment.appointmentType !== Appointment.oneTime
             ? appointment.recurringDate.weekDays
@@ -73,6 +79,7 @@ export default function ConfirmAppointment({ onBack }: { onBack: () => void }): 
         seekerDiagnoses: healthQuestionnaire.selectedDiagnoses,
         seekerActivities: healthQuestionnaire.selectedActivities,
       }).unwrap();
+      router.push(ROUTES.home);
     } catch (err) {
       throw new Error(err);
     }

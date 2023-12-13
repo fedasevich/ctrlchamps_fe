@@ -2,7 +2,6 @@ import { useState } from 'react';
 import OneTimeIcon from 'src/assets/icons/OneTimeIcon';
 import RecurringIcon from 'src/assets/icons/RecurringIcon';
 import { ErrorText, FilledButton } from 'src/components/reusable';
-import FlowHeader from 'src/components/reusable/header/FlowHeader';
 import { AppointmentType as AppointmentTypeI } from 'src/constants/types';
 import { useLocales } from 'src/locales';
 import { setAppointmentName, setAppointmentType } from 'src/redux/slices/appointmentSlice';
@@ -49,11 +48,6 @@ export default function AppointmentType({ onNext }: { onNext: () => void }): JSX
 
   return (
     <>
-      <FlowHeader
-        text={translate('create_appointment.header_text')}
-        iconType="close"
-        callback={handleOpen}
-      />
       <Background>
         <Container>
           <StyledForm>

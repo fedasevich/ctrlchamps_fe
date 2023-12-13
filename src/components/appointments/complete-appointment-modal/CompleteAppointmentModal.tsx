@@ -33,7 +33,7 @@ interface IProps {
   onCancel: () => void;
   onSignIn: () => void;
   isActive: boolean;
-  appointment: DetailedAppointment | undefined;
+  appointment?: DetailedAppointment;
 }
 
 export default function CompleteAppointmentModal({

@@ -13,7 +13,7 @@ import { getHoursForWeek } from 'src/components/appointments/helpers';
 import { Container, SubTitle, Text, Span, TaskList, Task } from './styles';
 
 interface IProps {
-  appointment: DetailedAppointment | undefined;
+  appointment?: DetailedAppointment;
 }
 
 export default function AgreementModal({ appointment }: IProps): JSX.Element | null {

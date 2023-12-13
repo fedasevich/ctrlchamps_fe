@@ -107,3 +107,17 @@ export const DoubleButtonBox = styled('div')`
   width: 100%;
   gap: 16px;
 `;
+
+export const StyledLabel = styled('p')`
+  color: ${PRIMARY.black};
+  font-size: ${TYPOGRAPHY.base}px;
+  font-weight: ${typography.fontWeightMedium};
+  line-height: 1.5;
+  letter-spacing: 0.15px;
+`;
+
+export const ModalFooter = styled('div')`
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+`;

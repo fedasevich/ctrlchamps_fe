@@ -55,3 +55,9 @@ export const TextContainer = styled('div')`
   flex-direction: column;
   padding: 24px 16px;
 `;
+
+export const ModalFooter = styled('div')`
+  width: 100%;
+  padding: 16px 24px;
+  border-top: 1px solid ${SECONDARY.light_gray};
+`;

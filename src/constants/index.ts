@@ -42,3 +42,8 @@ export const APPOINTMENT_STATUS = {
   Ongoing: 'Ongoing',
   Completed: 'Completed',
 };
+
+export const APPOINTMENT_TYPE = {
+  OneTime: 'One time',
+  Recurring: 'Recurring',
+};

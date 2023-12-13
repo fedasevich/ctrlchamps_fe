@@ -15,6 +15,8 @@ export const ONE_DAY = 1;
 export const TIMEZONE_FORMAT = Intl.DateTimeFormat().resolvedOptions().timeZone;
 export const URL_PATTERN = /^https:\/\/.+$/;
 
+export const GOOGLE_MAP_API = 'https://maps.googleapis.com/maps/api';
+
 export const USER_ROLE = {
   caregiver: 'caregiver',
   seeker: 'seeker',

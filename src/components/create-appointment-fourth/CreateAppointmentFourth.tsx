@@ -8,9 +8,10 @@ import {
   Switch,
 } from '@mui/material';
 import { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import MonetizationOn from 'src/assets/icons/MonetizationOn';
 import RightAction from 'src/assets/icons/RightAction';
-import CreateAppointmentFourthDrawer from 'src/components/create-appointment-fourth/caregiver-drawer/CreateAppointmentFourthDrawer';
+import CreateAppointmentFourthDrawer from 'src/components/create-appointment-fourth/drawer/CreateAppointmentFourthDrawer';
 import { SMALL_CAREGIVER_AVATAR_SIZE } from 'src/components/create-appointment-fourth/constants';
 import {
   getMockCaregiverAvatar,
@@ -30,11 +31,16 @@ import {
   StyledFormControlLabel,
   StyledListItemText,
 } from 'src/components/create-appointment-fourth/styles';
-import { useLocales } from 'src/locales';
-import { appointmentCreationApi } from 'src/redux/api/appointmentCreationAPI';
+import { appointmentApi } from 'src/redux/api/appointmentApi';
 
-export default function CreateAppointmentFourth(): JSX.Element {
-  const { translate } = useLocales();
+interface CreateAppointmentFourthProps {
+  onNext: () => void;
+}
+
+export default function CreateAppointmentFourth({
+  onNext,
+}: CreateAppointmentFourthProps): JSX.Element {
+  const { t: translate } = useTranslation();
 
   const { handleDrawerClose, handleDrawerOpen, isDrawerOpen, selectedCaregiverId } =
     useCreateAppointmentFourth();
@@ -42,10 +48,9 @@ export default function CreateAppointmentFourth(): JSX.Element {
     useCaregiverFilter();
 
   const [getFilteredCaregivers, { data: filteredCaregivers }] =
-    appointmentCreationApi.useLazyGetFilteredCaregiversQuery();
+    appointmentApi.useLazyGetFilteredCaregiversQuery();
 
   useEffect(() => {
-    if (!caregiverFilter.location.address) return;
     getFilteredCaregivers(serializeCaregiverFilterStateToQueryString(caregiverFilter, translate));
   }, [caregiverFilter, getFilteredCaregivers, translate]);
 
@@ -137,6 +142,7 @@ export default function CreateAppointmentFourth(): JSX.Element {
           open={isDrawerOpen}
           onClose={handleDrawerClose}
           selectedCaregiverId={selectedCaregiverId}
+          onNext={onNext}
         />
       )}
     </Background>

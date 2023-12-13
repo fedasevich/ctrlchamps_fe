@@ -1,6 +1,6 @@
 import { ObjectSchema, boolean, date, object, string } from 'yup';
-import { useLocales } from 'src/locales';
 import { MAX_CHARACTERS_LENGTH } from 'src/constants';
+import { useLocales } from 'src/locales';
 import { CompleteProfileSecondValues } from 'src/components/complete-profile-second/types';
 import { MAX_WORK_DATE } from './constants';
 
@@ -21,5 +21,5 @@ export const useProfileExperienceSchema = (): ObjectSchema<CompleteProfileSecond
       then: (schema) => schema.required(translate('completeProfileSecond.errors.endDateRequired')),
       otherwise: (schema) => schema.notRequired(),
     }),
-  });
+  }) as ObjectSchema<CompleteProfileSecondValues>;
 };

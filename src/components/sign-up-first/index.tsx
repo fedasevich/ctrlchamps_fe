@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { RootState } from 'src/redux/store';
+import { RootState } from 'src/redux/rootReducer';
 
 import { FormControlLabel, FormHelperText, FormLabel, Radio } from '@mui/material';
 import { Box } from '@mui/system';

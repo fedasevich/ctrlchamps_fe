@@ -5,6 +5,7 @@ import { AppointmentType } from 'src/constants/types';
 import { route } from 'src/redux/api/routes';
 import { RootState } from 'src/redux/rootReducer';
 import { Caregiver } from 'src/types/Caregiver.type';
+import { VirtualAssessment } from './virtualAssessmentApi';
 
 export interface AppointmentPayload {
   caregiverInfoId: string | undefined;
@@ -103,6 +104,7 @@ export interface DetailedAppointment {
   seekerCapabilities: SeekerCapability[];
   seekerDiagnoses: SeekerDiagnosis[];
   seekerTasks: SeekerTask[];
+  virtualAssessment: VirtualAssessment | null;
 }
 
 export const appointmentApi = createApi({

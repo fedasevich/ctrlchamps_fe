@@ -1,11 +1,10 @@
 import { Locale, format, formatDistance, parse } from 'date-fns';
-import { TFunction } from 'i18next';
 import { BACKEND_DATE_FORMAT, DATE_FORMAT } from 'src/constants';
 
 export const formatWorkExperienceDateRange = (
   startDate: string,
   endDate: string | null,
-  translate: TFunction<'translation', undefined, 'translation'>
+  translate: (translate: string) => string
 ): string => {
   const now = new Date();
 

@@ -4,12 +4,7 @@ import { SyntheticEvent, useState } from 'react';
 import ArrowBackFilled from 'src/assets/icons/ArrowBackFilled';
 import FreeCancellation from 'src/assets/icons/FreeCancellation';
 import MonetizationOn from 'src/assets/icons/MonetizationOn';
-import { BIG_CAREGIVER_AVATAR_SIZE } from 'src/components/create-appointment-fourth/constants';
-import {
-  formatWorkExperienceDateRange,
-  formatWorkExperienceDateRangeTenure,
-  getMockCaregiverAvatar,
-} from 'src/components/create-appointment-fourth/helpers';
+
 import Drawer from 'src/components/reusable/drawer/Drawer';
 import {
   DrawerBody,
@@ -18,13 +13,12 @@ import {
   DrawerTitle,
 } from 'src/components/reusable/drawer/styles';
 import { useLocales } from 'src/locales';
-import { appointmentCreationApi } from 'src/redux/api/appointmentCreationAPI';
-import { setSelectedCaregiver } from 'src/redux/slices/caregiverSlice';
-import { useAppDispatch } from 'src/redux/store';
+import { appointmentApi } from 'src/redux/api/appointmentApi';
 
-import { FIRST_SELECTED_TAB } from './constants';
+import { getMockCaregiverAvatar } from 'src/components/create-appointment-fourth/helpers';
+import { BIG_CAREGIVER_AVATAR_SIZE, FIRST_SELECTED_TAB } from './constants';
+import { formatWorkExperienceDateRange, formatWorkExperienceDateRangeTenure } from './helpers';
 import {
-  BookButton,
   DrawerAvatar,
   DrawerDateTenure,
   DrawerItem,
@@ -33,6 +27,7 @@ import {
   DrawerTextTitle,
   DrawerTextValue,
   StyledLink,
+  StyledStack,
   StyledTab,
   StyledTabPanel,
   StyledTabs,
@@ -40,34 +35,31 @@ import {
   StyledVideo,
 } from './styles';
 
-interface CreateAppointmentFourthDrawerProps {
+interface CaregiverDrawerProps {
   open: boolean;
   onClose: () => void;
-  selectedCaregiverId: string;
+  caregiverId: string;
+  footer?: React.ReactNode;
 }
 
-export default function CreateAppointmentFourthDrawer({
+export default function CaregiverDrawer({
   open,
   onClose,
-  selectedCaregiverId,
-}: CreateAppointmentFourthDrawerProps): JSX.Element | null {
+  caregiverId,
+  footer,
+}: CaregiverDrawerProps): JSX.Element | null {
   const { translate, currentLang } = useLocales();
-  const dispatch = useAppDispatch();
 
   const [selectedTab, setSelectedTab] = useState<string>(FIRST_SELECTED_TAB);
 
   const { data: selectedCaregiver, isLoading } =
-    appointmentCreationApi.useGetCaregiverDetailsQuery(selectedCaregiverId);
+    appointmentApi.useGetCaregiverDetailsQuery(caregiverId);
 
   if (isLoading) return null;
   if (!selectedCaregiver) return null;
 
   const handleTabClick = (_event: SyntheticEvent<Element, Event>, newValue: string): void => {
     setSelectedTab(newValue);
-  };
-
-  const handleBookClick = (): void => {
-    dispatch(setSelectedCaregiver(selectedCaregiver));
   };
 
   return (
@@ -85,7 +77,7 @@ export default function CreateAppointmentFourthDrawer({
           src={getMockCaregiverAvatar(BIG_CAREGIVER_AVATAR_SIZE)}
           alt={`${selectedCaregiver.firstName} ${selectedCaregiver.lastName}`}
         />
-        <Stack alignItems="center" flexDirection="row" justifyContent="space-evenly" width="100%">
+        <StyledStack>
           <Stack flexDirection="column" alignItems="center">
             <FreeCancellation />
             <DrawerTextTitle>
@@ -98,7 +90,7 @@ export default function CreateAppointmentFourthDrawer({
             <DrawerTextTitle>{translate('createAppointmentFourth.rate')}</DrawerTextTitle>
             <DrawerTextValue>{selectedCaregiver.caregiverInfo.hourlyRate}</DrawerTextValue>
           </Stack>
-        </Stack>
+        </StyledStack>
       </DrawerStats>
       <TabContext value={selectedTab}>
         <StyledTabs
@@ -198,11 +190,7 @@ export default function CreateAppointmentFourthDrawer({
           </StyledTabPanel>
         </DrawerBody>
       </TabContext>
-      <DrawerFooter>
-        <BookButton variant="contained" onClick={handleBookClick}>
-          {translate('createAppointmentFourth.bookAppointment')}
-        </BookButton>
-      </DrawerFooter>
+      {!!footer && <DrawerFooter>{footer}</DrawerFooter>}
     </Drawer>
   );
 }

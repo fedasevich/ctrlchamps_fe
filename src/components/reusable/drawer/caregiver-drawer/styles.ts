@@ -91,3 +91,11 @@ export const StyledGrid = styled(Grid)`
   width: 100%;
   word-wrap: break-word;
 `;
+
+export const StyledStack = styled(Stack)`
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  justify-content: space-evenly;
+  width: 100%;
+`

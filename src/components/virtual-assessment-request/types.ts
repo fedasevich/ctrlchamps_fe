@@ -36,5 +36,6 @@ export type appointmentProps = {
 export type VirtualAssessmentRequestModalProps = {
   appointment: appointmentProps;
   isOpen: boolean;
+  user: 'caregiver' | 'seeker';
   switchModalVisibility: () => void;
 };

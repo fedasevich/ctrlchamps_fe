@@ -8,6 +8,7 @@ import { useLocales } from 'src/locales';
 import { FilledButton } from 'src/components/reusable';
 import FlowHeader from 'src/components/reusable/header/FlowHeader';
 import { DRAWER_DATE_FORMAT } from 'src/components/appointments/constants';
+import { USER_ROLE } from 'src/constants';
 import { VirtualAssessmentRequestModalProps } from './types';
 import {
   AppointmentModal,
@@ -23,6 +24,7 @@ import {
 
 const VirtualAssessmentRequestModal = ({
   appointment,
+  user,
   isOpen,
   switchModalVisibility,
 }: VirtualAssessmentRequestModalProps): JSX.Element => {
@@ -69,18 +71,20 @@ const VirtualAssessmentRequestModal = ({
           {format(new Date(appointment.startDate), DRAWER_DATE_FORMAT)}
         </AppointmentModalBlock>
 
-        <AppointmentModalBlock>
-          <AppointmentModalBlockParagraph>
-            {translate('request_appointment.tasks')}
-          </AppointmentModalBlockParagraph>
-          <List disablePadding>
-            {appointment.seekerTasks.map((value) => (
-              <ListItemStyled key={value.name} disableGutters>
-                <ListItemText primary={value.name} />
-              </ListItemStyled>
-            ))}
-          </List>
-        </AppointmentModalBlock>
+        {user === USER_ROLE.caregiver && (
+          <AppointmentModalBlock>
+            <AppointmentModalBlockParagraph>
+              {translate('request_appointment.tasks')}
+            </AppointmentModalBlockParagraph>
+            <List disablePadding>
+              {appointment.seekerTasks.map((value) => (
+                <ListItemStyled key={value.name} disableGutters>
+                  <ListItemText primary={value.name} />
+                </ListItemStyled>
+              ))}
+            </List>
+          </AppointmentModalBlock>
+        )}
 
         <AppointmentModalBlock>
           <AppointmentModalBlockParagraph>

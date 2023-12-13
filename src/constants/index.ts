@@ -40,3 +40,10 @@ export const APPOINTMENT_STATUS = {
   Ongoing: 'Ongoing',
   Completed: 'Completed',
 };
+
+export const VIRTUAL_ASSESSMENT_STATUS = {
+  Proposed: 'Proposed',
+  Accepted: 'Accepted',
+  Rejected: 'Rejected',
+  Finished: 'Finished',
+};

@@ -1,19 +1,23 @@
-import React from 'react';
-import { Avatar, Button, List, ListItemText } from '@mui/material';
-import NotificationsNoneOutlinedIcon from '@mui/icons-material/NotificationsNoneOutlined';
-import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import ContentCopyIcon from '@mui/icons-material/ContentCopy';
+import NotificationsNoneOutlinedIcon from '@mui/icons-material/NotificationsNoneOutlined';
+import { Avatar, Button, List, ListItemText } from '@mui/material';
 import { format } from 'date-fns';
-import { useLocales } from 'src/locales';
+
+import { DRAWER_DATE_FORMAT } from 'src/components/appointments/constants';
 import { FilledButton } from 'src/components/reusable';
 import FlowHeader from 'src/components/reusable/header/FlowHeader';
-import { DRAWER_DATE_FORMAT } from 'src/components/appointments/constants';
-import { USER_ROLE } from 'src/constants';
+import { VIRTUAL_ASSESSMENT_STATUS } from 'src/constants';
+import { useLocales } from 'src/locales';
+import { virtualAssessmentApi } from 'src/redux/api/virtualAssessmentApi';
+
 import { VirtualAssessmentRequestModalProps } from './types';
+
 import {
   AppointmentModal,
   AppointmentModalBlock,
   AppointmentModalBlockParagraph,
+  AppointmentModalFooter,
   AppointmentParagraph,
   DrawerBody,
   InlineBlock,
@@ -24,16 +28,31 @@ import {
 
 const VirtualAssessmentRequestModal = ({
   appointment,
-  user,
   isOpen,
   switchModalVisibility,
 }: VirtualAssessmentRequestModalProps): JSX.Element => {
   const { translate } = useLocales();
 
+  const [updateVirtualAssessmentStatus] =
+    virtualAssessmentApi.useUpdateVirtualAssessmentStatusMutation();
+
   const copyMeetingLink = (): void => {
-    const { meetingLink } = appointment.virtual_assessment;
+    if (!appointment.virtualAssessment) return;
+    const { meetingLink } = appointment.virtualAssessment;
 
     navigator.clipboard.writeText(meetingLink);
+  };
+
+  const handleStatusChange = async (status: string): Promise<void> => {
+    try {
+      await updateVirtualAssessmentStatus({
+        id: appointment.id,
+        status,
+      });
+      switchModalVisibility();
+    } catch (error) {
+      throw new Error(error);
+    }
   };
 
   return (
@@ -60,7 +79,7 @@ const VirtualAssessmentRequestModal = ({
           </AppointmentModalBlockParagraph>
           <InlineBlock>
             <Avatar />
-            <NameParagraph>{appointment.userName}</NameParagraph>
+            <NameParagraph>{`${appointment.user.firstName} ${appointment.user.lastName}`}</NameParagraph>
           </InlineBlock>
         </AppointmentModalBlock>
 
@@ -71,20 +90,18 @@ const VirtualAssessmentRequestModal = ({
           {format(new Date(appointment.startDate), DRAWER_DATE_FORMAT)}
         </AppointmentModalBlock>
 
-        {user === USER_ROLE.caregiver && (
-          <AppointmentModalBlock>
-            <AppointmentModalBlockParagraph>
-              {translate('request_appointment.tasks')}
-            </AppointmentModalBlockParagraph>
-            <List disablePadding>
-              {appointment.seekerTasks.map((value) => (
-                <ListItemStyled key={value.name} disableGutters>
-                  <ListItemText primary={value.name} />
-                </ListItemStyled>
-              ))}
-            </List>
-          </AppointmentModalBlock>
-        )}
+        <AppointmentModalBlock>
+          <AppointmentModalBlockParagraph>
+            {translate('request_appointment.tasks')}
+          </AppointmentModalBlockParagraph>
+          <List disablePadding>
+            {appointment.seekerTasks.map((value) => (
+              <ListItemStyled key={value.name} disableGutters>
+                <ListItemText primary={value.name} />
+              </ListItemStyled>
+            ))}
+          </List>
+        </AppointmentModalBlock>
 
         <AppointmentModalBlock>
           <AppointmentModalBlockParagraph>
@@ -93,21 +110,31 @@ const VirtualAssessmentRequestModal = ({
               <ContentCopyIcon color="primary" fontSize="small" onClick={copyMeetingLink} />
             </Button>
           </AppointmentModalBlockParagraph>
-          {appointment.virtual_assessment.meetingLink}
+          {appointment.virtualAssessment && appointment.virtualAssessment.meetingLink}
         </AppointmentModalBlock>
 
-        <AppointmentModalBlock>
+        <AppointmentModalFooter>
           <NotificationMessage>
             <NotificationsNoneOutlinedIcon color="primary" />
             {translate('request_appointment.notify_message')}
           </NotificationMessage>
           <InlineBlock>
-            <Button variant="outlined" color="error" fullWidth>
+            <Button
+              variant="outlined"
+              color="error"
+              fullWidth
+              onClick={(): Promise<void> => handleStatusChange(VIRTUAL_ASSESSMENT_STATUS.Rejected)}
+            >
               {translate('request_appointment.btns.reject')}
             </Button>
-            <FilledButton fullWidth>{translate('request_appointment.btns.accept')}</FilledButton>
+            <FilledButton
+              fullWidth
+              onClick={(): Promise<void> => handleStatusChange(VIRTUAL_ASSESSMENT_STATUS.Accepted)}
+            >
+              {translate('request_appointment.btns.accept')}
+            </FilledButton>
           </InlineBlock>
-        </AppointmentModalBlock>
+        </AppointmentModalFooter>
       </DrawerBody>
     </AppointmentModal>
   );

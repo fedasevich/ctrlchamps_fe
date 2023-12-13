@@ -450,6 +450,23 @@ const en = {
       details_empty: 'Nothing specific',
     },
   },
+  request_appointment: {
+    virtual_assessment: 'Virtual Assessment',
+    open_original_appointment: 'Open Original Appointment',
+    appointment: 'Appointment',
+    client: 'Client',
+    date_and_time: 'Date & Time',
+    health_questionnaire: 'Health questionnaire',
+    meeting_link: 'Meeting Link',
+    tasks: 'Tasks',
+    additional_details: 'Additional details',
+    notify_message: 'We will notify you right before assessment starting time',
+    btns: {
+      reject: 'Reject',
+      accept: 'Accept',
+      view: 'View',
+    },
+  },
 };
 
 export default en;

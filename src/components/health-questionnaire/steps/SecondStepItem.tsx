@@ -2,15 +2,20 @@ import React, { useEffect, useState } from 'react';
 import { Typography } from '@mui/material';
 import { selectActivity } from 'src/redux/slices/healthQuestionnaireSlice';
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from 'src/redux/store';
+import { RootState } from 'src/redux/rootReducer';
 import { useLocales } from 'src/locales';
 import {
   ToggleButtonGroupStyled,
   ToggleButtonStyled,
 } from 'src/components/health-questionnaire/styles';
 
+type Activity = {
+  id: string;
+  name: string;
+};
+
 type SecondStepItemProps = {
-  questions: string[];
+  questions: Activity[];
   options: string[];
   onCompletion: (status: boolean) => void;
 };
@@ -23,46 +28,55 @@ const SecondStepItem = ({ questions, options, onCompletion }: SecondStepItemProp
     (state: RootState) => state.healthQuestionnaire.selectedActivities
   );
   const [selectedOptions, setSelectedOptions] = useState<{ [key: string]: string }>(
-    selectedActivities
+    selectedActivities.reduce((acc: { [key: string]: string }, activity) => {
+      acc[activity.id] = activity.answer;
+      return acc;
+    }, {})
   );
 
-  const handleOptionSelect = (question: string, option: string | null): void => {
+  const handleOptionSelect = (activity: Activity, option: string | null): void => {
     if (option !== null) {
-      setSelectedOptions({
+      const updatedSelectedOptions = {
         ...selectedOptions,
-        [question]: option,
-      });
+        [activity.id]: translate(option),
+      };
 
-      dispatch(
-        selectActivity({
-          activityName: question,
-          status: option,
-        })
-      );
+      setSelectedOptions(updatedSelectedOptions);
+
+      const seekerActivities = Object.entries(updatedSelectedOptions)
+        .filter(([activityId, answer]) => answer !== undefined)
+        .map(([activityId, answer]) => ({
+          id: activityId,
+          answer,
+        }));
+
+      dispatch(selectActivity({ activities: seekerActivities }));
     }
   };
 
   useEffect(() => {
-    const allQuestionsAnswered = questions.every(
-      (question) => selectedOptions[translate(question)]
-    );
+    const allQuestionsAnswered = questions.every((activity) => selectedOptions[activity.id]);
     onCompletion(allQuestionsAnswered);
-  }, [selectedOptions, questions, onCompletion, translate]);
+  }, [selectedOptions, questions, onCompletion]);
 
   return (
     <div>
-      {questions.map((question, index) => (
-        <div key={index}>
+      {questions.map((activity) => (
+        <div key={activity.id}>
           <Typography variant="body2" fontWeight="bold">
-            {translate(question)}
+            {translate(activity.name)}
           </Typography>
           <ToggleButtonGroupStyled
-            value={selectedOptions[translate(question)] || ''}
+            value={selectedOptions[activity.id] || ''}
             exclusive
-            onChange={(event, option): void => handleOptionSelect(translate(question), option)}
+            onChange={(event, option): void => handleOptionSelect(activity, option)}
           >
             {options.map((option) => (
-              <ToggleButtonStyled key={option} value={translate(option)} aria-label={option}>
+              <ToggleButtonStyled
+                key={option}
+                value={String(translate(option))}
+                aria-label={option}
+              >
                 {translate(option)}
               </ToggleButtonStyled>
             ))}

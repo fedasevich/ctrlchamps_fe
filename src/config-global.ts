@@ -12,6 +12,7 @@ export const AUTH0_API = {};
 //
 export const HEADER = {
   FLOW_HEIGHT: 64,
+  MAIN_HEIGHT: 61,
 };
 
 export const NAV = {

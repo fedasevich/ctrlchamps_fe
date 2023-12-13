@@ -15,6 +15,8 @@ const route = {
   questionnaire_diagnosis: '/diagnosis',
   appointment: '/appointment',
   caregivers: '/caregivers',
+  filter: '/filter',
+  timezoneJson: '/timezone/json',
 };
 
 export { route };

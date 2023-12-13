@@ -7,7 +7,7 @@ import { useUpdateAppointmentMutation } from 'src/redux/api/appointmentApi';
 import { APPOINTMENT_STATUS } from 'src/constants';
 import { FilledButton } from 'src/components/reusable';
 import FlowHeader from 'src/components/reusable/header/FlowHeader';
-import { ChildModal } from 'src/components/appointment-request-modal/HealthQuestionnaireModal';
+import { ChildModal } from 'src/components/appointment-request-modal/ChildModal';
 import { DRAWER_DATE_FORMAT } from 'src/components/appointments/constants';
 import { STEPS } from 'src/components/health-questionnaire/constants';
 import AppointmentStatus from 'src/components/appointments/appointment-status/AppointmentStatus';

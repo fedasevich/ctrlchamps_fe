@@ -1,11 +1,12 @@
 import { MouseEvent } from 'react';
+import { ChevronRight } from '@mui/icons-material';
+
 import { useLocales } from 'src/locales';
-import { PRIMARY } from 'src/theme/colors';
 import Cross from 'src/assets/icons/Cross';
-import RightAction from 'src/assets/icons/RightAction';
 import { SMALL_CAREGIVER_AVATAR_SIZE } from 'src/components/appointments/constants';
 import { getMockCaregiverAvatar } from 'src/components/appointments/helpers';
 import { DetailedAppointment } from 'src/components/appointments/types';
+
 import {
   BackDrop,
   ModalWrapper,
@@ -71,7 +72,7 @@ export default function CompleteAppointmentModal({
                 {translate('appointments_page.complete_modal_subtitle')}
               </OpenAppointmentText>
               <StyledIconButton edge="end" onClick={onClose}>
-                <RightAction color={PRIMARY.main} />
+                <ChevronRight color="primary" />
               </StyledIconButton>
             </OpenAppointmentBlock>
           </Block>

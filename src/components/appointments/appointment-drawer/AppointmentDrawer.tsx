@@ -215,7 +215,6 @@ export default function AppointmentDrawer({
         onClose={handleAgreementModalClose}
         title={translate('appointments_page.agreement_modal_title')}
         isActive={isAgreementModalOpen}
-        isFooter
         children={<AgreementModal appointment={appointment} />}
         footerChildren={
           appointment?.status !== APPOINTMENT_STATUS.Active && (

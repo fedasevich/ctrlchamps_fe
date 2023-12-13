@@ -15,7 +15,6 @@ type Props = {
   onClose: () => void;
   children: ReactElement;
   isActive: boolean;
-  isFooter?: boolean;
   footerChildren?: ReactElement | boolean;
 };
 
@@ -24,7 +23,6 @@ export default function Modal({
   title,
   children,
   isActive,
-  isFooter,
   footerChildren,
 }: Props): JSX.Element | null {
   if (!isActive) return null;
@@ -47,7 +45,7 @@ export default function Modal({
           <HeaderTitle>{title}</HeaderTitle>
         </ModalHeader>
         <TextContainer>{children}</TextContainer>
-        {isFooter && <ModalFooter>{footerChildren}</ModalFooter>}
+        {footerChildren && <ModalFooter>{footerChildren}</ModalFooter>}
       </ModalWrapper>
     </BackDrop>
   );

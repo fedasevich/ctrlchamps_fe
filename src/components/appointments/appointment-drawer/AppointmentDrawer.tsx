@@ -40,6 +40,8 @@ interface AppointmentsDrawerProps {
   isOpen: boolean;
   onClose: () => void;
   setIsDrawerOpen: Dispatch<SetStateAction<boolean>>;
+  setIsCaregiverDrawerOpen: Dispatch<SetStateAction<boolean>>;
+  setCaregiverId: Dispatch<SetStateAction<string>>;
   selectedAppointmentId: string;
 }
 
@@ -47,6 +49,8 @@ export default function AppointmentDrawer({
   isOpen,
   onClose,
   setIsDrawerOpen,
+  setIsCaregiverDrawerOpen,
+  setCaregiverId,
   selectedAppointmentId,
 }: AppointmentsDrawerProps): JSX.Element | null {
   const { translate } = useLocales();
@@ -57,8 +61,8 @@ export default function AppointmentDrawer({
     isAgreementModalOpen,
     isTermsAccepted,
     isLoading,
-    isVirtualAssesmentAccepted,
-    isVirtualAssesmentDone,
+    isVirtualAssessmentAccepted,
+    isVirtualAssessmentDone,
     appointment,
     formattedStartDate,
     handleCancelModalOpen,
@@ -72,16 +76,22 @@ export default function AppointmentDrawer({
 
   const [updateAppointment] = useUpdateAppointmentMutation();
 
+  const handleCaregiverDrawerOpen = (caregiverId: string): void => {
+    setCaregiverId(caregiverId);
+    setIsCaregiverDrawerOpen(true);
+    setIsDrawerOpen(false);
+  };
+
   if (isLoading) return null;
 
   const VIRTUAL_COMPONENT = (
     <>
-      {isVirtualAssesmentDone ? (
+      {isVirtualAssessmentDone ? (
         <StyledButton type="button" variant="contained" onClick={handleCompleteModalOpen}>
           {translate('appointments_page.complete_button')}
         </StyledButton>
       ) : (
-        <StyledButton type="button" variant="contained" disabled={!isVirtualAssesmentAccepted}>
+        <StyledButton type="button" variant="contained" disabled={!isVirtualAssessmentAccepted}>
           {translate('appointments_page.virtual_button')}
         </StyledButton>
       )}
@@ -162,7 +172,13 @@ export default function AppointmentDrawer({
                 {appointment?.caregiverInfo.user.firstName}{' '}
                 {appointment?.caregiverInfo.user.lastName}
               </CaregiverName>
-              <StyledIconButton edge="end" aria-label="open-drawer">
+              <StyledIconButton
+                edge="end"
+                aria-label="open-drawer"
+                onClick={(): void =>
+                  appointment && handleCaregiverDrawerOpen(appointment?.caregiverInfo.user.id)
+                }
+              >
                 <RightAction />
               </StyledIconButton>
             </CaregiverBlock>

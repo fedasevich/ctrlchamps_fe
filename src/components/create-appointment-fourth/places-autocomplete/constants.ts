@@ -8,4 +8,6 @@ export const PLACES_SCRIPT_LIBRARIES: Library[] = ['places'];
 
 export const PLACES_DEBOUNCE_DELAY = 500;
 
-export const PLACES_DETAILS_FIELDS = ['utc_offset_minutes', 'address_components'];
+export const PLACES_DETAILS_FIELDS = ['utc_offset_minutes', 'address_components', 'geometry'];
+
+export const PLACES_DATE_FORMAT = 't';

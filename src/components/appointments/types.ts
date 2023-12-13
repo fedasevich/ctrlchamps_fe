@@ -28,6 +28,7 @@ export type SeekerTask = {
 
 export type CaregiverInfo = {
   id: string;
+  hourlyRate: number;
   user: {
     id: string;
     firstName: string;

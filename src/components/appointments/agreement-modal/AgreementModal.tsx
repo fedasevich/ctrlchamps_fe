@@ -13,7 +13,7 @@ import { getHoursForWeek } from 'src/components/appointments/helpers';
 import { Container, SubTitle, Text, Span, TaskList, Task } from './styles';
 
 interface IProps {
-  appointment: DetailedAppointment | undefined;
+  appointment?: DetailedAppointment;
 }
 
 export default function AgreementModal({ appointment }: IProps): JSX.Element | null {
@@ -44,7 +44,7 @@ export default function AgreementModal({ appointment }: IProps): JSX.Element | n
         <Text>{translate('appointments_page.terms.services_text')}</Text>
         <TaskList>
           {appointment.seekerTasks.map((task) => (
-            <Task key={task.appointmentId}>{task.name}</Task>
+            <Task key={task.name}>{task.name}</Task>
           ))}
         </TaskList>
       </div>
@@ -61,7 +61,7 @@ export default function AgreementModal({ appointment }: IProps): JSX.Element | n
       <div>
         <Text>
           {translate('appointments_page.terms.payment_text1')}
-          <Span>{appointment.payment}</Span>
+          <Span>{appointment.caregiverInfo.hourlyRate}</Span>
           {translate('appointments_page.terms.payment_text2')}
           <Span>{PAYMENT_DAY}</Span>
           {translate('appointments_page.terms.payment_text3')}

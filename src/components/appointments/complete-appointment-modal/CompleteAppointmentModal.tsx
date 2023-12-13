@@ -33,7 +33,7 @@ interface IProps {
   onCancel: () => void;
   onSignIn: () => void;
   isActive: boolean;
-  appointment: DetailedAppointment | undefined;
+  appointment?: DetailedAppointment;
 }
 
 export default function CompleteAppointmentModal({
@@ -91,7 +91,7 @@ export default function CompleteAppointmentModal({
             <SubTitle>{translate('appointments_page.drawer.tasks')}</SubTitle>
             <TaskList>
               {appointment.seekerTasks.map((task) => (
-                <Task key={task.appointmentId}>{task.name}</Task>
+                <Task key={task.name}>{task.name}</Task>
               ))}
             </TaskList>
           </Block>

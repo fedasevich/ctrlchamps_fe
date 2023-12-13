@@ -15,6 +15,7 @@ import { getMockCaregiverAvatar } from 'src/components/appointments/helpers';
 import ArrowBackFilled from 'src/assets/icons/ArrowBackFilled';
 import RightAction from 'src/assets/icons/RightAction';
 
+import { useUpdateAppointmentMutation } from 'src/redux/api/appointmentApi';
 import {
   DrawerBody,
   Block,
@@ -69,7 +70,23 @@ export default function AppointmentDrawer({
     setIsTermsAccepted,
   } = useAppointmentDrawer({ setIsDrawerOpen, selectedAppointmentId });
 
+  const [updateAppointment] = useUpdateAppointmentMutation();
+
   if (isLoading) return null;
+
+  const VIRTUAL_COMPONENT = (
+    <>
+      {isVirtualAssesmentDone ? (
+        <StyledButton type="button" variant="contained" onClick={handleCompleteModalOpen}>
+          {translate('appointments_page.complete_button')}
+        </StyledButton>
+      ) : (
+        <StyledButton type="button" variant="contained" disabled={!isVirtualAssesmentAccepted}>
+          {translate('appointments_page.virtual_button')}
+        </StyledButton>
+      )}
+    </>
+  );
 
   const DRAWER_FOOTERS = {
     [APPOINTMENT_STATUS.Pending]: (
@@ -92,19 +109,32 @@ export default function AppointmentDrawer({
         </CancelBtn>
       </DoubleButtonBox>
     ),
-    [APPOINTMENT_STATUS.Virtual]: (
-      <>
-        {isVirtualAssesmentDone ? (
-          <StyledButton type="button" variant="contained" onClick={handleCompleteModalOpen}>
-            {translate('appointments_page.complete_button')}
-          </StyledButton>
-        ) : (
-          <StyledButton type="button" variant="contained" disabled={!isVirtualAssesmentAccepted}>
-            {translate('appointments_page.virtual_button')}
-          </StyledButton>
-        )}
-      </>
+    [APPOINTMENT_STATUS.Virtual]: VIRTUAL_COMPONENT,
+    [APPOINTMENT_STATUS.SignedCaregiver]: VIRTUAL_COMPONENT,
+    [APPOINTMENT_STATUS.SignedSeeker]: (
+      <StyledButton type="button" variant="contained">
+        {translate('appointments_page.contract_button')}
+      </StyledButton>
     ),
+  };
+
+  const handleSignInAgreement = async (): Promise<void> => {
+    const newAppointmentStatus =
+      appointment?.status === APPOINTMENT_STATUS.SignedCaregiver
+        ? APPOINTMENT_STATUS.Active
+        : APPOINTMENT_STATUS.SignedSeeker;
+
+    try {
+      await updateAppointment({
+        id: selectedAppointmentId,
+        status: newAppointmentStatus,
+      }).unwrap();
+
+      handleAgreementModalClose();
+      setIsTermsAccepted(false);
+    } catch (error) {
+      throw new Error(error);
+    }
   };
 
   return (
@@ -187,7 +217,7 @@ export default function AppointmentDrawer({
             <StyledButton
               type="button"
               variant="contained"
-              onClick={onClose}
+              onClick={handleSignInAgreement}
               disabled={!isTermsAccepted}
             >
               {translate('appointments_page.sign_agreement_button')}

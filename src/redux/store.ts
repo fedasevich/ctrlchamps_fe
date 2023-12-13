@@ -23,7 +23,7 @@ import authApi from 'src/redux/api/authApi';
 import questionnaireApi from 'src/redux/api/healthQuestionnaireApi';
 import profileApi from 'src/redux/api/profileCompleteApi';
 import timezoneApi from 'src/redux/api/timezoneApi';
-import { RootState } from 'src/redux/rootReducer';
+import rootReducer from 'src/redux/rootReducer';
 
 const persistConfig = {
   key: 'root',
@@ -75,3 +75,5 @@ export const useTypedSelector: TypedUseSelectorHook<RootState> = useSelector;
 export type AppDispatch = typeof store.dispatch;
 export const useAppDispatch = () => useDispatch<AppDispatch>();
 export { persistor, store };
+
+export type RootState = ReturnType<typeof rootReducer>;

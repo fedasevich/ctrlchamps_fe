@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import type { RootState } from 'src/redux/store';
 import { route } from 'src/redux/api/routes';
+import type { RootState } from 'src/redux/store';
 
 export interface Activity {
   id: string;

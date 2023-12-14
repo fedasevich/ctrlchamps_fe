@@ -47,7 +47,7 @@ const Button = styled(FilledButton)`
 const Container = styled('div')`
   background-color: ${PRIMARY.white};
   border-radius: 4px;
-  box-shadow: 0px 1px 16px 0px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 1px 16px 0px ${SECONDARY.gray_shadow};
   margin-bottom: 30px;
   width: 360px;
 `;

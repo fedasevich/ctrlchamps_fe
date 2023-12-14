@@ -1,7 +1,8 @@
 import { Drawer, ListItem, styled } from '@mui/material';
-import typography from 'src/theme/typography';
+
 import { PRIMARY, SECONDARY } from 'src/theme/colors';
 import { TYPOGRAPHY } from 'src/theme/fonts';
+import typography from 'src/theme/typography';
 
 export const AppointmentModal = styled(Drawer)`
   min-height: 100vh;
@@ -28,6 +29,10 @@ export const AppointmentModalBlock = styled('div')`
   display: flex;
   flex-direction: column;
   gap: 10px;
+`;
+
+export const AppointmentModalFooter = styled(AppointmentModalBlock)`
+  margin-top: auto;
 `;
 
 export const AppointmentModalBlockParagraph = styled('p')`

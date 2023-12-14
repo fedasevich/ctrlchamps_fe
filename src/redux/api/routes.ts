@@ -17,6 +17,7 @@ const route = {
   caregivers: '/caregivers',
   filter: '/filter',
   timezoneJson: '/timezone/json',
+  virtualAssessment: '/virtual-assessment',
 };
 
 export { route };

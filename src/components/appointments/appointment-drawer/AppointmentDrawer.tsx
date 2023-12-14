@@ -113,7 +113,7 @@ export default function AppointmentDrawer({
     ),
     [APPOINTMENT_STATUS.Virtual]: (
       <>
-        {!isVirtualAssessmentDone ? (
+        {isVirtualAssessmentDone ? (
           <StyledButton type="button" variant="contained" onClick={handleCompleteModalOpen}>
             {translate('appointments_page.complete_button')}
           </StyledButton>

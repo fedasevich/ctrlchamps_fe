@@ -85,6 +85,7 @@ export default function OneTimeAppointment({ onNext, onBack }: Props): JSX.Eleme
           disabled={!date || !startTime || !endTime}
           onClick={goNext}
           onBack={onBack}
+        />
       </Container>
     </Box>
   );

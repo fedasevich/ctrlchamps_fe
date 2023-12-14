@@ -154,7 +154,11 @@ export const appointmentApi = createApi({
   }),
 });
 
-export const { useGetAllAppointmentsQuery, useGetAppointmentQuery, useUpdateAppointmentMutation } =
-  appointmentApi;
+export const {
+  useGetAllAppointmentsQuery,
+  useGetAppointmentQuery,
+  useUpdateAppointmentMutation,
+  useCreateAppointmentMutation,
+} = appointmentApi;
 
 export default appointmentApi;

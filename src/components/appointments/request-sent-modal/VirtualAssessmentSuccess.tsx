@@ -12,7 +12,11 @@ export default function VirtualAssessmentSuccess({ isActive, handleClose }: Prop
   const { translate } = useLocales();
 
   return (
-    <Modal title="Virtual Assessment" isActive={isActive} onClose={handleClose}>
+    <Modal
+      title={translate('request_appointment.virtual_assessment')}
+      isActive={isActive}
+      onClose={handleClose}
+    >
       <Stack width={400}>
         <IconWrapper>
           <Icon color="primary" />

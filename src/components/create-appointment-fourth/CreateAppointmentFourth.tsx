@@ -35,10 +35,12 @@ import { appointmentApi } from 'src/redux/api/appointmentApi';
 
 interface CreateAppointmentFourthProps {
   onNext: () => void;
+  onBack: () => void;
 }
 
 export default function CreateAppointmentFourth({
   onNext,
+  onBack,
 }: CreateAppointmentFourthProps): JSX.Element {
   const { t: translate } = useTranslation();
 
@@ -143,6 +145,7 @@ export default function CreateAppointmentFourth({
           onClose={handleDrawerClose}
           selectedCaregiverId={selectedCaregiverId}
           onNext={onNext}
+          onBack={onBack}
         />
       )}
     </Background>

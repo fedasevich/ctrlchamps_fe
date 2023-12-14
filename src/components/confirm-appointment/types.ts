@@ -8,7 +8,6 @@ type Props = {
   isModalActive: boolean;
   onClose: () => void;
   onOpen: () => void;
-  onNext: () => void;
 };
 
 export type { Props };

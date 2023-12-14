@@ -1,17 +1,18 @@
-import { useState } from 'react';
 import { Checkbox, FormControlLabel, FormGroup, TextField, Typography } from '@mui/material';
+import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from 'src/redux/rootReducer';
-import { useLocales } from 'src/locales';
-import { saveNote, selectDiagnosis } from 'src/redux/slices/healthQuestionnaireSlice';
 import {
-  QuestionnaireTypeText,
-  SubmitButton,
   QuestionnaireContainerContent,
+  QuestionnaireTypeText,
 } from 'src/components/health-questionnaire/styles';
+import AppointmentBtn from 'src/components/reusable/appointment-btn/AppointmentBtn';
+import { useLocales } from 'src/locales';
+import { RootState } from 'src/redux/rootReducer';
+import { saveNote, selectDiagnosis } from 'src/redux/slices/healthQuestionnaireSlice';
 
 type Step1Props = {
   onNext: () => void;
+  onBack: () => void;
   stepKey: string;
   diagnoses: {
     id: string;
@@ -19,7 +20,7 @@ type Step1Props = {
   }[];
 };
 
-const Step1 = ({ onNext, stepKey, diagnoses }: Step1Props): JSX.Element => {
+const Step1 = ({ onNext, onBack, stepKey, diagnoses }: Step1Props): JSX.Element => {
   const { translate } = useLocales();
   const dispatch = useDispatch();
   const selectedDiagnoses = useSelector(
@@ -92,10 +93,13 @@ const Step1 = ({ onNext, stepKey, diagnoses }: Step1Props): JSX.Element => {
           onChange={handleNoteChange}
         />
       </QuestionnaireContainerContent>
-
-      <SubmitButton disabled={Boolean(!selectedOptions.length)} onClick={handleSubmit}>
-        {translate('health_questionnaire.btn_next')}
-      </SubmitButton>
+      <AppointmentBtn
+        nextText={translate('btn_next')}
+        backText={translate('profileQualification.back')}
+        disabled={Boolean(!selectedOptions.length)}
+        onClick={handleSubmit}
+        onBack={onBack}
+      />
     </div>
   );
 };

@@ -34,6 +34,8 @@ import {
   ModalFooter,
 } from './styles';
 import { useAppointmentDrawer } from './hooks';
+import VirtualAssessmentModal from '../virtual-assessment-modal/VirtualAssessmentModal';
+import VirtualAssessmentSuccess from '../request-sent-modal/VirtualAssessmentSuccess';
 
 interface AppointmentsDrawerProps {
   isOpen: boolean;
@@ -58,6 +60,8 @@ export default function AppointmentDrawer({
     isCancelModalOpen,
     isCompleteModalOpen,
     isAgreementModalOpen,
+    isVirtualAssessmentModalOpen,
+    isVirtualAssessmentSuccessOpen,
     isTermsAccepted,
     isLoading,
     isVirtualAssessmentAccepted,
@@ -70,7 +74,12 @@ export default function AppointmentDrawer({
     handleCompleteModalClose,
     handleAgreementModalOpen,
     handleAgreementModalClose,
+    handleVirtualAssessmentModalOpen,
+    handleVirtualAssessmentModalClose,
+    handleVirtualAssessmentSuccessModalClose,
+    handleVirtualAssessmentSuccessModalOpen,
     setIsTermsAccepted,
+    openOriginalAppointment,
   } = useAppointmentDrawer({ setIsDrawerOpen, selectedAppointmentId });
 
   const handleCaregiverDrawerOpen = (caregiverId: string): void => {
@@ -104,12 +113,17 @@ export default function AppointmentDrawer({
     ),
     [APPOINTMENT_STATUS.Virtual]: (
       <>
-        {isVirtualAssessmentDone ? (
+        {!isVirtualAssessmentDone ? (
           <StyledButton type="button" variant="contained" onClick={handleCompleteModalOpen}>
             {translate('appointments_page.complete_button')}
           </StyledButton>
         ) : (
-          <StyledButton type="button" variant="contained" disabled={!isVirtualAssessmentAccepted}>
+          <StyledButton
+            type="button"
+            variant="contained"
+            disabled={!isVirtualAssessmentAccepted}
+            onClick={handleVirtualAssessmentModalOpen}
+          >
             {translate('appointments_page.virtual_button')}
           </StyledButton>
         )}
@@ -216,6 +230,20 @@ export default function AppointmentDrawer({
         onSignIn={handleAgreementModalOpen}
         isActive={isCompleteModalOpen}
         appointment={appointment}
+      />
+      <VirtualAssessmentModal
+        caregiverName=""
+        onClose={handleVirtualAssessmentModalClose}
+        isActive={isVirtualAssessmentModalOpen}
+        openDrawer={openOriginalAppointment}
+        openCaregiverProfile={(): void =>
+          appointment && handleCaregiverDrawerOpen(appointment?.caregiverInfo.user.id)
+        }
+        openVirtualAssessmentSuccess={handleVirtualAssessmentSuccessModalOpen}
+      />
+      <VirtualAssessmentSuccess
+        isActive={isVirtualAssessmentSuccessOpen}
+        handleClose={handleVirtualAssessmentSuccessModalClose}
       />
     </>
   );

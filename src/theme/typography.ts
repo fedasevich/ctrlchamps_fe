@@ -47,6 +47,7 @@ const typography = {
   fontFamily: primaryFont.style.fontFamily,
   fontWeightRegular: 400,
   fontWeightMedium: 500,
+  fontWeightSemiBold: 600,
   fontWeightBold: 700,
   h1: {
     fontWeight: 800,

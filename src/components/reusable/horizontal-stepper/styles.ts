@@ -1,7 +1,11 @@
-import { styled } from '@mui/material';
+import { Stepper, styled } from '@mui/material';
 
 export const StepperWrapper = styled('div')`
-  width: 60%;
   margin-inline: auto;
-  margin-top: 25px;
+  padding: 25px 0;
+`;
+
+export const StyledStepper = styled(Stepper)`
+  width: 60%;
+  margin: 0 auto;
 `;

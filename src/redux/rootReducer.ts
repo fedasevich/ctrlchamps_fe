@@ -10,9 +10,9 @@ import { rateReducer } from 'src/redux/slices/rateSlice';
 import { roleReducer } from 'src/redux/slices/roleSlice';
 import { tokenReducer } from 'src/redux/slices/tokenSlice';
 import { workExperienceReducer } from 'src/redux/slices/workEperienceSlice';
-import { healthQuestionnaireReducer } from './slices/healthQuestionnaireSlice';
-import { locationReducer } from './slices/locationSlice';
-import { servicesReducer } from './slices/servicesSlice';
+import { healthQuestionnaireReducer } from 'src/redux/slices/healthQuestionnaireSlice';
+import { locationReducer } from 'src/redux/slices/locationSlice';
+import { servicesReducer } from 'src/redux/slices/servicesSlice';
 
 const rootReducer = combineReducers({
   role: roleReducer,

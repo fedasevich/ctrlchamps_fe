@@ -61,7 +61,7 @@ export default function AgreementModal({ appointment }: IProps): JSX.Element | n
       <div>
         <Text>
           {translate('appointments_page.terms.payment_text1')}
-          <Span>{appointment.payment}</Span>
+          <Span>{appointment.caregiverInfo.hourlyRate}</Span>
           {translate('appointments_page.terms.payment_text2')}
           <Span>{PAYMENT_DAY}</Span>
           {translate('appointments_page.terms.payment_text3')}

@@ -16,6 +16,8 @@ import ArrowBackFilled from 'src/assets/icons/ArrowBackFilled';
 import RightAction from 'src/assets/icons/RightAction';
 
 import { useUpdateAppointmentMutation } from 'src/redux/api/appointmentApi';
+import VirtualAssessmentSuccess from 'src/components/appointments/request-sent-modal/VirtualAssessmentSuccess';
+import VirtualAssessmentModal from 'src/components/appointments/virtual-assessment-modal/VirtualAssessmentModal';
 import {
   DrawerBody,
   Block,
@@ -35,8 +37,6 @@ import {
   ModalFooter,
 } from './styles';
 import { useAppointmentDrawer } from './hooks';
-import VirtualAssessmentModal from '../virtual-assessment-modal/VirtualAssessmentModal';
-import VirtualAssessmentSuccess from '../request-sent-modal/VirtualAssessmentSuccess';
 
 interface AppointmentsDrawerProps {
   isOpen: boolean;
@@ -100,7 +100,12 @@ export default function AppointmentDrawer({
           {translate('appointments_page.complete_button')}
         </StyledButton>
       ) : (
-        <StyledButton type="button" variant="contained" disabled={!isVirtualAssessmentAccepted} onClick={handleVirtualAssessmentModalOpen}>
+        <StyledButton
+          type="button"
+          variant="contained"
+          disabled={!isVirtualAssessmentAccepted}
+          onClick={handleVirtualAssessmentModalOpen}
+        >
           {translate('appointments_page.virtual_button')}
         </StyledButton>
       )}

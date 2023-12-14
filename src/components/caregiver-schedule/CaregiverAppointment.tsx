@@ -34,7 +34,7 @@ export default function CaregiverAppointment({
       <AppointmentDay>{format(appointmentDay, DISPLAY_DATE_FORMAT)}</AppointmentDay>
 
       {appointmentDays.map((appointment) => (
-        <Task>
+        <Task key={appointment.id}>
           <AppointmentInfo>
             <AppointmentHeader>
               <TaskText>{appointment.name}</TaskText>

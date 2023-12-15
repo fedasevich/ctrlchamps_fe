@@ -3,7 +3,7 @@ import { format } from 'date-fns';
 import AccessTimeIcon from 'src/assets/icons/AccessTimeIcon';
 import AppointmentStatus from 'src/components/appointments/appointment-status/AppointmentStatus';
 import { formatTimeToTimezone } from 'src/utils/formatTime';
-import { DISPLAY_DATE_FORMAT, DISPLAY_TIME_FORMAT } from 'src/constants';
+import { DATE_FORMAT, DISPLAY_TIME_FORMAT } from 'src/constants';
 import {
   AppointmentDay,
   AppointmentDetails,
@@ -31,8 +31,7 @@ export default function CaregiverAppointment({
 }: Props): JSX.Element {
   return (
     <Stack>
-      <AppointmentDay>{format(appointmentDay, DISPLAY_DATE_FORMAT)}</AppointmentDay>
-
+      <AppointmentDay>{format(appointmentDay, DATE_FORMAT)}</AppointmentDay>
       {appointmentDays.map((appointment) => (
         <Task key={appointment.id}>
           <AppointmentInfo>

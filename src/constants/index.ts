@@ -8,7 +8,6 @@ export const DATE_FORMAT = 'MM/dd/yyyy';
 export const BACKEND_DATE_FORMAT = 'yyyy-MM-dd';
 
 export const CURRENT_DAY = new Date();
-export const DISPLAY_DATE_FORMAT = 'dd MMMM, yyyy';
 export const DISPLAY_TIME_FORMAT = 'HH:mm';
 export const ONE_DAY = 1;
 

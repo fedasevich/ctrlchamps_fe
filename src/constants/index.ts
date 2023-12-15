@@ -1,3 +1,4 @@
+import { UserRole } from 'src/redux/slices/userSlice';
 import { daySelectedType } from './types';
 
 export const EMAIL_ERROR = 'email';
@@ -12,9 +13,9 @@ export const URL_PATTERN = /^https:\/\/.+$/;
 
 export const GOOGLE_MAP_API = 'https://maps.googleapis.com/maps/api';
 
-export const USER_ROLE = {
-  caregiver: 'caregiver',
-  seeker: 'seeker',
+export const USER_ROLE: Record<UserRole, UserRole> = {
+  Caregiver: 'Caregiver',
+  Seeker: 'Seeker',
 };
 
 export const FIRST_STEP_INDEX = 0;

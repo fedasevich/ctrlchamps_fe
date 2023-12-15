@@ -1,6 +1,5 @@
 import Head from 'next/head';
 import { useState } from 'react';
-import { Background } from 'src/components/book-appointment/styles';
 import ConfirmAppointment from 'src/components/confirm-appointment/ConfirmAppointment';
 import CreateAppointmentFourth from 'src/components/create-appointment-fourth/CreateAppointmentFourth';
 import AppointmentScheduling from 'src/components/create-appointment/AppointmentScheduling';
@@ -10,10 +9,11 @@ import {
   CancelAppointmentModal,
   useCancelAppointmentModal,
 } from 'src/components/modal-cancel-appointment';
+import { PrivateRoute } from 'src/components/private-route/PrivateRoute';
 import { Step } from 'src/components/profile/profile-qualification/types';
 import FlowHeader from 'src/components/reusable/header/FlowHeader';
 import HorizontalStepper from 'src/components/reusable/horizontal-stepper/HorizontalStepper';
-import { FIRST_STEP_INDEX, SECOND_STEP_INDEX } from 'src/constants';
+import { FIRST_STEP_INDEX, SECOND_STEP_INDEX, USER_ROLE } from 'src/constants';
 import { useLocales } from 'src/locales';
 import { useTypedSelector } from 'src/redux/store';
 import { PRIMARY } from 'src/theme/colors';
@@ -68,7 +68,7 @@ export default function CreateAppointmentPage(): JSX.Element {
 
   const ActiveStepComponent = STEPS[activeStepIndex].component;
   return (
-    <>
+    <PrivateRoute allowedRole={USER_ROLE.Seeker}>
       <Head>
         <title>{translate('create_appointment.create')}</title>
       </Head>
@@ -86,6 +86,6 @@ export default function CreateAppointmentPage(): JSX.Element {
       />
       {ActiveStepComponent}
       <CancelAppointmentModal open={modalOpen} setOpen={setModalOpen} />
-    </>
+    </PrivateRoute>
   );
 }

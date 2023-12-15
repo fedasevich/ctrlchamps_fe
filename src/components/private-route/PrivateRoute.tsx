@@ -1,13 +1,13 @@
 import { usePathname } from 'next/navigation';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
+import { DEFAULT_REDIRECT_PATH } from 'src/constants';
 import { UserRole } from 'src/redux/slices/userSlice';
 import { useTypedSelector } from 'src/redux/store';
 import { ROUTES } from 'src/routes';
-import { DEFAULT_REDIRECT_PATH, REDIRECT_PATHS } from './constants';
 
 interface PrivateRouteProps {
-  children?: React.ReactNode;
+  children: React.ReactNode;
   allowedRole?: UserRole;
   isIndex?: boolean;
 }
@@ -20,7 +20,7 @@ export function PrivateRoute({
   const router = useRouter();
   const pathname = usePathname();
 
-  const [isAllowedToEnter, setIsAllowedToEnter] = useState(false);
+  const [isAllowedToEnter, setIsAllowedToEnter] = useState<boolean>(false);
 
   const user = useTypedSelector((state) => state.user.user);
 
@@ -36,7 +36,7 @@ export function PrivateRoute({
     }
 
     if ((allowedRole && user.role !== allowedRole) || isIndex) {
-      router.replace(REDIRECT_PATHS[user.role]);
+      router.replace(ROUTES.home);
       return;
     }
 

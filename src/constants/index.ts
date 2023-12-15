@@ -1,4 +1,5 @@
 import { UserRole } from 'src/redux/slices/userSlice';
+import { ROUTES } from 'src/routes';
 import { daySelectedType } from './types';
 
 export const EMAIL_ERROR = 'email';
@@ -17,6 +18,8 @@ export const USER_ROLE: Record<UserRole, UserRole> = {
   Caregiver: 'Caregiver',
   Seeker: 'Seeker',
 };
+
+export const DEFAULT_REDIRECT_PATH = ROUTES.login;
 
 export const FIRST_STEP_INDEX = 0;
 export const SECOND_STEP_INDEX = 1;

@@ -5,7 +5,7 @@ import MainHeader from 'src/components/reusable/header/MainHeader';
 import { USER_ROLE } from 'src/constants';
 import { useLocales } from 'src/locales';
 
-export default function SchedulePage(): JSX.Element | null {
+export default function CaregiverSchedulePage(): JSX.Element | null {
   const { translate } = useLocales();
 
   return (

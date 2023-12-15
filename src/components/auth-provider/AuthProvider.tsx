@@ -10,7 +10,7 @@ interface AuthProviderProps {
 export function AuthProvider({ children }: AuthProviderProps): JSX.Element | null {
   const dispatch = useAppDispatch();
 
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState<boolean>(true);
 
   const token = useTypedSelector((state) => state.token.token);
 

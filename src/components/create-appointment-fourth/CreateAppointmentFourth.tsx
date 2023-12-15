@@ -11,7 +11,6 @@ import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import MonetizationOn from 'src/assets/icons/MonetizationOn';
 import RightAction from 'src/assets/icons/RightAction';
-import CreateAppointmentFourthDrawer from 'src/components/create-appointment-fourth/drawer/CreateAppointmentFourthDrawer';
 import { SMALL_CAREGIVER_AVATAR_SIZE } from 'src/components/create-appointment-fourth/constants';
 import {
   getMockCaregiverAvatar,
@@ -32,13 +31,16 @@ import {
   StyledListItemText,
 } from 'src/components/create-appointment-fourth/styles';
 import { appointmentApi } from 'src/redux/api/appointmentApi';
+import CreateAppointmentFourthDrawer from './CreateAppointmentFourthDrawer';
 
 interface CreateAppointmentFourthProps {
   onNext: () => void;
+  onBack: () => void;
 }
 
 export default function CreateAppointmentFourth({
   onNext,
+  onBack,
 }: CreateAppointmentFourthProps): JSX.Element {
   const { t: translate } = useTranslation();
 
@@ -143,6 +145,7 @@ export default function CreateAppointmentFourth({
           onClose={handleDrawerClose}
           selectedCaregiverId={selectedCaregiverId}
           onNext={onNext}
+          onBack={onBack}
         />
       )}
     </Background>

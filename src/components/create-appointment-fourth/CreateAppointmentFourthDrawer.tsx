@@ -3,14 +3,15 @@ import { appointmentApi } from 'src/redux/api/appointmentApi';
 import { setSelectedCaregiver } from 'src/redux/slices/caregiverSlice';
 import { useAppDispatch } from 'src/redux/store';
 
+import AppointmentBtn from 'src/components/reusable/appointment-btn/AppointmentBtn';
 import CaregiverDrawer from 'src/components/reusable/drawer/caregiver-drawer/CaregiverDrawer';
-import { BookButton } from './styles';
 
 interface CreateAppointmentFourthDrawerProps {
   open: boolean;
   onClose: () => void;
   selectedCaregiverId: string;
   onNext: () => void;
+  onBack: () => void;
 }
 
 export default function CreateAppointmentFourthDrawer({
@@ -18,6 +19,7 @@ export default function CreateAppointmentFourthDrawer({
   onClose,
   selectedCaregiverId,
   onNext,
+  onBack,
 }: CreateAppointmentFourthDrawerProps): JSX.Element | null {
   const { translate } = useLocales();
   const dispatch = useAppDispatch();
@@ -37,9 +39,12 @@ export default function CreateAppointmentFourthDrawer({
     <CaregiverDrawer
       caregiverId={selectedCaregiverId}
       footer={
-        <BookButton variant="contained" onClick={handleBookClick}>
-          {translate('createAppointmentFourth.bookAppointment')}
-        </BookButton>
+        <AppointmentBtn
+          nextText={translate('createAppointmentFourth.bookAppointment')}
+          backText={translate('profileQualification.back')}
+          onClick={handleBookClick}
+          onBack={onBack}
+        />
       }
       onClose={onClose}
       open={open}

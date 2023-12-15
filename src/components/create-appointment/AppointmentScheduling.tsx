@@ -1,15 +1,19 @@
-import { useTypedSelector } from 'src/redux/store';
-import { useLocales } from 'src/locales';
 import {
   CancelAppointmentModal,
   useCancelAppointmentModal,
 } from 'src/components/modal-cancel-appointment';
+import { useTypedSelector } from 'src/redux/store';
 import OneTimeAppointment from './OneTimeAppointment';
 import RecurringAppointment from './RecurringAppointment';
-import { Background } from './styles';
 import { Appointment } from './enums';
+import { Background } from './styles';
 
-export default function AppointmentScheduling({ onNext }: { onNext: () => void }): JSX.Element {
+type Props = {
+  onNext: () => void;
+  onBack: () => void;
+};
+
+export default function AppointmentScheduling({ onNext, onBack }: Props): JSX.Element {
   const { appointmentType } = useTypedSelector((state) => state.appointment);
   const { modalOpen, setModalOpen, handleOpen } = useCancelAppointmentModal();
 
@@ -17,9 +21,9 @@ export default function AppointmentScheduling({ onNext }: { onNext: () => void }
     <>
       <Background>
         {appointmentType === Appointment.oneTime ? (
-          <OneTimeAppointment onNext={onNext} />
+          <OneTimeAppointment onNext={onNext} onBack={onBack} />
         ) : (
-          <RecurringAppointment onNext={onNext} />
+          <RecurringAppointment onNext={onNext} onBack={onBack} />
         )}
       </Background>
       <CancelAppointmentModal open={modalOpen} setOpen={setModalOpen} />

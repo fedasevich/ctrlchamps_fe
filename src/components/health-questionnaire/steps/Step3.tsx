@@ -1,16 +1,15 @@
-import React, { useState } from 'react';
 import { Checkbox, FormControlLabel, FormGroup, TextField } from '@mui/material';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import {
+  DescriptionBlock,
+  QuestionnaireContainerContent,
+  QuestionnaireTypeText,
+} from 'src/components/health-questionnaire/styles';
+import AppointmentBtn from 'src/components/reusable/appointment-btn/AppointmentBtn';
 import { useLocales } from 'src/locales';
 import { RootState } from 'src/redux/rootReducer';
 import { saveNote, selectEnvChallenges } from 'src/redux/slices/healthQuestionnaireSlice';
-import {
-  QuestionnaireContainerContent,
-  QuestionnaireTypeText,
-  CardActionsStyled,
-  ActionButton,
-  DescriptionBlock,
-} from 'src/components/health-questionnaire/styles';
 
 type Step3Props = {
   onNext: () => void;
@@ -86,23 +85,13 @@ const Step3 = ({ onNext, onBack, stepKey, capabilities }: Step3Props): JSX.Eleme
           onChange={handleNoteChange}
         />
       </QuestionnaireContainerContent>
-      <CardActionsStyled>
-        <ActionButton
-          variant="outlined"
-          onClick={(): void => {
-            onBack();
-          }}
-        >
-          {translate('health_questionnaire.back')}
-        </ActionButton>
-        <ActionButton
-          variant="contained"
-          disabled={Boolean(!selectedOptions.length)}
-          onClick={handleSubmit}
-        >
-          {translate('health_questionnaire.submit')}
-        </ActionButton>
-      </CardActionsStyled>
+      <AppointmentBtn
+        nextText={translate('health_questionnaire.submit')}
+        backText={translate('profileQualification.back')}
+        disabled={Boolean(!selectedOptions.length)}
+        onClick={handleSubmit}
+        onBack={onBack}
+      />
     </div>
   );
 };

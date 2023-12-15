@@ -11,6 +11,7 @@ import { useCreateAppointmentMutation } from 'src/redux/api/appointmentApi';
 import { APPOINTMENT_STATUS } from 'src/constants';
 import { Appointment } from 'src/components/create-appointment/enums';
 import { ROUTES } from 'src/routes';
+import AppointmentBtn from 'src/components/reusable/appointment-btn/AppointmentBtn';
 import {
   Container,
   Header,
@@ -23,6 +24,7 @@ import {
   TasksWrapper,
   Typography,
 } from './style';
+import { CONFIRM_NOTE_MAX_LENGTH } from './constants';
 
 export default function ConfirmAppointment({ onBack }: { onBack: () => void }): JSX.Element {
   const { translate } = useLocales();
@@ -115,10 +117,16 @@ export default function ConfirmAppointment({ onBack }: { onBack: () => void }): 
               setDetails={setDetails}
               onClose={onCloseModal}
               onOpen={onOpenModal}
-              onNext={confirmAppointment}
               isModalActive={isModalActive}
             />
           </TasksWrapper>
+          <AppointmentBtn
+            nextText={translate('confirm_appointment.confirm')}
+            backText={translate('profileQualification.back')}
+            disabled={!tasks.length || details.length > CONFIRM_NOTE_MAX_LENGTH}
+            onClick={confirmAppointment}
+            onBack={onBack}
+          />
         </InnerContainer>
       </Container>
     </PageBackground>

@@ -1,6 +1,6 @@
 enum Appointment {
-  oneTime = 'one-time',
-  recurring = 'recurring',
+  oneTime = 'One time',
+  recurring = 'Recurring',
 }
 
 export { Appointment };

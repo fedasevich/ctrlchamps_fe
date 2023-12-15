@@ -163,6 +163,7 @@ const en = {
     },
     aria: {
       toggle: 'toggle password visibility',
+      open_drawer: 'open-drawer',
     },
     errors: {
       pass: "Passwords don't match",
@@ -579,13 +580,26 @@ const en = {
     },
   },
   request_appointment: {
+    virtual_assessment: 'Virtual Assessment',
+    open_original_appointment: 'Open Original Appointment',
     appointment: 'Appointment',
     client: 'Client',
+    caregiver: 'Caregiver',
     date_and_time: 'Date & Time',
     health_questionnaire: 'Health questionnaire',
+    meeting_link: 'Meeting Link',
+    link_copied: 'Meeting link is copied',
+    request_sent: 'Your request has been successfully sent!',
+    request_success: "Now, we'll wait for caregivers to respond. Thank you for using our app",
     tasks: 'Tasks',
     additional_details: 'Additional details',
+    notify_message: 'We will notify you right before assessment starting time',
+    invalid_link: 'Please enter valid link',
+    invalid_time:
+      'Appointment cannot be ended before the start. Please choose another value in End Time field.',
+    equal_time_error: 'You cannot choose identical time',
     btns: {
+      request: 'Request',
       reject: 'Reject',
       accept: 'Accept',
       view: 'View',

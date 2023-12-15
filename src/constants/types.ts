@@ -7,6 +7,6 @@ type daySelectedType =
   | 'Saturday'
   | 'Sunday';
 
-type AppointmentType = null | 'one-time' | 'recurring';
+type AppointmentType = null | 'One time' | 'Recurring';
 
 export type { daySelectedType, AppointmentType };

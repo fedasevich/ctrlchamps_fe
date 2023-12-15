@@ -1,38 +1,40 @@
-import { Drawer, ListItem, styled } from '@mui/material';
-
+import { ListItem, styled } from '@mui/material';
 import { PRIMARY, SECONDARY } from 'src/theme/colors';
 import { TYPOGRAPHY } from 'src/theme/fonts';
 import typography from 'src/theme/typography';
+import RightAction from 'src/assets/icons/RightAction';
+import { BackDrop, ModalWrapper } from '../complete-appointment-modal/styles';
 
-export const AppointmentModal = styled(Drawer)`
-  min-height: 100vh;
-  width: 360px;
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
+export const ModalBackdrop = styled(BackDrop)`
+  padding-top: 15px;
+  background: ${SECONDARY.gray_semi_transparent};
 `;
 
-export const DrawerBody = styled('div')`
+export const AppointmentModal = styled(ModalWrapper)`
+  width: 400px;
+`;
+
+export const ModalBody = styled('div')`
   display: flex;
   gap: 16px;
   flex-direction: column;
   overflow-y: auto;
   height: 100%;
   background-color: ${SECONDARY.drawer_background};
-  width: 360px;
 `;
 
 export const AppointmentModalBlock = styled('div')`
   font-weight: ${typography.fontWeightMedium};
   background-color: ${PRIMARY.white};
-  padding: 20px 25px;
+  padding: 16px;
+  border-top: 1px solid ${SECONDARY.light_gray};
+  border-bottom: 1px solid ${SECONDARY.light_gray};
   display: flex;
   flex-direction: column;
   gap: 10px;
-`;
-
-export const AppointmentModalFooter = styled(AppointmentModalBlock)`
-  margin-top: auto;
+  &:first-child {
+    margin-top: 16px;
+  }
 `;
 
 export const AppointmentModalBlockParagraph = styled('p')`
@@ -41,6 +43,18 @@ export const AppointmentModalBlockParagraph = styled('p')`
   display: flex;
   justify-content: space-between;
   align-items: center;
+`;
+
+export const AppointmentModalLinkBlock = styled(AppointmentModalBlockParagraph)`
+  position: relative;
+`;
+
+export const AppointmentModalFooter = styled(AppointmentModalBlock)`
+  border-radius: 0 0 4px 4px;
+`;
+
+export const ArrowRight = styled(RightAction)`
+  color: ${PRIMARY.main};
 `;
 
 export const InlineBlock = styled('div')`
@@ -58,12 +72,20 @@ export const AppointmentParagraph = styled('p')`
 export const NameParagraph = styled('p')`
   font-size: ${TYPOGRAPHY.base_sm}px;
   padding-left: 10px;
-  padding-right: 100px;
 `;
 
 export const ListItemStyled = styled(ListItem)`
   border-bottom: 1px solid ${SECONDARY.light_gray};
   padding-bottom: 5px;
+`;
+
+export const CopyLinkWrapper = styled('div')`
+  position: absolute;
+  right: -2px;
+  top: 15px;
+  background-color: ${PRIMARY.white};
+  padding: 3px 0 3px 8px;
+  cursor: pointer;
 `;
 
 export const NotificationMessage = styled('div')`

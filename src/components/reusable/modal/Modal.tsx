@@ -15,7 +15,7 @@ type Props = {
   onClose: () => void;
   children: ReactElement;
   isActive: boolean;
-  footerChildren?: ReactElement;
+  footerChildren?: ReactElement | boolean;
 };
 
 export default function Modal({

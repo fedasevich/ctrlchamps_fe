@@ -2,7 +2,7 @@ import { useState } from 'react';
 import Step1 from 'src/components/health-questionnaire/steps/Step1';
 import Step2 from 'src/components/health-questionnaire/steps/Step2';
 import Step3 from 'src/components/health-questionnaire/steps/Step3';
-import { QuestionnaireContainer } from 'src/components/health-questionnaire/styles';
+import { Background, QuestionnaireContainer } from 'src/components/health-questionnaire/styles';
 import {
   useGetActivityQuery,
   useGetCapabilityQuery,
@@ -38,7 +38,7 @@ const HealthQuestionnaire = ({ onNext }: Props): JSX.Element => {
   };
 
   return (
-    <>
+    <Background>
       {diagnoses && activities && capabilities && (
         <QuestionnaireContainer>
           {currentStep === STEPS.STEP_1 && (
@@ -62,7 +62,7 @@ const HealthQuestionnaire = ({ onNext }: Props): JSX.Element => {
           )}
         </QuestionnaireContainer>
       )}
-    </>
+    </Background>
   );
 };
 

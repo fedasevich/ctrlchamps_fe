@@ -5,6 +5,7 @@ import { AppointmentType } from 'src/constants/types';
 import { route } from 'src/redux/api/routes';
 import { RootState } from 'src/redux/rootReducer';
 import { Caregiver } from 'src/types/Caregiver.type';
+import { VirtualAssessment } from './virtualAssessmentApi';
 
 export interface AppointmentPayload {
   caregiverInfoId: string | undefined;
@@ -76,7 +77,8 @@ export interface SeekerTask {
 
 interface AppointmentCaregiverInfo {
   id: string;
-  timeZone: string;
+  timeZone?: string;
+  hourlyRate?: number;
   user: AppointmentUser;
 }
 
@@ -87,8 +89,8 @@ export interface DetailedAppointment {
   name: string;
   type: string;
   status: string;
-  details: string;
-  payment: number;
+  details?: string;
+  payment?: number;
   location: string;
   activityNote: string;
   diagnosisNote: string;
@@ -96,13 +98,14 @@ export interface DetailedAppointment {
   startDate: string;
   endDate: string;
   timezone: string;
-  weekday: string[];
+  weekday?: string[];
   caregiverInfo: AppointmentCaregiverInfo;
   user: AppointmentUser;
-  seekerActivities: SeekerActivity[];
-  seekerCapabilities: SeekerCapability[];
-  seekerDiagnoses: SeekerDiagnosis[];
+  seekerActivities?: SeekerActivity[];
+  seekerCapabilities?: SeekerCapability[];
+  seekerDiagnoses?: SeekerDiagnosis[];
   seekerTasks: SeekerTask[];
+  virtualAssessment: VirtualAssessment | null;
 }
 
 export const appointmentApi = createApi({
@@ -154,7 +157,11 @@ export const appointmentApi = createApi({
   }),
 });
 
-export const { useGetAllAppointmentsQuery, useGetAppointmentQuery, useUpdateAppointmentMutation } =
-  appointmentApi;
+export const {
+  useGetAllAppointmentsQuery,
+  useGetAppointmentQuery,
+  useUpdateAppointmentMutation,
+  useCreateAppointmentMutation,
+} = appointmentApi;
 
 export default appointmentApi;

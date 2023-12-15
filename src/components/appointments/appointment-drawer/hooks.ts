@@ -12,6 +12,8 @@ type ReturnType = {
   isCancelModalOpen: boolean;
   isCompleteModalOpen: boolean;
   isAgreementModalOpen: boolean;
+  isVirtualAssessmentModalOpen: boolean;
+  isVirtualAssessmentSuccessOpen: boolean;
   isTermsAccepted: boolean;
   isLoading: boolean;
   isVirtualAssessmentAccepted: boolean;
@@ -24,7 +26,12 @@ type ReturnType = {
   handleCompleteModalClose: () => void;
   handleAgreementModalOpen: () => void;
   handleAgreementModalClose: () => void;
+  handleVirtualAssessmentModalOpen: () => void;
+  handleVirtualAssessmentModalClose: () => void;
+  handleVirtualAssessmentSuccessModalOpen: () => void;
+  handleVirtualAssessmentSuccessModalClose: () => void;
   setIsTermsAccepted: Dispatch<SetStateAction<boolean>>;
+  openOriginalAppointment: () => void;
 };
 
 export function useAppointmentDrawer({
@@ -35,7 +42,10 @@ export function useAppointmentDrawer({
   const [isCompleteModalOpen, setIsCompleteModalOpen] = useState<boolean>(false);
   const [isAgreementModalOpen, setIsAgreementModalOpen] = useState<boolean>(false);
   const [isVirtualAssessmentDone, setVirtualAssessmentDone] = useState<boolean>(true);
+  const [isVirtualAssessmentModalOpen, setIsVirtualAssessmentModalOpen] = useState<boolean>(false);
   const [isVirtualAssessmentAccepted, setIsVirtualAssessmentAccepted] = useState<boolean>(false);
+  const [isVirtualAssessmentSuccessOpen, setIsVirtualAssessmentSuccessOpen] =
+    useState<boolean>(false);
   const [isTermsAccepted, setIsTermsAccepted] = useState<boolean>(false);
 
   const { data: appointment, isLoading } = useGetAppointmentQuery(selectedAppointmentId);
@@ -72,10 +82,35 @@ export function useAppointmentDrawer({
     setIsDrawerOpen(false);
   };
 
+  const handleVirtualAssessmentModalOpen = (): void => {
+    setIsVirtualAssessmentModalOpen(true);
+    setIsDrawerOpen(false);
+  };
+  const handleVirtualAssessmentModalClose = (): void => {
+    setIsVirtualAssessmentModalOpen(false);
+    setIsDrawerOpen(false);
+  };
+
+  const handleVirtualAssessmentSuccessModalOpen = (): void => {
+    setIsVirtualAssessmentSuccessOpen(true);
+    handleVirtualAssessmentModalClose();
+  };
+
+  const handleVirtualAssessmentSuccessModalClose = (): void => {
+    setIsVirtualAssessmentSuccessOpen(false);
+  };
+
+  const openOriginalAppointment = (): void => {
+    setIsDrawerOpen(true);
+    setIsVirtualAssessmentModalOpen(false);
+  };
+
   return {
     isCancelModalOpen,
     isCompleteModalOpen,
     isAgreementModalOpen,
+    isVirtualAssessmentModalOpen,
+    isVirtualAssessmentSuccessOpen,
     isTermsAccepted,
     isLoading,
     isVirtualAssessmentAccepted,
@@ -88,6 +123,11 @@ export function useAppointmentDrawer({
     handleCompleteModalClose,
     handleAgreementModalOpen,
     handleAgreementModalClose,
+    handleVirtualAssessmentModalOpen,
+    handleVirtualAssessmentModalClose,
+    handleVirtualAssessmentSuccessModalOpen,
+    handleVirtualAssessmentSuccessModalClose,
     setIsTermsAccepted,
+    openOriginalAppointment,
   };
 }

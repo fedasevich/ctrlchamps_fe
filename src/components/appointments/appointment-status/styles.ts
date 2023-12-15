@@ -17,6 +17,8 @@ export const StatusWrapper = styled.p<{ status: string }>`
       [APPOINTMENT_STATUS.Completed]: TEXT_COLOR.active,
       [APPOINTMENT_STATUS.Ongoing]: TEXT_COLOR.active,
       [APPOINTMENT_STATUS.Virtual]: TEXT_COLOR.active,
+      [APPOINTMENT_STATUS.SignedCaregiver]: TEXT_COLOR.active,
+      [APPOINTMENT_STATUS.SignedSeeker]: TEXT_COLOR.active,
       [APPOINTMENT_STATUS.Rejected]: TEXT_COLOR.rejected,
     };
 

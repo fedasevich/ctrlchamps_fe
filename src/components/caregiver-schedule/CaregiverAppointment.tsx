@@ -1,17 +1,17 @@
 import { Stack } from '@mui/material';
-import { format } from 'date-fns';
 import AccessTimeIcon from 'src/assets/icons/AccessTimeIcon';
 import AppointmentStatus from 'src/components/appointments/appointment-status/AppointmentStatus';
+import { DISPLAY_TIME_FORMAT } from 'src/constants';
+import { useLocales } from 'src/locales';
 import { formatTimeToTimezone } from 'src/utils/formatTime';
-import { DATE_FORMAT, DISPLAY_TIME_FORMAT } from 'src/constants';
 import {
-  AppointmentDay,
   AppointmentDetails,
   AppointmentHeader,
   AppointmentInfo,
   Arrow,
   AvatarIcon,
   Details,
+  HeaderText,
   Task,
   TaskText,
   Text,
@@ -20,18 +20,14 @@ import { CaregiverAppointmentI } from './types';
 
 type Props = {
   appointmentDays: CaregiverAppointmentI[];
-  appointmentDay: Date;
   openDrawer: () => void;
 };
 
-export default function CaregiverAppointment({
-  appointmentDays,
-  appointmentDay,
-  openDrawer,
-}: Props): JSX.Element {
+export default function CaregiverAppointment({ appointmentDays, openDrawer }: Props): JSX.Element {
+  const { translate } = useLocales();
   return (
     <Stack>
-      <AppointmentDay>{format(appointmentDay, DATE_FORMAT)}</AppointmentDay>
+      <HeaderText>{translate('appointments')}</HeaderText>
       {appointmentDays.map((appointment) => (
         <Task key={appointment.id}>
           <AppointmentInfo>

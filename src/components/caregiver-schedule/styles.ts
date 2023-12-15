@@ -111,10 +111,11 @@ const AppointmentHeader = styled('div')`
   gap: 12px;
 `;
 
-const AppointmentDay = styled('p')`
-  color: ${SECONDARY.grayish};
-  font-size: ${TYPOGRAPHY.ml}px;
+const HeaderText = styled('p')`
+  color: ${SECONDARY.gray_semi_transparent};
+  font-size: ${TYPOGRAPHY.base_md}px;
   font-weight: ${typography.fontWeightMedium};
+  margin-bottom: 5px;
 `;
 
 const AppointmentInfo = styled('div')`
@@ -169,7 +170,7 @@ const Details = styled('div')`
 `;
 
 export {
-  AppointmentDay,
+  HeaderText,
   AppointmentDetails,
   AppointmentInfo,
   AppointmentHeader,

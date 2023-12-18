@@ -1,17 +1,16 @@
-import React, { useState } from 'react';
 import { TextField } from '@mui/material';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useLocales } from 'src/locales';
-import SecondStepItem from 'src/components/health-questionnaire/steps/SecondStepItem';
-import { RootState } from 'src/redux/rootReducer';
-import { saveNote } from 'src/redux/slices/healthQuestionnaireSlice';
 import { OPTIONS } from 'src/components/health-questionnaire/constants';
+import SecondStepItem from 'src/components/health-questionnaire/steps/SecondStepItem';
 import {
   QuestionnaireContainerContent,
   QuestionnaireTypeText,
-  CardActionsStyled,
-  ActionButton,
 } from 'src/components/health-questionnaire/styles';
+import AppointmentBtn from 'src/components/reusable/appointment-btn/AppointmentBtn';
+import { useLocales } from 'src/locales';
+import { RootState } from 'src/redux/rootReducer';
+import { saveNote } from 'src/redux/slices/healthQuestionnaireSlice';
 
 type Step2Props = {
   onNext: () => void;
@@ -61,19 +60,13 @@ const Step2 = ({ onNext, onBack, stepKey, activities }: Step2Props): JSX.Element
           onChange={handleNoteChange}
         />
       </QuestionnaireContainerContent>
-      <CardActionsStyled>
-        <ActionButton
-          variant="outlined"
-          onClick={(): void => {
-            onBack();
-          }}
-        >
-          {translate('health_questionnaire.back')}
-        </ActionButton>
-        <ActionButton variant="contained" disabled={!questionsCompleted} onClick={handleSubmit}>
-          {translate('health_questionnaire.submit')}
-        </ActionButton>
-      </CardActionsStyled>
+      <AppointmentBtn
+        nextText={translate('health_questionnaire.submit')}
+        backText={translate('profileQualification.back')}
+        disabled={!questionsCompleted}
+        onClick={handleSubmit}
+        onBack={onBack}
+      />
     </div>
   );
 };

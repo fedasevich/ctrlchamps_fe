@@ -1,28 +1,34 @@
-import { useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import { addDays, isBefore, isSameDay } from 'date-fns';
 import { Box, FormControl, InputLabel, MenuItem, Select, TextField } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { addDays, isBefore, isSameDay } from 'date-fns';
+import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import OneTimeIcon from 'src/assets/icons/OneTimeIcon';
-import { FilledButton } from 'src/components/reusable';
 import { DATE_FORMAT, weekDays } from 'src/constants';
 import { setRecurringAppointmentTime } from 'src/redux/slices/appointmentSlice';
 import { useAppDispatch, useTypedSelector } from 'src/redux/store';
 import { setCustomTime } from 'src/utils/defineCustomTime';
 import { extractTimeFromDate } from 'src/utils/extractTimeFromDate';
-import useShowDuration from './useShowDuration';
+import AppointmentBtn from 'src/components/reusable/appointment-btn/AppointmentBtn';
 import { ONE_DAY, selectTimeOptions } from './constants';
 import {
   AppointmentDuration,
   BaseBoldText,
   Container,
+  ContentContainer,
   DatePickerContainer,
   SelectContainer,
   WeekSlot,
   WeekSlotContainer,
 } from './styles';
+import useShowDuration from './useShowDuration';
 
-export default function RecurringAppointment({ onNext }: { onNext: () => void }): JSX.Element {
+type Props = {
+  onNext: () => void;
+  onBack: () => void;
+};
+
+export default function RecurringAppointment({ onNext, onBack }: Props): JSX.Element {
   const { t: translate } = useTranslation();
   const dispatch = useAppDispatch();
   const { recurringDate } = useTypedSelector((state) => state.appointment);
@@ -33,6 +39,15 @@ export default function RecurringAppointment({ onNext }: { onNext: () => void })
   const [endTime, setEndTime] = useState<string>('');
   const [appointmentDays, setAppointmentDays] = useState<string[]>(recurringDate.weekDays);
   const { hours, minutes } = useShowDuration(startTime, endTime);
+
+  const isBtnDisabled =
+    !startDate ||
+    !endDate ||
+    !startTime ||
+    !endTime ||
+    !appointmentDays.length ||
+    isBefore(endDate, startDate) ||
+    isSameDay(startDate, endDate);
 
   useEffect(() => {
     if (!recurringDate.startDate || !recurringDate.endDate) return;
@@ -78,109 +93,104 @@ export default function RecurringAppointment({ onNext }: { onNext: () => void })
   return (
     <Box>
       <Container>
-        <DatePickerContainer>
-          <DatePicker
-            label={translate('create_appointment.start_date')}
-            minDate={new Date()}
-            value={startDate}
-            inputFormat={DATE_FORMAT}
-            onChange={(newValue): void => {
-              chooseStartDate(newValue);
-            }}
-            renderInput={(props) => (
-              <TextField
-                autoComplete="off"
-                InputProps={{ readOnly: true }}
-                variant="standard"
-                {...props}
-                helperText={null}
-              />
-            )}
-          />
-          <DatePicker
-            label={translate('create_appointment.end_date')}
-            minDate={startDate && addDays(startDate, ONE_DAY)}
-            value={endDate}
-            inputFormat={DATE_FORMAT}
-            onChange={(newValue): void => {
-              chooseEndDate(newValue);
-            }}
-            renderInput={(props) => (
-              <TextField
-                autoComplete="off"
-                InputProps={{ readOnly: true }}
-                variant="standard"
-                {...props}
-                helperText={null}
-              />
-            )}
-          />
-        </DatePickerContainer>
-        <SelectContainer>
-          <FormControl fullWidth variant="standard">
-            <InputLabel>{translate('create_appointment.start_time')}</InputLabel>
-            <Select
-              disabled={!startDate || !endDate}
-              value={startTime}
-              onChange={(e): void => chooseStartTime(e.target.value)}
-            >
-              {selectTimeOptions.map((option) => (
-                <MenuItem key={option} value={option}>
-                  {option}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-          <FormControl fullWidth variant="standard">
-            <InputLabel>{translate('create_appointment.end_time')}</InputLabel>
-            <Select
-              disabled={!startDate || !endDate}
-              value={endTime}
-              onChange={(e): void => chooseEndTime(e.target.value)}
-            >
-              {selectTimeOptions.map((option) => (
-                <MenuItem key={option} value={option}>
-                  {option}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-        </SelectContainer>
-        <BaseBoldText>{translate('create_appointment.select_days')}</BaseBoldText>
-        <WeekSlotContainer>
-          {weekDays.map((day) => (
-            <WeekSlot
-              key={day.value}
-              className={appointmentDays.find((el: string) => el === day.value) ? 'active' : ''}
-              onClick={(): void => chooseDay(day.value)}
-            >
-              {day.abbr}
-            </WeekSlot>
-          ))}
-        </WeekSlotContainer>
-        {startTime && endTime && (
-          <AppointmentDuration>
-            <OneTimeIcon />
-            {translate('create_appointment.duration', {
-              hours,
-              minutes,
-            })}
-          </AppointmentDuration>
-        )}
-        <FilledButton
+        <ContentContainer>
+          <DatePickerContainer>
+            <DatePicker
+              label={translate('create_appointment.start_date')}
+              minDate={new Date()}
+              value={startDate}
+              inputFormat={DATE_FORMAT}
+              onChange={(newValue): void => {
+                chooseStartDate(newValue);
+              }}
+              renderInput={(props) => (
+                <TextField
+                  autoComplete="off"
+                  InputProps={{ readOnly: true }}
+                  variant="standard"
+                  {...props}
+                  helperText={null}
+                />
+              )}
+            />
+            <DatePicker
+              label={translate('create_appointment.end_date')}
+              minDate={startDate && addDays(startDate, ONE_DAY)}
+              value={endDate}
+              inputFormat={DATE_FORMAT}
+              onChange={(newValue): void => {
+                chooseEndDate(newValue);
+              }}
+              renderInput={(props) => (
+                <TextField
+                  autoComplete="off"
+                  InputProps={{ readOnly: true }}
+                  variant="standard"
+                  {...props}
+                  helperText={null}
+                />
+              )}
+            />
+          </DatePickerContainer>
+          <SelectContainer>
+            <FormControl fullWidth variant="standard">
+              <InputLabel>{translate('create_appointment.start_time')}</InputLabel>
+              <Select
+                disabled={!startDate || !endDate}
+                value={startTime}
+                onChange={(e): void => chooseStartTime(e.target.value)}
+              >
+                {selectTimeOptions.map((option) => (
+                  <MenuItem key={option} value={option}>
+                    {option}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+            <FormControl fullWidth variant="standard">
+              <InputLabel>{translate('create_appointment.end_time')}</InputLabel>
+              <Select
+                disabled={!startDate || !endDate}
+                value={endTime}
+                onChange={(e): void => chooseEndTime(e.target.value)}
+              >
+                {selectTimeOptions.map((option) => (
+                  <MenuItem key={option} value={option}>
+                    {option}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          </SelectContainer>
+          <BaseBoldText>{translate('create_appointment.select_days')}</BaseBoldText>
+          <WeekSlotContainer>
+            {weekDays.map((day) => (
+              <WeekSlot
+                key={day.value}
+                className={appointmentDays.find((el: string) => el === day.value) ? 'active' : ''}
+                onClick={(): void => chooseDay(day.value)}
+              >
+                {day.abbr}
+              </WeekSlot>
+            ))}
+          </WeekSlotContainer>
+          {startTime && endTime && (
+            <AppointmentDuration>
+              <OneTimeIcon />
+              {translate('create_appointment.duration', {
+                hours,
+                minutes,
+              })}
+            </AppointmentDuration>
+          )}
+        </ContentContainer>
+        <AppointmentBtn
+          nextText={translate('btn_next')}
+          backText={translate('profileQualification.back')}
           onClick={goNext}
-          disabled={
-            !startDate ||
-            !endDate ||
-            !startTime ||
-            !endTime ||
-            !appointmentDays.length ||
-            isBefore(endDate, startDate) ||
-            isSameDay(startDate, endDate)
-          }
-        >
-          {translate('create_appointment.btn_next')}
-        </FilledButton>
+          onBack={onBack}
+          disabled={isBtnDisabled}
+        />
       </Container>
     </Box>
   );

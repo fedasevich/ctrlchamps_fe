@@ -14,13 +14,11 @@ import FlowHeader from 'src/components/reusable/header/FlowHeader';
 import HorizontalStepper from 'src/components/reusable/horizontal-stepper/HorizontalStepper';
 import { FIRST_STEP_INDEX, SECOND_STEP_INDEX } from 'src/constants';
 import { useLocales } from 'src/locales';
-import { useTypedSelector } from 'src/redux/store';
 import { PRIMARY } from 'src/theme/colors';
 
 export default function CreateAppointmentPage(): JSX.Element {
   const { translate } = useLocales();
 
-  const { appointmentType } = useTypedSelector((state) => state.appointment);
   const [activeStepIndex, setActiveStepIndex] = useState<number>(FIRST_STEP_INDEX);
   const [completed, setCompleted] = useState<Record<string, boolean>>({});
   const { modalOpen, setModalOpen, handleOpen } = useCancelAppointmentModal();
@@ -43,15 +41,15 @@ export default function CreateAppointmentPage(): JSX.Element {
     },
     {
       label: translate('appointmentSteps.scheduling'),
-      component: <AppointmentScheduling onNext={handleNext} />,
+      component: <AppointmentScheduling onBack={handleBack} onNext={handleNext} />,
     },
     {
       label: translate('appointmentSteps.healthQuestioner'),
-      component: <HealthQuestionnaire onNext={handleNext} />,
+      component: <HealthQuestionnaire onBack={handleBack} onNext={handleNext} />,
     },
     {
       label: translate('appointmentSteps.findCaregiver'),
-      component: <CreateAppointmentFourth onNext={handleNext} />,
+      component: <CreateAppointmentFourth onBack={handleBack} onNext={handleNext} />,
     },
     {
       label: translate('appointmentSteps.confirm'),

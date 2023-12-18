@@ -17,9 +17,10 @@ const STEPS = {
 
 type Props = {
   onNext: () => void;
+  onBack: () => void;
 };
 
-const HealthQuestionnaire = ({ onNext }: Props): JSX.Element => {
+const HealthQuestionnaire = ({ onNext, onBack }: Props): JSX.Element => {
   const [currentStep, setCurrentStep] = useState(STEPS.STEP_1);
   const { data: activities } = useGetActivityQuery();
   const { data: capabilities } = useGetCapabilityQuery();
@@ -42,7 +43,12 @@ const HealthQuestionnaire = ({ onNext }: Props): JSX.Element => {
       {diagnoses && activities && capabilities && (
         <QuestionnaireContainer>
           {currentStep === STEPS.STEP_1 && (
-            <Step1 onNext={handleNext} stepKey={STEPS.STEP_1} diagnoses={diagnoses} />
+            <Step1
+              onNext={handleNext}
+              onBack={onBack}
+              stepKey={STEPS.STEP_1}
+              diagnoses={diagnoses}
+            />
           )}
           {currentStep === STEPS.STEP_2 && (
             <Step2

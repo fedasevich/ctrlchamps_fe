@@ -47,6 +47,7 @@ export default function ResetPasswordForm({
     } catch (err) {
       if (err.data && err.data.message) {
         setError(err.data.message);
+
         return;
       }
       setError(translate('reset_password.errors.unexpected'));

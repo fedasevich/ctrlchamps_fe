@@ -7,6 +7,10 @@ export const MAX_CHARACTERS_LENGTH = 100;
 export const DATE_FORMAT = 'MM/dd/yyyy';
 export const BACKEND_DATE_FORMAT = 'yyyy-MM-dd';
 
+export const CURRENT_DAY = new Date();
+export const DISPLAY_TIME_FORMAT = 'HH:mm';
+export const ONE_DAY = 1;
+
 export const TIMEZONE_FORMAT = Intl.DateTimeFormat().resolvedOptions().timeZone;
 export const URL_PATTERN = /^https:\/\/.+$/;
 

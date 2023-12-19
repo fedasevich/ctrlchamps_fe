@@ -21,6 +21,7 @@ export const formatWorkExperienceDateRangeTenure = (
   locale: Locale
 ): string => {
   const now = new Date();
+
   return formatDistance(
     parse(startDate, BACKEND_DATE_FORMAT, now),
     endDate === null ? now : parse(endDate, BACKEND_DATE_FORMAT, now),

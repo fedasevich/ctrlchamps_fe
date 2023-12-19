@@ -72,6 +72,7 @@ export default function RecurringAppointment({ onNext, onBack }: Props): JSX.Ele
     if (dayAlreadyChosen) {
       const filtered = appointmentDays.filter((day: string) => day !== value);
       setAppointmentDays(filtered);
+
       return;
     }
 

@@ -48,6 +48,7 @@ export default function ProfileQualification({ onNext }: Props): JSX.Element | n
       if (certificate.id === updatedCertificate.id) {
         return { ...certificate, ...updatedCertificate };
       }
+
       return certificate;
     });
 

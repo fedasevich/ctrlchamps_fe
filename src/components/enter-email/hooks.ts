@@ -53,6 +53,7 @@ export function useEnterEmail(next: (email?: string) => void): ReturnType {
     } catch (err) {
       if (err.status === BAD_REQUEST_STATUS) {
         setEmailNotExists(true);
+
         return;
       }
 

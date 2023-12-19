@@ -287,7 +287,7 @@ const en = {
   appointmentSteps: {
     appointmentType: 'Appointment Type',
     scheduling: 'Scheduling',
-    healthQuestioner: 'Health Questioner',
+    healthQuestioner: 'Health Questionnaire',
     findCaregiver: 'Find Caregiver',
     confirm: 'Confirm',
   },
@@ -604,6 +604,10 @@ const en = {
       accept: 'Accept',
       view: 'View',
     },
+  },
+  schedule_page: {
+    choose_today: 'Go to Today',
+    no_appointments: 'No appointments',
   },
 };
 

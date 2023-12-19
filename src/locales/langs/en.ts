@@ -598,6 +598,7 @@ const en = {
     invalid_time:
       'Appointment cannot be ended before the start. Please choose another value in End Time field.',
     equal_time_error: 'You cannot choose identical time',
+    server_error: 'An error happened while processing your request, please try again later',
     btns: {
       request: 'Request',
       reject: 'Reject',

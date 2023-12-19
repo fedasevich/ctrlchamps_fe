@@ -67,6 +67,7 @@ export function useSignUpSecond(onNext: () => void): ReturnType {
               type: 'manual',
               message: translate('signUpSecondForm.emailExist'),
             });
+
             return;
           }
 

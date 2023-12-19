@@ -25,6 +25,7 @@ type Props = {
 
 export default function CaregiverAppointment({ appointmentDays, openDrawer }: Props): JSX.Element {
   const { translate } = useLocales();
+
   return (
     <Stack>
       <HeaderText>{translate('appointments')}</HeaderText>

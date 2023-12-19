@@ -57,6 +57,7 @@ export default function RecurringAppointment({ onNext }: { onNext: () => void })
     if (dayAlreadyChosen) {
       const filtered = appointmentDays.filter((day: string) => day !== value);
       setAppointmentDays(filtered);
+
       return;
     }
 

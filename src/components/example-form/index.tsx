@@ -13,6 +13,7 @@ export default function ExampleForm({ text }: { text: string }): JSX.Element {
     formState: { errors },
   } = useForm<FormValues>({ resolver });
   const onSubmit = handleSubmit((data) => alert(`${data.firstName} ${data.lastName}`));
+
   return (
     <Stack spacing={3} m={5} mt={5}>
       <StyledExample>{translate(text)}</StyledExample>

@@ -36,6 +36,7 @@ const useVerification = ({ onSubmit }: UseVerificationProps): UseVerificationRes
 
   const decodeToken = (tokenToDecode: string): string => {
     const decoded: { id: string } = jwt_decode(tokenToDecode);
+
     return decoded.id;
   };
 
@@ -70,6 +71,7 @@ const useVerification = ({ onSubmit }: UseVerificationProps): UseVerificationRes
       setCode((prevCode) => {
         const newCode = [...prevCode];
         newCode[index] = value;
+
         return newCode;
       });
       setCodeDoesNotMatch(false);

@@ -73,6 +73,7 @@ export default function TasksList({
   const editTask = (task: string): void => {
     const customFilteredTasks = customTasks.map((el) => {
       if (el === taskToEditValue) el = task;
+
       return el;
     });
 

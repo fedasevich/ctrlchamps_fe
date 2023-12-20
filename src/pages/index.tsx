@@ -1,21 +1,18 @@
-
-import Head from 'next/head';
-import { useState } from 'react';
-import CaregiverSchedule from 'src/components/caregiver-schedule/CaregiverSchedule';
-import Appointments from 'src/components/appointments/Appointments';
-import BookAppointment from 'src/components/book-appointment/BookAppointment';
-import MainHeader from 'src/components/reusable/header/MainHeader';
-import { TabType } from 'src/components/reusable/header/enums';
-import { ActiveTab } from 'src/components/reusable/header/types';
-import { useLocales } from 'src/locales';
-import { useGetAllAppointmentsQuery } from 'src/redux/api/appointmentApi';
+import { useRouter } from 'next/router';
+import AppointmentsPage from 'src/components/appointments/AppointmentsPage';
+import CaregiverSchedulePage from 'src/components/caregiver-schedule/CaregiverSchedulePage';
+import { PrivateRoute } from 'src/components/private-route/PrivateRoute';
+import { DEFAULT_REDIRECT_PATH, USER_ROLE } from 'src/constants';
+import { useTypedSelector } from 'src/redux/store';
 
 export default function HomePage(): JSX.Element | null {
-  const { translate } = useLocales();
-  const [activeTab, setActiveTab] = useState<ActiveTab>(null);
+  const router = useRouter();
+
+  const user = useTypedSelector((state) => state.user.user);
 
   if (!user) {
     router.replace(DEFAULT_REDIRECT_PATH);
+
     return null;
   }
 

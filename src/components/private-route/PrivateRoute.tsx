@@ -27,16 +27,19 @@ export function PrivateRoute({
   useEffect(() => {
     if (!user) {
       router.replace(DEFAULT_REDIRECT_PATH);
+
       return;
     }
 
     if (!user.isVerified && pathname !== `${ROUTES.account_verification}/`) {
       router.replace(ROUTES.account_verification);
+
       return;
     }
 
     if ((allowedRole && user.role !== allowedRole) || isIndex) {
       router.replace(ROUTES.home);
+
       return;
     }
 

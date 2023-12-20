@@ -28,14 +28,12 @@ import {
 } from './styles';
 import { ActiveTab } from './types';
 
-
 type Props = {
   activeTab: ActiveTab;
   setActiveTab: Dispatch<SetStateAction<ActiveTab>>;
 };
 
-export default function MainHeader({ activeTab, setActiveTab }: Props): JSX.Element {
-
+export default function MainHeader({ activeTab, setActiveTab }: Props): JSX.Element | null {
   const { translate } = useLocales();
 
   const user = useTypedSelector((state) => state.user.user);

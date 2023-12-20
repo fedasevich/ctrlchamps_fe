@@ -11,7 +11,7 @@ import { useAppDispatch, useTypedSelector } from 'src/redux/store';
 import { setCustomTime } from 'src/utils/defineCustomTime';
 import { extractTimeFromDate } from 'src/utils/extractTimeFromDate';
 import { getWeekDaysRange } from 'src/utils/getWeekDaysRange';
-import { ErrorText } from '../reusable';
+import { ErrorText } from 'src/components/reusable';
 import {
   FIRST_WEEK_DAY_IDX,
   LAST_WEEK_DAY_IDX,

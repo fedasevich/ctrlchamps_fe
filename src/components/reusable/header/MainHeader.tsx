@@ -1,6 +1,6 @@
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { Avatar } from '@mui/material';
-import { useState } from 'react';
+import { Dispatch, SetStateAction, useState } from 'react';
 import AppointmentsIcon from 'src/assets/icons/AppointmentsIcon';
 import ChatIcon from 'src/assets/icons/ChatIcon';
 import NotificationIcon from 'src/assets/icons/NotificationIcon';
@@ -28,12 +28,18 @@ import {
 } from './styles';
 import { ActiveTab } from './types';
 
-export default function MainHeader(): JSX.Element | null {
+
+type Props = {
+  activeTab: ActiveTab;
+  setActiveTab: Dispatch<SetStateAction<ActiveTab>>;
+};
+
+export default function MainHeader({ activeTab, setActiveTab }: Props): JSX.Element {
+
   const { translate } = useLocales();
 
   const user = useTypedSelector((state) => state.user.user);
 
-  const [activeTab, setActiveTab] = useState<ActiveTab>(TabType.appointment);
   const [isMenuVisible, setIsMenuVisible] = useState<boolean>(false);
 
   if (!user) return null;

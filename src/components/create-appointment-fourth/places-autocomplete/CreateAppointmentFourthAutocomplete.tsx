@@ -80,6 +80,7 @@ function PlacesAutocomplete({
         .then(async (data) => {
           if (!Object.values(data).every((value) => Boolean(value))) {
             setAutocompleteError(translate('createAppointmentFourth.notPreciseLocation'));
+
             return;
           }
 
@@ -152,6 +153,7 @@ function AutocompleteInput({
   params: AutocompleteRenderInputParams;
 }): JSX.Element {
   const { translate } = useLocales();
+
   return (
     <TextField
       name="test"
@@ -169,6 +171,7 @@ function AutocompleteOption(
   option: google.maps.places.AutocompletePrediction
 ): React.ReactNode {
   const { description } = option;
+
   return (
     <li {...props}>
       <Grid container alignItems="center">

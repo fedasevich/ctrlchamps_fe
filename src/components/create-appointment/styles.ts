@@ -1,9 +1,9 @@
 import { TextField, Typography, styled } from '@mui/material';
 import { HEADER } from 'src/config-global';
-import typography from 'src/theme/typography';
 import { PRIMARY, SECONDARY } from 'src/theme/colors';
 import { TYPOGRAPHY } from 'src/theme/fonts';
-import { FilledButton } from '../reusable';
+import typography from 'src/theme/typography';
+import { FilledButton } from 'src/components/reusable';
 
 const Background = styled('div')`
   background-color: ${PRIMARY.light_main};
@@ -45,15 +45,17 @@ const Button = styled(FilledButton)`
 `;
 
 const Container = styled('div')`
+  background-color: ${PRIMARY.white};
+  border-radius: 4px;
+  box-shadow: 0px 1px 16px 0px ${SECONDARY.gray_shadow};
+  margin-bottom: 30px;
+  width: 360px;
+`;
+
+const ContentContainer = styled('div')`
   display: flex;
   flex-direction: column;
   gap: 16px;
-  width: 360px;
-  background-color: ${PRIMARY.white};
-  border-radius: 4px;
-  box-shadow: 0px 1px 16px 0px rgba(0, 0, 0, 0.1);
-  margin-top: 24px;
-  margin-bottom: 5%;
   padding: 16px;
 `;
 
@@ -150,22 +152,23 @@ const StyledForm = styled('form')`
 `;
 
 export {
-  Background,
-  Button,
-  MainText,
-  BaseText,
-  BaseBoldText,
-  TextContainer,
-  IconWrapper,
-  WeekSlot,
-  WeekSlotContainer,
-  SelectContainer,
-  Container,
-  StyledForm,
-  DatePickerContainer,
+  AppointmentDuration,
   AppointmentTypeCard,
+  AppointmentTypeDetails,
   AppointmentTypeInput,
   AppointmentTypeText,
-  AppointmentTypeDetails,
-  AppointmentDuration,
+  Background,
+  BaseBoldText,
+  BaseText,
+  Button,
+  Container,
+  ContentContainer,
+  DatePickerContainer,
+  IconWrapper,
+  MainText,
+  SelectContainer,
+  StyledForm,
+  TextContainer,
+  WeekSlot,
+  WeekSlotContainer,
 };

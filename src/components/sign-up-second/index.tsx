@@ -68,6 +68,7 @@ function SignUpSecond({ role, onNext }: IProps): JSX.Element {
     );
     onAccountCheck({ email, phoneNumber }, setError);
   };
+
   return (
     <StyledForm onSubmit={handleSubmit(onSubmit)}>
       <InputWrapper>
@@ -126,6 +127,7 @@ function SignUpSecond({ role, onNext }: IProps): JSX.Element {
                       type: 'manual',
                       message: `${translate('signUpSecondForm.phoneInvalid')}`,
                     });
+
                     return;
                   }
                   if (value.slice(2, 3) === '') {
@@ -134,11 +136,13 @@ function SignUpSecond({ role, onNext }: IProps): JSX.Element {
                       type: 'manual',
                       message: `${translate('signUpSecondForm.phoneInvalid1')}`,
                     });
+
                     return;
                   }
                   if (value.length <= MAX_PHONE_CHARACTERS) {
                     field.onChange(value);
                     setValue('phoneNumber', value);
+
                     return;
                   }
                   if (value.length > MAX_PHONE_CHARACTERS) {
@@ -147,6 +151,7 @@ function SignUpSecond({ role, onNext }: IProps): JSX.Element {
                       type: 'manual',
                       message: `${translate('signUpSecondForm.phoneLengthInvalid')}`,
                     });
+
                     return;
                   }
                   clearErrors('phoneNumber');

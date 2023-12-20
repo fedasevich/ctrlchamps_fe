@@ -32,12 +32,12 @@ export const AppointmentModalBlock = styled('div')`
   display: flex;
   flex-direction: column;
   gap: 10px;
-  &:first-child {
+  &:first-of-type {
     margin-top: 16px;
   }
 `;
 
-export const AppointmentModalBlockParagraph = styled('p')`
+export const AppointmentModalBlockParagraph = styled('div')`
   color: ${SECONDARY.md_gray};
   font-size: ${TYPOGRAPHY.xs}px;
   display: flex;

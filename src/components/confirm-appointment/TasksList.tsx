@@ -1,6 +1,10 @@
 import CloseIcon from '@mui/icons-material/Close';
 import { TextField } from '@mui/material';
 import { useState } from 'react';
+import CheckIcon from 'src/assets/icons/Check';
+import CreditCardIcon from 'src/assets/icons/CreditCardIcon';
+import EditIcon from 'src/assets/icons/EditIcon';
+import ConfirmModal from 'src/components/confirm-appointment/Modal';
 import {
   ButtonWrapper,
   StyledButton,
@@ -8,10 +12,6 @@ import {
 import { ErrorText, FilledButton } from 'src/components/reusable';
 import Modal from 'src/components/reusable/modal/Modal';
 import { useLocales } from 'src/locales';
-import CreditCardIcon from 'src/assets/icons/CreditCardIcon';
-import CheckIcon from 'src/assets/icons/Check';
-import EditIcon from 'src/assets/icons/EditIcon';
-import ConfirmModal from 'src/components/confirm-appointment/Modal';
 import { CONFIRM_NOTE_MAX_LENGTH, suggestedTasks } from './constants';
 import {
   Background,
@@ -22,11 +22,11 @@ import {
   EditButton,
   ModalContainer,
   ModalContent,
+  StyledForm,
   Task,
   TasksBtns,
   TasksContainer,
   Typography,
-  StyledForm,
 } from './style';
 import { Props } from './types';
 
@@ -38,7 +38,6 @@ export default function TasksList({
   isModalActive,
   onClose,
   onOpen,
-  onNext,
 }: Props): JSX.Element {
   const { translate } = useLocales();
 
@@ -73,6 +72,7 @@ export default function TasksList({
   const editTask = (task: string): void => {
     const customFilteredTasks = customTasks.map((el) => {
       if (el === taskToEditValue) el = task;
+
       return el;
     });
 
@@ -124,13 +124,6 @@ export default function TasksList({
             {translate('confirm_appointment.charge_message')}
           </ChargeMessage>
         )}
-        <StyledButton
-          variant="contained"
-          disabled={!tasks.length || details.length > CONFIRM_NOTE_MAX_LENGTH}
-          onClick={onNext}
-        >
-          {translate('confirm_appointment.confirm')}
-        </StyledButton>
       </ButtonWrapper>
 
       <ConfirmModal

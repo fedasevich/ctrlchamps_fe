@@ -8,6 +8,7 @@ import { FilledButton } from '../reusable/FilledButton';
 export default function VerificationSuccess(): JSX.Element {
   const { translate } = useLocales();
   const { push } = useRouter();
+
   return (
     <Container>
       <IconWrapper>

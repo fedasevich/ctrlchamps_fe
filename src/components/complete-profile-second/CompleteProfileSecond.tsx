@@ -56,6 +56,7 @@ function CompleteProfileSecond({ onNext, onBack }: IProps): JSX.Element | null {
       if (workPlace.id === updatedWorkPlace.id) {
         return { ...workPlace, ...updatedWorkPlace };
       }
+
       return workPlace;
     });
 

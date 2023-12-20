@@ -17,6 +17,7 @@ export default function BookAppointment(): JSX.Element {
   const { translate } = useLocales();
 
   const pushToCreateAppointmentPage = (): Promise<boolean> => push(ROUTES.create_appointment);
+
   return (
     <Background>
       <BookingContainer>

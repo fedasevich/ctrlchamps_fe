@@ -260,6 +260,7 @@ export default function AppointmentDrawer({
       />
       <VirtualAssessmentModal
         caregiverName=""
+        appointmentId={selectedAppointmentId}
         onClose={handleVirtualAssessmentModalClose}
         isActive={isVirtualAssessmentModalOpen}
         openDrawer={openOriginalAppointment}

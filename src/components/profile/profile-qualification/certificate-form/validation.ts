@@ -21,6 +21,7 @@ export const useProfileQualificationSchema = (): ObjectSchema<ProfileQualityForm
         translate('profileQualification.certificationLinkInvalidUrl'),
         (value) => {
           if (!value) return true;
+
           return URL_PATTERN.test(value);
         }
       ),

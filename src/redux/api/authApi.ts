@@ -41,8 +41,10 @@ interface AccountCheckResponse {
 }
 
 export const authApi = createApi({
-  reducerPath: 'dataApi',
-  baseQuery: fetchBaseQuery({ baseUrl: `${process.env.NEXT_PUBLIC_API_URL}/${route.auth}` }),
+  reducerPath: 'userApi',
+  baseQuery: fetchBaseQuery({
+    baseUrl: `${process.env.NEXT_PUBLIC_API_URL}/${route.auth}`,
+  }),
   endpoints: (builder) => ({
     signUp: builder.mutation<SignUpResponse, SignUpData>({
       query: (body) => ({

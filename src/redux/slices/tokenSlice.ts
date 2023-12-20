@@ -1,18 +1,19 @@
+import type { PayloadAction } from '@reduxjs/toolkit';
 import { createSlice } from '@reduxjs/toolkit';
 
 const tokenSlice = createSlice({
-    name: 'token',
-    initialState: {
-        token: '',
+  name: 'token',
+  initialState: {
+    token: '',
+  },
+  reducers: {
+    setToken(state, action: PayloadAction<string>) {
+      state.token = action.payload;
     },
-    reducers: {
-        setToken(state, action) {
-            state.token = action.payload;
-        },
-        removeToken(state) {
-            state.token = '';
-        },
+    removeToken(state) {
+      state.token = '';
     },
+  },
 });
 
 export const { setToken, removeToken } = tokenSlice.actions;

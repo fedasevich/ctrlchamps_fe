@@ -1,17 +1,18 @@
 import Head from 'next/head';
 import { useEffect, useState } from 'react';
 
-import ProfileQualification from 'src/components/profile/profile-qualification/ProfileQualification';
+import CompleteProfileFifth from 'src/components/complete-profile-fifth/CompleteProfileFifth';
+import CompleteProfileFourth from 'src/components/complete-profile-fourth/CompleteProfileFourth';
 import CompleteProfileSecond from 'src/components/complete-profile-second/CompleteProfileSecond';
 import CompleteProfileThird from 'src/components/complete-profile-third/CompleteProfileThird';
-import CompleteProfileFourth from 'src/components/complete-profile-fourth/CompleteProfileFourth';
-import CompleteProfileFifth from 'src/components/complete-profile-fifth/CompleteProfileFifth';
+import { PrivateRoute } from 'src/components/private-route/PrivateRoute';
 import { Bio } from 'src/components/profile/bio/Bio';
+import ProfileQualification from 'src/components/profile/profile-qualification/ProfileQualification';
 import { Step } from 'src/components/profile/profile-qualification/types';
 import FlowHeader from 'src/components/reusable/header/FlowHeader';
 import HorizontalStepper from 'src/components/reusable/horizontal-stepper/HorizontalStepper';
 import { ProfileWrapper } from 'src/components/reusable/profile-wrapper/ProfileWrapper';
-import { FIRST_STEP_INDEX, SECOND_STEP_INDEX } from 'src/constants';
+import { FIRST_STEP_INDEX, SECOND_STEP_INDEX, USER_ROLE } from 'src/constants';
 import { useLocales } from 'src/locales';
 import { profileApi } from 'src/redux/api/profileCompleteApi';
 
@@ -78,7 +79,7 @@ function Profile(): JSX.Element | null {
   };
 
   return (
-    <>
+    <PrivateRoute allowedRole={USER_ROLE.Caregiver}>
       <Head>
         <title>{translate('profile.pageTitle')}</title>
       </Head>
@@ -90,7 +91,7 @@ function Profile(): JSX.Element | null {
         steps={STEPS}
       />
       <ProfileWrapper>{ActiveStepComponent}</ProfileWrapper>
-    </>
+    </PrivateRoute>
   );
 }
 

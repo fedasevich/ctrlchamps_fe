@@ -7,9 +7,10 @@ import { useAppDispatch, useTypedSelector } from 'src/redux/store';
 import { setCustomTime } from 'src/utils/defineCustomTime';
 import { extractTimeFromDate } from 'src/utils/extractTimeFromDate';
 import AppointmentBtn from 'src/components/reusable/appointment-btn/AppointmentBtn';
+import { ErrorText } from 'src/components/reusable';
 import Appointment from './Appointment';
 import useShowDuration from './useShowDuration';
-import { selectTimeOptions } from './constants';
+import { ONE_HOUR_INTERVAL_INDEX, selectTimeOptions } from './constants';
 import { AppointmentDuration, Container, ContentContainer } from './styles';
 
 type Props = {
@@ -25,7 +26,7 @@ export default function OneTimeAppointment({ onNext, onBack }: Props): JSX.Eleme
   const [date, setDate] = useState<Date | null>(oneTimeDate.startTime);
   const [startTime, setStartTime] = useState<string>('');
   const [endTime, setEndTime] = useState<string>('');
-  const { hours, minutes } = useShowDuration(startTime, endTime);
+  const { hours, minutes, isDurationSet, minValidDuration } = useShowDuration(startTime, endTime);
 
   useEffect(() => {
     if (!oneTimeDate.startTime || !oneTimeDate.endTime) return;
@@ -39,8 +40,15 @@ export default function OneTimeAppointment({ onNext, onBack }: Props): JSX.Eleme
     }
   }, [oneTimeDate.startTime, oneTimeDate.endTime]);
 
-  const chooseStartTime = (value: string): void => setStartTime(value);
+  const chooseStartTime = (value: string): void => {
+    setStartTime(value);
+    const selectedTime = selectTimeOptions.findIndex((el) => el === value);
+    const oneHourDifferenceIdx = selectedTime + ONE_HOUR_INTERVAL_INDEX;
+    setEndTime(selectTimeOptions[oneHourDifferenceIdx]);
+  };
+
   const chooseEndTime = (value: string): void => setEndTime(value);
+
   const chooseDate = (value: Date | null): void => setDate(value);
 
   const goNext = (): void => {
@@ -68,13 +76,21 @@ export default function OneTimeAppointment({ onNext, onBack }: Props): JSX.Eleme
             chooseDate={chooseDate}
           />
 
-          {startTime && endTime && date && (
+          {startTime && endTime && isDurationSet && !minValidDuration && (
+            <ErrorText>{translate('create_appointment.errors.min_appointment_duration')}</ErrorText>
+          )}
+
+          {startTime && endTime && date && minValidDuration && (
             <AppointmentDuration>
               <OneTimeIcon />
-              {translate('create_appointment.duration', {
-                hours,
-                minutes,
-              })}
+              {minutes > 0
+                ? translate('create_appointment.duration_with_minutes', {
+                    hours,
+                    minutes,
+                  })
+                : translate('create_appointment.duration', {
+                    hours,
+                  })}
             </AppointmentDuration>
           )}
         </ContentContainer>
@@ -82,7 +98,7 @@ export default function OneTimeAppointment({ onNext, onBack }: Props): JSX.Eleme
         <AppointmentBtn
           nextText={translate('btn_next')}
           backText={translate('profileQualification.back')}
-          disabled={!date || !startTime || !endTime}
+          disabled={!date || !startTime || !endTime || !minValidDuration}
           onClick={goNext}
           onBack={onBack}
         />

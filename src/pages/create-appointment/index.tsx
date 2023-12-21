@@ -65,6 +65,7 @@ export default function CreateAppointmentPage(): JSX.Element {
   };
 
   const ActiveStepComponent = STEPS[activeStepIndex].component;
+
   return (
     <PrivateRoute allowedRole={USER_ROLE.Seeker}>
       <Head>

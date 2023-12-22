@@ -20,7 +20,7 @@ import { CaregiverAppointmentI } from './types';
 
 type Props = {
   appointmentDays: CaregiverAppointmentI[];
-  openDrawer: () => void;
+  openDrawer: (appointmentId: string) => void;
 };
 
 export default function CaregiverAppointment({ appointmentDays, openDrawer }: Props): JSX.Element {
@@ -29,6 +29,7 @@ export default function CaregiverAppointment({ appointmentDays, openDrawer }: Pr
   return (
     <Stack>
       <HeaderText>{translate('appointments')}</HeaderText>
+
       {appointmentDays.map((appointment) => (
         <Task key={appointment.id}>
           <AppointmentInfo>
@@ -53,7 +54,7 @@ export default function CaregiverAppointment({ appointmentDays, openDrawer }: Pr
               </Details>
             </AppointmentDetails>
           </AppointmentInfo>
-          <Arrow onClick={openDrawer} />
+          <Arrow onClick={(): void => openDrawer(appointment.id)} />
         </Task>
       ))}
     </Stack>

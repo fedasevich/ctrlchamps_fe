@@ -1,11 +1,12 @@
 import { CalendarPicker } from '@mui/x-date-pickers';
+import { format } from 'date-fns';
 import { useState } from 'react';
 import CreateAppointmentIcon from 'src/assets/icons/CreateAppointmentIcon';
 import AppointmentDrawer from 'src/components/appointments/appointment-drawer/AppointmentDrawer';
-import { CURRENT_DAY } from 'src/constants';
+import { BACKEND_DATE_FORMAT, CURRENT_DAY, USER_ROLE } from 'src/constants';
 import { useLocales } from 'src/locales';
+import { useGetAppointmentsByDateQuery } from 'src/redux/api/appointmentApi';
 import CaregiverAppointment from './CaregiverAppointment';
-import { mocksChosenDay } from './mocks';
 import {
   AppointmentsContainer,
   Background,
@@ -17,23 +18,27 @@ import {
   NoAppointmentsContainer,
   TextContainer,
 } from './styles';
-import { CaregiverAppointmentI } from './types';
 
 export default function CaregiverSchedule({
   isCalendarVisible,
 }: {
   isCalendarVisible: boolean;
-}): JSX.Element {
+}): JSX.Element | null {
   const { translate } = useLocales();
 
   const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(false);
   const [chosenDay, setChosenDay] = useState<Date>(CURRENT_DAY);
-  const [chosenDayAppointments, setChosenDayAppointments] = useState<CaregiverAppointmentI[]>([]);
+  const [selectedAppointmentId, setSelectedAppointmentId] = useState<string>('');
+
+  const formattedDate = format(chosenDay, BACKEND_DATE_FORMAT);
+
+  const { data: appointments, isSuccess, isLoading } = useGetAppointmentsByDateQuery(formattedDate);
+
+  if (isLoading) return null;
 
   const chooseDay = (date: Date | null): void => {
     if (date) {
       setChosenDay(date);
-      setChosenDayAppointments(mocksChosenDay);
     }
   };
 
@@ -41,7 +46,10 @@ export default function CaregiverSchedule({
     setChosenDay(CURRENT_DAY);
   };
 
-  const openDrawer = (): void => setIsDrawerOpen(true);
+  const openDrawer = (appointmentId: string): void => {
+    setIsDrawerOpen(true);
+    setSelectedAppointmentId(appointmentId);
+  };
   const closeDrawer = (): void => setIsDrawerOpen(false);
 
   return (
@@ -60,7 +68,20 @@ export default function CaregiverSchedule({
           </CalendarContainer>
         )}
 
-        {!chosenDayAppointments.length ? (
+        {isSuccess && appointments.length > 0 ? (
+          <AppointmentsContainer className={!isCalendarVisible ? 'center' : ''}>
+            {selectedAppointmentId && (
+              <AppointmentDrawer
+                role={USER_ROLE.Caregiver}
+                selectedAppointmentId={selectedAppointmentId}
+                isOpen={isDrawerOpen}
+                onClose={closeDrawer}
+                setIsDrawerOpen={setIsDrawerOpen}
+              />
+            )}
+            <CaregiverAppointment appointmentDays={appointments} openDrawer={openDrawer} />
+          </AppointmentsContainer>
+        ) : (
           <NoAppointmentsContainer>
             <IconBackground>
               <CreateAppointmentIcon />
@@ -69,20 +90,6 @@ export default function CaregiverSchedule({
               <MainText>{translate('schedule_page.no_appointments')}</MainText>
             </TextContainer>
           </NoAppointmentsContainer>
-        ) : (
-          <AppointmentsContainer>
-            <AppointmentDrawer
-              selectedAppointmentId=""
-              isOpen={isDrawerOpen}
-              onClose={closeDrawer}
-              setIsDrawerOpen={openDrawer}
-            />
-            <CaregiverAppointment
-              appointmentDays={chosenDayAppointments}
-              appointmentDay={chosenDay}
-              openDrawer={openDrawer}
-            />
-          </AppointmentsContainer>
         )}
       </Container>
     </Background>

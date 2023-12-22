@@ -528,8 +528,10 @@ const en = {
     create_button: 'Create an Appointment',
     cancel_button: 'Cancel',
     cancel_appointment_button: 'Cancel appointment',
+    virtual_btn: 'Virtual assessment',
     virtual_button: 'View virtual assessment',
     complete_button: 'Complete appointment',
+    accept_button: 'Accept appointment',
     contract_button: 'View the signed contract',
     sign_in_button: 'Sign in the contract',
     sign_agreement_button: 'Sign agreement',
@@ -550,6 +552,7 @@ const en = {
     },
     drawer: {
       caregiver: 'Caregiver',
+      patient: 'Patient',
       date: 'Date & Time',
       tasks: 'Tasks',
       details: 'Additional Details',
@@ -603,7 +606,7 @@ const en = {
     invalid_time:
       'Appointment cannot be ended before the start. Please choose another value in End Time field.',
     equal_time_error: 'You cannot choose identical time',
-    server_error: 'An error happened while processing your request, please try again later',
+    server_error: 'Something went wrong',
     btns: {
       request: 'Request',
       reject: 'Reject',
@@ -614,6 +617,30 @@ const en = {
   schedule_page: {
     choose_today: 'Go to Today',
     no_appointments: 'No appointments',
+    virtual_assessment: 'Virtual Assessment',
+    open_original_appointment: 'Open Original Appointment',
+    appointment: 'Appointment',
+    client: 'Client',
+    caregiver: 'Caregiver',
+    date_and_time: 'Date & Time',
+    health_questionnaire: 'Health questionnaire',
+    meeting_link: 'Meeting Link',
+    link_copied: 'Meeting link is copied',
+    request_sent: 'Your request has been successfully sent!',
+    request_success: "Now, we'll wait for caregivers to respond. Thank you for using our app",
+    tasks: 'Tasks',
+    additional_details: 'Additional details',
+    notify_message: 'We will notify you right before assessment starting time',
+    invalid_link: 'Please enter valid link',
+    invalid_time:
+      'Appointment cannot be ended before the start. Please choose another value in End Time field.',
+    equal_time_error: 'You cannot choose identical time',
+    btns: {
+      request: 'Request',
+      reject: 'Reject',
+      accept: 'Accept',
+      view: 'View',
+    },
   },
 };
 

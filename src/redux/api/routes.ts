@@ -18,6 +18,7 @@ const route = {
   filter: '/filter',
   timezoneJson: '/timezone/json',
   virtualAssessment: '/virtual-assessment',
+  date: '/date',
 };
 
 export { route };

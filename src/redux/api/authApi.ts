@@ -41,7 +41,7 @@ interface AccountCheckResponse {
 }
 
 export const authApi = createApi({
-  reducerPath: 'userApi',
+  reducerPath: 'authApi',
   baseQuery: fetchBaseQuery({
     baseUrl: `${process.env.NEXT_PUBLIC_API_URL}/${route.auth}`,
   }),

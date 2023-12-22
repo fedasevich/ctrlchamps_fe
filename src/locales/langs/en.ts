@@ -642,6 +642,31 @@ const en = {
       view: 'View',
     },
   },
+  accountDetails: {
+    title: 'Account Details',
+    avatarText: 'Upload Photo',
+    personalInfo: 'Personal Information',
+    address: 'Address',
+    password: 'Password',
+    updatePassword: 'Update Password',
+    fileFormatError: 'Allowed avatar formats: png, jpeg, heic',
+    fileSizeError: 'Avatar size must be maximum 5 mb',
+    labels: {
+      firstName: 'First Name',
+      lastName: 'Last Name',
+      email: 'E-mail Address',
+      phone: 'Phone Number',
+      birthDate: 'Date of Birth',
+      isOpen: 'I`m open to living in clients` houses',
+      country: 'Country',
+      state: 'State',
+      city: 'City',
+      zip: 'ZIP Code',
+      street: 'Street, suite, etc',
+    },
+    personalInfoModal: { title: 'Edit Personal Information', saveButton: 'Save' },
+    addressModal: { title: 'Edit Address' },
+  },
 };
 
 export default en;

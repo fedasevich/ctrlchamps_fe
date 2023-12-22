@@ -1,1 +1,1 @@
-export type ActiveTab = 'appointments' | 'chats' | null;
+export type ActiveTab = 'mainPage' | 'chats' | null;

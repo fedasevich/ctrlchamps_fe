@@ -25,6 +25,7 @@ import questionnaireApi from 'src/redux/api/healthQuestionnaireApi';
 import profileApi from 'src/redux/api/profileCompleteApi';
 import timezoneApi from 'src/redux/api/timezoneApi';
 import virtualAssessmentApi from 'src/redux/api/virtualAssessmentApi';
+import userApi from 'src/redux/api/userApi';
 import { RootState } from 'src/redux/rootReducer';
 
 const persistConfig = {
@@ -58,6 +59,7 @@ const store = configureStore({
     [appointmentApi.reducerPath]: appointmentApi.reducer,
     [virtualAssessmentApi.reducerPath]: virtualAssessmentApi.reducer,
     [timezoneApi.reducerPath]: timezoneApi.reducer,
+    [userApi.reducerPath]: userApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
@@ -71,6 +73,7 @@ const store = configureStore({
       virtualAssessmentApi.middleware,
       questionnaireApi.middleware,
       timezoneApi.middleware,
+      userApi.middleware,
     ]),
 });
 

@@ -1,4 +1,5 @@
 import { ReactElement, MouseEvent } from 'react';
+import { PRIMARY } from 'src/theme/colors';
 import Cross from 'src/assets/icons/Cross';
 import {
   BackDrop,
@@ -6,7 +7,7 @@ import {
   ModalHeader,
   CloseButton,
   HeaderTitle,
-  TextContainer,
+  ModalBody,
   ModalFooter,
 } from './styles';
 
@@ -16,6 +17,7 @@ type Props = {
   children: ReactElement;
   isActive: boolean;
   footerChildren?: ReactElement | boolean;
+  backgroundColor?: string;
 };
 
 export default function Modal({
@@ -24,6 +26,7 @@ export default function Modal({
   children,
   isActive,
   footerChildren,
+  backgroundColor,
 }: Props): JSX.Element | null {
   if (!isActive) return null;
 
@@ -44,7 +47,9 @@ export default function Modal({
           </CloseButton>
           <HeaderTitle>{title}</HeaderTitle>
         </ModalHeader>
-        <TextContainer>{children}</TextContainer>
+        <ModalBody backgroundColor={!backgroundColor ? PRIMARY.white : backgroundColor}>
+          {children}
+        </ModalBody>
         {footerChildren && <ModalFooter>{footerChildren}</ModalFooter>}
       </ModalWrapper>
     </BackDrop>

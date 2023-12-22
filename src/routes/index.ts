@@ -10,4 +10,5 @@ export const ROUTES = {
   schedule: '/schedule',
   appointments: '/appointments',
   profile: '/profile',
+  account_details: '/account-details',
 };

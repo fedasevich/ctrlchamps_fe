@@ -37,7 +37,8 @@ export type CaregiverInfo = {
   };
 };
 
-export type DetailedAppointment = Appointment & {
-  seekerTasks: SeekerTask[];
-  caregiverInfo: CaregiverInfo;
+export type SeekerInfo = {
+  id: string;
+  firstName: string;
+  lastName: string;
 };

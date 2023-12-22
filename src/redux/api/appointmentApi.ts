@@ -101,9 +101,9 @@ export interface DetailedAppointment {
   weekday?: string[];
   caregiverInfo: AppointmentCaregiverInfo;
   user: AppointmentUser;
-  seekerActivities?: SeekerActivity[];
-  seekerCapabilities?: SeekerCapability[];
-  seekerDiagnoses?: SeekerDiagnosis[];
+  seekerActivities: SeekerActivity[];
+  seekerCapabilities: SeekerCapability[];
+  seekerDiagnoses: SeekerDiagnosis[];
   seekerTasks: SeekerTask[];
   virtualAssessment: VirtualAssessment | null;
 }

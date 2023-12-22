@@ -1,18 +1,19 @@
 import { useState } from 'react';
 import { format } from 'date-fns';
-
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import NotificationsNoneOutlinedIcon from '@mui/icons-material/NotificationsNoneOutlined';
 import { Alert, Avatar, IconButton, Snackbar, TextField } from '@mui/material';
+
 import Cross from 'src/assets/icons/Cross';
 import { CloseButton, HeaderTitle, ModalHeader } from 'src/components/confirm-appointment/style';
 import Appointment from 'src/components/create-appointment/Appointment';
 import { selectTimeOptions } from 'src/components/create-appointment/constants';
 import { ErrorText, FilledButton } from 'src/components/reusable';
 import { useLocales } from 'src/locales';
-import { BACKEND_DATE_FORMAT, URL_PATTERN } from 'src/constants';
+import { APPOINTMENT_STATUS, BACKEND_DATE_FORMAT, URL_PATTERN } from 'src/constants';
 import { virtualAssessmentApi } from 'src/redux/api/virtualAssessmentApi';
 import RightAction from 'src/assets/icons/RightAction';
+import { useUpdateAppointmentMutation } from 'src/redux/api/appointmentApi';
 
 import {
   AppointmentModal,
@@ -28,6 +29,7 @@ import {
   ModalBody,
   NameParagraph,
   NotificationMessage,
+  StyledIconButton,
 } from './styles';
 
 type Props = {
@@ -61,6 +63,8 @@ export default function VirtualAssessmentModal({
 
   const [requestVirtualAssessment, { isLoading }] =
     virtualAssessmentApi.useMakeVirtualAssessmentRequestMutation();
+
+  const [updateAppointment] = useUpdateAppointmentMutation();
 
   const isButtonDisabled =
     !date ||
@@ -102,6 +106,11 @@ export default function VirtualAssessmentModal({
         assessmentDate: format(date, BACKEND_DATE_FORMAT),
         meetingLink,
         appointmentId,
+      }).unwrap();
+
+      await updateAppointment({
+        id: appointmentId,
+        status: APPOINTMENT_STATUS.Virtual,
       }).unwrap();
 
       openVirtualAssessmentSuccess();
@@ -151,9 +160,9 @@ export default function VirtualAssessmentModal({
             <InlineBlock>
               <Avatar />
               <NameParagraph>{caregiverName}</NameParagraph>
-              <IconButton color="secondary" onClick={openCaregiverProfile}>
+              <StyledIconButton color="secondary" onClick={openCaregiverProfile}>
                 <RightAction />
-              </IconButton>
+              </StyledIconButton>
             </InlineBlock>
           </AppointmentModalBlock>
 

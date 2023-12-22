@@ -9,3 +9,5 @@ export const MAP_OPTIONS = {
 export const LAT_LNG_SPLIT = ',';
 
 export const MAP_REDIRECT_TARGET = '_blank';
+
+export const GOOGLE_MAPS_URL = 'https://www.google.com/maps/search/';

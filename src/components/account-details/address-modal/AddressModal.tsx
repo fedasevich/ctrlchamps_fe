@@ -84,25 +84,25 @@ export default function AddressModal({ user, onClose }: IProps): JSX.Element {
             {errors?.country && <ErrorMessage>{errors.country?.message}</ErrorMessage>}
           </FormControl>
 
-          <FormControl sx={{ width: '100%' }} variant="filled">
+          <FormControl fullWidth variant="filled">
             <InputLabel htmlFor="state">{translate('accountDetails.labels.state')}</InputLabel>
             <FilledInput {...register('state')} id="state" error={!!errors.state} />
             {errors?.state && <ErrorMessage>{errors.state?.message}</ErrorMessage>}
           </FormControl>
 
-          <FormControl sx={{ width: '100%' }} variant="filled">
+          <FormControl fullWidth variant="filled">
             <InputLabel htmlFor="city">{translate('accountDetails.labels.city')}</InputLabel>
             <FilledInput {...register('city')} id="city" error={!!errors.city} />
             {errors?.city && <ErrorMessage>{errors.city?.message}</ErrorMessage>}
           </FormControl>
 
-          <FormControl sx={{ width: '100%' }} variant="filled">
+          <FormControl fullWidth variant="filled">
             <InputLabel htmlFor="zipCode">{translate('accountDetails.labels.zip')}</InputLabel>
             <FilledInput {...register('zipCode')} id="zipCode" error={!!errors.zipCode} />
             {errors?.zipCode && <ErrorMessage>{errors.zipCode?.message}</ErrorMessage>}
           </FormControl>
 
-          <FormControl sx={{ width: '100%' }} variant="filled">
+          <FormControl fullWidth variant="filled">
             <InputLabel htmlFor="address">{translate('accountDetails.labels.street')}</InputLabel>
             <FilledInput {...register('address')} id="address" error={!!errors.address} />
             {errors?.address && <ErrorMessage>{errors.address?.message}</ErrorMessage>}

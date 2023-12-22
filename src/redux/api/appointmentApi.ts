@@ -1,10 +1,12 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { Appointment } from 'src/components/appointments/types';
+import { CaregiverAppointmentI } from 'src/components/caregiver-schedule/types';
 import { PreviewCaregiver } from 'src/components/create-appointment-fourth/types';
 import { AppointmentType } from 'src/constants/types';
 import { route } from 'src/redux/api/routes';
 import { RootState } from 'src/redux/rootReducer';
 import { Caregiver } from 'src/types/Caregiver.type';
+import { ActivityLog } from './activityLogApi';
 import { VirtualAssessment } from './virtualAssessmentApi';
 
 export interface AppointmentPayload {
@@ -92,6 +94,7 @@ export interface DetailedAppointment {
   details?: string;
   payment?: number;
   location: string;
+  signingDate: string | null;
   activityNote: string;
   diagnosisNote: string;
   capabilityNote: string;
@@ -106,6 +109,7 @@ export interface DetailedAppointment {
   seekerDiagnoses: SeekerDiagnosis[];
   seekerTasks: SeekerTask[];
   virtualAssessment: VirtualAssessment | null;
+  activityLog: ActivityLog[];
 }
 
 export const appointmentApi = createApi({

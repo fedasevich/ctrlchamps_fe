@@ -1,4 +1,4 @@
 export enum TabType {
-  appointment = 'appointments',
+  mainPage = 'mainPage',
   chat = 'chats',
 }

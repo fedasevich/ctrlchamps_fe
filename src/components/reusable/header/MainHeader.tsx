@@ -55,8 +55,8 @@ export default function MainHeader({ activeTab, setActiveTab }: Props): JSX.Elem
           <SecondPart>{translate('logo_second_part')}</SecondPart>
         </Logo>
         <AppointmentsSection
-          onClick={(): void => chooseActiveTab(TabType.appointment)}
-          className={activeTab === TabType.appointment ? 'active_tab' : ''}
+          onClick={(): void => chooseActiveTab(TabType.mainPage)}
+          className={activeTab === TabType.mainPage ? 'active_tab' : ''}
         >
           <AppointmentsIcon />
           <AppointmentsText>

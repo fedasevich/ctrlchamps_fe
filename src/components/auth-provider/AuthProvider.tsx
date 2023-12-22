@@ -17,6 +17,7 @@ export function AuthProvider({ children }: AuthProviderProps): JSX.Element | nul
   useEffect(() => {
     if (!token) {
       setLoading(false);
+
       return;
     }
     const user = jwt_decode<User>(token);

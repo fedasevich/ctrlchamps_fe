@@ -1,7 +1,10 @@
 import { useState, Dispatch, SetStateAction } from 'react';
-import { useGetAppointmentQuery } from 'src/redux/api/appointmentApi';
+import { useGetAppointmentQuery, DetailedAppointment } from 'src/redux/api/appointmentApi';
+import {
+  useGetVirtualAssessmentInfoQuery,
+  VirtualAssessment,
+} from 'src/redux/api/virtualAssessmentApi';
 import { getFormattedDate } from '../helpers';
-import { DetailedAppointment } from '../types';
 
 interface IProps {
   setIsDrawerOpen: Dispatch<SetStateAction<boolean>>;
@@ -16,8 +19,7 @@ type ReturnType = {
   isVirtualAssessmentSuccessOpen: boolean;
   isTermsAccepted: boolean;
   isLoading: boolean;
-  isVirtualAssessmentAccepted: boolean;
-  isVirtualAssessmentDone: boolean;
+  virtualAssessment: VirtualAssessment | undefined;
   appointment: DetailedAppointment | undefined;
   formattedStartDate: string | undefined;
   handleCancelModalOpen: () => void;
@@ -41,14 +43,13 @@ export function useAppointmentDrawer({
   const [isCancelModalOpen, setIsCancelModalOpen] = useState<boolean>(false);
   const [isCompleteModalOpen, setIsCompleteModalOpen] = useState<boolean>(false);
   const [isAgreementModalOpen, setIsAgreementModalOpen] = useState<boolean>(false);
-  const [isVirtualAssessmentDone, setVirtualAssessmentDone] = useState<boolean>(true);
   const [isVirtualAssessmentModalOpen, setIsVirtualAssessmentModalOpen] = useState<boolean>(false);
-  const [isVirtualAssessmentAccepted, setIsVirtualAssessmentAccepted] = useState<boolean>(false);
   const [isVirtualAssessmentSuccessOpen, setIsVirtualAssessmentSuccessOpen] =
     useState<boolean>(false);
   const [isTermsAccepted, setIsTermsAccepted] = useState<boolean>(false);
 
   const { data: appointment, isLoading } = useGetAppointmentQuery(selectedAppointmentId);
+  const { data: virtualAssessment } = useGetVirtualAssessmentInfoQuery(selectedAppointmentId);
 
   const formattedStartDate = appointment && getFormattedDate(appointment.startDate);
 
@@ -113,8 +114,7 @@ export function useAppointmentDrawer({
     isVirtualAssessmentSuccessOpen,
     isTermsAccepted,
     isLoading,
-    isVirtualAssessmentAccepted,
-    isVirtualAssessmentDone,
+    virtualAssessment,
     appointment,
     formattedStartDate,
     handleCancelModalOpen,

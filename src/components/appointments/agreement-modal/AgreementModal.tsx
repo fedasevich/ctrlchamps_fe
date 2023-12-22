@@ -1,7 +1,7 @@
 import { useLocales } from 'src/locales';
 import { APPOINTMENT_TYPE } from 'src/constants';
 
-import { DetailedAppointment } from 'src/components/appointments/types';
+import { DetailedAppointment } from 'src/redux/api/appointmentApi';
 import {
   CURRENT_DATE,
   PAYMENT_DAY,
@@ -23,7 +23,7 @@ export default function AgreementModal({ appointment }: IProps): JSX.Element | n
 
   const hoursPerWeek =
     appointment.type === APPOINTMENT_TYPE.Recurring &&
-    getHoursForWeek(appointment.endDate, appointment.startDate) * appointment.weekdays!.length;
+    getHoursForWeek(appointment.endDate, appointment.startDate) * appointment.weekday!.length;
 
   return (
     <Container>

@@ -53,7 +53,12 @@ export const virtualAssessmentApi = createApi({
         body: virtualAssessmentData,
       }),
     }),
+    getVirtualAssessmentInfo: builder.query<VirtualAssessment, string>({
+      query: (appointmentId) => ({ url: `/${appointmentId}` }),
+    }),
   }),
 });
+
+export const { useGetVirtualAssessmentInfoQuery } = virtualAssessmentApi;
 
 export default virtualAssessmentApi;

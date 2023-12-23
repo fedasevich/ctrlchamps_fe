@@ -1,4 +1,4 @@
-import { MuiTelInput } from 'mui-tel-input';
+import { yupResolver } from '@hookform/resolvers/yup';
 import {
   FilledInput,
   FormControl,
@@ -9,31 +9,32 @@ import {
   TextField,
 } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import { Controller, SubmitHandler, useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
 import { format } from 'date-fns';
+import { MuiTelInput } from 'mui-tel-input';
 import 'react-datepicker/dist/react-datepicker.css';
+import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 
-import { useAppDispatch } from 'src/redux/store';
-import { savePersonalDetails } from 'src/redux/slices/personalDetailsSlice';
-import { useLocales } from 'src/locales';
-import { DATE_FORMAT, USER_ROLE } from 'src/constants';
 import { MAX_BIRTH_DATE, MAX_PHONE_CHARACTERS } from 'src/components/sign-up-second/constants';
+import { DATE_FORMAT, USER_ROLE } from 'src/constants';
+import { useLocales } from 'src/locales';
+import { savePersonalDetails } from 'src/redux/slices/personalDetailsSlice';
+import { useAppDispatch } from 'src/redux/store';
 
-import {
-  useSignUpSecondSchema,
-  SignUpSecondValues,
-} from 'src/components/sign-up-second/validation';
+import { useSignUpSecond } from 'src/components/sign-up-second/hooks';
 import {
   ErrorMessage,
   InputWrapper,
   NextButton,
   StyledForm,
 } from 'src/components/sign-up-second/styles';
-import { useSignUpSecond } from 'src/components/sign-up-second/hooks';
+import {
+  SignUpSecondValues,
+  useSignUpSecondSchema,
+} from 'src/components/sign-up-second/validation';
+import { UserRole } from 'src/redux/slices/userSlice';
 
 interface IProps {
-  role: 'caregiver' | 'seeker';
+  role: UserRole;
   onNext: () => void;
 }
 function SignUpSecond({ role, onNext }: IProps): JSX.Element {
@@ -68,6 +69,7 @@ function SignUpSecond({ role, onNext }: IProps): JSX.Element {
     );
     onAccountCheck({ email, phoneNumber }, setError);
   };
+
   return (
     <StyledForm onSubmit={handleSubmit(onSubmit)}>
       <InputWrapper>
@@ -126,6 +128,7 @@ function SignUpSecond({ role, onNext }: IProps): JSX.Element {
                       type: 'manual',
                       message: `${translate('signUpSecondForm.phoneInvalid')}`,
                     });
+
                     return;
                   }
                   if (value.slice(2, 3) === '') {
@@ -134,11 +137,13 @@ function SignUpSecond({ role, onNext }: IProps): JSX.Element {
                       type: 'manual',
                       message: `${translate('signUpSecondForm.phoneInvalid1')}`,
                     });
+
                     return;
                   }
                   if (value.length <= MAX_PHONE_CHARACTERS) {
                     field.onChange(value);
                     setValue('phoneNumber', value);
+
                     return;
                   }
                   if (value.length > MAX_PHONE_CHARACTERS) {
@@ -147,6 +152,7 @@ function SignUpSecond({ role, onNext }: IProps): JSX.Element {
                       type: 'manual',
                       message: `${translate('signUpSecondForm.phoneLengthInvalid')}`,
                     });
+
                     return;
                   }
                   clearErrors('phoneNumber');
@@ -196,7 +202,7 @@ function SignUpSecond({ role, onNext }: IProps): JSX.Element {
         )}
       </InputWrapper>
 
-      {role === USER_ROLE.caregiver && (
+      {role === USER_ROLE.Caregiver && (
         <Controller
           control={control}
           name="isOpenToSeekerHomeLiving"

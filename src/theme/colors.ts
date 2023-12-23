@@ -11,10 +11,12 @@ export const PRIMARY = {
 export const SECONDARY = {
   light_gray: 'rgba(0, 0, 0, 0.12)',
   md_gray: '#555555',
+  lg_gray: '#666666',
   gray_semi_transparent: 'rgba(0, 0, 0, 0.60)',
   backdrop_background: 'rgba(0, 0, 0, 0.20)',
   gray_shadow: 'rgba(0, 0, 0, 0.1)',
   semi_gray: 'rgba(0, 0, 0, 0.5)',
+  grayish: 'rgba(0, 0, 0, 0.87)',
   selected: '#b8ffef63',
   drawer_background: 'rgba(8, 188, 184, 0.04)',
   error_hover: 'rgba(198, 40, 40, 0.08)',

@@ -2,6 +2,7 @@ import { MAX_RATE, MIN_RATE } from 'src/components/complete-profile-fifth/consta
 
 import {
   MAX_APPOINTMENT_NAME_LENGTH,
+  MIN_APPOINTMENT_HOUR_DURATION,
   MIN_APPOINTMENT_NAME_LENGTH,
 } from 'src/components/create-appointment/constants';
 
@@ -287,12 +288,13 @@ const en = {
   appointmentSteps: {
     appointmentType: 'Appointment Type',
     scheduling: 'Scheduling',
-    healthQuestioner: 'Health Questioner',
+    healthQuestioner: 'Health Questionnaire',
     findCaregiver: 'Find Caregiver',
     confirm: 'Confirm',
   },
   create_appointment: {
-    duration: 'Appointment duration is {{hours}}h {{minutes}}m',
+    duration: 'Appointment duration is {{hours}}h',
+    duration_with_minutes: 'Appointment duration is {{hours}}h {{minutes}}m',
     header_text: 'new appointment',
     header_recurring: 'recurring appointment',
     header_one_time: 'one-time appointment',
@@ -326,6 +328,9 @@ const en = {
     errors: {
       min_type_char: `Appointment name should contain more than ${MIN_APPOINTMENT_NAME_LENGTH} characters`,
       max_type_char: `You cannot enter more than ${MAX_APPOINTMENT_NAME_LENGTH} characters`,
+      min_appointment_duration: `An appointment should last for at least ${MIN_APPOINTMENT_HOUR_DURATION} hour.`,
+      invalid_week_days:
+        'According to the set date period, you can choose in range from {{dayFrom}} to {{dayTo}}',
     },
   },
   confirm_appointment: {
@@ -523,8 +528,10 @@ const en = {
     create_button: 'Create an Appointment',
     cancel_button: 'Cancel',
     cancel_appointment_button: 'Cancel appointment',
+    virtual_btn: 'Virtual assessment',
     virtual_button: 'View virtual assessment',
     complete_button: 'Complete appointment',
+    accept_button: 'Accept appointment',
     contract_button: 'View the signed contract',
     sign_in_button: 'Sign in the contract',
     sign_agreement_button: 'Sign agreement',
@@ -545,6 +552,7 @@ const en = {
     },
     drawer: {
       caregiver: 'Caregiver',
+      patient: 'Patient',
       date: 'Date & Time',
       tasks: 'Tasks',
       details: 'Additional Details',
@@ -598,12 +606,66 @@ const en = {
     invalid_time:
       'Appointment cannot be ended before the start. Please choose another value in End Time field.',
     equal_time_error: 'You cannot choose identical time',
+    server_error: 'Something went wrong',
     btns: {
       request: 'Request',
       reject: 'Reject',
       accept: 'Accept',
       view: 'View',
     },
+  },
+  schedule_page: {
+    choose_today: 'Go to Today',
+    no_appointments: 'No appointments',
+    virtual_assessment: 'Virtual Assessment',
+    open_original_appointment: 'Open Original Appointment',
+    appointment: 'Appointment',
+    client: 'Client',
+    caregiver: 'Caregiver',
+    date_and_time: 'Date & Time',
+    health_questionnaire: 'Health questionnaire',
+    meeting_link: 'Meeting Link',
+    link_copied: 'Meeting link is copied',
+    request_sent: 'Your request has been successfully sent!',
+    request_success: "Now, we'll wait for caregivers to respond. Thank you for using our app",
+    tasks: 'Tasks',
+    additional_details: 'Additional details',
+    notify_message: 'We will notify you right before assessment starting time',
+    invalid_link: 'Please enter valid link',
+    invalid_time:
+      'Appointment cannot be ended before the start. Please choose another value in End Time field.',
+    equal_time_error: 'You cannot choose identical time',
+    btns: {
+      request: 'Request',
+      reject: 'Reject',
+      accept: 'Accept',
+      view: 'View',
+    },
+  },
+  accountDetails: {
+    title: 'Account Details',
+    avatarText: 'Upload Photo',
+    personalInfo: 'Personal Information',
+    address: 'Address',
+    password: 'Password',
+    updatePassword: 'Update Password',
+    fileFormatError: 'Allowed avatar formats: png, jpeg, heic',
+    fileSizeError: 'Avatar size must be maximum 5 mb',
+    labels: {
+      firstName: 'First Name',
+      lastName: 'Last Name',
+      email: 'E-mail Address',
+      phone: 'Phone Number',
+      birthDate: 'Date of Birth',
+      isOpen: 'I`m open to living in clients` houses',
+      country: 'Country',
+      state: 'State',
+      city: 'City',
+      zip: 'ZIP Code',
+      street: 'Street, suite, etc',
+    },
+    personalInfoModal: { title: 'Edit Personal Information', saveButton: 'Save' },
+    addressModal: { title: 'Edit Address' },
   },
 };
 

@@ -39,6 +39,7 @@ export const serializeCaregiverFilterStateToQueryString = (
 
   const searchParams = Object.entries(dataToSerialize).reduce((params, [key, value]) => {
     params.append(key, value as string);
+
     return params;
   }, new URLSearchParams());
   services.forEach((item) => searchParams.append('services', item));

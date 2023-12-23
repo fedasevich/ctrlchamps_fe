@@ -101,9 +101,9 @@ export interface DetailedAppointment {
   weekday?: string[];
   caregiverInfo: AppointmentCaregiverInfo;
   user: AppointmentUser;
-  seekerActivities?: SeekerActivity[];
-  seekerCapabilities?: SeekerCapability[];
-  seekerDiagnoses?: SeekerDiagnosis[];
+  seekerActivities: SeekerActivity[];
+  seekerCapabilities: SeekerCapability[];
+  seekerDiagnoses: SeekerDiagnosis[];
   seekerTasks: SeekerTask[];
   virtualAssessment: VirtualAssessment | null;
 }
@@ -132,6 +132,10 @@ export const appointmentApi = createApi({
     getAppointment: builder.query<DetailedAppointment, string>({
       query: (id) => ({ url: `${route.appointment}/${id}` }),
       providesTags: (result, error, id) => [{ type: 'Appointments', id }],
+    }),
+    getAppointmentsByDate: builder.query<CaregiverAppointmentI[], string>({
+      query: (date) => ({ url: `${route.appointment}${route.date}/${date}` }),
+      providesTags: ['Appointments'],
     }),
     updateAppointment: builder.mutation<void, Partial<Appointment> & Pick<Appointment, 'id'>>({
       query: ({ id, ...appointment }) => ({
@@ -162,6 +166,7 @@ export const {
   useGetAppointmentQuery,
   useUpdateAppointmentMutation,
   useCreateAppointmentMutation,
+  useGetAppointmentsByDateQuery,
 } = appointmentApi;
 
 export default appointmentApi;

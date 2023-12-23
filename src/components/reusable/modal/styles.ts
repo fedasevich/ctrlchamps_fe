@@ -33,6 +33,14 @@ export const ModalHeader = styled('div')`
   padding: 8px 12px;
   text-transform: capitalize;
   border-bottom: 1px solid ${SECONDARY.light_gray};
+  background-color: ${PRIMARY.white};
+`;
+
+export const ModalBody = styled('div')<{ backgroundColor: string }>`
+  background-color: ${(props): string => props.backgroundColor};
+  display: flex;
+  flex-direction: column;
+  padding: 24px 16px;
 `;
 
 export const CloseButton = styled('button')`
@@ -48,12 +56,6 @@ export const CloseButton = styled('button')`
 export const HeaderTitle = styled(Typography)`
   font-size: ${TYPOGRAPHY.sm}px;
   color: ${PRIMARY.black};
-`;
-
-export const TextContainer = styled('div')`
-  display: flex;
-  flex-direction: column;
-  padding: 24px 16px;
 `;
 
 export const ModalFooter = styled('div')`

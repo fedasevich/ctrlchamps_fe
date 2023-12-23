@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { IconButton } from '@mui/material';
 
+import { useTypedSelector } from 'src/redux/store';
 import RightAction from 'src/assets/icons/RightAction';
 import AppointmentStatus from 'src/components/appointments/appointment-status/AppointmentStatus';
 import AppointmentDrawer from 'src/components/appointments/appointment-drawer/AppointmentDrawer';
@@ -10,11 +11,17 @@ import { APPOINTMENT_STATUS } from 'src/constants';
 
 import { Item, RejectedTitle, TextContainer, Title } from './styles';
 
-export default function AppointmentsList({ appointments }: AppointmentsProps): JSX.Element {
+export default function AppointmentsList({ appointments }: AppointmentsProps): JSX.Element | null {
   const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(false);
   const [isCaregiverDrawerOpen, setIsCaregiverDrawerOpen] = useState<boolean>(false);
   const [selectedAppointmentId, setSelectedAppointmentId] = useState<string>('');
   const [caregiverId, setCaregiverId] = useState<string>('');
+
+  const user = useTypedSelector((state) => state.user.user);
+
+  if (!user) return null;
+
+  const { role } = user;
 
   const handleDrawerOpen = (appointmentId: string): void => {
     setIsDrawerOpen(true);
@@ -54,6 +61,7 @@ export default function AppointmentsList({ appointments }: AppointmentsProps): J
       </ul>
       {selectedAppointmentId && (
         <AppointmentDrawer
+          role={role}
           isOpen={isDrawerOpen}
           setIsDrawerOpen={setIsDrawerOpen}
           setIsCaregiverDrawerOpen={setIsCaregiverDrawerOpen}

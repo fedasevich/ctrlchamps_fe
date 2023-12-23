@@ -4,5 +4,6 @@ export function checkIsEmail(value: string): boolean {
   if (reg.test(value)) {
     return true;
   }
+
   return false;
 }

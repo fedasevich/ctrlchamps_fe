@@ -43,6 +43,7 @@ export default function Verification({ userEmail, next, back }: VerificationProp
       if (!valid) {
         setError(true);
         setSubmitDisabled(true);
+
         return;
       }
       next();
@@ -63,6 +64,7 @@ export default function Verification({ userEmail, next, back }: VerificationProp
   async function checkCodeValidity(submittedCode: string): Promise<boolean> {
     try {
       await verifyCode({ email: userEmail, code: submittedCode }).unwrap();
+
       return true;
     } catch (err) {
       return false;

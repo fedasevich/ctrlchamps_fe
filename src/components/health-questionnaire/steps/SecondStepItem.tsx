@@ -30,6 +30,7 @@ const SecondStepItem = ({ questions, options, onCompletion }: SecondStepItemProp
   const [selectedOptions, setSelectedOptions] = useState<{ [key: string]: string }>(
     selectedActivities.reduce((acc: { [key: string]: string }, activity) => {
       acc[activity.id] = activity.answer;
+
       return acc;
     }, {})
   );

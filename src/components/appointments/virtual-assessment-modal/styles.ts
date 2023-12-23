@@ -1,4 +1,4 @@
-import { ListItem, styled } from '@mui/material';
+import { ListItem, IconButton, styled } from '@mui/material';
 import { PRIMARY, SECONDARY } from 'src/theme/colors';
 import { TYPOGRAPHY } from 'src/theme/fonts';
 import typography from 'src/theme/typography';
@@ -32,12 +32,12 @@ export const AppointmentModalBlock = styled('div')`
   display: flex;
   flex-direction: column;
   gap: 10px;
-  &:first-child {
+  &:first-of-type {
     margin-top: 16px;
   }
 `;
 
-export const AppointmentModalBlockParagraph = styled('p')`
+export const AppointmentModalBlockParagraph = styled('div')`
   color: ${SECONDARY.md_gray};
   font-size: ${TYPOGRAPHY.xs}px;
   display: flex;
@@ -96,4 +96,8 @@ export const NotificationMessage = styled('div')`
   border-radius: 5px;
   background-color: ${PRIMARY.light_main};
   line-height: 1.4;
+`;
+
+export const StyledIconButton = styled(IconButton)`
+  margin-left: auto;
 `;

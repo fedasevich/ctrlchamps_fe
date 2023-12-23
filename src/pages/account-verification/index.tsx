@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
+import { PrivateRoute } from 'src/components/private-route/PrivateRoute';
 
 import FlowHeader from 'src/components/reusable/header/FlowHeader';
 import OTPMessageField from 'src/components/sendOTP/AccountVerification';
@@ -23,14 +24,14 @@ const AccountVerification: React.FC<AccountVerificationProps> = (): JSX.Element 
   };
 
   return (
-    <>
+    <PrivateRoute>
       <FlowHeader text={t('account_verification.account_verification')} infoButton />
       {isSubmitted ? (
         <SuccessfulVerification profile={role} />
       ) : (
         <OTPMessageField onSubmit={onSubmit} />
       )}
-    </>
+    </PrivateRoute>
   );
 };
 

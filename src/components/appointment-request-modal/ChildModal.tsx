@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { Button, List, Modal, TextField } from '@mui/material';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
+
 import { useLocales } from 'src/locales';
 import FlowHeader from 'src/components/reusable/header/FlowHeader';
-import { Activity } from './types';
+import { SeekerActivity } from 'src/redux/api/appointmentApi';
 
 import {
   HealthQuestionnaireBlock,
@@ -17,7 +18,7 @@ import {
 type ChildModalProps = {
   name: string;
   note: string;
-  list: string[] | Activity[];
+  list: string[] | SeekerActivity[];
 };
 
 export function ChildModal({ name, note, list }: ChildModalProps): JSX.Element {
@@ -45,7 +46,9 @@ export function ChildModal({ name, note, list }: ChildModalProps): JSX.Element {
               {list.map((value, index) => (
                 <ListItemStyled key={index} disableGutters>
                   <CheckBoxIcon fontSize="medium" color="primary" />
-                  <ListItemTextStyled primary={typeof value === 'string' ? value : value.name} />
+                  <ListItemTextStyled
+                    primary={typeof value === 'string' ? value : value.activity.name}
+                  />
                   {typeof value !== 'string' && (
                     <InactiveStyledButton variant="contained" disabled>
                       {value.answer}

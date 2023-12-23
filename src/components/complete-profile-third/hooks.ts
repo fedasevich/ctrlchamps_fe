@@ -27,5 +27,6 @@ export function useCompleteProfileThird(onNext: () => void): ReturnType {
       throw new Error(error);
     }
   };
+
   return { onUpdateServices };
 }

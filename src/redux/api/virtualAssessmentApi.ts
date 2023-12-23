@@ -3,6 +3,14 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { RootState } from 'src/redux/rootReducer';
 import { route } from './routes';
 
+export type VirtualAssessmentRequest = {
+  startTime: string;
+  endTime: string;
+  assessmentDate: string;
+  meetingLink: string;
+  appointmentId: string;
+};
+
 export type VirtualAssessment = {
   id: string;
   status: string;
@@ -38,7 +46,19 @@ export const virtualAssessmentApi = createApi({
         }),
       }
     ),
+    makeVirtualAssessmentRequest: builder.mutation<void, VirtualAssessmentRequest>({
+      query: (virtualAssessmentData) => ({
+        url: '/',
+        method: 'POST',
+        body: virtualAssessmentData,
+      }),
+    }),
+    getVirtualAssessmentInfo: builder.query<VirtualAssessment, string>({
+      query: (appointmentId) => ({ url: `/${appointmentId}` }),
+    }),
   }),
 });
+
+export const { useGetVirtualAssessmentInfoQuery } = virtualAssessmentApi;
 
 export default virtualAssessmentApi;

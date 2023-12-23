@@ -1,6 +1,6 @@
-import React from 'react';
 import { Avatar, Button, Grid, List, ListItemText } from '@mui/material';
 import { format } from 'date-fns';
+
 import { useLocales } from 'src/locales';
 import CheckCircle from 'src/assets/icons/CheckCircle';
 import { useUpdateAppointmentMutation } from 'src/redux/api/appointmentApi';
@@ -11,6 +11,7 @@ import { ChildModal } from 'src/components/appointment-request-modal/ChildModal'
 import { DRAWER_DATE_FORMAT } from 'src/components/appointments/constants';
 import { STEPS } from 'src/components/health-questionnaire/constants';
 import AppointmentStatus from 'src/components/appointments/appointment-status/AppointmentStatus';
+
 import { AppointmentRequestModalProps } from './types';
 import {
   AppointmentModal,
@@ -27,7 +28,7 @@ import {
 const AppointmentRequestModal = ({
   appointment,
   isOpen,
-  switchModalVisibility,
+  onClose,
 }: AppointmentRequestModalProps): JSX.Element => {
   const { translate } = useLocales();
   const [updateAppointment] = useUpdateAppointmentMutation();
@@ -38,20 +39,20 @@ const AppointmentRequestModal = ({
         id: appointment.id,
         status,
       });
-      switchModalVisibility();
+      onClose();
     } catch (error) {
       throw new Error(error);
     }
   };
 
   return (
-    <AppointmentModal open={isOpen} onClose={switchModalVisibility} anchor="right">
+    <AppointmentModal open={isOpen} onClose={onClose} anchor="right">
       <DrawerBody>
         <FlowHeader
           text={translate('request_appointment.appointment')}
           iconType="close"
           infoButton
-          callback={switchModalVisibility}
+          callback={onClose}
         />
 
         <AppointmentModalBlock>
@@ -66,7 +67,9 @@ const AppointmentRequestModal = ({
           </AppointmentModalBlockParagraph>
           <InlineBlock>
             <Avatar />
-            <NameParagraph>{appointment.userName}</NameParagraph>
+            <NameParagraph>
+              {appointment.user.firstName} {appointment.user.lastName}
+            </NameParagraph>
           </InlineBlock>
         </AppointmentModalBlock>
 
@@ -84,9 +87,9 @@ const AppointmentRequestModal = ({
           <HealthQuestionnaireBlock>
             {STEPS.map((text, index) => {
               const data = [
-                appointment.seekerDiagnoses.map((diagnosis) => diagnosis.name),
+                appointment.seekerDiagnoses.map((diagnosis) => diagnosis.diagnosis.name),
                 appointment.seekerActivities.map((activity) => activity),
-                appointment.seekerCapabilities.map((capability) => capability.name),
+                appointment.seekerCapabilities.map((capability) => capability.capability.name),
               ][index];
               const noteData = [
                 appointment.diagnosisNote,

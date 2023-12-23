@@ -8,6 +8,7 @@ import { Box } from '@mui/system';
 
 import { useTranslation } from 'react-i18next';
 
+import { USER_ROLE } from 'src/constants';
 import { setRole } from 'src/redux/slices/roleSlice';
 import {
   BoxWrapper,
@@ -30,6 +31,7 @@ interface CustomRadioProps {
 }
 
 const SignUpFirstForm: React.FC<Step1FormProps> = ({ onNext }) => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
 
   const [selectedOption, setSelectedOption] = useState<string>('');
@@ -50,22 +52,20 @@ const SignUpFirstForm: React.FC<Step1FormProps> = ({ onNext }) => {
     }
   };
 
-  const { t } = useTranslation();
-
   return (
     <>
       <BoxWrapper>
         <CustomRadio
           label={t('signUpFirstForm.Seeker.Title')}
           description={t('signUpFirstForm.Seeker.Description')}
-          value="seeker"
+          value={USER_ROLE.Seeker}
           selectedOption={selectedOption}
           handleOptionChange={handleOptionChange}
         />
         <CustomRadio
           label={t('signUpFirstForm.Caregiver.Title')}
           description={t('signUpFirstForm.Caregiver.Description')}
-          value="caregiver"
+          value={USER_ROLE.Caregiver}
           selectedOption={selectedOption}
           handleOptionChange={handleOptionChange}
         />

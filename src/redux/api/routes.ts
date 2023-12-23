@@ -1,6 +1,7 @@
 const route = {
   auth: 'auth',
   profile: 'profile',
+  user: 'user',
   reset: '/reset-password',
   signUp: '/sign-up',
   requestResetCode: '/request-reset-otp',
@@ -8,6 +9,7 @@ const route = {
   signIn: '/sign-in',
   accountCheck: '/account-check',
   uploadFile: '/uploadFile',
+  uploadAvatar: '/uploadAvatar',
   certificates: '/certificates',
   workExperience: '/work-experience',
   questionnaire_activity: '/activity',
@@ -18,6 +20,7 @@ const route = {
   filter: '/filter',
   timezoneJson: '/timezone/json',
   virtualAssessment: '/virtual-assessment',
+  date: '/date',
 };
 
 export { route };

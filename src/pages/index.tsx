@@ -1,29 +1,27 @@
-import Head from 'next/head';
-
-import Appointments from 'src/components/appointments/Appointments';
-import BookAppointment from 'src/components/book-appointment/BookAppointment';
-import MainHeader from 'src/components/reusable/header/MainHeader';
-import { useLocales } from 'src/locales';
-import { useGetAllAppointmentsQuery } from 'src/redux/api/appointmentApi';
+import { useRouter } from 'next/router';
+import AppointmentsPage from 'src/components/appointments/AppointmentsPage';
+import CaregiverSchedulePage from 'src/components/caregiver-schedule/CaregiverSchedulePage';
+import { PrivateRoute } from 'src/components/private-route/PrivateRoute';
+import { DEFAULT_REDIRECT_PATH, USER_ROLE } from 'src/constants';
+import { useTypedSelector } from 'src/redux/store';
 
 export default function HomePage(): JSX.Element | null {
-  const { translate } = useLocales();
+  const router = useRouter();
 
-  const { data: appointments, isSuccess, isLoading } = useGetAllAppointmentsQuery();
+  const user = useTypedSelector((state) => state.user.user);
 
-  if (isLoading) return null;
+  if (!user) {
+    router.replace(DEFAULT_REDIRECT_PATH);
+
+    return null;
+  }
+
+  const { role } = user;
 
   return (
-    <>
-      <Head>
-        <title>{translate('app_title')}</title>
-      </Head>
-      <MainHeader />
-      {isSuccess && appointments.length > 0 ? (
-        <Appointments appointments={appointments} />
-      ) : (
-        <BookAppointment />
-      )}
-    </>
+    <PrivateRoute>
+      {role === USER_ROLE.Caregiver && <CaregiverSchedulePage />}
+      {role === USER_ROLE.Seeker && <AppointmentsPage />}
+    </PrivateRoute>
   );
 }

@@ -1,5 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { Appointment } from 'src/components/appointments/types';
+import { CaregiverAppointmentI } from 'src/components/caregiver-schedule/types';
 import { PreviewCaregiver } from 'src/components/create-appointment-fourth/types';
 import { AppointmentType } from 'src/constants/types';
 import { route } from 'src/redux/api/routes';

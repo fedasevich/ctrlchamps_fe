@@ -1,9 +1,15 @@
-import { ListItem, IconButton, styled } from '@mui/material';
+import { ListItem, IconButton, styled, css } from '@mui/material';
 import { PRIMARY, SECONDARY } from 'src/theme/colors';
 import { TYPOGRAPHY } from 'src/theme/fonts';
 import typography from 'src/theme/typography';
 import RightAction from 'src/assets/icons/RightAction';
+import { BaseBoldText } from 'src/components/create-appointment/styles';
+import { ModalHeader } from 'src/components/confirm-appointment/style';
 import { BackDrop, ModalWrapper } from '../complete-appointment-modal/styles';
+
+interface AppointmentModalBlockProps {
+  offsetTop?: boolean;
+}
 
 export const ModalBackdrop = styled(BackDrop)`
   padding-top: 15px;
@@ -12,6 +18,10 @@ export const ModalBackdrop = styled(BackDrop)`
 
 export const AppointmentModal = styled(ModalWrapper)`
   width: 400px;
+`;
+
+export const AppointmentModalHeader = styled(ModalHeader)`
+  gap: 0;
 `;
 
 export const ModalBody = styled('div')`
@@ -23,19 +33,24 @@ export const ModalBody = styled('div')`
   background-color: ${SECONDARY.drawer_background};
 `;
 
-export const AppointmentModalBlock = styled('div')`
-  font-weight: ${typography.fontWeightMedium};
-  background-color: ${PRIMARY.white};
-  padding: 16px;
-  border-top: 1px solid ${SECONDARY.light_gray};
-  border-bottom: 1px solid ${SECONDARY.light_gray};
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  &:first-of-type {
-    margin-top: 16px;
-  }
-`;
+export const AppointmentModalBlock = styled('div')<AppointmentModalBlockProps>(
+  ({ offsetTop }) => css`
+    font-weight: ${typography.fontWeightMedium};
+    background-color: ${PRIMARY.white};
+    padding: 16px;
+    border-top: 1px solid ${SECONDARY.light_gray};
+    border-bottom: 1px solid ${SECONDARY.light_gray};
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    &:first-of-type {
+      ${offsetTop &&
+      css`
+        margin-top: 16px;
+      `}
+    }
+  `
+);
 
 export const AppointmentModalBlockParagraph = styled('div')`
   color: ${SECONDARY.md_gray};
@@ -62,6 +77,15 @@ export const InlineBlock = styled('div')`
   align-items: center;
   justify-content: flex-start;
   gap: 10px;
+`;
+
+export const ModalBlock = styled(AppointmentModalBlock)`
+  border-top: 1px solid ${SECONDARY.light_gray};
+  border-bottom: 1px solid ${SECONDARY.light_gray};
+`;
+
+export const MainText = styled(BaseBoldText)`
+  padding: 16px 16px 0 16px;
 `;
 
 export const AppointmentParagraph = styled('p')`

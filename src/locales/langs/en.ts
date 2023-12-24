@@ -8,6 +8,11 @@ import {
 
 import { CONFIRM_NOTE_MAX_LENGTH } from 'src/components/confirm-appointment/constants';
 import { MAX_CHARACTERS_LENGTH } from 'src/constants';
+import {
+  MAX_ASSESSMENT_HOURS_DURATION,
+  MAX_REASON_LENGTH,
+  MIN_REASON_LENGTH,
+} from 'src/components/appointments/virtual-assessment-modal/constants';
 
 const en = {
   app_title: 'CtrlChamps',
@@ -18,6 +23,10 @@ const en = {
   appointments: 'Appointments',
   schedule: 'Schedule',
   chats: 'Chats',
+  roles: {
+    client: 'client',
+    caregiver: 'caregiver',
+  },
   unexpected_error: 'Something went wrong, try again later...',
   loginForm: {
     emailInvalid: 'Email is incorrect',
@@ -541,6 +550,9 @@ const en = {
     complete_modal_title: 'Complete appointment',
     complete_modal_subtitle: 'Open original appointment',
     agreement_modal_title: 'Personal Care Agreement',
+    assessment_duration_exceeded: `Virtual assessment duration cannot exceed ${MAX_ASSESSMENT_HOURS_DURATION} hours`,
+    rescheduling_reason_min: `Rescheduling reason must contain at least ${MIN_REASON_LENGTH} characters`,
+    rescheduling_reason_max: `Rescheduling reason cannot contain more than ${MAX_REASON_LENGTH} characters`,
     status: {
       pending: 'Pending confirmation',
       rejected: 'Rejected',
@@ -587,6 +599,11 @@ const en = {
       checkbox_label: 'I have read and agree to the terms',
     },
   },
+  reschedule_appointment: {
+    reason: 'Reason',
+    modal_header: 'Reschedule virtual assessment',
+    main_text: 'Please specify reason for rescheduling and suggest alternative date and time',
+  },
   request_appointment: {
     virtual_assessment: 'Virtual Assessment',
     open_original_appointment: 'Open Original Appointment',
@@ -598,7 +615,7 @@ const en = {
     meeting_link: 'Meeting Link',
     link_copied: 'Meeting link is copied',
     request_sent: 'Your request has been successfully sent!',
-    request_success: "Now, we'll wait for caregivers to respond. Thank you for using our app",
+    request_success: "Now, we'll wait for the {{role}} to respond. Thank you for using our site",
     tasks: 'Tasks',
     additional_details: 'Additional details',
     notify_message: 'We will notify you right before assessment starting time',
@@ -608,9 +625,11 @@ const en = {
     equal_time_error: 'You cannot choose identical time',
     server_error: 'Something went wrong',
     btns: {
+      reschedule: 'Reschedule',
       request: 'Request',
       reject: 'Reject',
       accept: 'Accept',
+      confirm: 'Confirm',
       view: 'View',
     },
   },

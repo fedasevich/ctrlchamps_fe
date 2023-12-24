@@ -610,6 +610,9 @@ const en = {
     choose_today: 'Go to Today',
     no_appointments: 'No appointments',
   },
+  caregiverProfile: {
+    title: 'Caregiver profile'
+  }
 };
 
 export default en;

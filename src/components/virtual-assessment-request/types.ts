@@ -4,4 +4,5 @@ export type VirtualAssessmentRequestModalProps = {
   appointment: DetailedAppointment;
   isOpen: boolean;
   switchModalVisibility: () => void;
+  openDrawer: () => void;
 };

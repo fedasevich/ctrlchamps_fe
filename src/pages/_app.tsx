@@ -17,7 +17,7 @@ import { Provider as ReduxProvider } from 'react-redux';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 // redux
-import { store } from '../redux/store';
+import { persistor, store } from '../redux/store';
 // utils
 import createEmotionCache from '../utils/createEmotionCache';
 // locales
@@ -26,6 +26,8 @@ import ThemeLocalization from '../locales';
 import 'normalize.css';
 import 'reset-css';
 // components
+import { PersistGate } from 'redux-persist/integration/react';
+import { AuthProvider } from 'src/components/auth-provider/AuthProvider';
 import ThemeProvider from 'src/theme';
 import { SettingsProvider } from '../components/settings';
 
@@ -53,13 +55,17 @@ export default function MyApp(props: MyAppProps) {
         <meta name="viewport" content="initial-scale=1, width=device-width" />
       </Head>
       <ReduxProvider store={store}>
-        <LocalizationProvider dateAdapter={AdapterDateFns}>
-          <SettingsProvider>
-            <ThemeProvider>
-              <ThemeLocalization>{getLayout(<Component {...pageProps} />)}</ThemeLocalization>
-            </ThemeProvider>
-          </SettingsProvider>
-        </LocalizationProvider>
+        <PersistGate loading={null} persistor={persistor}>
+          <AuthProvider>
+            <LocalizationProvider dateAdapter={AdapterDateFns}>
+              <SettingsProvider>
+                <ThemeProvider>
+                  <ThemeLocalization>{getLayout(<Component {...pageProps} />)}</ThemeLocalization>
+                </ThemeProvider>
+              </SettingsProvider>
+            </LocalizationProvider>
+          </AuthProvider>
+        </PersistGate>
       </ReduxProvider>
     </CacheProvider>
   );

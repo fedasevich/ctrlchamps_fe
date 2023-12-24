@@ -12,6 +12,7 @@ import { rateReducer } from 'src/redux/slices/rateSlice';
 import { roleReducer } from 'src/redux/slices/roleSlice';
 import { servicesReducer } from 'src/redux/slices/servicesSlice';
 import { tokenReducer } from 'src/redux/slices/tokenSlice';
+import { userReducer } from 'src/redux/slices/userSlice';
 import { workExperienceReducer } from 'src/redux/slices/workEperienceSlice';
 import { appointmentReducer } from './slices/appointmentSlice';
 import { caregiverReducer } from './slices/caregiverSlice';
@@ -22,8 +23,9 @@ import appointmentApi from 'src/redux/api/appointmentApi';
 import authApi from 'src/redux/api/authApi';
 import questionnaireApi from 'src/redux/api/healthQuestionnaireApi';
 import profileApi from 'src/redux/api/profileCompleteApi';
-import virtualAssessmentApi from 'src/redux/api/virtualAssessmentApi';
 import timezoneApi from 'src/redux/api/timezoneApi';
+import virtualAssessmentApi from 'src/redux/api/virtualAssessmentApi';
+import userApi from 'src/redux/api/userApi';
 import { RootState } from 'src/redux/rootReducer';
 
 const persistConfig = {
@@ -49,6 +51,7 @@ const store = configureStore({
     healthQuestionnaire: healthQuestionnaireReducer,
     appointment: appointmentReducer,
     location: locationReducer,
+    user: userReducer,
     [authApi.reducerPath]: authApi.reducer,
     [accountVerificationApi.reducerPath]: accountVerificationApi.reducer,
     [profileApi.reducerPath]: profileApi.reducer,
@@ -56,6 +59,7 @@ const store = configureStore({
     [appointmentApi.reducerPath]: appointmentApi.reducer,
     [virtualAssessmentApi.reducerPath]: virtualAssessmentApi.reducer,
     [timezoneApi.reducerPath]: timezoneApi.reducer,
+    [userApi.reducerPath]: userApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
@@ -69,6 +73,7 @@ const store = configureStore({
       virtualAssessmentApi.middleware,
       questionnaireApi.middleware,
       timezoneApi.middleware,
+      userApi.middleware,
     ]),
 });
 

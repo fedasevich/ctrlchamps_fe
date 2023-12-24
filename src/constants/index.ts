@@ -1,3 +1,5 @@
+import { UserRole } from 'src/redux/slices/userSlice';
+import { ROUTES } from 'src/routes';
 import { daySelectedType } from './types';
 
 export const EMAIL_ERROR = 'email';
@@ -16,10 +18,12 @@ export const URL_PATTERN = /^https:\/\/.+$/;
 
 export const GOOGLE_MAP_API = 'https://maps.googleapis.com/maps/api';
 
-export const USER_ROLE = {
-  caregiver: 'caregiver',
-  seeker: 'seeker',
+export const USER_ROLE: Record<UserRole, UserRole> = {
+  Caregiver: 'Caregiver',
+  Seeker: 'Seeker',
 };
+
+export const DEFAULT_REDIRECT_PATH = ROUTES.login;
 
 export const FIRST_STEP_INDEX = 0;
 export const SECOND_STEP_INDEX = 1;

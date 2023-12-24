@@ -26,15 +26,19 @@ export const useSignUpThirdSchema = (): ObjectSchema<
   return object({
     country: string().required(translate('signUpThirdForm.countryRequired')),
     state: string()
+      .trim()
       .max(100, translate('signUpThirdForm.stateMaxLength'))
       .required(translate('signUpThirdForm.stateRequired')),
     city: string()
+      .trim()
       .required(translate('signUpThirdForm.cityRequired'))
       .max(100, translate('signUpThirdForm.cityMaxLength')),
     zipCode: string()
+      .trim()
       .required(translate('signUpThirdForm.zipCodeRequired'))
       .max(100, translate('signUpThirdForm.zipCodeMaxLength')),
     address: string()
+      .trim()
       .required(translate('signUpThirdForm.addressRequired'))
       .max(100, translate('signUpThirdForm.addressMaxLength')),
   });

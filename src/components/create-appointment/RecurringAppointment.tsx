@@ -4,13 +4,21 @@ import { addDays, isBefore, isSameDay } from 'date-fns';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import OneTimeIcon from 'src/assets/icons/OneTimeIcon';
+import AppointmentBtn from 'src/components/reusable/appointment-btn/AppointmentBtn';
 import { DATE_FORMAT, weekDays } from 'src/constants';
 import { setRecurringAppointmentTime } from 'src/redux/slices/appointmentSlice';
 import { useAppDispatch, useTypedSelector } from 'src/redux/store';
 import { setCustomTime } from 'src/utils/defineCustomTime';
 import { extractTimeFromDate } from 'src/utils/extractTimeFromDate';
-import AppointmentBtn from 'src/components/reusable/appointment-btn/AppointmentBtn';
-import { ONE_DAY, selectTimeOptions } from './constants';
+import { getWeekDaysRange } from 'src/utils/getWeekDaysRange';
+import { ErrorText } from 'src/components/reusable';
+import {
+  FIRST_WEEK_DAY_IDX,
+  LAST_WEEK_DAY_IDX,
+  ONE_DAY,
+  ONE_HOUR_INTERVAL_INDEX,
+  selectTimeOptions,
+} from './constants';
 import {
   AppointmentDuration,
   BaseBoldText,
@@ -38,7 +46,8 @@ export default function RecurringAppointment({ onNext, onBack }: Props): JSX.Ele
   const [startTime, setStartTime] = useState<string>('');
   const [endTime, setEndTime] = useState<string>('');
   const [appointmentDays, setAppointmentDays] = useState<string[]>(recurringDate.weekDays);
-  const { hours, minutes } = useShowDuration(startTime, endTime);
+  const [invalidWeekDaysRange, setInvalidWeekDaysRange] = useState<boolean>(false);
+  const { hours, minutes, isDurationSet, minValidDuration } = useShowDuration(startTime, endTime);
 
   const isBtnDisabled =
     !startDate ||
@@ -46,8 +55,12 @@ export default function RecurringAppointment({ onNext, onBack }: Props): JSX.Ele
     !startTime ||
     !endTime ||
     !appointmentDays.length ||
+    !minValidDuration ||
     isBefore(endDate, startDate) ||
     isSameDay(startDate, endDate);
+
+  const isAppointmentDurationShown =
+    startTime && endTime && startDate && endDate && minValidDuration && !invalidWeekDaysRange;
 
   useEffect(() => {
     if (!recurringDate.startDate || !recurringDate.endDate) return;
@@ -61,17 +74,38 @@ export default function RecurringAppointment({ onNext, onBack }: Props): JSX.Ele
     }
   }, [recurringDate.startDate, recurringDate.endDate]);
 
-  const chooseStartTime = (value: string): void => setStartTime(value);
+  const chooseStartTime = (value: string): void => {
+    setStartTime(value);
+    const selectedTime = selectTimeOptions.findIndex((el) => el === value);
+    const oneHourDifferenceIdx = selectedTime + ONE_HOUR_INTERVAL_INDEX;
+    setEndTime(selectTimeOptions[oneHourDifferenceIdx]);
+  };
+
   const chooseEndTime = (value: string): void => setEndTime(value);
-  const chooseStartDate = (value: Date | null): void => setStartDate(value);
-  const chooseEndDate = (value: Date | null): void => setEndDate(value);
+
+  const chooseStartDate = (value: Date | null): void => {
+    setStartDate(value);
+    setInvalidWeekDaysRange(false);
+  };
+
+  const chooseEndDate = (value: Date | null): void => {
+    setEndDate(value);
+    setInvalidWeekDaysRange(false);
+  };
 
   const chooseDay = (value: string): void => {
     const dayAlreadyChosen = appointmentDays.find((day: string) => day === value);
+    const availableDaysToChoose = getWeekDaysRange(startDate, endDate);
+    setInvalidWeekDaysRange(false);
 
     if (dayAlreadyChosen) {
       const filtered = appointmentDays.filter((day: string) => day !== value);
       setAppointmentDays(filtered);
+
+      return;
+    }
+    if (!availableDaysToChoose.includes(value)) {
+      setInvalidWeekDaysRange(true);
 
       return;
     }
@@ -136,11 +170,7 @@ export default function RecurringAppointment({ onNext, onBack }: Props): JSX.Ele
           <SelectContainer>
             <FormControl fullWidth variant="standard">
               <InputLabel>{translate('create_appointment.start_time')}</InputLabel>
-              <Select
-                disabled={!startDate || !endDate}
-                value={startTime}
-                onChange={(e): void => chooseStartTime(e.target.value)}
-              >
+              <Select value={startTime} onChange={(e): void => chooseStartTime(e.target.value)}>
                 {selectTimeOptions.map((option) => (
                   <MenuItem key={option} value={option}>
                     {option}
@@ -150,11 +180,7 @@ export default function RecurringAppointment({ onNext, onBack }: Props): JSX.Ele
             </FormControl>
             <FormControl fullWidth variant="standard">
               <InputLabel>{translate('create_appointment.end_time')}</InputLabel>
-              <Select
-                disabled={!startDate || !endDate}
-                value={endTime}
-                onChange={(e): void => chooseEndTime(e.target.value)}
-              >
+              <Select value={endTime} onChange={(e): void => chooseEndTime(e.target.value)}>
                 {selectTimeOptions.map((option) => (
                   <MenuItem key={option} value={option}>
                     {option}
@@ -175,13 +201,28 @@ export default function RecurringAppointment({ onNext, onBack }: Props): JSX.Ele
               </WeekSlot>
             ))}
           </WeekSlotContainer>
-          {startTime && endTime && (
+          {invalidWeekDaysRange && (
+            <ErrorText>
+              {translate('create_appointment.errors.invalid_week_days', {
+                dayFrom: getWeekDaysRange(startDate, endDate)[FIRST_WEEK_DAY_IDX],
+                dayTo: getWeekDaysRange(startDate, endDate).at(LAST_WEEK_DAY_IDX),
+              })}
+            </ErrorText>
+          )}
+          {startTime && endTime && isDurationSet && !minValidDuration && (
+            <ErrorText>{translate('create_appointment.errors.min_appointment_duration')}</ErrorText>
+          )}
+          {isAppointmentDurationShown && (
             <AppointmentDuration>
               <OneTimeIcon />
-              {translate('create_appointment.duration', {
-                hours,
-                minutes,
-              })}
+              {minutes > 0
+                ? translate('create_appointment.duration_with_minutes', {
+                    hours,
+                    minutes,
+                  })
+                : translate('create_appointment.duration', {
+                    hours,
+                  })}
             </AppointmentDuration>
           )}
         </ContentContainer>

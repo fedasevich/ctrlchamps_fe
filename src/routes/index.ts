@@ -8,4 +8,7 @@ export const ROUTES = {
   create_appointment: '/create-appointment',
   appointment_caregiver_list: '/caregiver-list',
   schedule: '/schedule',
+  appointments: '/appointments',
+  profile: '/profile',
+  account_details: '/account-details',
 };

@@ -7,7 +7,7 @@ import {
 } from 'src/components/create-appointment/constants';
 
 import { CONFIRM_NOTE_MAX_LENGTH } from 'src/components/confirm-appointment/constants';
-import { MAX_CHARACTERS_LENGTH } from 'src/constants';
+import { MAX_CHARACTERS_LENGTH, HELP_EMAIL } from 'src/constants';
 
 const en = {
   app_title: 'CtrlChamps',
@@ -671,7 +671,7 @@ const en = {
     title: 'Get Help',
     subtitle: 'Need assistance? We`re here to help!',
     text: 'If you have any questions, concerns, or issues, you can reach out to our dedicated support team via email',
-    email: 'help@afyanex.com',
+    email: `${HELP_EMAIL}`,
   },
 };
 

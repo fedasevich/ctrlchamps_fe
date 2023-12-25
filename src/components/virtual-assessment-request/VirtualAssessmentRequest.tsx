@@ -189,7 +189,7 @@ const VirtualAssessmentRequestModal = ({
                 <FilledButton
                   fullWidth
                   onClick={(): Promise<void> =>
-                    handleStatusChange(VIRTUAL_ASSESSMENT_STATUS.Finished)
+                    handleStatusChange(VIRTUAL_ASSESSMENT_STATUS.Accepted)
                   }
                 >
                   {translate('request_appointment.btns.accept')}

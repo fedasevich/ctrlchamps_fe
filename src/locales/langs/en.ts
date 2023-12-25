@@ -668,7 +668,7 @@ const en = {
     addressModal: { title: 'Edit Address' },
   },
   caregiverProfile: {
-    title: 'Caregiver profile'
+    title: 'Caregiver Profile'
   }
 };
 

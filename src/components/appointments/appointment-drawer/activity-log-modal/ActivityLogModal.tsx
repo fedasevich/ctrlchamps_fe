@@ -79,13 +79,13 @@ export default function ActivityLogModal({
           color="primary"
           onClick={handleSubmit(onSubmit)}
         >
-          Confirm
+          {translate('appointments_page.confirm')}
         </Button>
       }
     >
       <Container>
         <DoubleButtonBox>
-          <StyledTitle>{translate('appointments_page.activityLog')}</StyledTitle>
+          <StyledTitle>{translate('appointments_page.completedTasks')}</StyledTitle>
           <StyledTaskList>
             {seekerTasks.map((task) => (
               <StyledTask key={task.name}>

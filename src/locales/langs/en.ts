@@ -541,11 +541,13 @@ const en = {
     agreementSignedDate: 'Date: ',
     activityLog: 'Activity Log',
     reviewed: 'Reviewed',
+    confirm: 'Confirm',
     filled: 'Filled',
     modal_subtitle: 'Are you sure you would like to cancel the appointment?',
     complete_modal_title: 'Complete appointment',
     complete_modal_subtitle: 'Open original appointment',
     agreement_modal_title: 'Personal Care Agreement',
+    completedTasks: 'Completed Tasks',
     status: {
       pending: 'Pending confirmation',
       rejected: 'Rejected',

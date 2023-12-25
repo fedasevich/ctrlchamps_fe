@@ -3,13 +3,27 @@ import { utcToZonedTime } from 'date-fns-tz';
 import { APPOINTMENT_STATUS, APPOINTMENT_TYPE, USER_ROLE } from 'src/constants';
 import { DetailedAppointment } from 'src/redux/api/appointmentApi';
 import { UserRole } from 'src/redux/slices/userSlice';
-import { UTC_BIAS, WEEKDAY_FORMAT } from './constants';
+import { getISODateWithoutUTC } from 'src/utils/getISODateWithoutUTC';
+import { WEEKDAY_FORMAT } from './constants';
 
-const getISODateWithoutUTC = (date: string): string => date.replace(UTC_BIAS, '');
-
+/**
+ * Checks if the given day is a recurring working (recurring appointment will happen) day based on the weekday array.
+ *
+ * @param {Date} now - Date object
+ * @param {string[]} weekday - ['Monday', 'Wednesday'].
+ * @returns {boolean} True if the day is a recurring working day, false otherwise.
+ */
 const isRecurringWorkingDay = (now: Date, weekday: string[]): boolean =>
   weekday.includes(format(now, WEEKDAY_FORMAT));
 
+/**
+ * Checks if the current time is within the appointment date range interval.
+ *
+ * @param {Date} now - The current date and time.
+ * @param {string} startDate - "2023-12-20T00:00:00.000Z"
+ * @param {string} endDate - "2023-12-31T03:00:00.000Z"
+ * @returns {boolean} True if the current time is within the appointment interval, false otherwise.
+ */
 const isWithinAppointmentInterval = (now: Date, startDate: string, endDate: string): boolean => {
   const start = parseISO(startDate);
   const end = parseISO(endDate);
@@ -17,6 +31,12 @@ const isWithinAppointmentInterval = (now: Date, startDate: string, endDate: stri
   return isWithinInterval(now, { start, end });
 };
 
+/**
+ * Checks if the activity log for the given appointment should be shown.
+ *
+ * @param {DetailedAppointment} appointment - The whole detailed appointment object.
+ * @returns {boolean} True if the activity log should be shown, false otherwise.
+ */
 export const isActivityLogShown = (appointment: DetailedAppointment): boolean => {
   const { startDate, endDate, status, timezone, type, weekday } = appointment;
 
@@ -46,6 +66,15 @@ export const isActivityLogShown = (appointment: DetailedAppointment): boolean =>
   return false;
 };
 
+/**
+ * Calculates information about the given date in relation to an appointment.
+ *
+ * @param {Date} now - The current date and time.
+ * @param {string} startDate - "2023-12-20T00:00:00.000Z"
+ * @param {string} endDate - "2023-12-31T03:00:00.000Z"
+ * @param {string[]} weekday - ['Monday', 'Wednesday'].
+ * @returns {{isWorkingDay: boolean, hasPassedStartTime: boolean, hasPassedEndTime: boolean}} - {isWorkingDay: true, hasPassedStartTime: true, hasPassedEndTime: true}
+ */
 const calculateDateInfo = (
   now: Date,
   startDate: string,
@@ -78,6 +107,13 @@ const calculateDateInfo = (
   return { isWorkingDay, hasPassedStartTime, hasPassedEndTime };
 };
 
+/**
+ * Checks if activity log buttons for the given appointment should be shown.
+ *
+ * @param {DetailedAppointment} appointment - The whole detailed appointment object.
+ * @param {UserRole} role - 'Caregiver' | 'Seeker'
+ * @returns {boolean} True if the activity log should be shown, false otherwise.
+ */
 export const isActivityLogReviewedShown = (
   appointment: DetailedAppointment,
   role: UserRole

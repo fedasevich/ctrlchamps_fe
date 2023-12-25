@@ -5,6 +5,11 @@ import { DetailedAppointment } from 'src/redux/api/appointmentApi';
 import { UserRole } from 'src/redux/slices/userSlice';
 import { WEEKDAY_FORMAT } from './constants';
 
+const getISODateWithoutUTC = (date: string): string => date.replace('Z', '');
+
+const isRecurringWorkingDay = (now: Date, weekday: string[]): boolean =>
+  weekday.includes(format(now, WEEKDAY_FORMAT));
+
 const isWithinAppointmentInterval = (now: Date, startDate: string, endDate: string): boolean => {
   const start = parseISO(startDate);
   const end = parseISO(endDate);
@@ -45,16 +50,16 @@ const calculateDateInfo = (
   now: Date,
   startDate: string,
   endDate: string,
-  weekdays: string[]
+  weekday: string[]
 ): {
   isWorkingDay: boolean;
   hasPassedStartTime: boolean;
   hasPassedEndTime: boolean;
 } => {
-  const start = parseISO(startDate);
-  const end = parseISO(endDate);
+  const start = parseISO(getISODateWithoutUTC(startDate));
+  const end = parseISO(getISODateWithoutUTC(endDate));
 
-  const isWorkingDay = weekdays.includes(format(now, WEEKDAY_FORMAT));
+  const isWorkingDay = isRecurringWorkingDay(now, weekday);
 
   const todayHour = getHours(now);
   const todayMinute = getMinutes(now);
@@ -77,7 +82,7 @@ export const isActivityLogReviewedShown = (
   appointment: DetailedAppointment,
   role: UserRole
 ): boolean => {
-  const { activityLog, type, status, startDate, endDate, timezone } = appointment;
+  const { activityLog, type, status, startDate, endDate, timezone, weekday } = appointment;
 
   const now = utcToZonedTime(new Date(), timezone);
 
@@ -93,7 +98,10 @@ export const isActivityLogReviewedShown = (
     type === APPOINTMENT_TYPE.Recurring &&
     (status === APPOINTMENT_STATUS.Completed || status === APPOINTMENT_STATUS.Active)
   ) {
-    return activityLog.some((item) => isToday(parseISO(item.createdAt)));
+    return (
+      activityLog.some((item) => isToday(parseISO(item.createdAt))) &&
+      isRecurringWorkingDay(now, weekday as string[])
+    );
   }
 
   return false;

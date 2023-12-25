@@ -1,5 +1,5 @@
 import { ObjectSchema, boolean, date, object, string } from 'yup';
-import { endOfDay, isAfter } from 'date-fns';
+import { isAfter } from 'date-fns';
 
 import { ProfileQualityFormValues } from 'src/components/profile/profile-qualification/types';
 import { MAX_CHARACTERS_LENGTH, URL_PATTERN } from 'src/constants';
@@ -31,7 +31,7 @@ export const useProfileQualificationSchema = (): ObjectSchema<ProfileQualityForm
       .test(
         'is-future-date',
         translate('profileQualification.startDateCannotBeInFuture'),
-        (value) => !isAfter(value, endOfDay(new Date()))
+        (value) => !isAfter(value, new Date())
       ),
     isExpirationDateDisabled: boolean().required(),
     expirationDate: date().when('isExpirationDateDisabled', {

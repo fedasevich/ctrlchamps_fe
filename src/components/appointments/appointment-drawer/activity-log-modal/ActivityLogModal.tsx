@@ -87,8 +87,8 @@ export default function ActivityLogModal({
         <DoubleButtonBox>
           <StyledTitle>{translate('appointments_page.activityLog')}</StyledTitle>
           <StyledTaskList>
-            {seekerTasks.map((task, index) => (
-              <StyledTask key={index}>
+            {seekerTasks.map((task) => (
+              <StyledTask key={task.name}>
                 <Checkbox {...register('tasks')} value={task.name} />
                 {task.name}
               </StyledTask>

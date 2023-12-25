@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction } from 'react';
-import { calculateEndTime } from 'src/components/create-appointment/helpers';
+import { calculateEndTime } from 'src/utils/calculateTimeDifference';
 
 type SetTimeAction = Dispatch<SetStateAction<string>>;
 type ReturnType = {

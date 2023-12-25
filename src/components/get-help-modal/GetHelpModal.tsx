@@ -1,5 +1,6 @@
 import { useLocales } from 'src/locales';
 import FavoriteIcon from 'src/assets/icons/FavoriteIcon';
+import { HELP_EMAIL } from 'src/constants';
 
 import { Container, IconContainer, SubTitle, Text, Link } from './styles';
 
@@ -13,9 +14,7 @@ export default function GetHelpModal(): JSX.Element {
       </IconContainer>
       <SubTitle>{translate('getHelpModal.subtitle')}</SubTitle>
       <Text>{translate('getHelpModal.text')}</Text>
-      <Link href={`mailto:${translate('needHelpModal.email')}`}>
-        {translate('getHelpModal.email')}
-      </Link>
+      <Link href={`mailto:${translate('needHelpModal.email')}`}>{HELP_EMAIL}</Link>
     </Container>
   );
 }

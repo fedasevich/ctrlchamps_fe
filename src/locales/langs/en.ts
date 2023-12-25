@@ -671,7 +671,6 @@ const en = {
     title: 'Get Help',
     subtitle: 'Need assistance? We`re here to help!',
     text: 'If you have any questions, concerns, or issues, you can reach out to our dedicated support team via email',
-    email: `${HELP_EMAIL}`,
   },
 };
 

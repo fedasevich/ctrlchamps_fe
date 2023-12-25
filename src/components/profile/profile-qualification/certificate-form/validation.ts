@@ -39,7 +39,7 @@ export const useProfileQualificationSchema = (): ObjectSchema<ProfileQualityForm
             (value, context) => {
               const { dateIssued } = context.parent;
 
-              return !dateIssued || !value || isBefore(dateIssued - ONE_DAY, value);
+              return !dateIssued || isBefore(dateIssued - ONE_DAY, value);
             }
           ),
       otherwise: (schema) => schema.notRequired(),

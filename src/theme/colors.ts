@@ -20,6 +20,7 @@ export const SECONDARY = {
   selected: '#b8ffef63',
   drawer_background: 'rgba(8, 188, 184, 0.04)',
   error_hover: 'rgba(198, 40, 40, 0.08)',
+  error: '#FF0000',
 };
 
 export const TEXT_COLOR = {

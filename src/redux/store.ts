@@ -25,6 +25,7 @@ import questionnaireApi from 'src/redux/api/healthQuestionnaireApi';
 import profileApi from 'src/redux/api/profileCompleteApi';
 import timezoneApi from 'src/redux/api/timezoneApi';
 import virtualAssessmentApi from 'src/redux/api/virtualAssessmentApi';
+import transactionsApi from 'src/redux/api/transactionsApi';
 import userApi from 'src/redux/api/userApi';
 import { RootState } from 'src/redux/rootReducer';
 
@@ -60,6 +61,7 @@ const store = configureStore({
     [virtualAssessmentApi.reducerPath]: virtualAssessmentApi.reducer,
     [timezoneApi.reducerPath]: timezoneApi.reducer,
     [userApi.reducerPath]: userApi.reducer,
+    [transactionsApi.reducerPath]: transactionsApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
@@ -74,6 +76,7 @@ const store = configureStore({
       questionnaireApi.middleware,
       timezoneApi.middleware,
       userApi.middleware,
+      transactionsApi.middleware,
     ]),
 });
 

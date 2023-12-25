@@ -3,9 +3,9 @@ import { utcToZonedTime } from 'date-fns-tz';
 import { APPOINTMENT_STATUS, APPOINTMENT_TYPE, USER_ROLE } from 'src/constants';
 import { DetailedAppointment } from 'src/redux/api/appointmentApi';
 import { UserRole } from 'src/redux/slices/userSlice';
-import { WEEKDAY_FORMAT } from './constants';
+import { UTC_BIAS, WEEKDAY_FORMAT } from './constants';
 
-const getISODateWithoutUTC = (date: string): string => date.replace('Z', '');
+const getISODateWithoutUTC = (date: string): string => date.replace(UTC_BIAS, '');
 
 const isRecurringWorkingDay = (now: Date, weekday: string[]): boolean =>
   weekday.includes(format(now, WEEKDAY_FORMAT));

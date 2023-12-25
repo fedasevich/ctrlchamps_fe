@@ -65,4 +65,4 @@ export const APPOINTMENT_TYPE = {
   Recurring: 'Recurring',
 };
 
-export const HELP_EMAIL = 'help@afyanex.com';
+export const HELP_EMAIL = 'help@ctrlchamps@gmail.com';

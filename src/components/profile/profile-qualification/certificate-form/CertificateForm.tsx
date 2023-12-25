@@ -15,7 +15,7 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 
 import {
   DEFAULT_PROFILE_QUALIFICATION_VALUES,
-  MAX_CERTIFICATE_DATE,
+  CURRENT_DATE,
 } from 'src/components/profile/profile-qualification/certificate-form/constants';
 import {
   ErrorMessage,
@@ -145,7 +145,7 @@ export default function CertificateForm({
               <DatePicker
                 {...field}
                 label={translate('profileQualification.placeholderStartDate')}
-                maxDate={MAX_CERTIFICATE_DATE}
+                maxDate={CURRENT_DATE}
                 openTo="year"
                 inputFormat={DATE_FORMAT}
                 PopperProps={{

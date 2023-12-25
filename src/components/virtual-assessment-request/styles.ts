@@ -69,7 +69,6 @@ export const ListItemStyled = styled(ListItem)`
 export const NotificationMessage = styled('div')`
   display: flex;
   padding: 15px;
-  margin-bottom: 10px;
   gap: 10px;
   border-radius: 5px;
   background-color: ${PRIMARY.light_main};

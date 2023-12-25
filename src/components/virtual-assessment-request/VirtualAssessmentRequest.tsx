@@ -162,38 +162,40 @@ const VirtualAssessmentRequestModal = ({
               <NotificationsNoneOutlinedIcon color="primary" />
               {translate('request_appointment.notify_message')}
             </NotificationMessage>
-            <InlineBlock>
-              {appointment.virtualAssessment?.wasRescheduled ? (
-                <Button
-                  variant="outlined"
-                  color="error"
+            {!appointment.virtualAssessment?.wasRescheduled && (
+              <InlineBlock>
+                {appointment.virtualAssessment?.wasRescheduled ? (
+                  <Button
+                    variant="outlined"
+                    color="error"
+                    fullWidth
+                    onClick={(): Promise<void> =>
+                      handleStatusChange(VIRTUAL_ASSESSMENT_STATUS.Rejected)
+                    }
+                  >
+                    {translate('request_appointment.btns.reject')}
+                  </Button>
+                ) : (
+                  <Button
+                    variant="outlined"
+                    color="primary"
+                    fullWidth
+                    onClick={openReschedulingModal}
+                  >
+                    {translate('request_appointment.btns.reschedule')}
+                  </Button>
+                )}
+
+                <FilledButton
                   fullWidth
                   onClick={(): Promise<void> =>
-                    handleStatusChange(VIRTUAL_ASSESSMENT_STATUS.Rejected)
+                    handleStatusChange(VIRTUAL_ASSESSMENT_STATUS.Finished)
                   }
                 >
-                  {translate('request_appointment.btns.reject')}
-                </Button>
-              ) : (
-                <Button
-                  variant="outlined"
-                  color="primary"
-                  fullWidth
-                  onClick={openReschedulingModal}
-                >
-                  {translate('request_appointment.btns.reschedule')}
-                </Button>
-              )}
-
-              <FilledButton
-                fullWidth
-                onClick={(): Promise<void> =>
-                  handleStatusChange(VIRTUAL_ASSESSMENT_STATUS.Finished)
-                }
-              >
-                {translate('request_appointment.btns.accept')}
-              </FilledButton>
-            </InlineBlock>
+                  {translate('request_appointment.btns.accept')}
+                </FilledButton>
+              </InlineBlock>
+            )}
           </AppointmentModalFooter>
         </DrawerBody>
       </AppointmentModal>

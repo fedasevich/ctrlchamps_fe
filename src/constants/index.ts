@@ -64,3 +64,5 @@ export const APPOINTMENT_TYPE = {
   OneTime: 'One time',
   Recurring: 'Recurring',
 };
+
+export const HELP_EMAIL = 'help@ctrlchamps@gmail.com';

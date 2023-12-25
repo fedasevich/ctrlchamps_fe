@@ -667,6 +667,11 @@ const en = {
     personalInfoModal: { title: 'Edit Personal Information', saveButton: 'Save' },
     addressModal: { title: 'Edit Address' },
   },
+  getHelpModal: {
+    title: 'Get Help',
+    subtitle: 'Need assistance? We`re here to help!',
+    text: 'If you have any questions, concerns, or issues, you can reach out to our dedicated support team via email',
+  },
 };
 
 export default en;

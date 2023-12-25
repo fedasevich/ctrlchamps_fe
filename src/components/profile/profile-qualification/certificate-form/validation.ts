@@ -1,7 +1,8 @@
 import { ObjectSchema, boolean, date, object, string } from 'yup';
+import { isBefore } from 'date-fns';
 
 import { ProfileQualityFormValues } from 'src/components/profile/profile-qualification/types';
-import { MAX_CHARACTERS_LENGTH, URL_PATTERN } from 'src/constants';
+import { MAX_CHARACTERS_LENGTH, ONE_DAY, URL_PATTERN } from 'src/constants';
 import { useLocales } from 'src/locales';
 
 export const useProfileQualificationSchema = (): ObjectSchema<ProfileQualityFormValues> => {
@@ -29,7 +30,18 @@ export const useProfileQualificationSchema = (): ObjectSchema<ProfileQualityForm
     isExpirationDateDisabled: boolean().required(),
     expirationDate: date().when('isExpirationDateDisabled', {
       is: false,
-      then: (schema) => schema.required(translate('profileQualification.expirationDateRequired')),
+      then: (schema) =>
+        schema
+          .required(translate('profileQualification.expirationDateRequired'))
+          .test(
+            'is-after-dateIssued',
+            translate('profileQualification.expirationDateCannotBeBeforeStartDate'),
+            (value, context) => {
+              const { dateIssued } = context.parent;
+
+              return !dateIssued || !value || isBefore(dateIssued - ONE_DAY, value);
+            }
+          ),
       otherwise: (schema) => schema.notRequired(),
     }),
   }) as ObjectSchema<ProfileQualityFormValues>;

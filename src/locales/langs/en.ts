@@ -200,6 +200,8 @@ const en = {
     startDateRequired: 'Start date is required',
     expirationDate: 'Expiration date is required',
 
+    expirationDateCannotBeBeforeStartDate: 'Expiration date cannot be before start date',
+
     mainTitle:
       'Please specify your experience and feel free to attach any document to proof your certification',
     subTitle: 'Added Certificate(s)',

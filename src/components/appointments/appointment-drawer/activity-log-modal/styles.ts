@@ -9,6 +9,7 @@ export const Container = styled('div')`
 `;
 
 export const DoubleButtonBox = styled('div')`
+  flex-direction: column;
   display: flex;
   gap: 16px;
 `;
@@ -23,6 +24,13 @@ export const CancelBtn = styled(Button)`
     background-color: ${SECONDARY.error_hover};
     border: 1px solid ${TEXT_COLOR.error};
   }
+`;
+
+export const StyledTitle = styled(Typography)`
+  padding-left: 8px;
+  color: ${SECONDARY.gray_semi_transparent};
+  font-size: ${TYPOGRAPHY.xs}px;
+  font-weight: ${typography.fontWeightMedium};
 `;
 
 export const StyledButton = styled(Button)`

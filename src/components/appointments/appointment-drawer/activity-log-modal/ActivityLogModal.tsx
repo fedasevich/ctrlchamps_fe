@@ -8,7 +8,14 @@ import { useLocales } from 'src/locales';
 import { ActivityLogStatus, activityLogApi } from 'src/redux/api/activityLogApi';
 import { SeekerTask, appointmentApi } from 'src/redux/api/appointmentApi';
 
-import { Container, DoubleButtonBox, ErrorMessage, StyledTask, StyledTaskList } from './styles';
+import {
+  Container,
+  DoubleButtonBox,
+  ErrorMessage,
+  StyledTask,
+  StyledTaskList,
+  StyledTitle,
+} from './styles';
 import { ActivityLogModalFormValues, useActivityLogModalSchema } from './validation';
 
 interface IProps {
@@ -78,6 +85,7 @@ export default function ActivityLogModal({
     >
       <Container>
         <DoubleButtonBox>
+          <StyledTitle>{translate('appointments_page.activityLog')}</StyledTitle>
           <StyledTaskList>
             {seekerTasks.map((task, index) => (
               <StyledTask key={index}>

@@ -1,8 +1,10 @@
 import { ObjectSchema, boolean, date, object, string } from 'yup';
+import { isAfter } from 'date-fns';
 
 import { ProfileQualityFormValues } from 'src/components/profile/profile-qualification/types';
 import { MAX_CHARACTERS_LENGTH, URL_PATTERN } from 'src/constants';
 import { useLocales } from 'src/locales';
+import { MAX_CERTIFICATE_DATE } from 'src/components/profile/profile-qualification/certificate-form/constants';
 
 export const useProfileQualificationSchema = (): ObjectSchema<ProfileQualityFormValues> => {
   const { translate } = useLocales();
@@ -25,7 +27,13 @@ export const useProfileQualificationSchema = (): ObjectSchema<ProfileQualityForm
           return URL_PATTERN.test(value);
         }
       ),
-    dateIssued: date().required(translate('profileQualification.startDateRequired')),
+    dateIssued: date()
+      .required(translate('profileQualification.startDateRequired'))
+      .test(
+        'is-future-date',
+        translate('profileQualification.startDateCannotBeInFuture'),
+        (value) => !isAfter(value, MAX_CERTIFICATE_DATE)
+      ),
     isExpirationDateDisabled: boolean().required(),
     expirationDate: date().when('isExpirationDateDisabled', {
       is: false,

@@ -1,5 +1,5 @@
-import { Avatar, Button, IconButton, styled } from '@mui/material';
-import { SECONDARY, PRIMARY, TEXT_COLOR } from 'src/theme/colors';
+import { Avatar, Button, IconButton, Typography, styled } from '@mui/material';
+import { PRIMARY, SECONDARY, TEXT_COLOR } from 'src/theme/colors';
 import { TYPOGRAPHY } from 'src/theme/fonts';
 import typography from 'src/theme/typography';
 
@@ -120,4 +120,20 @@ export const ModalFooter = styled('div')`
   display: flex;
   flex-direction: column;
   gap: 14px;
+`;
+
+export const ActivityLogBlock = styled('div')`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+`;
+
+export const DisabledText = styled(Typography)`
+  font-size: ${TYPOGRAPHY.base_xs}px;
+  font-weight: ${typography.fontWeightMedium};
+  color: ${TEXT_COLOR.disabled};
+  display: flex;
+  align-items: center;
+  gap: 8px;
 `;

@@ -209,6 +209,8 @@ const en = {
     startDateRequired: 'Start date is required',
     expirationDate: 'Expiration date is required',
 
+    startDateCannotBeInFuture: 'Start date cannot be in future',
+
     mainTitle:
       'Please specify your experience and feel free to attach any document to proof your certification',
     subTitle: 'Added Certificate(s)',
@@ -546,6 +548,12 @@ const en = {
     sign_agreement_button: 'Sign agreement',
     back_button: 'Back to the appointment',
     modal_title: 'Cancel the appointment',
+    signed: 'Signed',
+    agreementSignedDate: 'Date: ',
+    activityLog: 'Activity Log',
+    reviewed: 'Reviewed',
+    confirm: 'Confirm',
+    filled: 'Filled',
     modal_subtitle: 'Are you sure you would like to cancel the appointment?',
     complete_modal_title: 'Complete appointment',
     complete_modal_subtitle: 'Open original appointment',
@@ -553,6 +561,7 @@ const en = {
     assessment_duration_exceeded: `Virtual assessment duration cannot exceed ${MAX_ASSESSMENT_HOURS_DURATION} hours`,
     rescheduling_reason_min: `Rescheduling reason must contain at least ${MIN_REASON_LENGTH} characters`,
     rescheduling_reason_max: `Rescheduling reason cannot contain more than ${MAX_REASON_LENGTH} characters`,
+    completedTasks: 'Completed Tasks',
     status: {
       pending: 'Pending confirmation',
       rejected: 'Rejected',
@@ -562,7 +571,12 @@ const en = {
       ongoing: 'Ongoing',
       completed: 'Completed',
     },
+    activityLogModal: {
+      tasksRequired: 'At least one task is required',
+    },
     drawer: {
+      agreement: 'Agreement',
+      area: 'Area',
       caregiver: 'Caregiver',
       patient: 'Patient',
       date: 'Date & Time',
@@ -685,6 +699,11 @@ const en = {
     },
     personalInfoModal: { title: 'Edit Personal Information', saveButton: 'Save' },
     addressModal: { title: 'Edit Address' },
+  },
+  getHelpModal: {
+    title: 'Get Help',
+    subtitle: 'Need assistance? We`re here to help!',
+    text: 'If you have any questions, concerns, or issues, you can reach out to our dedicated support team via email',
   },
 };
 

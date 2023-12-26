@@ -209,7 +209,6 @@ const VirtualAssessmentRequestModal = ({
                 </InlineBlock>
               )}
           </AppointmentModalFooter>
-          ;
         </DrawerBody>
       </AppointmentModal>
 

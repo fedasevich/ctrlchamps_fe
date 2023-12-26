@@ -1,12 +1,14 @@
-import { Dispatch, SetStateAction, useState } from 'react';
-import { DetailedAppointment, useGetAppointmentQuery } from 'src/redux/api/appointmentApi';
+import { useState, Dispatch, SetStateAction } from 'react';
+import { useGetAppointmentQuery, DetailedAppointment } from 'src/redux/api/appointmentApi';
 import {
   useGetVirtualAssessmentInfoQuery,
   VirtualAssessment,
 } from 'src/redux/api/virtualAssessmentApi';
+import { USER_ROLE } from 'src/constants';
 import { getFormattedDate } from '../helpers';
 
 interface IProps {
+  role: string;
   setIsDrawerOpen: Dispatch<SetStateAction<boolean>>;
   selectedAppointmentId: string;
 }
@@ -37,9 +39,12 @@ type ReturnType = {
   handleVirtualAssessmentSuccessModalClose: () => void;
   setIsTermsAccepted: Dispatch<SetStateAction<boolean>>;
   openOriginalAppointment: () => void;
+  closeOriginalAppointment: () => void;
+  virtualAssessmentDrawerShown: boolean;
 };
 
 export function useAppointmentDrawer({
+  role,
   setIsDrawerOpen,
   selectedAppointmentId,
 }: IProps): ReturnType {
@@ -56,6 +61,9 @@ export function useAppointmentDrawer({
   const { data: virtualAssessment } = useGetVirtualAssessmentInfoQuery(selectedAppointmentId);
 
   const formattedStartDate = appointment && getFormattedDate(appointment.startDate);
+
+  const virtualAssessmentDrawerShown =
+    appointment?.virtualAssessment?.wasRescheduled || role === USER_ROLE.Caregiver;
 
   const handleCancelModalOpen = (): void => {
     setIsCancelModalOpen(true);
@@ -118,6 +126,11 @@ export function useAppointmentDrawer({
     setIsVirtualAssessmentModalOpen(false);
   };
 
+  const closeOriginalAppointment = (): void => {
+    setIsDrawerOpen(false);
+    setIsVirtualAssessmentModalOpen(false);
+  };
+
   return {
     isCancelModalOpen,
     isCompleteModalOpen,
@@ -144,5 +157,7 @@ export function useAppointmentDrawer({
     handleVirtualAssessmentSuccessModalClose,
     setIsTermsAccepted,
     openOriginalAppointment,
+    closeOriginalAppointment,
+    virtualAssessmentDrawerShown,
   };
 }

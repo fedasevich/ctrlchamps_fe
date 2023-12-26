@@ -452,7 +452,7 @@ export default function AppointmentDrawer({
           caregiverName={`${appointment?.caregiverInfo.user.firstName} ${appointment?.caregiverInfo.user.lastName}`}
           appointmentId={selectedAppointmentId}
           onClose={handleVirtualAssessmentModalClose}
-          isActive={isVirtualAssessmentModalOpen && !virtualAssessment?.wasRescheduled}
+          isActive={isVirtualAssessmentModalOpen && !appointment.virtualAssessment?.wasRescheduled}
           openDrawer={openOriginalAppointment}
           openCaregiverProfile={(): void =>
             appointment && handleCaregiverDrawerOpen(appointment?.caregiverInfo.user.id)
@@ -461,7 +461,7 @@ export default function AppointmentDrawer({
         />
       )}
 
-     {isActivityLogModalOpen && (
+      {isActivityLogModalOpen && (
         <ActivityLogModal
           isOpen={isActivityLogModalOpen}
           appointmentId={appointment.id}

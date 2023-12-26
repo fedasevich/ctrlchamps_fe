@@ -2,9 +2,8 @@ import { ObjectSchema, boolean, date, object, string } from 'yup';
 import { isBefore, isValid, parse } from 'date-fns';
 
 import { ProfileQualityFormValues } from 'src/components/profile/profile-qualification/types';
-import { DATE_FORMAT, MAX_CHARACTERS_LENGTH, ONE_DAY, URL_PATTERN } from 'src/constants';
+import { CURRENT_DAY, DATE_FORMAT, MAX_CHARACTERS_LENGTH, ONE_DAY, URL_PATTERN } from 'src/constants';
 import { useLocales } from 'src/locales';
-import { CURRENT_DATE } from 'src/components/profile/profile-qualification/certificate-form/constants';
 
 export const useProfileQualificationSchema = (): ObjectSchema<ProfileQualityFormValues> => {
   const { translate } = useLocales();
@@ -31,7 +30,7 @@ export const useProfileQualificationSchema = (): ObjectSchema<ProfileQualityForm
       .required(translate('profileQualification.startDateRequired'))
       .transform((value, originalValue) => {
         if (typeof originalValue === 'string') {
-          const parsedDate = parse(originalValue, DATE_FORMAT, CURRENT_DATE);
+          const parsedDate = parse(originalValue, DATE_FORMAT, CURRENT_DAY);
 
           return isValid(parsedDate);
         }
@@ -56,7 +55,7 @@ export const useProfileQualificationSchema = (): ObjectSchema<ProfileQualityForm
           )
           .transform((value, originalValue) => {
             if (typeof originalValue === 'string') {
-              const parsedDate = parse(originalValue, DATE_FORMAT, CURRENT_DATE);
+              const parsedDate = parse(originalValue, DATE_FORMAT, CURRENT_DAY);
 
               return isValid(parsedDate);
             }

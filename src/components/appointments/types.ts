@@ -15,6 +15,7 @@ export type Appointment = {
   timezone: string;
   weekdays?: string[];
   payment?: number;
+  signingDate: string | null;
 };
 
 export type AppointmentsProps = {

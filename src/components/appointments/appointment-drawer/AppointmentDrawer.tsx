@@ -63,6 +63,7 @@ import {
   Task,
   TaskList,
 } from './styles';
+import { AssessmentPurpose } from '../virtual-assessment-modal/enums';
 
 interface AppointmentsDrawerProps {
   role: string;
@@ -110,7 +111,9 @@ export default function AppointmentDrawer({
     handleVirtualAssessmentSuccessModalOpen,
     setIsTermsAccepted,
     openOriginalAppointment,
-  } = useAppointmentDrawer({ setIsDrawerOpen, selectedAppointmentId });
+    closeOriginalAppointment,
+    virtualAssessmentDrawerShown,
+  } = useAppointmentDrawer({ role, setIsDrawerOpen, selectedAppointmentId });
 
   const [updateAppointment] = useUpdateAppointmentMutation();
 
@@ -138,7 +141,8 @@ export default function AppointmentDrawer({
           variant="contained"
           disabled={
             appointment.virtualAssessment?.status !== VIRTUAL_ASSESSMENT_STATUS.Accepted &&
-            role === USER_ROLE.Seeker
+            role === USER_ROLE.Seeker &&
+            !appointment.virtualAssessment?.wasRescheduled
           }
           onClick={handleVirtualAssessmentModalOpen}
         >
@@ -444,10 +448,11 @@ export default function AppointmentDrawer({
       />
       {role === USER_ROLE.Seeker && (
         <VirtualAssessmentModal
+          purpose={AssessmentPurpose.request}
           caregiverName={`${appointment?.caregiverInfo.user.firstName} ${appointment?.caregiverInfo.user.lastName}`}
           appointmentId={selectedAppointmentId}
           onClose={handleVirtualAssessmentModalClose}
-          isActive={isVirtualAssessmentModalOpen}
+          isActive={isVirtualAssessmentModalOpen && !appointment.virtualAssessment?.wasRescheduled}
           openDrawer={openOriginalAppointment}
           openCaregiverProfile={(): void =>
             appointment && handleCaregiverDrawerOpen(appointment?.caregiverInfo.user.id)
@@ -465,17 +470,19 @@ export default function AppointmentDrawer({
         />
       )}
 
-      {role === USER_ROLE.Caregiver && (
+      {virtualAssessmentDrawerShown && (
         <VirtualAssessmentRequestModal
           appointment={appointment}
           isOpen={isVirtualAssessmentModalOpen}
           switchModalVisibility={handleVirtualAssessmentModalClose}
           openDrawer={openOriginalAppointment}
+          closeDrawer={closeOriginalAppointment}
         />
       )}
       <VirtualAssessmentSuccess
         isActive={isVirtualAssessmentSuccessOpen}
         handleClose={handleVirtualAssessmentSuccessModalClose}
+        role={USER_ROLE.Caregiver}
       />
     </>
   );

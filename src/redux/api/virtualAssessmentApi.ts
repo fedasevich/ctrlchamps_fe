@@ -19,6 +19,17 @@ export type VirtualAssessment = {
   assessmentDate: Date;
   meetingLink: string;
   appointmentId: string;
+  wasRescheduled: boolean;
+  reschedulingAccepted: null | boolean;
+};
+
+export type VirtualAssessmentRescheduling = {
+  reason: string;
+  startTime: string;
+  endTime: string;
+  assessmentDate: string;
+  meetingLink: string;
+  appointmentId: string;
 };
 
 export const virtualAssessmentApi = createApi({
@@ -51,6 +62,13 @@ export const virtualAssessmentApi = createApi({
         url: '/',
         method: 'POST',
         body: virtualAssessmentData,
+      }),
+    }),
+    rescheduleVirtualAssessment: builder.mutation<void, VirtualAssessmentRescheduling>({
+      query: ({ appointmentId, ...reschedulingData }) => ({
+        url: `/reschedule/${appointmentId}`,
+        method: 'PATCH',
+        body: reschedulingData,
       }),
     }),
     getVirtualAssessmentInfo: builder.query<VirtualAssessment, string>({

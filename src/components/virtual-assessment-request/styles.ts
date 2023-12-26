@@ -29,6 +29,8 @@ export const AppointmentModalBlock = styled('div')`
   display: flex;
   flex-direction: column;
   gap: 10px;
+  border-top: 1px solid ${SECONDARY.light_gray};
+  border-bottom: 1px solid ${SECONDARY.light_gray};
 `;
 
 export const AppointmentModalFooter = styled(AppointmentModalBlock)`

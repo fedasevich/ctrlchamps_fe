@@ -40,6 +40,7 @@ const VirtualAssessmentRequestModal = ({
   isOpen,
   switchModalVisibility,
   openDrawer,
+  virtualAssessment,
 }: VirtualAssessmentRequestModalProps): JSX.Element => {
   const { translate } = useLocales();
 
@@ -101,9 +102,14 @@ const VirtualAssessmentRequestModal = ({
 
         <AppointmentModalBlock>
           <AppointmentModalBlockParagraph>
-            {translate('request_appointment.date_and_time')}
+            {translate('request_appointment.date_aSnd_time')}
           </AppointmentModalBlockParagraph>
-          {format(new Date(appointment.startDate), DRAWER_DATE_FORMAT)}
+          {virtualAssessment &&
+            virtualAssessment.startTime &&
+            format(
+              new Date(`${virtualAssessment.assessmentDate}T${virtualAssessment.startTime}`),
+              DRAWER_DATE_FORMAT
+            )}
         </AppointmentModalBlock>
         {userId === appointment.caregiverInfo.user.id && (
           <AppointmentModalBlock>
@@ -136,22 +142,30 @@ const VirtualAssessmentRequestModal = ({
             <NotificationsNoneOutlinedIcon color="primary" />
             {translate('request_appointment.notify_message')}
           </NotificationMessage>
-          <InlineBlock>
-            <Button
-              variant="outlined"
-              color="error"
-              fullWidth
-              onClick={(): Promise<void> => handleStatusChange(VIRTUAL_ASSESSMENT_STATUS.Rejected)}
-            >
-              {translate('request_appointment.btns.reject')}
-            </Button>
-            <FilledButton
-              fullWidth
-              onClick={(): Promise<void> => handleStatusChange(VIRTUAL_ASSESSMENT_STATUS.Finished)}
-            >
-              {translate('request_appointment.btns.accept')}
-            </FilledButton>
-          </InlineBlock>
+          {virtualAssessment?.status !== VIRTUAL_ASSESSMENT_STATUS.Accepted && (
+            <InlineBlock>
+              <Button
+                variant="outlined"
+                color="error"
+                fullWidth
+                onClick={async (): Promise<void> => {
+                  await handleStatusChange(VIRTUAL_ASSESSMENT_STATUS.Rejected);
+                  window.location.reload();
+                }}
+              >
+                {translate('request_appointment.btns.reject')}
+              </Button>
+              <FilledButton
+                fullWidth
+                onClick={async (): Promise<void> => {
+                  await handleStatusChange(VIRTUAL_ASSESSMENT_STATUS.Accepted);
+                  window.location.reload();
+                }}
+              >
+                {translate('request_appointment.btns.accept')}
+              </FilledButton>
+            </InlineBlock>
+          )}
         </AppointmentModalFooter>
       </DrawerBody>
     </AppointmentModal>

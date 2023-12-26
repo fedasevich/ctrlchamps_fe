@@ -28,7 +28,7 @@ const TransactionsModal = ({ role, transactions }: TransactionsModalProps): JSX.
         transactions.map((transaction) => (
           <TransactionParagraph key={transaction.id}>
             <InlineBlock>
-              <IconWrapper backgroundColor={getTransactionColor(transaction.type)}>
+              <IconWrapper backgroundColor={getTransactionColor(transaction.type, role)}>
                 {getTransactionIcon(transaction.type)}
               </IconWrapper>
               <div>

@@ -1,19 +1,19 @@
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
+import { USER_ROLE } from 'src/constants';
 import { PRIMARY, SECONDARY } from '../../theme/colors';
 import { TransactionAmmount } from './styles';
 
-export const getTransactionColor = (type: string): string => {
+export const getTransactionColor = (type: string, role: string): string => {
   switch (type) {
     case 'Outcome':
-      return PRIMARY.main;
+      return role === USER_ROLE.Seeker ? SECONDARY.error : PRIMARY.main;
     case 'Income':
-      return SECONDARY.error;
+      return role === USER_ROLE.Seeker ? PRIMARY.main : SECONDARY.error;
     default:
       return '';
   }
 };
-
 export const getTransactionTitle = (
   type: string,
   role: string,
@@ -22,7 +22,7 @@ export const getTransactionTitle = (
 ): React.ReactNode => {
   switch (type) {
     case 'Outcome':
-      return role === 'Seeker' ? (
+      return role === USER_ROLE.Seeker ? (
         <span>
           {translate('transactions.payment_sent')}:{' '}
           <TransactionAmmount>${amount}</TransactionAmmount>
@@ -34,7 +34,7 @@ export const getTransactionTitle = (
         </span>
       );
     case 'Income':
-      return role === 'Caregiver' ? (
+      return role === USER_ROLE.Caregiver ? (
         <span>
           {translate('transactions.payment_received')}:{' '}
           <TransactionAmmount>${amount}</TransactionAmmount>{' '}

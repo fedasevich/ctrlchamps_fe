@@ -22,8 +22,6 @@ export const TransactionModalTitle = styled.div`
   justify-content: flex-start;
 `;
 
-export const TransactionWrapper = styled.div``;
-
 export const TransactionParagraph = styled.div`
   color: ${SECONDARY.gray_semi_transparent};
   font-weight: ${typography.fontWeightMedium};

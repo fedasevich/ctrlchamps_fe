@@ -38,8 +38,8 @@ import {
 
 import PriorityIcon from 'src/assets/icons/PriorityIcon';
 
+import { AssessmentPurpose } from 'src/components/appointments/virtual-assessment-modal/enums';
 import { UserRole } from 'src/redux/slices/userSlice';
-import { AssessmentPurpose } from '../virtual-assessment-modal/enums';
 import ActivityLogModal from './activity-log-modal/ActivityLogModal';
 import { isActivityLogReviewedShown, isActivityLogShown } from './activity-log-modal/helpers';
 import { useAppointmentDrawer } from './hooks';

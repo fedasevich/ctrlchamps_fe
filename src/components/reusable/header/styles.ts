@@ -133,7 +133,7 @@ const SecondPart = styled.p`
 const MenuSection = styled.div`
   display: flex;
   align-items: center;
-  gap: 32px;
+  gap: 20px;
 `;
 
 const ProfileSection = styled.div`
@@ -160,6 +160,16 @@ const AvatarWrapper = styled.div`
 
 const IconWrapper = styled.div`
   cursor: pointer;
+  padding: 12.5px 10px;
+  border-bottom: 3px solid transparent;
+  &:hover {
+    color: ${PRIMARY.dark_main};
+  }
+
+  &.active {
+    color: ${PRIMARY.navy};
+    border-bottom: 3px solid ${PRIMARY.navy};
+  }
 `;
 
 const Arrow = styled.div`

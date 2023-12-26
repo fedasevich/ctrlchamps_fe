@@ -1,10 +1,9 @@
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import NotificationsIcon from '@mui/icons-material/Notifications';
 import { Avatar } from '@mui/material';
 import { useRouter } from 'next/router';
 import { Dispatch, SetStateAction, useState } from 'react';
 import AppointmentsIcon from 'src/assets/icons/AppointmentsIcon';
-import NotificationIcon from 'src/assets/icons/NotificationIcon';
-import { IconWrapper } from 'src/components/confirm-appointment/style';
 import { USER_ROLE } from 'src/constants';
 import { useLocales } from 'src/locales';
 import { useTypedSelector } from 'src/redux/store';
@@ -15,6 +14,7 @@ import {
   Arrow,
   AvatarWrapper,
   FirstPart,
+  IconWrapper,
   Logo,
   LogoSection,
   MainHeaderWrapper,
@@ -46,6 +46,10 @@ export default function MainHeader({
 
   const openMenu = (): void => setIsMenuVisible(!isMenuVisible);
 
+  const viewNotifications = (): void => {
+    if (route !== ROUTES.notifications) push(ROUTES.notifications);
+  };
+
   const chooseAppointmentsTab = (): void => {
     if (route !== ROUTES.home) {
       push(ROUTES.home);
@@ -74,8 +78,11 @@ export default function MainHeader({
         </AppointmentsSection>
       </LogoSection>
       <MenuSection>
-        <IconWrapper>
-          <NotificationIcon />
+        <IconWrapper
+          onClick={viewNotifications}
+          className={route === ROUTES.notifications ? 'active' : ''}
+        >
+          <NotificationsIcon />
         </IconWrapper>
         <ProfileSection>
           <AvatarWrapper>

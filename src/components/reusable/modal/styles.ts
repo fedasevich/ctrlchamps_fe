@@ -34,6 +34,7 @@ export const ModalHeader = styled('div')`
   text-transform: capitalize;
   border-bottom: 1px solid ${SECONDARY.light_gray};
   background-color: ${PRIMARY.white};
+  border-radius: 4px 4px 0 0;
 `;
 
 export const ModalBody = styled('div')<{ backgroundColor: string }>`
@@ -41,6 +42,7 @@ export const ModalBody = styled('div')<{ backgroundColor: string }>`
   display: flex;
   flex-direction: column;
   padding: 24px 16px;
+  border-radius: 0 0 4px 4px;
 `;
 
 export const CloseButton = styled('button')`
@@ -62,4 +64,5 @@ export const ModalFooter = styled('div')`
   width: 100%;
   padding: 16px 24px;
   border-top: 1px solid ${SECONDARY.light_gray};
+  border-radius: 0 0 4px 4px;
 `;

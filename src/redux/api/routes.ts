@@ -21,6 +21,7 @@ const route = {
   timezoneJson: '/timezone/json',
   virtualAssessment: '/virtual-assessment',
   date: '/date',
+  activityLog: '/activity-log',
 };
 
 export { route };

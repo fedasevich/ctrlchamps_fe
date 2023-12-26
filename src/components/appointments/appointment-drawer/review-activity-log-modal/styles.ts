@@ -1,4 +1,5 @@
 import { Button, Typography, styled } from '@mui/material';
+import { SECONDARY } from 'src/theme/colors';
 import { TYPOGRAPHY } from 'src/theme/fonts';
 import typography from 'src/theme/typography';
 import { Task, TaskList } from '../styles';
@@ -35,5 +36,11 @@ export const ModalFooter = styled('div')`
 export const ErrorMessage = styled(Typography)`
   color: ${({ theme }): string => theme.palette.error.main};
   font-size: ${TYPOGRAPHY.xss}px;
+  font-weight: ${typography.fontWeightMedium};
+`;
+
+export const StyledTitle = styled(Typography)`
+  color: ${SECONDARY.gray_semi_transparent};
+  font-size: ${TYPOGRAPHY.xs}px;
   font-weight: ${typography.fontWeightMedium};
 `;

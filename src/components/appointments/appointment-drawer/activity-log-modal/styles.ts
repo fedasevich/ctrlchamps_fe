@@ -1,5 +1,5 @@
 import { Button, Typography, styled } from '@mui/material';
-import { SECONDARY, TEXT_COLOR } from 'src/theme/colors';
+import { SECONDARY } from 'src/theme/colors';
 import { TYPOGRAPHY } from 'src/theme/fonts';
 import typography from 'src/theme/typography';
 import { Task, TaskList } from '../styles';
@@ -12,18 +12,6 @@ export const DoubleButtonBox = styled('div')`
   flex-direction: column;
   display: flex;
   gap: 16px;
-`;
-
-export const CancelBtn = styled(Button)`
-  border-radius: 4px;
-  width: 100%;
-  color: ${TEXT_COLOR.error};
-  border-color: ${TEXT_COLOR.error};
-
-  &:hover {
-    background-color: ${SECONDARY.error_hover};
-    border: 1px solid ${TEXT_COLOR.error};
-  }
 `;
 
 export const StyledTitle = styled(Typography)`

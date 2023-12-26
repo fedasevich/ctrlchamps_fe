@@ -9,7 +9,14 @@ import { useState } from 'react';
 import { appointmentApi } from 'src/redux/api/appointmentApi';
 import RejectReviewActivityLogModal from './RejectReviewActivityLogModal';
 import { getLatestPendingActivityLog } from './helpers';
-import { Container, DoubleButtonBox, ModalFooter, StyledTask, StyledTaskList } from './styles';
+import {
+  Container,
+  DoubleButtonBox,
+  ModalFooter,
+  StyledTask,
+  StyledTaskList,
+  StyledTitle,
+} from './styles';
 
 interface IProps {
   onClose: () => void;
@@ -92,6 +99,7 @@ export default function ReviewActivityLogModal({
         }
       >
         <Container>
+          <StyledTitle>{translate('appointments_page.completedTasks')}</StyledTitle>
           <DoubleButtonBox>
             <StyledTaskList>
               {tasks.map((task) => (

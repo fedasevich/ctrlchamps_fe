@@ -1,8 +1,14 @@
 import { ObjectSchema, boolean, date, object, string } from 'yup';
-import { isBefore, isValid, parse } from 'date-fns';
+import { isBefore, isValid, parse, isAfter } from 'date-fns';
 
 import { ProfileQualityFormValues } from 'src/components/profile/profile-qualification/types';
-import { CURRENT_DAY, DATE_FORMAT, MAX_CHARACTERS_LENGTH, ONE_DAY, URL_PATTERN } from 'src/constants';
+import {
+  CURRENT_DAY,
+  DATE_FORMAT,
+  MAX_CHARACTERS_LENGTH,
+  ONE_DAY,
+  URL_PATTERN,
+} from 'src/constants';
 import { useLocales } from 'src/locales';
 
 export const useProfileQualificationSchema = (): ObjectSchema<ProfileQualityFormValues> => {
@@ -37,7 +43,12 @@ export const useProfileQualificationSchema = (): ObjectSchema<ProfileQualityForm
 
         return value;
       })
-      .typeError(translate('profileQualification.invalidDateFormat')),
+      .typeError(translate('profileQualification.invalidDateFormat'))
+      .test(
+        'is-future-date',
+        translate('profileQualification.startDateCannotBeInFuture'),
+        (value) => !isAfter(value, CURRENT_DAY)
+      ),
     isExpirationDateDisabled: boolean().required(),
     expirationDate: date().when('isExpirationDateDisabled', {
       is: false,

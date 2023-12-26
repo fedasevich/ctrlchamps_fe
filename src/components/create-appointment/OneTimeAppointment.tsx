@@ -8,6 +8,7 @@ import { setCustomTime } from 'src/utils/defineCustomTime';
 import { extractTimeFromDate } from 'src/utils/extractTimeFromDate';
 import AppointmentBtn from 'src/components/reusable/appointment-btn/AppointmentBtn';
 import { ErrorText } from 'src/components/reusable';
+import useChooseTime from 'src/hooks/useChooseTime';
 import Appointment from './Appointment';
 import useShowDuration from './useShowDuration';
 import { ONE_HOUR_INTERVAL_INDEX, selectTimeOptions } from './constants';
@@ -26,7 +27,14 @@ export default function OneTimeAppointment({ onNext, onBack }: Props): JSX.Eleme
   const [date, setDate] = useState<Date | null>(oneTimeDate.startTime);
   const [startTime, setStartTime] = useState<string>('');
   const [endTime, setEndTime] = useState<string>('');
+
   const { hours, minutes, isDurationSet, minValidDuration } = useShowDuration(startTime, endTime);
+  const { chooseStartTime, chooseEndTime } = useChooseTime(
+    selectTimeOptions,
+    setStartTime,
+    setEndTime,
+    ONE_HOUR_INTERVAL_INDEX
+  );
 
   useEffect(() => {
     if (!oneTimeDate.startTime || !oneTimeDate.endTime) return;
@@ -39,15 +47,6 @@ export default function OneTimeAppointment({ onNext, onBack }: Props): JSX.Eleme
       setEndTime(endDateTime);
     }
   }, [oneTimeDate.startTime, oneTimeDate.endTime]);
-
-  const chooseStartTime = (value: string): void => {
-    setStartTime(value);
-    const selectedTime = selectTimeOptions.findIndex((el) => el === value);
-    const oneHourDifferenceIdx = selectedTime + ONE_HOUR_INTERVAL_INDEX;
-    setEndTime(selectTimeOptions[oneHourDifferenceIdx]);
-  };
-
-  const chooseEndTime = (value: string): void => setEndTime(value);
 
   const chooseDate = (value: Date | null): void => setDate(value);
 

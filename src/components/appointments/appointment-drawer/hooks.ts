@@ -1,5 +1,5 @@
-import { useState, Dispatch, SetStateAction } from 'react';
-import { useGetAppointmentQuery, DetailedAppointment } from 'src/redux/api/appointmentApi';
+import { Dispatch, SetStateAction, useState } from 'react';
+import { DetailedAppointment, useGetAppointmentQuery } from 'src/redux/api/appointmentApi';
 import {
   useGetVirtualAssessmentInfoQuery,
   VirtualAssessment,
@@ -15,6 +15,7 @@ type ReturnType = {
   isCancelModalOpen: boolean;
   isCompleteModalOpen: boolean;
   isAgreementModalOpen: boolean;
+  isActivityLogModalOpen: boolean;
   isVirtualAssessmentModalOpen: boolean;
   isVirtualAssessmentSuccessOpen: boolean;
   isTermsAccepted: boolean;
@@ -30,6 +31,8 @@ type ReturnType = {
   handleAgreementModalClose: () => void;
   handleVirtualAssessmentModalOpen: () => void;
   handleVirtualAssessmentModalClose: () => void;
+  handleActivityLogModalOpen: () => void;
+  handleActivityLogModalClose: () => void;
   handleVirtualAssessmentSuccessModalOpen: () => void;
   handleVirtualAssessmentSuccessModalClose: () => void;
   setIsTermsAccepted: Dispatch<SetStateAction<boolean>>;
@@ -43,6 +46,7 @@ export function useAppointmentDrawer({
   const [isCancelModalOpen, setIsCancelModalOpen] = useState<boolean>(false);
   const [isCompleteModalOpen, setIsCompleteModalOpen] = useState<boolean>(false);
   const [isAgreementModalOpen, setIsAgreementModalOpen] = useState<boolean>(false);
+  const [isActivityLogModalOpen, setIsActivityLogModalOpen] = useState<boolean>(false);
   const [isVirtualAssessmentModalOpen, setIsVirtualAssessmentModalOpen] = useState<boolean>(false);
   const [isVirtualAssessmentSuccessOpen, setIsVirtualAssessmentSuccessOpen] =
     useState<boolean>(false);
@@ -83,6 +87,14 @@ export function useAppointmentDrawer({
     setIsDrawerOpen(false);
   };
 
+  const handleActivityLogModalOpen = (): void => {
+    setIsActivityLogModalOpen(true);
+    setIsDrawerOpen(false);
+  };
+  const handleActivityLogModalClose = (): void => {
+    setIsActivityLogModalOpen(false);
+  };
+
   const handleVirtualAssessmentModalOpen = (): void => {
     setIsVirtualAssessmentModalOpen(true);
     setIsDrawerOpen(false);
@@ -110,6 +122,7 @@ export function useAppointmentDrawer({
     isCancelModalOpen,
     isCompleteModalOpen,
     isAgreementModalOpen,
+    isActivityLogModalOpen,
     isVirtualAssessmentModalOpen,
     isVirtualAssessmentSuccessOpen,
     isTermsAccepted,
@@ -117,6 +130,8 @@ export function useAppointmentDrawer({
     virtualAssessment,
     appointment,
     formattedStartDate,
+    handleActivityLogModalOpen,
+    handleActivityLogModalClose,
     handleCancelModalOpen,
     handleCancelModalClose,
     handleCompleteModalOpen,

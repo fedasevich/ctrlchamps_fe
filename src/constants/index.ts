@@ -8,6 +8,7 @@ export const USER_MIN_AGE = 18;
 export const MAX_CHARACTERS_LENGTH = 100;
 export const DATE_FORMAT = 'MM/dd/yyyy';
 export const BACKEND_DATE_FORMAT = 'yyyy-MM-dd';
+export const UTC_BIAS = 'Z';
 
 export const CURRENT_DAY = new Date();
 export const DISPLAY_TIME_FORMAT = 'HH:mm';

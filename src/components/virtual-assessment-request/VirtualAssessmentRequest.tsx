@@ -102,7 +102,7 @@ const VirtualAssessmentRequestModal = ({
 
         <AppointmentModalBlock>
           <AppointmentModalBlockParagraph>
-            {translate('request_appointment.date_aSnd_time')}
+            {translate('request_appointment.date_and_time')}
           </AppointmentModalBlockParagraph>
           {virtualAssessment &&
             virtualAssessment.startTime &&
@@ -142,7 +142,7 @@ const VirtualAssessmentRequestModal = ({
             <NotificationsNoneOutlinedIcon color="primary" />
             {translate('request_appointment.notify_message')}
           </NotificationMessage>
-          {virtualAssessment?.status !== VIRTUAL_ASSESSMENT_STATUS.Accepted && (
+          {virtualAssessment?.status === VIRTUAL_ASSESSMENT_STATUS.Proposed && (
             <InlineBlock>
               <Button
                 variant="outlined"

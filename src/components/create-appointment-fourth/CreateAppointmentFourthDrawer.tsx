@@ -10,8 +10,8 @@ interface CreateAppointmentFourthDrawerProps {
   open: boolean;
   onClose: () => void;
   selectedCaregiverId: string;
-  onNext: () => void;
-  onBack: () => void;
+  onNext?: () => void;
+  onBack?: () => void;
 }
 
 export default function CreateAppointmentFourthDrawer({
@@ -32,19 +32,21 @@ export default function CreateAppointmentFourthDrawer({
 
   const handleBookClick = (): void => {
     dispatch(setSelectedCaregiver(selectedCaregiver));
-    onNext();
+    if (onNext) onNext();
   };
 
   return (
     <CaregiverDrawer
       caregiverId={selectedCaregiverId}
       footer={
-        <AppointmentBtn
-          nextText={translate('createAppointmentFourth.bookAppointment')}
-          backText={translate('profileQualification.back')}
-          onClick={handleBookClick}
-          onBack={onBack}
-        />
+        onNext && (
+          <AppointmentBtn
+            nextText={translate('createAppointmentFourth.bookAppointment')}
+            backText={translate('profileQualification.back')}
+            onClick={handleBookClick}
+            onBack={onBack}
+          />
+        )
       }
       onClose={onClose}
       open={open}

@@ -6,8 +6,7 @@ import { APPOINTMENT_STATUS, BACKEND_DATE_FORMAT, URL_PATTERN } from 'src/consta
 import { useUpdateAppointmentMutation } from 'src/redux/api/appointmentApi';
 import { virtualAssessmentApi } from 'src/redux/api/virtualAssessmentApi';
 
-import { calculateEndTime } from 'src/components/create-appointment/helpers';
-import { calculateTimeDifference } from 'src/utils/calculateTimeDifference';
+import { calculateTimeDifference, calculateEndTime } from 'src/utils/calculateTimeDifference';
 import useChooseTime from 'src/hooks/useChooseTime';
 import {
   INTERVAL_30_MINUTES_IDX,

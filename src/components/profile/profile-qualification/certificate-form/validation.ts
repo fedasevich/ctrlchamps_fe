@@ -11,12 +11,15 @@ export const useProfileQualificationSchema = (): ObjectSchema<ProfileQualityForm
 
   return object({
     name: string()
+      .trim()
       .required(translate('profileQualification.certificationNameRequired'))
       .max(MAX_CHARACTERS_LENGTH, translate('profileQualification.certificationNameMaxLength')),
     certificateId: string()
+      .trim()
       .required(translate('profileQualification.certificationNumberRequired'))
       .max(MAX_CHARACTERS_LENGTH, translate('profileQualification.certificationNumberMaxLength')),
     link: string()
+      .trim()
       .max(MAX_CHARACTERS_LENGTH, translate('profileQualification.certificationLinkMaxLength'))
       .test(
         'is-url-valid',

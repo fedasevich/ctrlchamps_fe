@@ -21,10 +21,12 @@ export const useLoginSchema = (): ObjectSchema<
 
   return object({
     email: string()
+      .trim()
       .matches(emailRegExp, translate('loginForm.emailInvalid'))
       .max(100, translate('loginForm.emailInvalid'))
       .required(translate('loginForm.emailRequired')),
     password: string()
+      .trim()
       .min(8, translate('loginForm.passwordInvalid'))
       .required(translate('loginForm.passwordRequired')),
   });

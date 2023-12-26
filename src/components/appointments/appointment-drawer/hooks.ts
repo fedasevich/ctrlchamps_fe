@@ -14,6 +14,7 @@ type ReturnType = {
   isCompleteModalOpen: boolean;
   isAgreementModalOpen: boolean;
   isActivityLogModalOpen: boolean;
+  isReviewActivityLogModalOpen: boolean;
   isVirtualAssessmentModalOpen: boolean;
   isVirtualAssessmentSuccessOpen: boolean;
   isTermsAccepted: boolean;
@@ -30,6 +31,8 @@ type ReturnType = {
   handleVirtualAssessmentModalClose: () => void;
   handleActivityLogModalOpen: () => void;
   handleActivityLogModalClose: () => void;
+  handleReviewActivityLogModalOpen: () => void;
+  handleReviewActivityLogModalClose: () => void;
   handleVirtualAssessmentSuccessModalOpen: () => void;
   handleVirtualAssessmentSuccessModalClose: () => void;
   setIsTermsAccepted: Dispatch<SetStateAction<boolean>>;
@@ -47,6 +50,7 @@ export function useAppointmentDrawer({
   const [isCompleteModalOpen, setIsCompleteModalOpen] = useState<boolean>(false);
   const [isAgreementModalOpen, setIsAgreementModalOpen] = useState<boolean>(false);
   const [isActivityLogModalOpen, setIsActivityLogModalOpen] = useState<boolean>(false);
+  const [isReviewActivityLogModalOpen, setIsReviewActivityLogModalOpen] = useState<boolean>(false);
   const [isVirtualAssessmentModalOpen, setIsVirtualAssessmentModalOpen] = useState<boolean>(false);
   const [isVirtualAssessmentSuccessOpen, setIsVirtualAssessmentSuccessOpen] =
     useState<boolean>(false);
@@ -97,6 +101,14 @@ export function useAppointmentDrawer({
     setIsActivityLogModalOpen(false);
   };
 
+  const handleReviewActivityLogModalOpen = (): void => {
+    setIsReviewActivityLogModalOpen(true);
+    setIsDrawerOpen(false);
+  };
+  const handleReviewActivityLogModalClose = (): void => {
+    setIsReviewActivityLogModalOpen(false);
+  };
+
   const handleVirtualAssessmentModalOpen = (): void => {
     setIsVirtualAssessmentModalOpen(true);
     setIsDrawerOpen(false);
@@ -130,6 +142,7 @@ export function useAppointmentDrawer({
     isCompleteModalOpen,
     isAgreementModalOpen,
     isActivityLogModalOpen,
+    isReviewActivityLogModalOpen,
     isVirtualAssessmentModalOpen,
     isVirtualAssessmentSuccessOpen,
     isTermsAccepted,
@@ -138,6 +151,8 @@ export function useAppointmentDrawer({
     formattedStartDate,
     handleActivityLogModalOpen,
     handleActivityLogModalClose,
+    handleReviewActivityLogModalOpen,
+    handleReviewActivityLogModalClose,
     handleCancelModalOpen,
     handleCancelModalClose,
     handleCompleteModalOpen,

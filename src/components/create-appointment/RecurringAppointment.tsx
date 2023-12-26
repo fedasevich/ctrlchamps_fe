@@ -12,6 +12,7 @@ import { setCustomTime } from 'src/utils/defineCustomTime';
 import { extractTimeFromDate } from 'src/utils/extractTimeFromDate';
 import { getWeekDaysRange } from 'src/utils/getWeekDaysRange';
 import { ErrorText } from 'src/components/reusable';
+import useChooseTime from 'src/hooks/useChooseTime';
 import {
   FIRST_WEEK_DAY_IDX,
   LAST_WEEK_DAY_IDX,
@@ -47,7 +48,14 @@ export default function RecurringAppointment({ onNext, onBack }: Props): JSX.Ele
   const [endTime, setEndTime] = useState<string>('');
   const [appointmentDays, setAppointmentDays] = useState<string[]>(recurringDate.weekDays);
   const [invalidWeekDaysRange, setInvalidWeekDaysRange] = useState<boolean>(false);
+
   const { hours, minutes, isDurationSet, minValidDuration } = useShowDuration(startTime, endTime);
+  const { chooseStartTime, chooseEndTime } = useChooseTime(
+    selectTimeOptions,
+    setStartTime,
+    setEndTime,
+    ONE_HOUR_INTERVAL_INDEX
+  );
 
   const isBtnDisabled =
     !startDate ||
@@ -73,15 +81,6 @@ export default function RecurringAppointment({ onNext, onBack }: Props): JSX.Ele
       setEndTime(endDateTime);
     }
   }, [recurringDate.startDate, recurringDate.endDate]);
-
-  const chooseStartTime = (value: string): void => {
-    setStartTime(value);
-    const selectedTime = selectTimeOptions.findIndex((el) => el === value);
-    const oneHourDifferenceIdx = selectedTime + ONE_HOUR_INTERVAL_INDEX;
-    setEndTime(selectTimeOptions[oneHourDifferenceIdx]);
-  };
-
-  const chooseEndTime = (value: string): void => setEndTime(value);
 
   const chooseStartDate = (value: Date | null): void => {
     setStartDate(value);

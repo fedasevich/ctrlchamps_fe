@@ -22,6 +22,7 @@ const route = {
   virtualAssessment: '/virtual-assessment',
   date: '/date',
   transactions: '/transaction-history',
+  activityLog: '/activity-log',
 };
 
 export { route };

@@ -723,6 +723,18 @@ const en = {
     subtitle: 'Need assistance? We`re here to help!',
     text: 'If you have any questions, concerns, or issues, you can reach out to our dedicated support team via email',
   },
+  faq: {
+    title: 'FAQ',
+    firstQuestionTitle: 'What is the caregiver app?',
+    firstQuestionAnswer:
+      'The caregiver app is a mobile application designed to connect caregivers with families or individuals in need of caregiving services. It offers a platform for caregivers to find job opportunities and for families to hire reliable and qualified caregivers for their loved ones.',
+    secondQuestionTitle: 'How does the app match caregivers with clients?',
+    secondQuestionAnswer:
+      'The app uses a sophisticated matching algorithm that takes into account various factors, including caregiver skills, availability, location, and the specific needs of clients. This ensures that caregivers are matched with clients in a way that best meets the unique requirements of each situation.',
+    thirdQuestionTitle: 'What qualifications do I need to become a caregiver on the app?',
+    thirdQuestionAnswer:
+      'To become a caregiver on the app, you typically need to possess relevant qualifications and experience in caregiving. This may include certifications in healthcare or caregiving, a background check, and a demonstrated ability to provide compassionate and reliable care. The app may have specific requirements, so be sure to review and meet those qualifications outlined during the application process.',
+  },
 };
 
 export default en;

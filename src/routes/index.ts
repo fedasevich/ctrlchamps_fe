@@ -10,4 +10,5 @@ export const ROUTES = {
   profile: '/profile',
   account_details: '/account-details',
   notifications: '/notifications',
+  faq: '/faq',
 };

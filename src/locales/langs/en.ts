@@ -211,8 +211,9 @@ const en = {
     startDateRequired: 'Start date is required',
     expirationDate: 'Expiration date is required',
 
-    invalidDateFormat: 'Entered data has an invalid format',
+    expirationDateCannotBeBeforeStartDate: 'Expiration date cannot be before start date',
     startDateCannotBeInFuture: 'Start date cannot be in future',
+    invalidDateFormat: 'Entered data has an invalid format',
 
     mainTitle:
       'Please specify your experience and feel free to attach any document to proof your certification',
@@ -709,6 +710,14 @@ const en = {
     },
     personalInfoModal: { title: 'Edit Personal Information', saveButton: 'Save' },
     addressModal: { title: 'Edit Address' },
+  },
+  transactions: {
+    transactions: 'Transactions',
+    top_up: 'Top-up',
+    payment_sent: 'Payment sent',
+    for_your_appointment: ' for your appointment',
+    withdrawal: 'Withdrawal',
+    payment_received: 'Payment received',
   },
   getHelpModal: {
     title: 'Get Help',

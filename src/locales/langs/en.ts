@@ -211,8 +211,9 @@ const en = {
     startDateRequired: 'Start date is required',
     expirationDate: 'Expiration date is required',
 
-    invalidDateFormat: 'Entered data has an invalid format',
+    expirationDateCannotBeBeforeStartDate: 'Expiration date cannot be before start date',
     startDateCannotBeInFuture: 'Start date cannot be in future',
+    invalidDateFormat: 'Entered data has an invalid format',
 
     mainTitle:
       'Please specify your experience and feel free to attach any document to proof your certification',

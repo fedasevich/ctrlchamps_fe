@@ -106,15 +106,9 @@ export default function useCompleteProfileFourth(onNext: () => void): HookReturn
       FIRST_ELEMENT
     ];
 
-    if (!hourlyAdjustedValue) {
-      setAvailableTo(availableTimeOptions[FIRST_ELEMENT]);
-    } else {
-      setAvailableTo(hourlyAdjustedValue);
-    }
-
     if (availableFrom) {
       handleErrors(
-        value > hourlyAdjustedValue,
+        value > availableTo,
         invalidTimeErrors,
         setInvalidTimeError,
         setInvalidTimeErrors
@@ -122,11 +116,19 @@ export default function useCompleteProfileFourth(onNext: () => void): HookReturn
     }
 
     handleErrors(
-      value === availableFrom,
+      value === availableTo,
       identicalTimeErrors,
       setIdenticalTimeError,
       setIdenticalTimeErrors
     );
+
+    if (availableFrom) return;
+
+    if (!hourlyAdjustedValue) {
+      setAvailableTo(availableTimeOptions[FIRST_ELEMENT]);
+    } else {
+      setAvailableTo(hourlyAdjustedValue);
+    }
   };
 
   const chooseToTime = (value: string): void => {

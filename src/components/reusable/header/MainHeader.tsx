@@ -1,23 +1,20 @@
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import NotificationsIcon from '@mui/icons-material/Notifications';
 import { Avatar } from '@mui/material';
+import { useRouter } from 'next/router';
 import { Dispatch, SetStateAction, useState } from 'react';
 import AppointmentsIcon from 'src/assets/icons/AppointmentsIcon';
-import ChatIcon from 'src/assets/icons/ChatIcon';
-import NotificationIcon from 'src/assets/icons/NotificationIcon';
-import { IconWrapper } from 'src/components/confirm-appointment/style';
 import { USER_ROLE } from 'src/constants';
 import { useLocales } from 'src/locales';
 import { useTypedSelector } from 'src/redux/store';
 import { ROUTES } from 'src/routes';
-import { TabType } from './enums';
 import {
   AppointmentsSection,
   AppointmentsText,
   Arrow,
   AvatarWrapper,
-  ChatSection,
-  ChatText,
   FirstPart,
+  IconWrapper,
   Logo,
   LogoSection,
   MainHeaderWrapper,
@@ -26,15 +23,18 @@ import {
   ProfileSection,
   SecondPart,
 } from './styles';
-import { ActiveTab } from './types';
 
 type Props = {
-  activeTab: ActiveTab;
-  setActiveTab: Dispatch<SetStateAction<ActiveTab>>;
+  isCalendarVisible?: boolean;
+  setIsCalendarVisible?: Dispatch<SetStateAction<boolean>>;
 };
 
-export default function MainHeader({ activeTab, setActiveTab }: Props): JSX.Element | null {
+export default function MainHeader({
+  isCalendarVisible,
+  setIsCalendarVisible,
+}: Props): JSX.Element | null {
   const { translate } = useLocales();
+  const { push, route } = useRouter();
 
   const user = useTypedSelector((state) => state.user.user);
 
@@ -45,7 +45,20 @@ export default function MainHeader({ activeTab, setActiveTab }: Props): JSX.Elem
   const { role, firstName, lastName } = user;
 
   const openMenu = (): void => setIsMenuVisible(!isMenuVisible);
-  const chooseActiveTab = (value: ActiveTab): void => setActiveTab(value);
+
+  const viewNotifications = (): void => {
+    if (route !== ROUTES.notifications) push(ROUTES.notifications);
+  };
+
+  const chooseAppointmentsTab = (): void => {
+    if (route !== ROUTES.home) {
+      push(ROUTES.home);
+    }
+
+    if (role === USER_ROLE.Caregiver && setIsCalendarVisible) {
+      setIsCalendarVisible(!isCalendarVisible);
+    }
+  };
 
   return (
     <MainHeaderWrapper>
@@ -55,25 +68,21 @@ export default function MainHeader({ activeTab, setActiveTab }: Props): JSX.Elem
           <SecondPart>{translate('logo_second_part')}</SecondPart>
         </Logo>
         <AppointmentsSection
-          onClick={(): void => chooseActiveTab(TabType.mainPage)}
-          className={activeTab === TabType.mainPage ? 'active_tab' : ''}
+          onClick={chooseAppointmentsTab}
+          className={route === ROUTES.home ? 'active_tab' : ''}
         >
           <AppointmentsIcon />
           <AppointmentsText>
             {role === USER_ROLE.Seeker ? translate('appointments') : translate('schedule')}
           </AppointmentsText>
         </AppointmentsSection>
-        <ChatSection
-          onClick={(): void => chooseActiveTab(TabType.chat)}
-          className={activeTab === TabType.chat ? 'active_tab' : ''}
-        >
-          <ChatIcon />
-          <ChatText>{translate('chats')}</ChatText>
-        </ChatSection>
       </LogoSection>
       <MenuSection>
-        <IconWrapper>
-          <NotificationIcon />
+        <IconWrapper
+          onClick={viewNotifications}
+          className={route === ROUTES.notifications ? 'active' : ''}
+        >
+          <NotificationsIcon />
         </IconWrapper>
         <ProfileSection>
           <AvatarWrapper>

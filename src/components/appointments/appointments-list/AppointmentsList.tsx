@@ -1,13 +1,13 @@
-import { useState } from 'react';
 import { IconButton } from '@mui/material';
+import { useState } from 'react';
 
-import { useTypedSelector } from 'src/redux/store';
 import RightAction from 'src/assets/icons/RightAction';
-import AppointmentStatus from 'src/components/appointments/appointment-status/AppointmentStatus';
 import AppointmentDrawer from 'src/components/appointments/appointment-drawer/AppointmentDrawer';
-import CaregiverDrawer from 'src/components/reusable/drawer/caregiver-drawer/CaregiverDrawer';
+import AppointmentStatus from 'src/components/appointments/appointment-status/AppointmentStatus';
 import { AppointmentsProps } from 'src/components/appointments/types';
+import CaregiverDrawer from 'src/components/reusable/drawer/caregiver-drawer/CaregiverDrawer';
 import { APPOINTMENT_STATUS } from 'src/constants';
+import { useTypedSelector } from 'src/redux/store';
 
 import { Item, RejectedTitle, TextContainer, Title } from './styles';
 
@@ -70,11 +70,13 @@ export default function AppointmentsList({ appointments }: AppointmentsProps): J
           selectedAppointmentId={selectedAppointmentId}
         />
       )}
-      <CaregiverDrawer
-        open={isCaregiverDrawerOpen}
-        onClose={handleCaregiverDrawerClose}
-        caregiverId={caregiverId}
-      />
+      {isCaregiverDrawerOpen && caregiverId && (
+        <CaregiverDrawer
+          open={isCaregiverDrawerOpen}
+          onClose={handleCaregiverDrawerClose}
+          caregiverId={caregiverId}
+        />
+      )}
     </>
   );
 }

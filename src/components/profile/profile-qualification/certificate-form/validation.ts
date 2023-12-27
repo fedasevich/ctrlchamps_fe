@@ -1,22 +1,30 @@
 import { ObjectSchema, boolean, date, object, string } from 'yup';
-import { isBefore, isAfter } from 'date-fns';
+import { isBefore, isValid, parse, isAfter } from 'date-fns';
 
 import { ProfileQualityFormValues } from 'src/components/profile/profile-qualification/types';
-import { MAX_CHARACTERS_LENGTH, ONE_DAY, URL_PATTERN } from 'src/constants';
+import {
+  CURRENT_DAY,
+  DATE_FORMAT,
+  MAX_CHARACTERS_LENGTH,
+  ONE_DAY,
+  URL_PATTERN,
+} from 'src/constants';
 import { useLocales } from 'src/locales';
-import { MAX_CERTIFICATE_DATE } from 'src/components/profile/profile-qualification/certificate-form/constants';
 
 export const useProfileQualificationSchema = (): ObjectSchema<ProfileQualityFormValues> => {
   const { translate } = useLocales();
 
   return object({
     name: string()
+      .trim()
       .required(translate('profileQualification.certificationNameRequired'))
       .max(MAX_CHARACTERS_LENGTH, translate('profileQualification.certificationNameMaxLength')),
     certificateId: string()
+      .trim()
       .required(translate('profileQualification.certificationNumberRequired'))
       .max(MAX_CHARACTERS_LENGTH, translate('profileQualification.certificationNumberMaxLength')),
     link: string()
+      .trim()
       .max(MAX_CHARACTERS_LENGTH, translate('profileQualification.certificationLinkMaxLength'))
       .test(
         'is-url-valid',
@@ -29,10 +37,20 @@ export const useProfileQualificationSchema = (): ObjectSchema<ProfileQualityForm
       ),
     dateIssued: date()
       .required(translate('profileQualification.startDateRequired'))
+      .transform((value, originalValue) => {
+        if (typeof originalValue === 'string') {
+          const parsedDate = parse(originalValue, DATE_FORMAT, CURRENT_DAY);
+
+          return isValid(parsedDate);
+        }
+
+        return value;
+      })
+      .typeError(translate('profileQualification.invalidDateFormat'))
       .test(
         'is-future-date',
         translate('profileQualification.startDateCannotBeInFuture'),
-        (value) => !isAfter(value, MAX_CERTIFICATE_DATE)
+        (value) => !isAfter(value, CURRENT_DAY)
       ),
     isExpirationDateDisabled: boolean().required(),
     expirationDate: date().when('isExpirationDateDisabled', {
@@ -48,7 +66,17 @@ export const useProfileQualificationSchema = (): ObjectSchema<ProfileQualityForm
 
               return !dateIssued || isBefore(dateIssued - ONE_DAY, value);
             }
-          ),
+          )
+          .transform((value, originalValue) => {
+            if (typeof originalValue === 'string') {
+              const parsedDate = parse(originalValue, DATE_FORMAT, CURRENT_DAY);
+
+              return isValid(parsedDate);
+            }
+
+            return value;
+          })
+          .typeError(translate('profileQualification.invalidDateFormat')),
       otherwise: (schema) => schema.notRequired(),
     }),
   }) as ObjectSchema<ProfileQualityFormValues>;

@@ -3,6 +3,7 @@ import { Box } from '@mui/material';
 import { ButtonWrapper, NextButton } from './styles';
 
 type Props = {
+  noPadding?: boolean;
   nextText: string;
   backText: string;
   disabled?: boolean;
@@ -16,9 +17,10 @@ export default function AppointmentBtn({
   disabled,
   onClick,
   onBack,
+  noPadding,
 }: Props): JSX.Element {
   return (
-    <ButtonWrapper>
+    <ButtonWrapper noPadding={noPadding}>
       <Box display="flex" gap={1}>
         <NextButton variant="outlined" onClick={onBack}>
           {backText}

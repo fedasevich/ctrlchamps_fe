@@ -27,3 +27,20 @@ export function calculateTimeDifference(
 
   return { hours, minutes };
 }
+
+// function to calculate end time index based on start time
+//  @param timeOptions - ['08:00', '08:15', '08:30', '08:45', '09:00', '09:15', '09:30', '09:45', '10:00']
+//  @param startTime - "08:15"
+//  @param specifiedInterval - 2
+//  @return - 3
+
+export const calculateEndTime = (
+  timeOptions: string[],
+  startTime: string,
+  specifiedInterval: number
+): number => {
+  const selectedTimeIdx = timeOptions.findIndex((el) => el === startTime);
+  const specifiedIntervalDifferenceIdx = (selectedTimeIdx + specifiedInterval) % timeOptions.length;
+
+  return specifiedIntervalDifferenceIdx;
+};

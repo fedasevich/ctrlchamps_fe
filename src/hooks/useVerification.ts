@@ -1,8 +1,7 @@
-import { useCallback, useState } from 'react';
-import { useRouter } from 'next/router';
 import jwt_decode from 'jwt-decode';
+import { useRouter } from 'next/router';
+import { useCallback, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { RootState } from 'src/redux/rootReducer';
 import {
   ACCOUNT_VERIFIED_RESPONSE_MESSAGE,
   NO_ACCOUNT_TO_VERIFY_RESPONSE_MESSAGE,
@@ -11,6 +10,9 @@ import {
   useRequestNewVerificationCodeMutation,
   useSubmitVerificationCodeMutation,
 } from 'src/redux/api/accountVerificationAPI';
+import { RootState } from 'src/redux/rootReducer';
+import { setToken } from 'src/redux/slices/tokenSlice';
+import { useAppDispatch } from 'src/redux/store';
 
 interface UseVerificationProps {
   onSubmit: () => void;
@@ -26,6 +28,8 @@ interface UseVerificationResult {
 
 const useVerification = ({ onSubmit }: UseVerificationProps): UseVerificationResult => {
   const router = useRouter();
+  const dispatch = useAppDispatch();
+
   const [submitCode] = useSubmitVerificationCodeMutation();
   const [requestNewCodeMutation] = useRequestNewVerificationCodeMutation();
 
@@ -83,13 +87,17 @@ const useVerification = ({ onSubmit }: UseVerificationProps): UseVerificationRes
     try {
       const verificationCode: string = code.join('');
       const userId = decodeToken(token);
-      await submitCode({ code: verificationCode, userId }).unwrap();
+      await submitCode({ code: verificationCode, userId })
+        .unwrap()
+        .then((data) => {
+          dispatch(setToken(data.token));
+        });
       onSubmit();
     } catch (error) {
       setCodeDoesNotMatch(true);
       setCode(['', '', '', '']);
     }
-  }, [code, submitCode, onSubmit, token]);
+  }, [code, submitCode, onSubmit, token, dispatch]);
 
   return {
     code,

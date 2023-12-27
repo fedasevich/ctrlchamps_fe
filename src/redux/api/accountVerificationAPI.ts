@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 interface ResponseData {
-  code: string;
+  token: string;
 }
 
 interface SubmitVerificationCodeProps {

@@ -3,6 +3,7 @@ import { TIMEZONE_FORMAT } from 'src/constants';
 import { daySelectedType } from 'src/constants/types';
 import { useUpdateProfileMutation } from 'src/redux/api/profileCompleteApi';
 import { chooseAvailableTime } from 'src/redux/slices/availableDaysSlice';
+import { setToken } from 'src/redux/slices/tokenSlice';
 import { useAppDispatch, useTypedSelector } from 'src/redux/store';
 import { FIRST_ELEMENT, PLUS_HOUR, availableTimeOptions } from './constants';
 import { HookReturnType } from './types';
@@ -157,7 +158,12 @@ export default function useCompleteProfileFourth(onNext: () => void): HookReturn
           availability: [...availableDays],
           timeZone: TIMEZONE_FORMAT,
         },
-      }).unwrap();
+      })
+        .unwrap()
+        .then((data) => {
+          if (!data.token) return;
+          dispatch(setToken(data.token));
+        });
       onNext();
     } catch (err) {
       setServerError(true);

@@ -1,7 +1,7 @@
 import { usePathname } from 'next/navigation';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
-import { DEFAULT_REDIRECT_PATH } from 'src/constants';
+import { DEFAULT_REDIRECT_PATH, USER_ROLE } from 'src/constants';
 import { UserRole } from 'src/redux/slices/userSlice';
 import { useTypedSelector } from 'src/redux/store';
 import { ROUTES } from 'src/routes';
@@ -33,6 +33,17 @@ export function PrivateRoute({
 
     if (!user.isVerified && pathname !== `${ROUTES.account_verification}/`) {
       router.replace(ROUTES.account_verification);
+
+      return;
+    }
+
+    if (
+      !user.isProfileFilled &&
+      pathname !== `${ROUTES.profile}/` &&
+      pathname !== `${ROUTES.account_verification}/` &&
+      user.role === USER_ROLE.Caregiver
+    ) {
+      router.replace(ROUTES.profile);
 
       return;
     }

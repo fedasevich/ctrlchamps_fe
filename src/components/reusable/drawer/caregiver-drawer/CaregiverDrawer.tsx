@@ -108,7 +108,9 @@ export default function CaregiverDrawer({
           <StyledTabPanel value="1">
             <DrawerItem>
               <DrawerTextValue>{selectedCaregiver.caregiverInfo.description}</DrawerTextValue>
-              <StyledVideo src={selectedCaregiver.caregiverInfo.videoLink} controls />
+              {selectedCaregiver.caregiverInfo.videoLink && (
+                <StyledVideo src={selectedCaregiver.caregiverInfo.videoLink} controls />
+              )}
             </DrawerItem>
           </StyledTabPanel>
           <StyledTabPanel value="2">

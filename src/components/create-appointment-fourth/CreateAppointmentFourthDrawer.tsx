@@ -41,6 +41,7 @@ export default function CreateAppointmentFourthDrawer({
       footer={
         onNext && (
           <AppointmentBtn
+            noPadding
             nextText={translate('createAppointmentFourth.bookAppointment')}
             backText={translate('profileQualification.back')}
             onClick={handleBookClick}

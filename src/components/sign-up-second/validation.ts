@@ -29,16 +29,20 @@ export const useSignUpSecondSchema = (): ObjectSchema<
 
   return object({
     firstName: string()
+      .trim()
       .max(100, translate('signUpSecondForm.firstNameInvalid'))
       .required(translate('signUpSecondForm.firstNameRequired')),
     lastName: string()
+      .trim()
       .max(100, translate('signUpSecondForm.lastNameInvalid'))
       .required(translate('signUpSecondForm.lastNameRequired')),
     email: string()
+      .trim()
       .matches(emailRegExp, translate('signUpSecondForm.emailInvalid'))
       .max(100, translate('signUpSecondForm.emailLengthInvalid'))
       .required(translate('signUpSecondForm.emailRequired')),
     phoneNumber: string()
+      .trim()
       .length(MAX_PHONE_CHARACTERS, translate('signUpSecondForm.phoneLengthInvalid'))
       .required(translate('signUpSecondForm.phoneRequired')),
     dateOfBirth: date()

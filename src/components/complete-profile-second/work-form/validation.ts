@@ -9,9 +9,12 @@ export const useProfileExperienceSchema = (): ObjectSchema<CompleteProfileSecond
 
   return object({
     workplace: string()
+      .trim()
       .required(translate('completeProfileSecond.errors.workPlaceRequired'))
       .max(MAX_CHARACTERS_LENGTH, translate('completeProfileSecond.errors.workPlaceLength')),
-    qualifications: string().required(translate('completeProfileSecond.errors.workTypeRequired')),
+    qualifications: string()
+      .trim()
+      .required(translate('completeProfileSecond.errors.workTypeRequired')),
     startDate: date()
       .max(MAX_WORK_DATE, translate('completeProfileSecond.errors.startDateMax'))
       .required(translate('completeProfileSecond.errors.startDateRequired')),

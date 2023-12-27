@@ -6,13 +6,13 @@ import {
   MIN_APPOINTMENT_NAME_LENGTH,
 } from 'src/components/create-appointment/constants';
 
-import { CONFIRM_NOTE_MAX_LENGTH } from 'src/components/confirm-appointment/constants';
-import { MAX_CHARACTERS_LENGTH } from 'src/constants';
 import {
   MAX_ASSESSMENT_HOURS_DURATION,
   MAX_REASON_LENGTH,
   MIN_REASON_LENGTH,
 } from 'src/components/appointments/virtual-assessment-modal/constants';
+import { CONFIRM_NOTE_MAX_LENGTH } from 'src/components/confirm-appointment/constants';
+import { MAX_CHARACTERS_LENGTH } from 'src/constants';
 
 const en = {
   app_title: 'CtrlChamps',
@@ -706,6 +706,11 @@ const en = {
     },
     personalInfoModal: { title: 'Edit Personal Information', saveButton: 'Save' },
     addressModal: { title: 'Edit Address' },
+  },
+  getHelpModal: {
+    title: 'Get Help',
+    subtitle: 'Need assistance? We`re here to help!',
+    text: 'If you have any questions, concerns, or issues, you can reach out to our dedicated support team via email',
   },
 };
 

@@ -1,6 +1,7 @@
 import { format, getHours, getMinutes, isToday, isWithinInterval, parseISO } from 'date-fns';
 import { utcToZonedTime } from 'date-fns-tz';
 import { APPOINTMENT_STATUS, APPOINTMENT_TYPE, USER_ROLE } from 'src/constants';
+import { ActivityLogStatus } from 'src/redux/api/activityLogApi';
 import { DetailedAppointment } from 'src/redux/api/appointmentApi';
 import { UserRole } from 'src/redux/slices/userSlice';
 import { getISODateWithoutUTC } from 'src/utils/getISODateWithoutUTC';
@@ -123,6 +124,14 @@ export const isActivityLogReviewedShown = (
   const now = utcToZonedTime(new Date(), timezone);
 
   if (!isWithinAppointmentInterval(now, startDate, endDate)) return false;
+
+  if (
+    role === USER_ROLE.Seeker &&
+    (status === APPOINTMENT_STATUS.Completed || status === APPOINTMENT_STATUS.Active) &&
+    activityLog.every((item) => item.status !== ActivityLogStatus.Pending)
+  ) {
+    return true;
+  }
 
   if (activityLog.length && role === USER_ROLE.Caregiver && type === APPOINTMENT_TYPE.OneTime) {
     return true;

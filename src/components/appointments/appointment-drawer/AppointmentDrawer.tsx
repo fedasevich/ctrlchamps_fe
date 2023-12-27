@@ -38,11 +38,14 @@ import {
 
 import PriorityIcon from 'src/assets/icons/PriorityIcon';
 
+import { AssessmentPurpose } from 'src/components/appointments/virtual-assessment-modal/enums';
 import { UserRole } from 'src/redux/slices/userSlice';
 import ActivityLogModal from './activity-log-modal/ActivityLogModal';
 import { isActivityLogReviewedShown, isActivityLogShown } from './activity-log-modal/helpers';
 import { useAppointmentDrawer } from './hooks';
 import AppointmentDrawerLocation from './location/AppointmentDrawerLocation';
+import ReviewActivityLogModal from './review-activity-log-modal/ReviewActivityLogModal';
+import { getLatestPendingActivityLog } from './review-activity-log-modal/helpers';
 import {
   ActivityLogBlock,
   AppointmentName,
@@ -63,7 +66,6 @@ import {
   Task,
   TaskList,
 } from './styles';
-import { AssessmentPurpose } from '../virtual-assessment-modal/enums';
 
 interface AppointmentsDrawerProps {
   role: string;
@@ -91,7 +93,7 @@ export default function AppointmentDrawer({
     isCompleteModalOpen,
     isAgreementModalOpen,
     isActivityLogModalOpen,
-    virtualAssessment,
+    isReviewActivityLogModalOpen,
     isVirtualAssessmentModalOpen,
     isVirtualAssessmentSuccessOpen,
     isTermsAccepted,
@@ -106,6 +108,8 @@ export default function AppointmentDrawer({
     handleAgreementModalClose,
     handleActivityLogModalClose,
     handleActivityLogModalOpen,
+    handleReviewActivityLogModalClose,
+    handleReviewActivityLogModalOpen,
     handleVirtualAssessmentModalOpen,
     handleVirtualAssessmentModalClose,
     handleVirtualAssessmentSuccessModalClose,
@@ -266,7 +270,12 @@ export default function AppointmentDrawer({
                     {translate('appointments_page.activityLog')}
                   </Button>
                 )}
-
+              {!!getLatestPendingActivityLog(appointment.activityLog) &&
+                role === USER_ROLE.Seeker && (
+                  <Button variant="outlined" onClick={handleReviewActivityLogModalOpen}>
+                    {translate('appointments_page.reviewActivityLog')}
+                  </Button>
+                )}
               {isActivityLogReviewedShown(appointment, role as UserRole) && (
                 <DisabledText>
                   <PriorityIcon />
@@ -467,7 +476,6 @@ export default function AppointmentDrawer({
           isOpen={isVirtualAssessmentModalOpen}
           switchModalVisibility={handleVirtualAssessmentModalClose}
           openDrawer={openOriginalAppointment}
-          virtualAssessment={virtualAssessment}
           closeDrawer={closeOriginalAppointment}
         />
       )}
@@ -481,13 +489,20 @@ export default function AppointmentDrawer({
         />
       )}
 
+      {isReviewActivityLogModalOpen && (
+        <ReviewActivityLogModal
+          isOpen={isReviewActivityLogModalOpen}
+          activityLog={appointment.activityLog}
+          onClose={handleReviewActivityLogModalClose}
+        />
+      )}
+
       {virtualAssessmentDrawerShown && (
         <VirtualAssessmentRequestModal
           appointment={appointment}
           isOpen={isVirtualAssessmentModalOpen}
           switchModalVisibility={handleVirtualAssessmentModalClose}
           openDrawer={openOriginalAppointment}
-          virtualAssessment={virtualAssessment}
           closeDrawer={closeOriginalAppointment}
         />
       )}

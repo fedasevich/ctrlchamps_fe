@@ -1,6 +1,6 @@
 import { Theme } from '@mui/material/styles';
+import typography from 'src/theme/typography';
 import { PRIMARY, SECONDARY } from '../colors';
-import typography from '../typography';
 
 // ----------------------------------------------------------------------
 

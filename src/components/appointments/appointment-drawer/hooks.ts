@@ -1,5 +1,9 @@
 import { useState, Dispatch, SetStateAction } from 'react';
 import { useGetAppointmentQuery, DetailedAppointment } from 'src/redux/api/appointmentApi';
+import {
+  useGetVirtualAssessmentInfoQuery,
+  VirtualAssessment,
+} from 'src/redux/api/virtualAssessmentApi';
 import { USER_ROLE } from 'src/constants';
 import { getFormattedDate } from '../helpers';
 
@@ -18,6 +22,7 @@ type ReturnType = {
   isVirtualAssessmentSuccessOpen: boolean;
   isTermsAccepted: boolean;
   isLoading: boolean;
+  virtualAssessment: VirtualAssessment | undefined;
   appointment: DetailedAppointment | undefined;
   formattedStartDate: string | undefined;
   handleCancelModalOpen: () => void;
@@ -53,11 +58,12 @@ export function useAppointmentDrawer({
   const [isTermsAccepted, setIsTermsAccepted] = useState<boolean>(false);
 
   const { data: appointment, isLoading } = useGetAppointmentQuery(selectedAppointmentId);
+  const { data: virtualAssessment } = useGetVirtualAssessmentInfoQuery(selectedAppointmentId);
 
   const formattedStartDate = appointment && getFormattedDate(appointment.startDate);
 
   const virtualAssessmentDrawerShown =
-    appointment?.virtualAssessment?.wasRescheduled  || role === USER_ROLE.Caregiver;
+    appointment?.virtualAssessment?.wasRescheduled || role === USER_ROLE.Caregiver;
 
   const handleCancelModalOpen = (): void => {
     setIsCancelModalOpen(true);
@@ -134,6 +140,7 @@ export function useAppointmentDrawer({
     isVirtualAssessmentSuccessOpen,
     isTermsAccepted,
     isLoading,
+    virtualAssessment,
     appointment,
     formattedStartDate,
     handleActivityLogModalOpen,

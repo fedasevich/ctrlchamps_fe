@@ -6,13 +6,13 @@ import {
   MIN_APPOINTMENT_NAME_LENGTH,
 } from 'src/components/create-appointment/constants';
 
-import { CONFIRM_NOTE_MAX_LENGTH } from 'src/components/confirm-appointment/constants';
-import { MAX_CHARACTERS_LENGTH } from 'src/constants';
 import {
   MAX_ASSESSMENT_HOURS_DURATION,
   MAX_REASON_LENGTH,
   MIN_REASON_LENGTH,
 } from 'src/components/appointments/virtual-assessment-modal/constants';
+import { CONFIRM_NOTE_MAX_LENGTH } from 'src/components/confirm-appointment/constants';
+import { MAX_CHARACTERS_LENGTH } from 'src/constants';
 
 const en = {
   app_title: 'CtrlChamps',
@@ -375,8 +375,8 @@ const en = {
       medicationManagement: 'Medication Management',
       mobilitySupport: 'Mobility Support',
       mealPreparation: 'Meal Preparation',
-      housekeeping: 'Housekeeping and Laundry',
-      socialActivities: 'Social and Recreational Activities',
+      housekeeping: 'Housekeeping And Laundry',
+      socialActivities: 'Social And Recreational Activities',
     },
     bookAppointment: 'Book Appointment',
     numberOfAppointments: 'Appts.',

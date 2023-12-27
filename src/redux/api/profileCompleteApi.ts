@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import type { RootState } from 'src/redux/rootReducer';
 import { route } from 'src/redux/api/routes';
+import type { RootState } from 'src/redux/rootReducer';
 
 export interface TimeSlot {
   day: string;
@@ -17,11 +17,7 @@ export interface UpdateProfileRequest {
 }
 
 export interface UpdateProfileResponse {
-  services: string[];
-  availability: TimeSlot[];
-  timeZone: string;
-  hourlyRate: number;
-  description: string;
+  token?: string;
 }
 
 export interface Certificate {

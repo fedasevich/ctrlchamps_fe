@@ -1,3 +1,4 @@
+import { yupResolver } from '@hookform/resolvers/yup';
 import { Checkbox, FormControlLabel } from '@mui/material';
 import { memo } from 'react';
 import { Controller, useForm } from 'react-hook-form';
@@ -9,6 +10,8 @@ import ProfileBtn from 'src/components/reusable/profile-btn/ProfileBtn';
 import { useLocales } from 'src/locales';
 import { saveServices } from 'src/redux/slices/servicesSlice';
 import { useAppDispatch, useTypedSelector } from 'src/redux/store';
+
+import { servicesSchema } from './validation';
 
 function CompleteProfileThird({ onNext, onBack }: IProps): JSX.Element {
   const { translate } = useLocales();
@@ -23,6 +26,7 @@ function CompleteProfileThird({ onNext, onBack }: IProps): JSX.Element {
     formState: { isDirty, isValid },
   } = useForm<CompleteProfileThirdValues>({
     mode: 'onBlur',
+    resolver: yupResolver(servicesSchema),
     defaultValues: initialServicesValues,
   });
 

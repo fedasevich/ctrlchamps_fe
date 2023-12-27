@@ -27,6 +27,7 @@ import {
   SecondPart,
 } from './styles';
 import { ActiveTab } from './types';
+import MenuDropdown from './Menu';
 
 type Props = {
   activeTab: ActiveTab;
@@ -80,9 +81,9 @@ export default function MainHeader({ activeTab, setActiveTab }: Props): JSX.Elem
             <Avatar />
           </AvatarWrapper>
           <ProfileName>{`${firstName} ${lastName}`}</ProfileName>
-          <Arrow onClick={openMenu} className={isMenuVisible ? 'active' : ''}>
+          <MenuDropdown onClick={openMenu}>
             <KeyboardArrowDownIcon />
-          </Arrow>
+          </MenuDropdown>
         </ProfileSection>
       </MenuSection>
     </MainHeaderWrapper>

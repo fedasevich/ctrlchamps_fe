@@ -163,6 +163,8 @@ const IconWrapper = styled.div`
 `;
 
 const Arrow = styled.div`
+  width: 24px;
+  height: 24px;
   &.active {
     transform: rotate(180deg);
   }

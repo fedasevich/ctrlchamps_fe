@@ -209,6 +209,7 @@ const en = {
     startDateRequired: 'Start date is required',
     expirationDate: 'Expiration date is required',
 
+    invalidDateFormat: 'Entered data has an invalid format',
     startDateCannotBeInFuture: 'Start date cannot be in future',
 
     mainTitle:

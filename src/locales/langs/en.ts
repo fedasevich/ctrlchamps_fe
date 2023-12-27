@@ -82,9 +82,11 @@ const en = {
 
     stateMaxLength: 'State must be at most 100 characters',
     stateRequired: 'State is required',
+    stateOnlyLetters: 'State must contain only letters',
 
     cityMaxLength: 'City must be at most 100 characters',
     cityRequired: 'City is required',
+    cityOnlyLetters: 'City must contain only letters',
 
     zipCodeMaxLength: 'Zip code must be at most 100 characters',
     zipCodeRequired: 'Zip code is required',
@@ -112,7 +114,7 @@ const en = {
     termsButton: 'Terms & Conditions',
   },
   termsModal: {
-    title: 'Terms',
+    title: 'Terms & Conditions',
     headText:
       'Welcome to the Caregiver App! Before you begin using our services, we kindly ask you to read and agree to the following terms and conditions, which govern your use of the app. By accessing or using the app, you acknowledge that you have read, understood, and agreed to these terms. If you do not agree to these terms, please refrain from using the app.',
     firstItem:

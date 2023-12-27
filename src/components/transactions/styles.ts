@@ -3,6 +3,7 @@ import typography from 'src/theme/typography';
 import { PRIMARY, SECONDARY } from 'src/theme/colors';
 
 export const TransactionsModalWrapper = styled.div`
+  margin-top: 25px;
   display: flex;
   flex-direction: column;
   align-items: center;

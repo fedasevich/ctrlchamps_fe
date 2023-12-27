@@ -3,12 +3,13 @@ import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import { USER_ROLE } from 'src/constants';
 import { PRIMARY, SECONDARY } from '../../theme/colors';
 import { TransactionAmmount } from './styles';
+import { TransactionType } from './enums';
 
 export const getTransactionColor = (type: string, role: string): string => {
   switch (type) {
-    case 'Outcome':
+    case TransactionType.Outcome:
       return role === USER_ROLE.Seeker ? SECONDARY.error : PRIMARY.main;
-    case 'Income':
+    case TransactionType.Income:
       return role === USER_ROLE.Seeker ? PRIMARY.main : SECONDARY.error;
     default:
       return '';
@@ -21,7 +22,7 @@ export const getTransactionTitle = (
   translate: (key: string) => string
 ): React.ReactNode => {
   switch (type) {
-    case 'Outcome':
+    case TransactionType.Outcome:
       return role === USER_ROLE.Seeker ? (
         <span>
           {translate('transactions.payment_sent')}:{' '}
@@ -33,7 +34,7 @@ export const getTransactionTitle = (
           {translate('transactions.withdrawal')}: <TransactionAmmount>${amount}</TransactionAmmount>
         </span>
       );
-    case 'Income':
+    case TransactionType.Income:
       return role === USER_ROLE.Caregiver ? (
         <span>
           {translate('transactions.payment_received')}:{' '}
@@ -52,9 +53,9 @@ export const getTransactionTitle = (
 
 export const getTransactionIcon = (type: string): React.ReactNode => {
   switch (type) {
-    case 'Outcome':
+    case TransactionType.Outcome:
       return <ArrowDownwardIcon sx={{ color: 'white' }} />;
-    case 'Income':
+    case TransactionType.Income:
       return <ArrowUpwardIcon sx={{ color: 'white' }} />;
     default:
       return null;

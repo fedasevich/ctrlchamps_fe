@@ -71,7 +71,7 @@ export function Bio({ onBack }: IProps): JSX.Element {
         updateProfileDto: { description: data.description },
       })
         .unwrap()
-        .then(() => router.push(ROUTES.schedule));
+        .then(() => router.push(ROUTES.home));
     } catch (error) {
       throw new Error(error);
     }

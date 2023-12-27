@@ -40,6 +40,7 @@ export default function CreateAppointmentFourthDrawer({
       caregiverId={selectedCaregiverId}
       footer={
         <AppointmentBtn
+          noPadding
           nextText={translate('createAppointmentFourth.bookAppointment')}
           backText={translate('profileQualification.back')}
           onClick={handleBookClick}

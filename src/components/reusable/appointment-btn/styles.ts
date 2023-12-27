@@ -1,11 +1,16 @@
 import { Button, styled } from '@mui/material';
 import { SECONDARY } from 'src/theme/colors';
 
-export const ButtonWrapper = styled('div')`
-  border-top: 1px solid ${SECONDARY.light_gray};
-  padding: 16px;
-  margin-top: auto;
-`;
+interface ButtonWrapperProps {
+  noPadding?: boolean;
+}
+
+export const ButtonWrapper = styled('div')(({ noPadding }: ButtonWrapperProps) => ({
+  borderTop: noPadding ? 'none' : `1px solid ${SECONDARY.light_gray}`,
+  padding: noPadding ? 0 : '16px',
+  marginTop: 'auto',
+  width: '100%',
+}));
 
 export const NextButton = styled(Button)`
   border-radius: 4px;

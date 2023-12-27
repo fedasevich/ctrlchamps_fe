@@ -29,13 +29,12 @@ const WeekSlot = styled('div')`
   background-color: ${PRIMARY.white};
   border: 1px solid ${PRIMARY.main};
   border-radius: 50%;
-  padding: 11px 14.5px;
+  padding: 11px 13px;
   cursor: pointer;
-
-  &:nth-child(1),
-  &:nth-child(3) {
-    padding: 11px 13.5px;
-  }
+  width: 41px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   &.active {
     background-color: ${PRIMARY.main};
@@ -45,7 +44,7 @@ const WeekSlot = styled('div')`
 
 const WeekSlotContainer = styled('div')`
   display: flex;
-  gap: 20px;
+  gap: 15px;
 `;
 
 const SelectContainer = styled('div')`

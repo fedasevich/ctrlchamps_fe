@@ -94,6 +94,7 @@ export default function AppointmentDrawer({
     isAgreementModalOpen,
     isActivityLogModalOpen,
     isReviewActivityLogModalOpen,
+    virtualAssessment,
     isVirtualAssessmentModalOpen,
     isVirtualAssessmentSuccessOpen,
     isTermsAccepted,
@@ -456,7 +457,8 @@ export default function AppointmentDrawer({
         appointment={appointment}
         role={role}
       />
-      {role === USER_ROLE.Seeker && (
+      {role === USER_ROLE.Seeker &&
+      appointment.virtualAssessment?.status !== VIRTUAL_ASSESSMENT_STATUS.Accepted ? (
         <VirtualAssessmentModal
           purpose={AssessmentPurpose.request}
           caregiverName={`${appointment?.caregiverInfo.user.firstName} ${appointment?.caregiverInfo.user.lastName}`}
@@ -468,6 +470,15 @@ export default function AppointmentDrawer({
             appointment && handleCaregiverDrawerOpen(appointment?.caregiverInfo.user.id)
           }
           openVirtualAssessmentSuccess={handleVirtualAssessmentSuccessModalOpen}
+        />
+      ) : (
+        <VirtualAssessmentRequestModal
+          appointment={appointment}
+          isOpen={isVirtualAssessmentModalOpen}
+          switchModalVisibility={handleVirtualAssessmentModalClose}
+          openDrawer={openOriginalAppointment}
+          virtualAssessment={virtualAssessment}
+          closeDrawer={closeOriginalAppointment}
         />
       )}
 
@@ -494,6 +505,7 @@ export default function AppointmentDrawer({
           isOpen={isVirtualAssessmentModalOpen}
           switchModalVisibility={handleVirtualAssessmentModalClose}
           openDrawer={openOriginalAppointment}
+          virtualAssessment={virtualAssessment}
           closeDrawer={closeOriginalAppointment}
         />
       )}

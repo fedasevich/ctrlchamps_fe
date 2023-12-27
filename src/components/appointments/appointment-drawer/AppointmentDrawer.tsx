@@ -94,7 +94,6 @@ export default function AppointmentDrawer({
     isAgreementModalOpen,
     isActivityLogModalOpen,
     isReviewActivityLogModalOpen,
-    virtualAssessment,
     isVirtualAssessmentModalOpen,
     isVirtualAssessmentSuccessOpen,
     isTermsAccepted,
@@ -477,7 +476,6 @@ export default function AppointmentDrawer({
           isOpen={isVirtualAssessmentModalOpen}
           switchModalVisibility={handleVirtualAssessmentModalClose}
           openDrawer={openOriginalAppointment}
-          virtualAssessment={virtualAssessment}
           closeDrawer={closeOriginalAppointment}
         />
       )}
@@ -505,7 +503,6 @@ export default function AppointmentDrawer({
           isOpen={isVirtualAssessmentModalOpen}
           switchModalVisibility={handleVirtualAssessmentModalClose}
           openDrawer={openOriginalAppointment}
-          virtualAssessment={virtualAssessment}
           closeDrawer={closeOriginalAppointment}
         />
       )}

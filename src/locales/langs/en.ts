@@ -710,6 +710,14 @@ const en = {
     personalInfoModal: { title: 'Edit Personal Information', saveButton: 'Save' },
     addressModal: { title: 'Edit Address' },
   },
+  transactions: {
+    transactions: 'Transactions',
+    top_up: 'Top-up',
+    payment_sent: 'Payment sent',
+    for_your_appointment: ' for your appointment',
+    withdrawal: 'Withdrawal',
+    payment_received: 'Payment received',
+  },
   getHelpModal: {
     title: 'Get Help',
     subtitle: 'Need assistance? We`re here to help!',

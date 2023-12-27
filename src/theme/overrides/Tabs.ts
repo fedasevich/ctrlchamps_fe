@@ -25,17 +25,15 @@ export default function Tabs(theme: Theme) {
       },
       styleOverrides: {
         root: ({ ownerState }: { ownerState: TabProps }) => ({
-          padding: 0,
           opacity: 1,
+          minWidth: 'auto',
           fontWeight: theme.typography.fontWeightMedium,
-          '&:not(:last-of-type)': {
-            padding: theme.spacing(2),
+          padding: theme.spacing(2),
+          '&.Mui-selected': {
+            color: theme.palette.secondary.main,
           },
           '&:not(.Mui-selected)': {
             color: theme.palette.text.secondary,
-          },
-          '&.Mui-selected': {
-            color: theme.palette.secondary.main,
           },
           ...((ownerState.iconPosition === 'start' || ownerState.iconPosition === 'end') && {
             minHeight: 48,

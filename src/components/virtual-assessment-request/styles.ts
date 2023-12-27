@@ -29,6 +29,8 @@ export const AppointmentModalBlock = styled('div')`
   display: flex;
   flex-direction: column;
   gap: 10px;
+  border-top: 1px solid ${SECONDARY.light_gray};
+  border-bottom: 1px solid ${SECONDARY.light_gray};
 `;
 
 export const AppointmentModalFooter = styled(AppointmentModalBlock)`
@@ -69,7 +71,6 @@ export const ListItemStyled = styled(ListItem)`
 export const NotificationMessage = styled('div')`
   display: flex;
   padding: 15px;
-  margin-bottom: 10px;
   gap: 10px;
   border-radius: 5px;
   background-color: ${PRIMARY.light_main};

@@ -27,4 +27,5 @@ export const TEXT_COLOR = {
   pending: 'rgba(255, 165, 0, 0.87)',
   active: 'rgba(0, 128, 0, 0.87)',
   rejected: 'rgba(255, 0, 0, 0.87)',
+  disabled: '#00000061',
 };

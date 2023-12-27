@@ -1,25 +1,34 @@
-import { Dispatch, SetStateAction } from 'react';
-import { IconButton, Checkbox, FormControlLabel, Grid } from '@mui/material';
 import { CheckCircle } from '@mui/icons-material';
+import { Button, Checkbox, FormControlLabel, Grid, IconButton } from '@mui/material';
+import { format, formatISO, parseISO } from 'date-fns';
+import { utcToZonedTime } from 'date-fns-tz';
+import { Dispatch, SetStateAction } from 'react';
 
-import { useLocales } from 'src/locales';
-import { APPOINTMENT_STATUS, USER_ROLE, VIRTUAL_ASSESSMENT_STATUS } from 'src/constants';
+import ArrowBackFilled from 'src/assets/icons/ArrowBackFilled';
+import RightAction from 'src/assets/icons/RightAction';
+import AgreementModal from 'src/components/appointments/agreement-modal/AgreementModal';
+import AppointmentStatus from 'src/components/appointments/appointment-status/AppointmentStatus';
+import CancelModal from 'src/components/appointments/cancel-modal/CancelModal';
+import CompleteAppointmentModal from 'src/components/appointments/complete-appointment-modal/CompleteAppointmentModal';
+import { SMALL_CAREGIVER_AVATAR_SIZE } from 'src/components/appointments/constants';
+import { getMockCaregiverAvatar } from 'src/components/appointments/helpers';
 import { STEPS } from 'src/components/health-questionnaire/constants';
 import Drawer from 'src/components/reusable/drawer/Drawer';
 import { DrawerFooter, DrawerHeader, DrawerTitle } from 'src/components/reusable/drawer/styles';
 import Modal from 'src/components/reusable/modal/Modal';
-import AgreementModal from 'src/components/appointments/agreement-modal/AgreementModal';
-import CompleteAppointmentModal from 'src/components/appointments/complete-appointment-modal/CompleteAppointmentModal';
-import CancelModal from 'src/components/appointments/cancel-modal/CancelModal';
-import AppointmentStatus from 'src/components/appointments/appointment-status/AppointmentStatus';
-import { SMALL_CAREGIVER_AVATAR_SIZE } from 'src/components/appointments/constants';
-import { getMockCaregiverAvatar } from 'src/components/appointments/helpers';
-import ArrowBackFilled from 'src/assets/icons/ArrowBackFilled';
-import RightAction from 'src/assets/icons/RightAction';
-import { useUpdateAppointmentMutation } from 'src/redux/api/appointmentApi';
+import {
+  APPOINTMENT_STATUS,
+  DATE_FORMAT,
+  USER_ROLE,
+  VIRTUAL_ASSESSMENT_STATUS,
+} from 'src/constants';
+import { useLocales } from 'src/locales';
+
 import VirtualAssessmentSuccess from 'src/components/appointments/request-sent-modal/VirtualAssessmentSuccess';
 import VirtualAssessmentModal from 'src/components/appointments/virtual-assessment-modal/VirtualAssessmentModal';
 import VirtualAssessmentRequestModal from 'src/components/virtual-assessment-request/VirtualAssessmentRequest';
+import { useUpdateAppointmentMutation } from 'src/redux/api/appointmentApi';
+
 import { ChildModal } from 'src/components/appointment-request-modal/ChildModal';
 import {
   AppointmentModalBlock,
@@ -27,25 +36,34 @@ import {
   HealthQuestionnaireBlock,
 } from 'src/components/appointment-request-modal/styles';
 
+import PriorityIcon from 'src/assets/icons/PriorityIcon';
+
+import { UserRole } from 'src/redux/slices/userSlice';
+import ActivityLogModal from './activity-log-modal/ActivityLogModal';
+import { isActivityLogReviewedShown, isActivityLogShown } from './activity-log-modal/helpers';
 import { useAppointmentDrawer } from './hooks';
+import AppointmentDrawerLocation from './location/AppointmentDrawerLocation';
 import {
-  DrawerBody,
-  Block,
+  ActivityLogBlock,
   AppointmentName,
-  SubTitle,
-  CaregiverName,
-  DrawerAvatar,
-  CaregiverBlock,
-  StyledIconButton,
-  DateText,
-  TaskList,
-  Task,
+  Block,
   CancelBtn,
-  StyledButton,
+  CaregiverBlock,
+  CaregiverName,
+  DateText,
+  DisabledText,
   DoubleButtonBox,
-  StyledLabel,
+  DrawerAvatar,
+  DrawerBody,
   ModalFooter,
+  StyledButton,
+  StyledIconButton,
+  StyledLabel,
+  SubTitle,
+  Task,
+  TaskList,
 } from './styles';
+import { AssessmentPurpose } from '../virtual-assessment-modal/enums';
 
 interface AppointmentsDrawerProps {
   role: string;
@@ -72,11 +90,12 @@ export default function AppointmentDrawer({
     isCancelModalOpen,
     isCompleteModalOpen,
     isAgreementModalOpen,
+    isActivityLogModalOpen,
+    virtualAssessment,
     isVirtualAssessmentModalOpen,
     isVirtualAssessmentSuccessOpen,
     isTermsAccepted,
     isLoading,
-    virtualAssessment,
     appointment,
     formattedStartDate,
     handleCancelModalOpen,
@@ -85,13 +104,17 @@ export default function AppointmentDrawer({
     handleCompleteModalClose,
     handleAgreementModalOpen,
     handleAgreementModalClose,
+    handleActivityLogModalClose,
+    handleActivityLogModalOpen,
     handleVirtualAssessmentModalOpen,
     handleVirtualAssessmentModalClose,
     handleVirtualAssessmentSuccessModalClose,
     handleVirtualAssessmentSuccessModalOpen,
     setIsTermsAccepted,
     openOriginalAppointment,
-  } = useAppointmentDrawer({ setIsDrawerOpen, selectedAppointmentId });
+    closeOriginalAppointment,
+    virtualAssessmentDrawerShown,
+  } = useAppointmentDrawer({ role, setIsDrawerOpen, selectedAppointmentId });
 
   const [updateAppointment] = useUpdateAppointmentMutation();
 
@@ -109,7 +132,7 @@ export default function AppointmentDrawer({
 
   const VIRTUAL_COMPONENT = (
     <>
-      {virtualAssessment?.status === VIRTUAL_ASSESSMENT_STATUS.Finished ? (
+      {appointment.virtualAssessment?.status === VIRTUAL_ASSESSMENT_STATUS.Finished ? (
         <StyledButton type="button" variant="contained" onClick={handleCompleteModalOpen}>
           {translate('appointments_page.complete_button')}
         </StyledButton>
@@ -118,8 +141,9 @@ export default function AppointmentDrawer({
           type="button"
           variant="contained"
           disabled={
-            virtualAssessment?.status !== VIRTUAL_ASSESSMENT_STATUS.Accepted &&
-            role === USER_ROLE.Seeker
+            appointment.virtualAssessment?.status !== VIRTUAL_ASSESSMENT_STATUS.Accepted &&
+            role === USER_ROLE.Seeker &&
+            !appointment.virtualAssessment?.wasRescheduled
           }
           onClick={handleVirtualAssessmentModalOpen}
         >
@@ -174,14 +198,15 @@ export default function AppointmentDrawer({
       </>
     ),
     [APPOINTMENT_STATUS.Active]: (
-      <DoubleButtonBox>
-        <StyledButton type="button" variant="contained" onClick={handleAgreementModalOpen}>
-          {translate('appointments_page.contract_button')}
-        </StyledButton>
-        <CancelBtn type="button" variant="outlined" onClick={handleCancelModalOpen}>
-          {translate('appointments_page.cancel_appointment_button')}
-        </CancelBtn>
-      </DoubleButtonBox>
+      <>
+        {!appointment.activityLog.length && (
+          <DoubleButtonBox>
+            <CancelBtn type="button" variant="outlined" onClick={handleCancelModalOpen}>
+              {translate('appointments_page.cancel_appointment_button')}
+            </CancelBtn>
+          </DoubleButtonBox>
+        )}
+      </>
     ),
     [APPOINTMENT_STATUS.Virtual]: VIRTUAL_COMPONENT,
     [APPOINTMENT_STATUS.SignedCaregiver]: role === USER_ROLE.Seeker && VIRTUAL_COMPONENT,
@@ -202,12 +227,17 @@ export default function AppointmentDrawer({
 
     const newAppointmentStatus = STATUS_MAP[role][appointment!.status] ?? STATUS_MAP[role].default;
 
-    try {
-      await updateAppointment({
-        id: selectedAppointmentId,
-        status: newAppointmentStatus,
-      }).unwrap();
+    const updateObject: Parameters<typeof updateAppointment>[0] = {
+      id: selectedAppointmentId,
+      status: newAppointmentStatus,
+    };
 
+    if (newAppointmentStatus === APPOINTMENT_STATUS.Active) {
+      updateObject.signingDate = formatISO(utcToZonedTime(new Date(), appointment.timezone));
+    }
+
+    try {
+      await updateAppointment(updateObject).unwrap();
       handleAgreementModalClose();
       setIsTermsAccepted(false);
     } catch (error) {
@@ -227,7 +257,25 @@ export default function AppointmentDrawer({
         <DrawerBody>
           <Block>
             <AppointmentName>{appointment?.name}</AppointmentName>
-            <AppointmentStatus status={appointment!.status} />
+            <ActivityLogBlock>
+              <AppointmentStatus status={appointment!.status} />
+              {!isActivityLogReviewedShown(appointment, role as UserRole) &&
+                role === USER_ROLE.Caregiver &&
+                isActivityLogShown(appointment) && (
+                  <Button variant="outlined" onClick={handleActivityLogModalOpen}>
+                    {translate('appointments_page.activityLog')}
+                  </Button>
+                )}
+
+              {isActivityLogReviewedShown(appointment, role as UserRole) && (
+                <DisabledText>
+                  <PriorityIcon />
+                  {role === USER_ROLE.Seeker
+                    ? translate('appointments_page.reviewed')
+                    : translate('appointments_page.filled')}
+                </DisabledText>
+              )}
+            </ActivityLogBlock>
           </Block>
           {role === USER_ROLE.Seeker ? (
             <Block>
@@ -266,10 +314,41 @@ export default function AppointmentDrawer({
               </CaregiverBlock>
             </Block>
           )}
+          {appointment.status === APPOINTMENT_STATUS.Active && !!appointment.signingDate && (
+            <Block>
+              <SubTitle>{translate('appointments_page.drawer.agreement')}</SubTitle>
+              <Grid container alignItems="center">
+                <Grid item xs={2}>
+                  <CheckCircle color="primary" />
+                </Grid>
+                <Grid item xs={8}>
+                  <DateText>{translate('appointments_page.signed')}</DateText>
+                  <SubTitle>{`${translate('appointments_page.agreementSignedDate')} ${format(
+                    parseISO(appointment.signingDate),
+                    DATE_FORMAT
+                  )}`}</SubTitle>
+                </Grid>
+                <Grid item xs={2}>
+                  <Button variant="outlined" onClick={handleAgreementModalOpen}>
+                    {translate('request_appointment.btns.view')}
+                  </Button>
+                </Grid>
+              </Grid>
+            </Block>
+          )}
+
           <Block>
             <SubTitle>{translate('appointments_page.drawer.date')}</SubTitle>
             <DateText>{formattedStartDate}</DateText>
           </Block>
+
+          {appointment.status === APPOINTMENT_STATUS.Active && (
+            <Block>
+              <SubTitle>{translate('appointments_page.drawer.area')}</SubTitle>
+              <AppointmentDrawerLocation placeId={appointment?.location} />
+            </Block>
+          )}
+
           {role === USER_ROLE.Caregiver && (
             <AppointmentModalBlock>
               <AppointmentModalBlockParagraph>
@@ -368,31 +447,54 @@ export default function AppointmentDrawer({
         appointment={appointment}
         role={role}
       />
-      {role === USER_ROLE.Seeker && (
+      {role === USER_ROLE.Seeker &&
+      appointment.virtualAssessment?.status !== VIRTUAL_ASSESSMENT_STATUS.Accepted ? (
         <VirtualAssessmentModal
+          purpose={AssessmentPurpose.request}
           caregiverName={`${appointment?.caregiverInfo.user.firstName} ${appointment?.caregiverInfo.user.lastName}`}
           appointmentId={selectedAppointmentId}
           onClose={handleVirtualAssessmentModalClose}
-          isActive={isVirtualAssessmentModalOpen}
+          isActive={isVirtualAssessmentModalOpen && !appointment.virtualAssessment?.wasRescheduled}
           openDrawer={openOriginalAppointment}
           openCaregiverProfile={(): void =>
             appointment && handleCaregiverDrawerOpen(appointment?.caregiverInfo.user.id)
           }
           openVirtualAssessmentSuccess={handleVirtualAssessmentSuccessModalOpen}
         />
-      )}
-
-      {role === USER_ROLE.Caregiver && (
+      ) : (
         <VirtualAssessmentRequestModal
           appointment={appointment}
           isOpen={isVirtualAssessmentModalOpen}
           switchModalVisibility={handleVirtualAssessmentModalClose}
           openDrawer={openOriginalAppointment}
+          virtualAssessment={virtualAssessment}
+          closeDrawer={closeOriginalAppointment}
+        />
+      )}
+
+      {isActivityLogModalOpen && (
+        <ActivityLogModal
+          isOpen={isActivityLogModalOpen}
+          appointmentId={appointment.id}
+          onClose={handleActivityLogModalClose}
+          seekerTasks={appointment.seekerTasks}
+        />
+      )}
+
+      {virtualAssessmentDrawerShown && (
+        <VirtualAssessmentRequestModal
+          appointment={appointment}
+          isOpen={isVirtualAssessmentModalOpen}
+          switchModalVisibility={handleVirtualAssessmentModalClose}
+          openDrawer={openOriginalAppointment}
+          virtualAssessment={virtualAssessment}
+          closeDrawer={closeOriginalAppointment}
         />
       )}
       <VirtualAssessmentSuccess
         isActive={isVirtualAssessmentSuccessOpen}
         handleClose={handleVirtualAssessmentSuccessModalClose}
+        role={USER_ROLE.Caregiver}
       />
     </>
   );

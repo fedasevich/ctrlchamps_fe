@@ -94,8 +94,8 @@ export default function CaregiverDrawer({
       <TabContext value={selectedTab}>
         <StyledTabs
           value={selectedTab}
+          scrollButtons="auto"
           onChange={handleTabClick}
-          scrollButtons={false}
           textColor="secondary"
           indicatorColor="secondary"
         >

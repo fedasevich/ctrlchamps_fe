@@ -27,6 +27,7 @@ import timezoneApi from 'src/redux/api/timezoneApi';
 import userApi from 'src/redux/api/userApi';
 import virtualAssessmentApi from 'src/redux/api/virtualAssessmentApi';
 import rootReducer from 'src/redux/rootReducer';
+import activityLogApi from './api/activityLogApi';
 
 const persistConfig = {
   key: 'root',
@@ -60,6 +61,7 @@ const store = configureStore({
     [virtualAssessmentApi.reducerPath]: virtualAssessmentApi.reducer,
     [timezoneApi.reducerPath]: timezoneApi.reducer,
     [userApi.reducerPath]: userApi.reducer,
+    [activityLogApi.reducerPath]: activityLogApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
@@ -74,6 +76,7 @@ const store = configureStore({
       questionnaireApi.middleware,
       timezoneApi.middleware,
       userApi.middleware,
+      activityLogApi.middleware,
     ]),
 });
 

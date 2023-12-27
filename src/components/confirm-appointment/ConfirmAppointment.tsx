@@ -12,6 +12,8 @@ import { APPOINTMENT_STATUS } from 'src/constants';
 import { Appointment } from 'src/components/create-appointment/enums';
 import { ROUTES } from 'src/routes';
 import AppointmentBtn from 'src/components/reusable/appointment-btn/AppointmentBtn';
+import CreateAppointmentFourthDrawer from 'src/components/create-appointment-fourth/CreateAppointmentFourthDrawer';
+
 import {
   Container,
   Header,
@@ -37,18 +39,18 @@ export default function ConfirmAppointment({ onBack }: { onBack: () => void }): 
   const [tasks, setTasks] = useState<string[]>([]);
   const [details, setDetails] = useState<string>('');
   const [isModalActive, setIsModalActive] = useState<boolean>(false);
+  const [isCaregiverDrawerOpen, setIsCaregiverDrawerOpen] = useState<boolean>(false);
   const [createAppointment] = useCreateAppointmentMutation();
 
   const onOpenModal = (): void => setIsModalActive(true);
   const onCloseModal = (): void => setIsModalActive(false);
 
+  const openDrawer = (): void => setIsCaregiverDrawerOpen(true);
+  const closeDrawer = (): void => setIsCaregiverDrawerOpen(false);
+
   const deleteTask = (idx: number): void => {
     const filtered = tasks.filter((el, i) => i !== idx);
     setTasks(filtered);
-  };
-
-  const goToProfileStep = (): void => {
-    onBack();
   };
 
   const confirmAppointment = async (): Promise<void> => {
@@ -93,7 +95,7 @@ export default function ConfirmAppointment({ onBack }: { onBack: () => void }): 
         <InnerContainer>
           <Header>
             <Typography>{translate('confirm_appointment.caregiver')}</Typography>
-            <LinkToProfile onClick={goToProfileStep}>
+            <LinkToProfile onClick={openDrawer}>
               <Avatar />
               <Name>{`${caregiver?.firstName} ${caregiver?.lastName}`}</Name>
               <ArrowForward />
@@ -129,6 +131,13 @@ export default function ConfirmAppointment({ onBack }: { onBack: () => void }): 
           />
         </InnerContainer>
       </Container>
+      {caregiver && (
+        <CreateAppointmentFourthDrawer
+          open={isCaregiverDrawerOpen}
+          onClose={closeDrawer}
+          selectedCaregiverId={caregiver.id}
+        />
+      )}
     </PageBackground>
   );
 }

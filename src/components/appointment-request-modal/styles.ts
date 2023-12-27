@@ -28,6 +28,8 @@ export const AppointmentModalBlock = styled('div')`
   display: flex;
   flex-direction: column;
   gap: 10px;
+  border-top: 1px solid ${SECONDARY.light_gray};
+  border-bottom: 1px solid ${SECONDARY.light_gray};
 `;
 
 export const AppointmentModalBlockParagraph = styled('p')`
@@ -60,7 +62,7 @@ export const HealthQuestionnaireBlock = styled('div')`
 export const HealthQuestionnaireModal = styled('div')`
   max-width: 560px;
   background-color: ${PRIMARY.white};
-  margin: 8% auto;
+  margin: 50px auto;
 `;
 
 export const ModalBlock = styled('div')`

@@ -74,6 +74,7 @@ export function Bio({ onBack }: IProps): JSX.Element {
         updateProfileDto: { description: data.description },
       })
         .unwrap()
+
         .then((response) => {
           if (response.token) {
             dispatch(setToken(response.token));

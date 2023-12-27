@@ -1,15 +1,48 @@
 import React from 'react';
-import { Button, Menu, MenuItem } from '@mui/material';
-import { Arrow } from './styles';
+import { Button } from '@mui/material';
+import ReceiptLongOutlinedIcon from '@mui/icons-material/ReceiptLongOutlined';
+import PersonOutlinedIcon from '@mui/icons-material/PersonOutlined';
+import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
+import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
+import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
+import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
+import SupportAgentOutlinedIcon from '@mui/icons-material/SupportAgentOutlined';
+import ChevronRightOutlinedIcon from '@mui/icons-material/ChevronRightOutlined';
+import { useRouter } from 'next/router';
+import { ROUTES } from 'src/routes';
+import { removeToken } from 'src/redux/slices/tokenSlice';
+// import { removeUser } from 'src/redux/slices/userSlice';
+import { useLocales } from 'src/locales';
+import { useAppDispatch, useTypedSelector } from 'src/redux/store';
+import { USER_ROLE } from 'src/constants';
+import {
+  Arrow,
+  BalanceAmount,
+  BalanceBlock,
+  BalanceParagraph,
+  BalanceTitle,
+  MenuListItem,
+  MenuItemStyled,
+  OperationButton,
+  StyledMenu,
+} from './styles';
 
 interface MenuDropdownProps {
   children: React.ReactNode;
   onClick: () => void;
 }
 
-const MenuDropdown: React.FC<MenuDropdownProps> = ({ children, onClick }): JSX.Element => {
+const MenuDropdown: React.FC<MenuDropdownProps> = ({ children, onClick }): JSX.Element | null => {
+  const router = useRouter();
+  const { translate } = useLocales();
+  const dispatch = useAppDispatch();
+
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
+  const user = useTypedSelector((state) => state.user.user);
+  if (!user) return null;
+
+  const { role } = user;
 
   const handleClick = (event: React.MouseEvent<HTMLElement>): void => {
     setAnchorEl(event.currentTarget);
@@ -20,19 +53,83 @@ const MenuDropdown: React.FC<MenuDropdownProps> = ({ children, onClick }): JSX.E
     setAnchorEl(null);
   };
 
+  const handleLogOut = async (): Promise<void> => {
+    try {
+      dispatch(removeToken());
+      // dispatch(removeUser());
+      handleClose();
+      window.location.reload();
+    } catch (error) {
+      throw new Error(error);
+    }
+  };
+
   return (
     <>
-      <Button onClick={handleClick} sx={{ padding: 0 }}>
+      <Button onClick={handleClick} sx={{ padding: '15px' }}>
         <Arrow className={open ? 'active' : ''}>{children}</Arrow>
       </Button>
-      <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
-        <MenuItem onClick={handleClose}>Transactions</MenuItem>
-        <MenuItem onClick={handleClose}>Account Details</MenuItem>
-        <MenuItem onClick={handleClose}>Settings</MenuItem>
-        <MenuItem onClick={handleClose}>F.A.Q</MenuItem>
-        <MenuItem onClick={handleClose}>Get Help</MenuItem>
-        <MenuItem onClick={handleClose}>Log Out</MenuItem>
-      </Menu>
+      <StyledMenu anchorEl={anchorEl} open={open} onClose={handleClose}>
+        <BalanceBlock>
+          <BalanceTitle>{translate('menu.balance')}</BalanceTitle>
+          <BalanceParagraph>
+            <BalanceAmount>
+              <div style={{ opacity: 0.6 }}>$ </div>0
+            </BalanceAmount>
+            {role === USER_ROLE.Caregiver ? (
+              <OperationButton variant="contained">{translate('menu.withdraw')}</OperationButton>
+            ) : (
+              <OperationButton variant="contained">{translate('menu.top_up')}</OperationButton>
+            )}
+          </BalanceParagraph>
+        </BalanceBlock>
+        <MenuItemStyled onClick={handleClose}>
+          <ReceiptLongOutlinedIcon />
+          <MenuListItem onClick={(): Promise<boolean> => router.push(ROUTES.transactions)}>
+            <div>{translate('menu.transactions')}</div>
+            <ChevronRightOutlinedIcon />
+          </MenuListItem>
+        </MenuItemStyled>
+        <MenuItemStyled onClick={handleClose}>
+          <PersonOutlinedIcon />
+          <MenuListItem>
+            <div>{translate('menu.acc_details')}</div> <ChevronRightOutlinedIcon />
+          </MenuListItem>
+        </MenuItemStyled>
+        {role === USER_ROLE.Caregiver && (
+          <MenuItemStyled onClick={handleClose}>
+            <SupportAgentOutlinedIcon />
+            <MenuListItem>
+              <div>{translate('menu.caregiver_profile')}</div> <ChevronRightOutlinedIcon />
+            </MenuListItem>
+          </MenuItemStyled>
+        )}
+        <MenuItemStyled onClick={handleClose}>
+          <SettingsOutlinedIcon />
+          <MenuListItem>
+            <div>{translate('menu.settings')}</div>
+            <ChevronRightOutlinedIcon />
+          </MenuListItem>
+        </MenuItemStyled>
+        <MenuItemStyled onClick={handleClose}>
+          <InfoOutlinedIcon />
+          <MenuListItem>
+            <div>{translate('menu.faq')}</div> <ChevronRightOutlinedIcon />
+          </MenuListItem>
+        </MenuItemStyled>
+        <MenuItemStyled onClick={handleClose}>
+          <FavoriteBorderOutlinedIcon />
+          <MenuListItem>
+            <div>{translate('menu.get_help')}</div> <ChevronRightOutlinedIcon />
+          </MenuListItem>
+        </MenuItemStyled>
+        <MenuItemStyled onClick={handleClose}>
+          <FavoriteBorderOutlinedIcon sx={{ visibility: 'hidden' }} />
+          <MenuListItem onClick={handleLogOut}>
+            <div>{translate('menu.log_out')} </div> <LogoutOutlinedIcon color="error" />
+          </MenuListItem>
+        </MenuItemStyled>
+      </StyledMenu>
     </>
   );
 };

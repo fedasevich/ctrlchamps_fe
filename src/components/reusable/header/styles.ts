@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { Button, Menu, MenuItem } from '@mui/material';
 import Link from 'next/link';
 import { PRIMARY, SECONDARY } from 'src/theme/colors';
 import { TYPOGRAPHY } from 'src/theme/fonts';
@@ -165,9 +166,63 @@ const IconWrapper = styled.div`
 const Arrow = styled.div`
   width: 24px;
   height: 24px;
+  color: ${SECONDARY.semi_gray};
   &.active {
     transform: rotate(180deg);
+`;
+
+export const StyledMenu = styled(Menu)`
+  width: 300px;
+  margin-top: 15px;
+`;
+
+const BalanceBlock = styled.div`
+  background: ${PRIMARY.main};
+  border-radius: 5px;
+  margin: 10px;
+  padding: 10px 15px;
+  color: ${PRIMARY.white};
+`;
+
+const BalanceTitle = styled.div`
+  font-size: ${TYPOGRAPHY.xs}px;
+`;
+
+const BalanceAmount = styled.div`
+  font-size: ${TYPOGRAPHY.md}px;
+  font-weight: ${typography.fontWeightMedium};
+  display: flex;
+`;
+
+const BalanceParagraph = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`;
+
+const OperationButton = styled(Button)`
+  background: ${PRIMARY.white};
+  color: ${PRIMARY.main};
+
+  &:hover {
+    background: ${PRIMARY.white};
+    color: ${PRIMARY.main};
   }
+`;
+
+const MenuItemStyled = styled(MenuItem)`
+  border-top: 1px solid ${SECONDARY.light_gray};
+  margin: 0 10px;
+  padding: 10px 0;
+  font-weight: ${typography.fontWeightMedium};
+`;
+
+const MenuListItem = styled.div`
+  display: flex;
+  width: 250px;
+  margin-left: 10px;
+  justify-content: space-between;
+  align-items: center;
 `;
 
 export {
@@ -192,4 +247,11 @@ export {
   IconWrapper,
   AvatarWrapper,
   Arrow,
+  MenuItemStyled,
+  MenuListItem,
+  BalanceBlock,
+  BalanceTitle,
+  BalanceAmount,
+  BalanceParagraph,
+  OperationButton,
 };

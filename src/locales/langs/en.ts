@@ -705,6 +705,18 @@ const en = {
     subtitle: 'Need assistance? We`re here to help!',
     text: 'If you have any questions, concerns, or issues, you can reach out to our dedicated support team via email',
   },
+  menu: {
+    balance: 'Balance',
+    top_up: 'Top-up',
+    withdraw: 'Withdraw',
+    transactions: 'Transactions',
+    acc_details: 'Account Details',
+    caregiver_profile: 'Caregiver profile',
+    settings: 'Settings',
+    faq: 'F.A.Q',
+    get_help: 'Get Help',
+    log_out: 'Log Out',
+  },
 };
 
 export default en;

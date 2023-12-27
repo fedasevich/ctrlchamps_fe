@@ -11,4 +11,5 @@ export const ROUTES = {
   appointments: '/appointments',
   profile: '/profile',
   account_details: '/account-details',
+  transactions: '/transactions',
 };

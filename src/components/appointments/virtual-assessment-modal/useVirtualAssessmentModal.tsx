@@ -1,8 +1,8 @@
-import { format } from 'date-fns';
+import { format, isBefore, isSameDay } from 'date-fns';
 import { Dispatch, SetStateAction, useState } from 'react';
 
 import { selectTimeOptions } from 'src/components/create-appointment/constants';
-import { APPOINTMENT_STATUS, BACKEND_DATE_FORMAT, URL_PATTERN } from 'src/constants';
+import { APPOINTMENT_STATUS, BACKEND_DATE_FORMAT, CURRENT_DAY, URL_PATTERN } from 'src/constants';
 import { useUpdateAppointmentMutation } from 'src/redux/api/appointmentApi';
 import { virtualAssessmentApi } from 'src/redux/api/virtualAssessmentApi';
 
@@ -75,7 +75,13 @@ export default function useVirtualAssessmentModal(
   const maxReasonLength = reschedulingReason.length > MAX_REASON_LENGTH;
 
   const isButtonDisabled =
-    !date || !startTime || !endTime || invalidTime || startTime === endTime || !validLink;
+    !date ||
+    !startTime ||
+    !endTime ||
+    invalidTime ||
+    startTime === endTime ||
+    !validLink ||
+    (date && isBefore(date, CURRENT_DAY) && !isSameDay(date, CURRENT_DAY));
   const isRescheduleBtnDisabled = isButtonDisabled || minReasonLength || maxReasonLength;
 
   const checkTimeValidity = (condition: boolean): void => {

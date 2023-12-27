@@ -40,6 +40,7 @@ export function PrivateRoute({
     if (
       !user.isProfileFilled &&
       pathname !== `${ROUTES.profile}/` &&
+      pathname !== `${ROUTES.account_verification}/` &&
       user.role === USER_ROLE.Caregiver
     ) {
       router.replace(ROUTES.profile);

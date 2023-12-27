@@ -9,7 +9,7 @@ export type User = {
   lastName: string;
   role: UserRole;
   isVerified: boolean;
-  isProfileFilled: boolean;
+  isProfileFilled?: boolean;
 };
 
 type UserState = {

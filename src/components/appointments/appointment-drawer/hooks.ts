@@ -1,10 +1,6 @@
-import { useState, Dispatch, SetStateAction } from 'react';
-import { useGetAppointmentQuery, DetailedAppointment } from 'src/redux/api/appointmentApi';
-import {
-  useGetVirtualAssessmentInfoQuery,
-  VirtualAssessment,
-} from 'src/redux/api/virtualAssessmentApi';
+import { Dispatch, SetStateAction, useState } from 'react';
 import { USER_ROLE } from 'src/constants';
+import { DetailedAppointment, useGetAppointmentQuery } from 'src/redux/api/appointmentApi';
 import { getFormattedDate } from '../helpers';
 
 interface IProps {
@@ -18,11 +14,11 @@ type ReturnType = {
   isCompleteModalOpen: boolean;
   isAgreementModalOpen: boolean;
   isActivityLogModalOpen: boolean;
+  isReviewActivityLogModalOpen: boolean;
   isVirtualAssessmentModalOpen: boolean;
   isVirtualAssessmentSuccessOpen: boolean;
   isTermsAccepted: boolean;
   isLoading: boolean;
-  virtualAssessment: VirtualAssessment | undefined;
   appointment: DetailedAppointment | undefined;
   formattedStartDate: string | undefined;
   handleCancelModalOpen: () => void;
@@ -35,6 +31,8 @@ type ReturnType = {
   handleVirtualAssessmentModalClose: () => void;
   handleActivityLogModalOpen: () => void;
   handleActivityLogModalClose: () => void;
+  handleReviewActivityLogModalOpen: () => void;
+  handleReviewActivityLogModalClose: () => void;
   handleVirtualAssessmentSuccessModalOpen: () => void;
   handleVirtualAssessmentSuccessModalClose: () => void;
   setIsTermsAccepted: Dispatch<SetStateAction<boolean>>;
@@ -52,13 +50,13 @@ export function useAppointmentDrawer({
   const [isCompleteModalOpen, setIsCompleteModalOpen] = useState<boolean>(false);
   const [isAgreementModalOpen, setIsAgreementModalOpen] = useState<boolean>(false);
   const [isActivityLogModalOpen, setIsActivityLogModalOpen] = useState<boolean>(false);
+  const [isReviewActivityLogModalOpen, setIsReviewActivityLogModalOpen] = useState<boolean>(false);
   const [isVirtualAssessmentModalOpen, setIsVirtualAssessmentModalOpen] = useState<boolean>(false);
   const [isVirtualAssessmentSuccessOpen, setIsVirtualAssessmentSuccessOpen] =
     useState<boolean>(false);
   const [isTermsAccepted, setIsTermsAccepted] = useState<boolean>(false);
 
   const { data: appointment, isLoading } = useGetAppointmentQuery(selectedAppointmentId);
-  const { data: virtualAssessment } = useGetVirtualAssessmentInfoQuery(selectedAppointmentId);
 
   const formattedStartDate = appointment && getFormattedDate(appointment.startDate);
 
@@ -103,6 +101,14 @@ export function useAppointmentDrawer({
     setIsActivityLogModalOpen(false);
   };
 
+  const handleReviewActivityLogModalOpen = (): void => {
+    setIsReviewActivityLogModalOpen(true);
+    setIsDrawerOpen(false);
+  };
+  const handleReviewActivityLogModalClose = (): void => {
+    setIsReviewActivityLogModalOpen(false);
+  };
+
   const handleVirtualAssessmentModalOpen = (): void => {
     setIsVirtualAssessmentModalOpen(true);
     setIsDrawerOpen(false);
@@ -136,15 +142,17 @@ export function useAppointmentDrawer({
     isCompleteModalOpen,
     isAgreementModalOpen,
     isActivityLogModalOpen,
+    isReviewActivityLogModalOpen,
     isVirtualAssessmentModalOpen,
     isVirtualAssessmentSuccessOpen,
     isTermsAccepted,
     isLoading,
-    virtualAssessment,
     appointment,
     formattedStartDate,
     handleActivityLogModalOpen,
     handleActivityLogModalClose,
+    handleReviewActivityLogModalOpen,
+    handleReviewActivityLogModalClose,
     handleCancelModalOpen,
     handleCancelModalClose,
     handleCompleteModalOpen,

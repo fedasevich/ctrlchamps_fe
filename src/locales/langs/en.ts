@@ -6,13 +6,13 @@ import {
   MIN_APPOINTMENT_NAME_LENGTH,
 } from 'src/components/create-appointment/constants';
 
-import { CONFIRM_NOTE_MAX_LENGTH } from 'src/components/confirm-appointment/constants';
-import { MAX_CHARACTERS_LENGTH } from 'src/constants';
 import {
   MAX_ASSESSMENT_HOURS_DURATION,
   MAX_REASON_LENGTH,
   MIN_REASON_LENGTH,
 } from 'src/components/appointments/virtual-assessment-modal/constants';
+import { CONFIRM_NOTE_MAX_LENGTH } from 'src/components/confirm-appointment/constants';
+import { MAX_CHARACTERS_LENGTH } from 'src/constants';
 
 const en = {
   app_title: 'CtrlChamps',
@@ -551,8 +551,10 @@ const en = {
     signed: 'Signed',
     agreementSignedDate: 'Date: ',
     activityLog: 'Activity Log',
-    reviewed: 'Reviewed',
+    reviewActivityLog: 'Review Activity Log',
     confirm: 'Confirm',
+    reject: 'Reject',
+    reviewed: 'Reviewed',
     filled: 'Filled',
     modal_subtitle: 'Are you sure you would like to cancel the appointment?',
     complete_modal_title: 'Complete appointment',
@@ -573,6 +575,11 @@ const en = {
     },
     activityLogModal: {
       tasksRequired: 'At least one task is required',
+    },
+    rejectReviewActivityLogModal: {
+      specifyReason: 'Specify reason',
+      reasonRequired: 'Please specify a reason',
+      reasonMaxLength: `Reason must be at most ${MAX_CHARACTERS_LENGTH} characters`,
     },
     drawer: {
       agreement: 'Agreement',

@@ -7,6 +7,9 @@ import jwt_decode from 'jwt-decode';
 import { useMemo, useState } from 'react';
 
 import { DRAWER_DATE_FORMAT } from 'src/components/appointments/constants';
+import VirtualAssessmentSuccess from 'src/components/appointments/request-sent-modal/VirtualAssessmentSuccess';
+import VirtualAssessmentModal from 'src/components/appointments/virtual-assessment-modal/VirtualAssessmentModal';
+import { AssessmentPurpose } from 'src/components/appointments/virtual-assessment-modal/enums';
 import { FilledButton } from 'src/components/reusable';
 import FlowHeader from 'src/components/reusable/header/FlowHeader';
 import { USER_ROLE, VIRTUAL_ASSESSMENT_STATUS } from 'src/constants';
@@ -14,11 +17,7 @@ import { useLocales } from 'src/locales';
 import { virtualAssessmentApi } from 'src/redux/api/virtualAssessmentApi';
 import { useTypedSelector } from 'src/redux/store';
 import { setCustomTime } from 'src/utils/defineCustomTime';
-import VirtualAssessmentSuccess from 'src/components/appointments/request-sent-modal/VirtualAssessmentSuccess';
-import VirtualAssessmentModal from 'src/components/appointments/virtual-assessment-modal/VirtualAssessmentModal';
-import { AssessmentPurpose } from 'src/components/appointments/virtual-assessment-modal/enums';
 
-import { VirtualAssessmentRequestModalProps } from './types';
 import {
   AppointmentModal,
   AppointmentModalBlock,
@@ -31,6 +30,7 @@ import {
   NameParagraph,
   NotificationMessage,
 } from './styles';
+import { VirtualAssessmentRequestModalProps } from './types';
 
 const decodeToken = (tokenToDecode: string): string => {
   const decoded: { id: string } = jwt_decode(tokenToDecode);
@@ -44,7 +44,6 @@ const VirtualAssessmentRequestModal = ({
   switchModalVisibility,
   openDrawer,
   closeDrawer,
-  virtualAssessment,
 }: VirtualAssessmentRequestModalProps): JSX.Element => {
   const { translate } = useLocales();
 
@@ -159,7 +158,7 @@ const VirtualAssessmentRequestModal = ({
               <NotificationsNoneOutlinedIcon color="primary" />
               {translate('request_appointment.notify_message')}
             </NotificationMessage>
-            {virtualAssessment?.status === VIRTUAL_ASSESSMENT_STATUS.Proposed &&
+            {appointment.virtualAssessment?.status === VIRTUAL_ASSESSMENT_STATUS.Proposed &&
               !appointment.virtualAssessment?.wasRescheduled && (
                 <InlineBlock>
                   <Button
@@ -181,7 +180,7 @@ const VirtualAssessmentRequestModal = ({
                   </FilledButton>
                 </InlineBlock>
               )}
-            {virtualAssessment?.status === VIRTUAL_ASSESSMENT_STATUS.Proposed &&
+            {appointment.virtualAssessment?.status === VIRTUAL_ASSESSMENT_STATUS.Proposed &&
               appointment.virtualAssessment?.wasRescheduled && (
                 <InlineBlock>
                   <Button

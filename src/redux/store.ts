@@ -26,8 +26,9 @@ import profileApi from 'src/redux/api/profileCompleteApi';
 import timezoneApi from 'src/redux/api/timezoneApi';
 import userApi from 'src/redux/api/userApi';
 import virtualAssessmentApi from 'src/redux/api/virtualAssessmentApi';
+import activityLogApi from 'src/redux/api/activityLogApi';
+import paymentApi from 'src/redux/api/paymentApi';
 import { RootState } from 'src/redux/rootReducer';
-import activityLogApi from './api/activityLogApi';
 
 const persistConfig = {
   key: 'root',
@@ -62,6 +63,7 @@ const store = configureStore({
     [timezoneApi.reducerPath]: timezoneApi.reducer,
     [userApi.reducerPath]: userApi.reducer,
     [activityLogApi.reducerPath]: activityLogApi.reducer,
+    [paymentApi.reducerPath]: paymentApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
@@ -77,6 +79,7 @@ const store = configureStore({
       timezoneApi.middleware,
       userApi.middleware,
       activityLogApi.middleware,
+      paymentApi.middleware,
     ]),
 });
 

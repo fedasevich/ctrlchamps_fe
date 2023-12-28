@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button } from '@mui/material';
 import ReceiptLongOutlinedIcon from '@mui/icons-material/ReceiptLongOutlined';
 import PersonOutlinedIcon from '@mui/icons-material/PersonOutlined';
@@ -11,10 +11,12 @@ import ChevronRightOutlinedIcon from '@mui/icons-material/ChevronRightOutlined';
 import { useRouter } from 'next/router';
 import { ROUTES } from 'src/routes';
 import { removeToken } from 'src/redux/slices/tokenSlice';
-// import { removeUser } from 'src/redux/slices/userSlice';
+import { removeUser } from 'src/redux/slices/userSlice';
 import { useLocales } from 'src/locales';
 import { useAppDispatch, useTypedSelector } from 'src/redux/store';
-import { USER_ROLE } from 'src/constants';
+import { TRANSACTION_EXAMPLE, USER_ROLE } from 'src/constants';
+import { useTopUpMutation, useWithdrawMutation } from 'src/redux/api/paymentApi';
+import { useGetUserInfoQuery } from 'src/redux/api/userApi';
 import {
   Arrow,
   BalanceAmount,
@@ -36,10 +38,21 @@ const MenuDropdown: React.FC<MenuDropdownProps> = ({ children, onClick }): JSX.E
   const router = useRouter();
   const { translate } = useLocales();
   const dispatch = useAppDispatch();
+  const [withdraw] = useWithdrawMutation();
+  const [topUp] = useTopUpMutation();
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const [balance, setBalance] = useState<number>(0);
   const open = Boolean(anchorEl);
   const user = useTypedSelector((state) => state.user.user);
+  const { data: userInfo } = useGetUserInfoQuery(user?.id);
+
+  useEffect(() => {
+    if (userInfo?.balance !== undefined) {
+      setBalance(userInfo.balance);
+    }
+  }, [userInfo]);
+
   if (!user) return null;
 
   const { role } = user;
@@ -56,9 +69,31 @@ const MenuDropdown: React.FC<MenuDropdownProps> = ({ children, onClick }): JSX.E
   const handleLogOut = async (): Promise<void> => {
     try {
       dispatch(removeToken());
-      // dispatch(removeUser());
+      dispatch(removeUser());
       handleClose();
       window.location.reload();
+    } catch (error) {
+      throw new Error(error);
+    }
+  };
+
+  const handleWithdraw = async (amount: number): Promise<void> => {
+    try {
+      const previousBalance = balance;
+
+      setBalance((prevBalance) => prevBalance - amount);
+
+      await withdraw(previousBalance - amount);
+    } catch (error) {
+      throw new Error(error);
+    }
+  };
+
+  const handleTopUp = async (amount: number): Promise<void> => {
+    try {
+      setBalance((prevBalance) => prevBalance + amount);
+
+      await topUp(balance + amount);
     } catch (error) {
       throw new Error(error);
     }
@@ -74,12 +109,25 @@ const MenuDropdown: React.FC<MenuDropdownProps> = ({ children, onClick }): JSX.E
           <BalanceTitle>{translate('menu.balance')}</BalanceTitle>
           <BalanceParagraph>
             <BalanceAmount>
-              <div style={{ opacity: 0.6 }}>$ </div>0
+              <div style={{ opacity: 0.6 }}>$ </div>
+              {balance}
             </BalanceAmount>
             {role === USER_ROLE.Caregiver ? (
-              <OperationButton variant="contained">{translate('menu.withdraw')}</OperationButton>
+              <OperationButton
+                variant="contained"
+                onClick={(): Promise<void> => handleWithdraw(TRANSACTION_EXAMPLE)}
+                disabled={balance < TRANSACTION_EXAMPLE}
+              >
+                {translate('menu.withdraw')}
+              </OperationButton>
             ) : (
-              <OperationButton variant="contained">{translate('menu.top_up')}</OperationButton>
+              <OperationButton
+                variant="contained"
+                onClick={(): Promise<void> => handleTopUp(TRANSACTION_EXAMPLE)}
+                disabled={balance < TRANSACTION_EXAMPLE}
+              >
+                {translate('menu.top_up')}
+              </OperationButton>
             )}
           </BalanceParagraph>
         </BalanceBlock>

@@ -67,3 +67,4 @@ export const APPOINTMENT_TYPE = {
 };
 
 export const HELP_EMAIL = 'help@ctrlchamps@gmail.com';
+export const TRANSACTION_EXAMPLE = 100;

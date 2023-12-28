@@ -22,6 +22,9 @@ const route = {
   virtualAssessment: '/virtual-assessment',
   date: '/date',
   activityLog: '/activity-log',
+  payment: '/payment',
+  withdraw: '/withdraw',
+  topUp: '/top-up',
 };
 
 export { route };

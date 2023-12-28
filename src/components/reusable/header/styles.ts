@@ -208,6 +208,10 @@ const OperationButton = styled(Button)`
     background: ${PRIMARY.white};
     color: ${PRIMARY.main};
   }
+  &:disabled {
+    background: ${PRIMARY.white};
+    color: ${SECONDARY.semi_gray};
+  }
 `;
 
 const MenuItemStyled = styled(MenuItem)`

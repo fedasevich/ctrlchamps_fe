@@ -72,6 +72,8 @@ function PlacesAutocomplete({
     if (newValue === null) {
       dispatch(setTimezone(''));
       dispatch(setSeekerLocation(''));
+
+      return;
     }
 
     if (!newValue) {

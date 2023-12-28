@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { Button } from '@mui/material';
 import Link from 'next/link';
 import { PRIMARY, SECONDARY } from 'src/theme/colors';
 import { TYPOGRAPHY } from 'src/theme/fonts';
@@ -45,6 +46,18 @@ const InfoButton = styled.button`
   border: none;
   cursor: pointer;
   padding: 0;
+`;
+
+const ButtonContainer = styled.div`
+  display: flex;
+  gap: 16px;
+  align-items: center;
+`;
+
+const LogOutButton = styled(Button)`
+  padding: 0;
+  font-size: ${TYPOGRAPHY.base}px;
+  text-decoration: underline;
 `;
 
 const MainHeaderWrapper = styled.header`
@@ -184,6 +197,8 @@ export {
   Text,
   Icon,
   InfoButton,
+  ButtonContainer,
+  LogOutButton,
   MainHeaderWrapper,
   LogoSection,
   MenuSection,

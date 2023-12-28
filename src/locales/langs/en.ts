@@ -727,6 +727,12 @@ const en = {
     subtitle: 'Need assistance? We`re here to help!',
     text: 'If you have any questions, concerns, or issues, you can reach out to our dedicated support team via email',
   },
+  logOutModal: {
+    title: 'Incomplete profile information',
+    text: 'Are you sure you want to log out before ending completing your profile? Information will not be saved',
+    logOutBtn: 'Log out',
+    backBtn: 'Back to complete profile',
+  },
 };
 
 export default en;

@@ -376,6 +376,9 @@ const en = {
     openToLivingInClientsHouses: 'Open to living in client’s houses',
     noLocations: 'No location',
     servicesTitle: 'Services',
+    backToHealthQuestionnaire: 'Back to Health questionnaire',
+    toBookAnAppointmentFirstlyChooseYourLocation:
+      'To book an appointment firstly choose your location',
     hourRate: '{{rate}}/h',
     services: {
       personalCare: 'Personal Care Assistance',

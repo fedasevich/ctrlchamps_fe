@@ -3,11 +3,12 @@ import { HEADER } from 'src/config-global';
 import { PRIMARY, SECONDARY } from 'src/theme/colors';
 import { TYPOGRAPHY } from 'src/theme/fonts';
 import typography from 'src/theme/typography';
+import { NextButton } from '../reusable/appointment-btn/styles';
 
 export const Background = styled('div')`
   background-color: ${PRIMARY.light_main};
-  min-height: calc(100vh - ${HEADER.FLOW_HEIGHT}px - 1px);
-  padding: 24px;
+  min-height: calc(100vh - ${HEADER.MAIN_HEIGHT}px - 74px);
+  padding: 0px 24px 24px 24px;
   gap: 24px;
   display: flex;
 `;
@@ -59,4 +60,15 @@ export const StyledListItemText = styled(ListItemText)`
     font-size: ${TYPOGRAPHY.xs}px;
     font-weight: ${typography.fontWeightMedium};
   }
+`;
+
+export const StyledNextButton = styled(NextButton)`
+  margin-top: auto;
+`;
+
+export const StyledModalFooter = styled('div')`
+  display: flex;
+  width: 100%;
+  gap: 8px;
+  flex-direction: column;
 `;

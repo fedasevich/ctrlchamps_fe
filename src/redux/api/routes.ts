@@ -21,6 +21,7 @@ const route = {
   timezoneJson: '/timezone/json',
   virtualAssessment: '/virtual-assessment',
   date: '/date',
+  transactions: '/transaction-history',
   activityLog: '/activity-log',
   payment: '/payment',
   withdraw: '/withdraw',

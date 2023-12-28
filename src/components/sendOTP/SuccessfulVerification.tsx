@@ -1,28 +1,33 @@
-import React, { useMemo } from 'react';
+import { Container } from '@mui/system';
+import { useRouter } from 'next/router';
 import { useTranslation } from 'react-i18next';
 
 import SuccessfulValidationIcon from 'src/assets/icons/SuccessfulValidationIcon';
-import { Container } from '@mui/system';
 import { FilledButton } from 'src/components/reusable/FilledButton';
-
 import {
-  SuccessAccountVerificationContainer,
   IconContainer,
   StyledParagraphSuccess,
   SubmitButtonContainer,
+  SuccessAccountVerificationContainer,
   TextBlock,
 } from 'src/components/sendOTP/styles';
+import { USER_ROLE } from 'src/constants';
+import { useTypedSelector } from 'src/redux/store';
+import { ROUTES } from 'src/routes';
 
-const SuccessfulVerification = ({ profile }: { profile: string }): JSX.Element => {
+const SuccessfulVerification = (): JSX.Element | null => {
+  const router = useRouter();
   const { t } = useTranslation();
 
-  const roles = useMemo(
-    () => ({
-      SEEKER: 'Seeker',
-      CAREGIVER: 'Caregiver',
-    }),
-    []
-  );
+  const user = useTypedSelector((state) => state.user.user);
+
+  if (!user) return null;
+
+  const { role } = user;
+
+  const handleButtonClick = (): void => {
+    router.push(role === USER_ROLE.Seeker ? ROUTES.login : ROUTES.profile);
+  };
 
   return (
     <Container component="main" maxWidth="sm">
@@ -35,15 +40,15 @@ const SuccessfulVerification = ({ profile }: { profile: string }): JSX.Element =
             {t('account_verification.successfully_verified')}
           </StyledParagraphSuccess>
           <p>
-            {profile === roles.SEEKER
+            {role === USER_ROLE.Seeker
               ? t('account_verification.successfully_seeker')
               : t('account_verification.successfully_caregiver')}
           </p>
         </TextBlock>
 
         <SubmitButtonContainer>
-          <FilledButton fullWidth>
-            {profile === roles.SEEKER
+          <FilledButton fullWidth onClick={handleButtonClick}>
+            {role === USER_ROLE.Seeker
               ? t('account_verification.successfully_seeker_btn')
               : t('account_verification.successfully_caregiver_btn')}
           </FilledButton>

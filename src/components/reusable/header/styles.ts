@@ -48,6 +48,18 @@ const InfoButton = styled.button`
   padding: 0;
 `;
 
+const ButtonContainer = styled.div`
+  display: flex;
+  gap: 16px;
+  align-items: center;
+`;
+
+const LogOutButton = styled(Button)`
+  padding: 0;
+  font-size: ${TYPOGRAPHY.base}px;
+  text-decoration: underline;
+`;
+
 const MainHeaderWrapper = styled.header`
   position: absolute;
   width: 100%;
@@ -134,7 +146,7 @@ const SecondPart = styled.p`
 const MenuSection = styled.div`
   display: flex;
   align-items: center;
-  gap: 32px;
+  gap: 20px;
 `;
 
 const ProfileSection = styled.div`
@@ -161,6 +173,16 @@ const AvatarWrapper = styled.div`
 
 const IconWrapper = styled.div`
   cursor: pointer;
+  padding: 12.5px 10px;
+  border-bottom: 3px solid transparent;
+  &:hover {
+    color: ${PRIMARY.dark_main};
+  }
+
+  &.active {
+    color: ${PRIMARY.navy};
+    border-bottom: 3px solid ${PRIMARY.navy};
+  }
 `;
 
 const Arrow = styled.div`
@@ -235,6 +257,8 @@ export {
   Text,
   Icon,
   InfoButton,
+  ButtonContainer,
+  LogOutButton,
   MainHeaderWrapper,
   LogoSection,
   MenuSection,

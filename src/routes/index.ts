@@ -7,9 +7,8 @@ export const ROUTES = {
   sign_up: 'sign-up',
   create_appointment: '/create-appointment',
   appointment_caregiver_list: '/caregiver-list',
-  schedule: '/schedule',
-  appointments: '/appointments',
   profile: '/profile',
   account_details: '/account-details',
   transactions: '/transactions',
+  notifications: '/notifications',
 };

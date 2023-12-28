@@ -21,6 +21,7 @@ export const useBioFormSchema = (): ObjectSchema<BioFormValues> => {
         (value) => !value || (value instanceof File && value.size <= MAX_FILE_SIZE_BYTES)
       ),
     description: string()
+      .trim()
       .required(translate('profileBio.descriptionRequired'))
       .max(MAX_CHARACTERS_LENGTH, translate('profileBio.descriptionMaxLength')),
   });

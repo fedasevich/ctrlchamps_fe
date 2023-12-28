@@ -7,6 +7,9 @@ import jwt_decode from 'jwt-decode';
 import { useMemo, useState } from 'react';
 
 import { DRAWER_DATE_FORMAT } from 'src/components/appointments/constants';
+import VirtualAssessmentSuccess from 'src/components/appointments/request-sent-modal/VirtualAssessmentSuccess';
+import VirtualAssessmentModal from 'src/components/appointments/virtual-assessment-modal/VirtualAssessmentModal';
+import { AssessmentPurpose } from 'src/components/appointments/virtual-assessment-modal/enums';
 import { FilledButton } from 'src/components/reusable';
 import FlowHeader from 'src/components/reusable/header/FlowHeader';
 import { USER_ROLE, VIRTUAL_ASSESSMENT_STATUS } from 'src/constants';
@@ -14,11 +17,7 @@ import { useLocales } from 'src/locales';
 import { virtualAssessmentApi } from 'src/redux/api/virtualAssessmentApi';
 import { useTypedSelector } from 'src/redux/store';
 import { setCustomTime } from 'src/utils/defineCustomTime';
-import VirtualAssessmentSuccess from 'src/components/appointments/request-sent-modal/VirtualAssessmentSuccess';
-import VirtualAssessmentModal from 'src/components/appointments/virtual-assessment-modal/VirtualAssessmentModal';
-import { AssessmentPurpose } from 'src/components/appointments/virtual-assessment-modal/enums';
 
-import { VirtualAssessmentRequestModalProps } from './types';
 import {
   AppointmentModal,
   AppointmentModalBlock,
@@ -31,6 +30,7 @@ import {
   NameParagraph,
   NotificationMessage,
 } from './styles';
+import { VirtualAssessmentRequestModalProps } from './types';
 
 const decodeToken = (tokenToDecode: string): string => {
   const decoded: { id: string } = jwt_decode(tokenToDecode);
@@ -103,7 +103,6 @@ const VirtualAssessmentRequestModal = ({
             iconType="close"
             callback={switchModalVisibility}
           />
-
           <AppointmentModalBlock>
             <AppointmentModalBlockParagraph>
               <AppointmentParagraph>
@@ -114,7 +113,6 @@ const VirtualAssessmentRequestModal = ({
               </IconButton>
             </AppointmentModalBlockParagraph>
           </AppointmentModalBlock>
-
           <AppointmentModalBlock>
             <AppointmentModalBlockParagraph>
               {translate('request_appointment.client')}
@@ -124,7 +122,6 @@ const VirtualAssessmentRequestModal = ({
               <NameParagraph>{`${appointment.user.firstName} ${appointment.user.lastName}`}</NameParagraph>
             </InlineBlock>
           </AppointmentModalBlock>
-
           <AppointmentModalBlock>
             <AppointmentModalBlockParagraph>
               {translate('request_appointment.date_and_time')}
@@ -156,26 +153,14 @@ const VirtualAssessmentRequestModal = ({
               <Typography overflow="hidden">{appointment.virtualAssessment.meetingLink}</Typography>
             )}
           </AppointmentModalBlock>
-
           <AppointmentModalFooter>
             <NotificationMessage>
               <NotificationsNoneOutlinedIcon color="primary" />
               {translate('request_appointment.notify_message')}
             </NotificationMessage>
-            {!appointment.virtualAssessment?.wasRescheduled && (
-              <InlineBlock>
-                {appointment.virtualAssessment?.wasRescheduled ? (
-                  <Button
-                    variant="outlined"
-                    color="error"
-                    fullWidth
-                    onClick={(): Promise<void> =>
-                      handleStatusChange(VIRTUAL_ASSESSMENT_STATUS.Rejected)
-                    }
-                  >
-                    {translate('request_appointment.btns.reject')}
-                  </Button>
-                ) : (
+            {appointment.virtualAssessment?.status === VIRTUAL_ASSESSMENT_STATUS.Proposed &&
+              !appointment.virtualAssessment?.wasRescheduled && (
+                <InlineBlock>
                   <Button
                     variant="outlined"
                     color="primary"
@@ -184,18 +169,44 @@ const VirtualAssessmentRequestModal = ({
                   >
                     {translate('request_appointment.btns.reschedule')}
                   </Button>
-                )}
-
-                <FilledButton
-                  fullWidth
-                  onClick={(): Promise<void> =>
-                    handleStatusChange(VIRTUAL_ASSESSMENT_STATUS.Accepted)
-                  }
-                >
-                  {translate('request_appointment.btns.accept')}
-                </FilledButton>
-              </InlineBlock>
-            )}
+                  <FilledButton
+                    fullWidth
+                    onClick={async (): Promise<void> => {
+                      await handleStatusChange(VIRTUAL_ASSESSMENT_STATUS.Accepted);
+                      window.location.reload();
+                    }}
+                  >
+                    {translate('request_appointment.btns.accept')}
+                  </FilledButton>
+                </InlineBlock>
+              )}
+            {appointment.virtualAssessment?.status === VIRTUAL_ASSESSMENT_STATUS.Proposed &&
+              appointment.virtualAssessment?.wasRescheduled && (
+                <InlineBlock>
+                  <Button
+                    variant="outlined"
+                    color="error"
+                    fullWidth
+                    onClick={async (): Promise<void> => {
+                      await handleStatusChange(VIRTUAL_ASSESSMENT_STATUS.Rejected);
+                      window.location.reload();
+                    }}
+                  >
+                    {translate('request_appointment.btns.reject')}
+                  </Button>
+                  <Button
+                    variant="outlined"
+                    color="primary"
+                    fullWidth
+                    onClick={async (): Promise<void> => {
+                      await handleStatusChange(VIRTUAL_ASSESSMENT_STATUS.Accepted);
+                      window.location.reload();
+                    }}
+                  >
+                    {translate('request_appointment.btns.accept')}
+                  </Button>
+                </InlineBlock>
+              )}
           </AppointmentModalFooter>
         </DrawerBody>
       </AppointmentModal>

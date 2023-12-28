@@ -3,6 +3,7 @@ import { TIMEZONE_FORMAT } from 'src/constants';
 import { daySelectedType } from 'src/constants/types';
 import { useUpdateProfileMutation } from 'src/redux/api/profileCompleteApi';
 import { chooseAvailableTime } from 'src/redux/slices/availableDaysSlice';
+import { setToken } from 'src/redux/slices/tokenSlice';
 import { useAppDispatch, useTypedSelector } from 'src/redux/store';
 import { FIRST_ELEMENT, PLUS_HOUR, availableTimeOptions } from './constants';
 import { HookReturnType } from './types';
@@ -106,15 +107,9 @@ export default function useCompleteProfileFourth(onNext: () => void): HookReturn
       FIRST_ELEMENT
     ];
 
-    if (!hourlyAdjustedValue) {
-      setAvailableTo(availableTimeOptions[FIRST_ELEMENT]);
-    } else {
-      setAvailableTo(hourlyAdjustedValue);
-    }
-
     if (availableFrom) {
       handleErrors(
-        value > hourlyAdjustedValue,
+        value > availableTo,
         invalidTimeErrors,
         setInvalidTimeError,
         setInvalidTimeErrors
@@ -122,11 +117,19 @@ export default function useCompleteProfileFourth(onNext: () => void): HookReturn
     }
 
     handleErrors(
-      value === availableFrom,
+      value === availableTo,
       identicalTimeErrors,
       setIdenticalTimeError,
       setIdenticalTimeErrors
     );
+
+    if (availableFrom) return;
+
+    if (!hourlyAdjustedValue) {
+      setAvailableTo(availableTimeOptions[FIRST_ELEMENT]);
+    } else {
+      setAvailableTo(hourlyAdjustedValue);
+    }
   };
 
   const chooseToTime = (value: string): void => {
@@ -155,7 +158,12 @@ export default function useCompleteProfileFourth(onNext: () => void): HookReturn
           availability: [...availableDays],
           timeZone: TIMEZONE_FORMAT,
         },
-      }).unwrap();
+      })
+        .unwrap()
+        .then((data) => {
+          if (!data.token) return;
+          dispatch(setToken(data.token));
+        });
       onNext();
     } catch (err) {
       setServerError(true);

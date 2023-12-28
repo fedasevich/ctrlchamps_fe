@@ -13,6 +13,7 @@ import {
   StyledParagraphMain,
   SubmitButtonContainer,
 } from 'src/components/sendOTP/styles';
+import { OTP_LENGTH } from 'src/constants';
 
 interface OTPMessageFieldProps {
   onSubmit: () => void;
@@ -24,6 +25,8 @@ const OTPMessageField: React.FC<OTPMessageFieldProps> = ({ onSubmit }): JSX.Elem
   const { code, codeDoesNotMatch, handleInputChange, handleSubmit, requestNewCode } =
     useVerification({ onSubmit });
 
+  const inputFields = Array<string>(OTP_LENGTH).fill('');
+
   return (
     <Container component="main" maxWidth="sm">
       <AccountVerificationContainer>
@@ -33,12 +36,14 @@ const OTPMessageField: React.FC<OTPMessageFieldProps> = ({ onSubmit }): JSX.Elem
         <StyledParagraph>{t('account_verification.sent_code')}</StyledParagraph>
         <form>
           <div style={{ display: 'flex' }}>
-            {[0, 1, 2, 3].map((index) => (
+            {inputFields.map((value, index) => (
               <DigitTextField
                 key={index}
                 value={code[index]}
                 onChange={handleInputChange(index)}
                 className={codeDoesNotMatch ? 'error' : ''}
+                index={index}
+                maxLength={inputFields.length}
               />
             ))}
           </div>
@@ -62,4 +67,5 @@ const OTPMessageField: React.FC<OTPMessageFieldProps> = ({ onSubmit }): JSX.Elem
     </Container>
   );
 };
+
 export default OTPMessageField;

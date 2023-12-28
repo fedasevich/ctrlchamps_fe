@@ -4,6 +4,7 @@ import { Alert, Snackbar } from '@mui/material';
 import { useLocales } from 'src/locales';
 import { useRequestResetCodeMutation, useVerifyResetCodeMutation } from 'src/redux/api/authApi';
 import EmailInboxIcon from 'src/assets/icons/EmailInboxIcon';
+import { OTP_LENGTH } from 'src/constants';
 import { ErrorText, FilledButton } from '../reusable';
 import {
   BtnContainer,
@@ -15,7 +16,6 @@ import {
   TextBtn,
 } from './styles';
 import OTPInput from './OTPInput';
-import { OTP_LENGTH } from './constants';
 
 type VerificationProps = { userEmail: string; next: () => void; back: () => void };
 

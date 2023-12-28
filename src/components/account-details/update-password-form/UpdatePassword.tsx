@@ -1,6 +1,6 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { FormControl, IconButton, InputAdornment, OutlinedInput } from '@mui/material';
-import { SetStateAction, useState } from 'react';
+import { SetStateAction, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 import { useLocales } from 'src/locales';
@@ -13,12 +13,12 @@ import { Container, ErrorMessage, StyledButton, StyledForm } from './styles';
 import { FormValues, useUpdatePassword } from './validation';
 
 type Props = {
-  userId: string;
+  email: string;
   onClose: () => void;
   onSuccess: () => void;
 };
 
-export default function UpdatePassword({ userId, onClose, onSuccess }: Props): JSX.Element {
+export default function UpdatePassword({ email, onClose, onSuccess }: Props): JSX.Element {
   const { translate } = useLocales();
   const updatePassSchema = useUpdatePassword();
 
@@ -26,12 +26,13 @@ export default function UpdatePassword({ userId, onClose, onSuccess }: Props): J
   const [isNewPassVisible, setIsNewPassVisible] = useState<boolean>(false);
   const [isConfirmPassVisible, setIsConfirmPassVisible] = useState<boolean>(false);
   const [invalidOldPassword, setInvalidOldPassword] = useState<boolean>(false);
+  const [serverError, setServerError] = useState<string | null>(null);
 
   const [updatePassword, { isLoading }] = useUpdatePasswordMutation();
-  const [error, setError] = useState<string | null>(null);
 
   const {
     register,
+    watch,
     handleSubmit,
     reset,
     formState: { errors, isValid },
@@ -40,18 +41,24 @@ export default function UpdatePassword({ userId, onClose, onSuccess }: Props): J
     mode: 'onChange',
   });
 
+  const oldPasswordChanges = watch('oldPassword');
+
+  useEffect(() => {
+    setInvalidOldPassword(false);
+  }, [oldPasswordChanges]);
+
   const showPassword = (setPassword: (value: SetStateAction<boolean>) => void): void =>
     setPassword((visible) => !visible);
 
   const onSubmit = handleSubmit(async (data) => {
     const { oldPassword, newPassword } = data;
 
-    setError(null);
+    setServerError(null);
     setInvalidOldPassword(false);
 
     try {
       await updatePassword({
-        id: userId,
+        email,
         oldPassword,
         newPassword,
       }).unwrap();
@@ -67,12 +74,12 @@ export default function UpdatePassword({ userId, onClose, onSuccess }: Props): J
       }
 
       if (err.data && err.data.message) {
-        setError(err.data.message);
+        setServerError(err.data.message);
 
         return;
       }
 
-      setError(translate('changePassword.errors.unexpected'));
+      setServerError(translate('changePassword.errors.unexpected'));
     }
   });
 
@@ -162,7 +169,7 @@ export default function UpdatePassword({ userId, onClose, onSuccess }: Props): J
         >
           {translate('accountDetails.updatePassword')}
         </StyledButton>
-        {error && <ErrorMessage>{error}</ErrorMessage>}
+        {serverError && <ErrorMessage>{serverError}</ErrorMessage>}
       </StyledForm>
     </Container>
   );

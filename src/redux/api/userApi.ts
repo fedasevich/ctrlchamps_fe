@@ -38,7 +38,7 @@ export interface UpdateUser {
 }
 
 interface UserPasswordData {
-  id: string;
+  email: string;
   oldPassword: string;
   newPassword: string;
 }
@@ -85,9 +85,9 @@ export const userApi = createApi({
       },
     }),
     updatePassword: builder.mutation<void, UserPasswordData>({
-      query: ({ id, ...passwordData }) => ({
-        url: `${route.changePassword}/${id}`,
-        method: 'PATCH',
+      query: ({ ...passwordData }) => ({
+        url: `${route.changePassword}`,
+        method: 'POST',
         body: passwordData,
       }),
     }),

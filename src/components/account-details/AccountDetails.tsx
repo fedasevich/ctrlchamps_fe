@@ -215,7 +215,7 @@ export default function AccountDetails({ user }: IProps): JSX.Element | null {
           </EditButton>
           {isPasswordBlockVisible && (
             <UpdatePassword
-              userId={user.id}
+              email={user.email}
               onClose={closePasswordBlock}
               onSuccess={(): void => setPasswordUpdated(true)}
             />

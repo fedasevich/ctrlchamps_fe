@@ -22,6 +22,7 @@ const route = {
   date: '/date',
   uploadAvatar: '/upload-avatar',
   changePassword: '/change-password',
+  transactions: '/transaction-history',
   activityLog: '/activity-log',
 };
 

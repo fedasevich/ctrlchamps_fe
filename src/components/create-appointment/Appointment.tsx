@@ -54,6 +54,7 @@ export default function Appointment({
         minDate={new Date()}
         value={date}
         inputFormat={DATE_FORMAT}
+        disablePast
         onChange={(newValue): void => {
           chooseDate(newValue);
         }}

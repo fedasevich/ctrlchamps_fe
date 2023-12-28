@@ -10,3 +10,5 @@ export const DEFAULT_PROFILE_QUALIFICATION_VALUES: ProfileQualityFormValues = {
 };
 
 export const MAX_CERTIFICATE_DATE = new Date();
+
+export const ONE_DAY = 1;

@@ -6,6 +6,11 @@ import {
   MIN_APPOINTMENT_NAME_LENGTH,
 } from 'src/components/create-appointment/constants';
 
+import {
+  MAX_ASSESSMENT_HOURS_DURATION,
+  MAX_REASON_LENGTH,
+  MIN_REASON_LENGTH,
+} from 'src/components/appointments/virtual-assessment-modal/constants';
 import { CONFIRM_NOTE_MAX_LENGTH } from 'src/components/confirm-appointment/constants';
 import { MAX_CHARACTERS_LENGTH, MIN_PASSWORD_LENGTH } from 'src/constants';
 
@@ -18,6 +23,10 @@ const en = {
   appointments: 'Appointments',
   schedule: 'Schedule',
   chats: 'Chats',
+  roles: {
+    client: 'client',
+    caregiver: 'caregiver',
+  },
   unexpected_error: 'Something went wrong, try again later...',
   loginForm: {
     emailInvalid: 'Email is incorrect',
@@ -73,9 +82,11 @@ const en = {
 
     stateMaxLength: 'State must be at most 100 characters',
     stateRequired: 'State is required',
+    stateOnlyLetters: 'State must contain only letters',
 
     cityMaxLength: 'City must be at most 100 characters',
     cityRequired: 'City is required',
+    cityOnlyLetters: 'City must contain only letters',
 
     zipCodeMaxLength: 'Zip code must be at most 100 characters',
     zipCodeRequired: 'Zip code is required',
@@ -103,7 +114,7 @@ const en = {
     termsButton: 'Terms & Conditions',
   },
   termsModal: {
-    title: 'Terms',
+    title: 'Terms & Conditions',
     headText:
       'Welcome to the Caregiver App! Before you begin using our services, we kindly ask you to read and agree to the following terms and conditions, which govern your use of the app. By accessing or using the app, you acknowledge that you have read, understood, and agreed to these terms. If you do not agree to these terms, please refrain from using the app.',
     firstItem:
@@ -200,7 +211,9 @@ const en = {
     startDateRequired: 'Start date is required',
     expirationDate: 'Expiration date is required',
 
+    expirationDateCannotBeBeforeStartDate: 'Expiration date cannot be before start date',
     startDateCannotBeInFuture: 'Start date cannot be in future',
+    invalidDateFormat: 'Entered data has an invalid format',
 
     mainTitle:
       'Please specify your experience and feel free to attach any document to proof your certification',
@@ -331,6 +344,9 @@ const en = {
       min_type_char: `Appointment name should contain more than ${MIN_APPOINTMENT_NAME_LENGTH} characters`,
       max_type_char: `You cannot enter more than ${MAX_APPOINTMENT_NAME_LENGTH} characters`,
       min_appointment_duration: `An appointment should last for at least ${MIN_APPOINTMENT_HOUR_DURATION} hour.`,
+      invalid_date: 'Please select current date or a date in the future.',
+      invalid_start_date:
+        'The selected start date has already passed. Please choose a future date.',
       invalid_week_days:
         'According to the set date period, you can choose in range from {{dayFrom}} to {{dayTo}}',
     },
@@ -366,8 +382,8 @@ const en = {
       medicationManagement: 'Medication Management',
       mobilitySupport: 'Mobility Support',
       mealPreparation: 'Meal Preparation',
-      housekeeping: 'Housekeeping and Laundry',
-      socialActivities: 'Social and Recreational Activities',
+      housekeeping: 'Housekeeping And Laundry',
+      socialActivities: 'Social And Recreational Activities',
     },
     bookAppointment: 'Book Appointment',
     numberOfAppointments: 'Appts.',
@@ -542,13 +558,18 @@ const en = {
     signed: 'Signed',
     agreementSignedDate: 'Date: ',
     activityLog: 'Activity Log',
-    reviewed: 'Reviewed',
+    reviewActivityLog: 'Review Activity Log',
     confirm: 'Confirm',
+    reject: 'Reject',
+    reviewed: 'Reviewed',
     filled: 'Filled',
     modal_subtitle: 'Are you sure you would like to cancel the appointment?',
     complete_modal_title: 'Complete appointment',
     complete_modal_subtitle: 'Open original appointment',
     agreement_modal_title: 'Personal Care Agreement',
+    assessment_duration_exceeded: `Virtual assessment duration cannot exceed ${MAX_ASSESSMENT_HOURS_DURATION} hours`,
+    rescheduling_reason_min: `Rescheduling reason must contain at least ${MIN_REASON_LENGTH} characters`,
+    rescheduling_reason_max: `Rescheduling reason cannot contain more than ${MAX_REASON_LENGTH} characters`,
     completedTasks: 'Completed Tasks',
     status: {
       pending: 'Pending confirmation',
@@ -561,6 +582,11 @@ const en = {
     },
     activityLogModal: {
       tasksRequired: 'At least one task is required',
+    },
+    rejectReviewActivityLogModal: {
+      specifyReason: 'Specify reason',
+      reasonRequired: 'Please specify a reason',
+      reasonMaxLength: `Reason must be at most ${MAX_CHARACTERS_LENGTH} characters`,
     },
     drawer: {
       agreement: 'Agreement',
@@ -601,6 +627,11 @@ const en = {
       checkbox_label: 'I have read and agree to the terms',
     },
   },
+  reschedule_appointment: {
+    reason: 'Reason',
+    modal_header: 'Reschedule virtual assessment',
+    main_text: 'Please specify reason for rescheduling and suggest alternative date and time',
+  },
   request_appointment: {
     virtual_assessment: 'Virtual Assessment',
     open_original_appointment: 'Open Original Appointment',
@@ -612,7 +643,7 @@ const en = {
     meeting_link: 'Meeting Link',
     link_copied: 'Meeting link is copied',
     request_sent: 'Your request has been successfully sent!',
-    request_success: "Now, we'll wait for caregivers to respond. Thank you for using our app",
+    request_success: "Now, we'll wait for the {{role}} to respond. Thank you for using our site",
     tasks: 'Tasks',
     additional_details: 'Additional details',
     notify_message: 'We will notify you right before assessment starting time',
@@ -622,9 +653,11 @@ const en = {
     equal_time_error: 'You cannot choose identical time',
     server_error: 'Something went wrong',
     btns: {
+      reschedule: 'Reschedule',
       request: 'Request',
       reject: 'Reject',
       accept: 'Accept',
+      confirm: 'Confirm',
       view: 'View',
     },
   },
@@ -699,10 +732,24 @@ const en = {
       unexpected: 'Something went wrong..',
     }
 },
+  transactions: {
+    transactions: 'Transactions',
+    top_up: 'Top-up',
+    payment_sent: 'Payment sent',
+    for_your_appointment: ' for your appointment',
+    withdrawal: 'Withdrawal',
+    payment_received: 'Payment received',
+  },
   getHelpModal: {
     title: 'Get Help',
     subtitle: 'Need assistance? We`re here to help!',
     text: 'If you have any questions, concerns, or issues, you can reach out to our dedicated support team via email',
+  },
+  logOutModal: {
+    title: 'Incomplete profile information',
+    text: 'Are you sure you want to log out before ending completing your profile? Information will not be saved',
+    logOutBtn: 'Log out',
+    backBtn: 'Back to complete profile',
   },
 };
 

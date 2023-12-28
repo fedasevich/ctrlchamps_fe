@@ -9,10 +9,15 @@ export enum ActivityLogStatus {
 }
 
 export interface ActivityLog {
+  id: string;
   appointmentId: string;
   status: ActivityLogStatus;
   tasks: string[];
   createdAt: string;
+}
+
+interface UpdateActivityLogPayload extends Pick<ActivityLog, 'id' | 'status'> {
+  reason?: string;
 }
 
 export const activityLogApi = createApi({
@@ -31,11 +36,18 @@ export const activityLogApi = createApi({
     },
   }),
   endpoints: (builder) => ({
-    createActivityLog: builder.mutation<void, Omit<ActivityLog, 'createdAt'>>({
+    createActivityLog: builder.mutation<void, Omit<ActivityLog, 'createdAt' | 'id'>>({
       query: (body) => ({
         url: route.activityLog,
         method: 'POST',
         body,
+      }),
+    }),
+    updateActivityLog: builder.mutation<void, UpdateActivityLogPayload>({
+      query: ({ id, ...activityLog }) => ({
+        url: `${route.activityLog}/${id}`,
+        method: 'PATCH',
+        body: activityLog,
       }),
     }),
   }),

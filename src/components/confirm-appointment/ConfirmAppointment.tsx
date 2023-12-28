@@ -6,12 +6,16 @@ import { Avatar } from '@mui/material';
 import ArrowForward from 'src/assets/icons/ArrowForward';
 import TasksList from 'src/components/confirm-appointment/TasksList';
 import { useLocales } from 'src/locales';
-import { useTypedSelector } from 'src/redux/store';
+import { useAppDispatch, useTypedSelector } from 'src/redux/store';
 import { useCreateAppointmentMutation } from 'src/redux/api/appointmentApi';
 import { APPOINTMENT_STATUS } from 'src/constants';
 import { Appointment } from 'src/components/create-appointment/enums';
 import { ROUTES } from 'src/routes';
 import AppointmentBtn from 'src/components/reusable/appointment-btn/AppointmentBtn';
+import CreateAppointmentFourthDrawer from 'src/components/create-appointment-fourth/CreateAppointmentFourthDrawer';
+
+import { cancelAppointment as resetAppointmentInfo } from 'src/redux/slices/appointmentSlice';
+import { resetAllInfo } from 'src/redux/slices/healthQuestionnaireSlice';
 import {
   Container,
   Header,
@@ -29,6 +33,7 @@ import { CONFIRM_NOTE_MAX_LENGTH } from './constants';
 export default function ConfirmAppointment({ onBack }: { onBack: () => void }): JSX.Element {
   const { translate } = useLocales();
   const router = useRouter();
+  const dispatch = useAppDispatch();
   const caregiver = useTypedSelector((state) => state.caregiver.selectedCaregiver);
   const appointment = useTypedSelector((state) => state.appointment);
   const location = useTypedSelector((state) => state.location);
@@ -37,18 +42,18 @@ export default function ConfirmAppointment({ onBack }: { onBack: () => void }): 
   const [tasks, setTasks] = useState<string[]>([]);
   const [details, setDetails] = useState<string>('');
   const [isModalActive, setIsModalActive] = useState<boolean>(false);
-  const [createAppointment] = useCreateAppointmentMutation();
+  const [isCaregiverDrawerOpen, setIsCaregiverDrawerOpen] = useState<boolean>(false);
+  const [createAppointment, { isLoading }] = useCreateAppointmentMutation();
 
   const onOpenModal = (): void => setIsModalActive(true);
   const onCloseModal = (): void => setIsModalActive(false);
 
+  const openDrawer = (): void => setIsCaregiverDrawerOpen(true);
+  const closeDrawer = (): void => setIsCaregiverDrawerOpen(false);
+
   const deleteTask = (idx: number): void => {
     const filtered = tasks.filter((el, i) => i !== idx);
     setTasks(filtered);
-  };
-
-  const goToProfileStep = (): void => {
-    onBack();
   };
 
   const confirmAppointment = async (): Promise<void> => {
@@ -82,6 +87,8 @@ export default function ConfirmAppointment({ onBack }: { onBack: () => void }): 
         seekerActivities: healthQuestionnaire.selectedActivities,
       }).unwrap();
       router.push(ROUTES.home);
+      dispatch(resetAppointmentInfo());
+      dispatch(resetAllInfo());
     } catch (err) {
       throw new Error(err);
     }
@@ -93,7 +100,7 @@ export default function ConfirmAppointment({ onBack }: { onBack: () => void }): 
         <InnerContainer>
           <Header>
             <Typography>{translate('confirm_appointment.caregiver')}</Typography>
-            <LinkToProfile onClick={goToProfileStep}>
+            <LinkToProfile onClick={openDrawer}>
               <Avatar />
               <Name>{`${caregiver?.firstName} ${caregiver?.lastName}`}</Name>
               <ArrowForward />
@@ -123,12 +130,19 @@ export default function ConfirmAppointment({ onBack }: { onBack: () => void }): 
           <AppointmentBtn
             nextText={translate('confirm_appointment.confirm')}
             backText={translate('profileQualification.back')}
-            disabled={!tasks.length || details.length > CONFIRM_NOTE_MAX_LENGTH}
+            disabled={!tasks.length || details.length > CONFIRM_NOTE_MAX_LENGTH || isLoading}
             onClick={confirmAppointment}
             onBack={onBack}
           />
         </InnerContainer>
       </Container>
+      {caregiver && (
+        <CreateAppointmentFourthDrawer
+          open={isCaregiverDrawerOpen}
+          onClose={closeDrawer}
+          selectedCaregiverId={caregiver.id}
+        />
+      )}
     </PageBackground>
   );
 }

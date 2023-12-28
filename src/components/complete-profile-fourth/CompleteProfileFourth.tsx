@@ -86,7 +86,7 @@ export default function CompleteProfileFourth({ onNext, onBack }: IProps): JSX.E
           <ErrorText>{translate('completeProfileFourth.invalid_time')}</ErrorText>
         )}
         {identicalTimeError && (
-          <ErrorText> {translate('completeProfileFourth.equal_time_error')}</ErrorText>
+          <ErrorText>{translate('completeProfileFourth.equal_time_error')}</ErrorText>
         )}
         <Snackbar
           open={serverError}

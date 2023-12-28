@@ -20,10 +20,7 @@ import { WorkExperience, useCreateWorkExperienceMutation } from 'src/redux/api/p
 import { saveWorkExperiences } from 'src/redux/slices/workEperienceSlice';
 import { useAppDispatch, useTypedSelector } from 'src/redux/store';
 import { ProfileExperience } from 'src/components/complete-profile-second/types';
-import {
-  DEFAULT_EXPERIENCE_VALUES,
-  MAX_WORK_DATE,
-} from 'src/components/complete-profile-second/work-form/constants';
+import { DEFAULT_EXPERIENCE_VALUES } from 'src/components/complete-profile-second/work-form/constants';
 import { useExperienceSelectOptions } from 'src/components/complete-profile-second/work-form/select-options';
 import {
   ErrorMessage,
@@ -32,7 +29,7 @@ import {
   ButtonWrapper,
 } from 'src/components/complete-profile-second/work-form/styles';
 import { useProfileExperienceSchema } from 'src/components/complete-profile-second/work-form/validation';
-import { DATE_FORMAT, BACKEND_DATE_FORMAT } from 'src/constants';
+import { DATE_FORMAT, BACKEND_DATE_FORMAT, CURRENT_DAY } from 'src/constants';
 import { useLocales } from 'src/locales';
 
 type Props = {
@@ -58,7 +55,6 @@ export default function WorkForm({ onClose, onSave, editingWorkPlaces }: Props):
     watch,
     setValue,
     trigger,
-    getValues,
     formState: { errors, isValid },
   } = useForm<ProfileExperience>({
     resolver: yupResolver(profileExperienceSchema),
@@ -151,7 +147,7 @@ export default function WorkForm({ onClose, onSave, editingWorkPlaces }: Props):
               <DatePicker
                 {...field}
                 label={translate('completeProfileSecond.startDateLabel')}
-                maxDate={MAX_WORK_DATE}
+                maxDate={CURRENT_DAY}
                 openTo="year"
                 inputFormat={DATE_FORMAT}
                 PopperProps={{
@@ -175,8 +171,8 @@ export default function WorkForm({ onClose, onSave, editingWorkPlaces }: Props):
                 {...field}
                 label={translate('completeProfileSecond.endDateLabel')}
                 inputFormat={DATE_FORMAT}
-                maxDate={MAX_WORK_DATE}
-                minDate={getValues('startDate')}
+                maxDate={CURRENT_DAY}
+                minDate={watch('startDate')}
                 openTo="year"
                 value={isEndDateDisabled ? null : field.value}
                 onChange={(date): void => field.onChange(date)}

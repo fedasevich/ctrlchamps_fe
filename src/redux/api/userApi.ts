@@ -37,6 +37,12 @@ export interface UpdateUser {
   avatar?: string | null;
 }
 
+interface UserPasswordData {
+  email: string;
+  oldPassword: string;
+  newPassword: string;
+}
+
 export const userApi = createApi({
   reducerPath: 'userApi',
   baseQuery: fetchBaseQuery({
@@ -78,9 +84,21 @@ export const userApi = createApi({
         };
       },
     }),
+    updatePassword: builder.mutation<void, UserPasswordData>({
+      query: ({ ...passwordData }) => ({
+        url: `${route.changePassword}`,
+        method: 'POST',
+        body: passwordData,
+      }),
+    }),
   }),
 });
 
-export const { useGetUserInfoQuery, useUpdateUserMutation, useUploadAvatarMutation } = userApi;
+export const {
+  useGetUserInfoQuery,
+  useUpdateUserMutation,
+  useUploadAvatarMutation,
+  useUpdatePasswordMutation,
+} = userApi;
 
 export default userApi;

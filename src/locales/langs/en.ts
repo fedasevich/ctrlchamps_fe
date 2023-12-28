@@ -707,7 +707,7 @@ const en = {
   },
   logOutModal: {
     title: 'Incomplete profile information',
-    text: 'Are you sure you want to log before ending completing your profile? Information will not be saved',
+    text: 'Are you sure you want to log out before ending completing your profile? Information will not be saved',
     logOutBtn: 'Log out',
     backBtn: 'Back to complete profile',
   },

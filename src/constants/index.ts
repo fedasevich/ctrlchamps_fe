@@ -10,6 +10,7 @@ export const MAX_CHARACTERS_LENGTH = 100;
 export const BAD_REQUEST_STATUS = 400;
 export const DATE_FORMAT = 'MM/dd/yyyy';
 export const BACKEND_DATE_FORMAT = 'yyyy-MM-dd';
+export const UTC_BIAS = 'Z';
 
 export const CURRENT_DAY = new Date();
 export const DISPLAY_TIME_FORMAT = 'HH:mm';
@@ -66,3 +67,5 @@ export const APPOINTMENT_TYPE = {
   OneTime: 'One time',
   Recurring: 'Recurring',
 };
+
+export const HELP_EMAIL = 'help@ctrlchamps@gmail.com';

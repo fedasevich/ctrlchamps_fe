@@ -48,10 +48,11 @@ const healthQuestionnaireSlice = createSlice({
       const { step, note } = action.payload;
       state.notes[step] = note;
     },
+    resetAllInfo: () => initialState,
   },
 });
 
-export const { selectDiagnosis, selectActivity, selectEnvChallenges, saveNote } =
+export const { selectDiagnosis, selectActivity, selectEnvChallenges, saveNote, resetAllInfo } =
   healthQuestionnaireSlice.actions;
 
 export default healthQuestionnaireSlice.reducer;

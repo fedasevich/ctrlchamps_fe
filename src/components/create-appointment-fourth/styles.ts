@@ -1,9 +1,9 @@
 import { Avatar, FormControlLabel, ListItemText, Typography, styled } from '@mui/material';
+import { NextButton } from 'src/components/reusable/appointment-btn/styles';
 import { HEADER } from 'src/config-global';
 import { PRIMARY, SECONDARY } from 'src/theme/colors';
 import { TYPOGRAPHY } from 'src/theme/fonts';
 import typography from 'src/theme/typography';
-import { NextButton } from '../reusable/appointment-btn/styles';
 
 export const Background = styled('div')`
   background-color: ${PRIMARY.light_main};

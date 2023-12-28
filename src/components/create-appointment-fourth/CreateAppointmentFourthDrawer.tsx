@@ -3,9 +3,9 @@ import { appointmentApi } from 'src/redux/api/appointmentApi';
 import { setSelectedCaregiver } from 'src/redux/slices/caregiverSlice';
 import { useAppDispatch } from 'src/redux/store';
 
+import { NextButton } from 'src/components//reusable/appointment-btn/styles';
 import CaregiverDrawer from 'src/components/reusable/drawer/caregiver-drawer/CaregiverDrawer';
 import { InfoIcon } from 'src/theme/overrides/CustomIcons';
-import { NextButton } from '../reusable/profile-btn/styles';
 import { LocationMessage } from './places-autocomplete/styles';
 import { StyledModalFooter } from './styles';
 

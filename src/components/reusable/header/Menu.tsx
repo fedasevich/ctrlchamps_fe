@@ -27,6 +27,7 @@ import {
   MenuItemStyled,
   OperationButton,
   StyledMenu,
+  HalfVisibleParagraph,
 } from './styles';
 
 interface MenuDropdownProps {
@@ -71,7 +72,7 @@ const MenuDropdown: React.FC<MenuDropdownProps> = ({ children, onClick }): JSX.E
       dispatch(removeToken());
       dispatch(removeUser());
       handleClose();
-      window.location.reload();
+      router.push(ROUTES.login);
     } catch (error) {
       throw new Error(error);
     }
@@ -109,7 +110,7 @@ const MenuDropdown: React.FC<MenuDropdownProps> = ({ children, onClick }): JSX.E
           <BalanceTitle>{translate('menu.balance')}</BalanceTitle>
           <BalanceParagraph>
             <BalanceAmount>
-              <div style={{ opacity: 0.6 }}>$ </div>
+              <HalfVisibleParagraph>$ </HalfVisibleParagraph>
               {balance}
             </BalanceAmount>
             {role === USER_ROLE.Caregiver ? (

@@ -21,6 +21,7 @@ import {
   MenuSection,
   ProfileName,
   ProfileSection,
+  SecondPart,
 } from './styles';
 import { ActiveTab } from './types';
 

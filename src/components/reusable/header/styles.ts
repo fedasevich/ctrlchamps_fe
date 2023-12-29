@@ -193,9 +193,13 @@ const Arrow = styled.div`
     transform: rotate(180deg);
 `;
 
-export const StyledMenu = styled(Menu)`
+const StyledMenu = styled(Menu)`
   width: 300px;
   margin-top: 15px;
+`;
+
+const HalfVisibleParagraph = styled.div`
+  opacity: 0.7;
 `;
 
 const BalanceBlock = styled.div`
@@ -282,4 +286,6 @@ export {
   BalanceAmount,
   BalanceParagraph,
   OperationButton,
+  HalfVisibleParagraph,
+  StyledMenu,
 };

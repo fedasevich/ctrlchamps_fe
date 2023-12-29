@@ -5,9 +5,12 @@ import { daySelectedType } from './types';
 export const EMAIL_ERROR = 'email';
 export const PHONE_ERROR = 'phone';
 export const USER_MIN_AGE = 18;
+export const MIN_PASSWORD_LENGTH = 8;
 export const MAX_CHARACTERS_LENGTH = 100;
+export const BAD_REQUEST_STATUS = 400;
 export const DATE_FORMAT = 'MM/dd/yyyy';
 export const BACKEND_DATE_FORMAT = 'yyyy-MM-dd';
+export const UTC_BIAS = 'Z';
 
 export const CURRENT_DAY = new Date();
 export const DISPLAY_TIME_FORMAT = 'HH:mm';
@@ -15,6 +18,7 @@ export const ONE_DAY = 1;
 
 export const TIMEZONE_FORMAT = Intl.DateTimeFormat().resolvedOptions().timeZone;
 export const URL_PATTERN = /^https:\/\/.+$/;
+export const ONLY_LETTERS_PATTERN = /^[a-zA-Z\s]*$/;
 
 export const GOOGLE_MAP_API = 'https://maps.googleapis.com/maps/api';
 
@@ -64,3 +68,5 @@ export const APPOINTMENT_TYPE = {
   OneTime: 'One time',
   Recurring: 'Recurring',
 };
+
+export const HELP_EMAIL = 'help@ctrlchamps@gmail.com';

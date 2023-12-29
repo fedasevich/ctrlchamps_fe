@@ -19,12 +19,15 @@ export const usePersonalInfoSchema = (): ObjectSchema<
 
   return object({
     firstName: string()
+      .trim()
       .max(100, translate('signUpSecondForm.firstNameInvalid'))
       .required(translate('signUpSecondForm.firstNameRequired')),
     lastName: string()
+      .trim()
       .max(100, translate('signUpSecondForm.lastNameInvalid'))
       .required(translate('signUpSecondForm.lastNameRequired')),
     phoneNumber: string()
+      .trim()
       .length(MAX_PHONE_CHARACTERS, translate('signUpSecondForm.phoneLengthInvalid'))
       .required(translate('signUpSecondForm.phoneRequired')),
     dateOfBirth: date()

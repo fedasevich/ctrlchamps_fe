@@ -13,10 +13,7 @@ import { format } from 'date-fns';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 
-import {
-  DEFAULT_PROFILE_QUALIFICATION_VALUES,
-  MAX_CERTIFICATE_DATE,
-} from 'src/components/profile/profile-qualification/certificate-form/constants';
+import { DEFAULT_PROFILE_QUALIFICATION_VALUES } from 'src/components/profile/profile-qualification/certificate-form/constants';
 import {
   ErrorMessage,
   StyledForm,
@@ -26,7 +23,7 @@ import {
 import { useProfileQualificationSchema } from 'src/components/profile/profile-qualification/certificate-form/validation';
 import { ProfileQuality } from 'src/components/profile/profile-qualification/types';
 import { useLocales } from 'src/locales';
-import { BACKEND_DATE_FORMAT, DATE_FORMAT } from 'src/constants';
+import { BACKEND_DATE_FORMAT, CURRENT_DAY, DATE_FORMAT } from 'src/constants';
 import { Certificate, profileApi } from 'src/redux/api/profileCompleteApi';
 import { saveCertificates } from 'src/redux/slices/certificateSlice';
 import { useAppDispatch, useTypedSelector } from 'src/redux/store';
@@ -145,7 +142,7 @@ export default function CertificateForm({
               <DatePicker
                 {...field}
                 label={translate('profileQualification.placeholderStartDate')}
-                maxDate={MAX_CERTIFICATE_DATE}
+                maxDate={CURRENT_DAY}
                 openTo="year"
                 inputFormat={DATE_FORMAT}
                 PopperProps={{
@@ -169,7 +166,7 @@ export default function CertificateForm({
                 {...field}
                 label={translate('profileQualification.placeholderExpirationDate')}
                 inputFormat={DATE_FORMAT}
-                minDate={getValues('dateIssued')}
+                minDate={watch('dateIssued')}
                 openTo="year"
                 value={isExpirationDateDisabled ? null : field.value}
                 onChange={(date): void => field.onChange(date)}

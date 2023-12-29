@@ -21,7 +21,8 @@ export const SECONDARY = {
   drawer_background: 'rgba(8, 188, 184, 0.04)',
   error_hover: 'rgba(198, 40, 40, 0.08)',
   caregiver_profile_background: 'rgba(255, 255, 255, 1)',
-  light_green: 'rgba(227, 248, 247, 1)'
+  light_green: 'rgba(227, 248, 247, 1)',
+  error: '#FF0000',
 };
 
 export const TEXT_COLOR = {
@@ -29,4 +30,5 @@ export const TEXT_COLOR = {
   pending: 'rgba(255, 165, 0, 0.87)',
   active: 'rgba(0, 128, 0, 0.87)',
   rejected: 'rgba(255, 0, 0, 0.87)',
+  disabled: '#00000061',
 };

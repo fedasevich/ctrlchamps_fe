@@ -5,4 +5,5 @@ export type VirtualAssessmentRequestModalProps = {
   isOpen: boolean;
   switchModalVisibility: () => void;
   openDrawer: () => void;
+  closeDrawer: () => void;
 };

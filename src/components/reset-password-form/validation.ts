@@ -28,8 +28,9 @@ export function useResetPassword(): ReturnType {
   const confirmPasswordRequired: string = t('reset_password.errors.pass_required');
 
   return object({
-    password: string().min(MIN_PASS_LENGTH, minPassLength).required(passwordRequired),
+    password: string().trim().min(MIN_PASS_LENGTH, minPassLength).required(passwordRequired),
     confirmPassword: string()
+      .trim()
       .oneOf([ref('password'), undefined], passwordsNotMatching)
       .required(confirmPasswordRequired),
   });

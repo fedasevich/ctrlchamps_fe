@@ -7,5 +7,3 @@ export const DEFAULT_EXPERIENCE_VALUES: CompleteProfileSecondValues = {
   endDate: '',
   isEndDateDisabled: false,
 };
-
-export const MAX_WORK_DATE = new Date();

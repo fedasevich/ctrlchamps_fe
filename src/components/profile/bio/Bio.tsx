@@ -1,35 +1,37 @@
-import { ChangeEvent, ReactElement, useState } from 'react';
-import { useRouter } from 'next/router';
-import { useForm, Controller, ControllerRenderProps, SubmitHandler } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { FormControl, FilledInput, InputLabel, Button } from '@mui/material';
 import { Close } from '@mui/icons-material';
 import VideocamOutlinedIcon from '@mui/icons-material/VideocamOutlined';
+import { Button, FilledInput, FormControl, InputLabel } from '@mui/material';
+import { useRouter } from 'next/router';
+import { ChangeEvent, ReactElement, useState } from 'react';
+import { Controller, ControllerRenderProps, SubmitHandler, useForm } from 'react-hook-form';
 
-import { useUploadFileMutation, useUpdateProfileMutation } from 'src/redux/api/profileCompleteApi';
 import { useSelector } from 'react-redux';
-import { RootState } from 'src/redux/rootReducer';
-import { useLocales } from 'src/locales';
-import { ROUTES } from 'src/routes';
-import { useBioFormSchema } from 'src/components/profile/bio/validation';
-import {
-  ErrorMessage,
-  MediaWrapper,
-  StyledForm,
-  StyledIconButton,
-  StyledVideo,
-  VideocamIcon,
-  StyledFormControl,
-  NotAllowIcon,
-} from 'src/components/profile/bio/styles';
-import { BioFormValues } from 'src/components/profile/bio/types';
 import {
   AVI_FORMAT,
   DEFAULT_BIO_VALUES,
   MOV_FORMAT,
   MP4_FORMAT,
 } from 'src/components/profile/bio/constants';
+import {
+  ErrorMessage,
+  MediaWrapper,
+  NotAllowIcon,
+  StyledForm,
+  StyledFormControl,
+  StyledIconButton,
+  StyledVideo,
+  VideocamIcon,
+} from 'src/components/profile/bio/styles';
+import { BioFormValues } from 'src/components/profile/bio/types';
+import { useBioFormSchema } from 'src/components/profile/bio/validation';
 import ProfileBtn from 'src/components/reusable/profile-btn/ProfileBtn';
+import { useLocales } from 'src/locales';
+import { useUpdateProfileMutation, useUploadFileMutation } from 'src/redux/api/profileCompleteApi';
+import { RootState } from 'src/redux/rootReducer';
+import { setToken } from 'src/redux/slices/tokenSlice';
+import { useAppDispatch } from 'src/redux/store';
+import { ROUTES } from 'src/routes';
 
 interface IProps {
   onBack: () => void;
@@ -43,6 +45,7 @@ export function Bio({ onBack }: IProps): JSX.Element {
 
   const { translate } = useLocales();
   const router = useRouter();
+  const dispatch = useAppDispatch();
 
   const bioFormSchema = useBioFormSchema();
 
@@ -71,7 +74,13 @@ export function Bio({ onBack }: IProps): JSX.Element {
         updateProfileDto: { description: data.description },
       })
         .unwrap()
-        .then(() => router.push(ROUTES.schedule));
+
+        .then((response) => {
+          if (response.token) {
+            dispatch(setToken(response.token));
+          }
+          router.push(ROUTES.home);
+        });
     } catch (error) {
       throw new Error(error);
     }

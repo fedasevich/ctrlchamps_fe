@@ -9,7 +9,6 @@ const route = {
   signIn: '/sign-in',
   accountCheck: '/account-check',
   uploadFile: '/uploadFile',
-  uploadAvatar: '/uploadAvatar',
   certificates: '/certificates',
   workExperience: '/work-experience',
   questionnaire_activity: '/activity',
@@ -21,11 +20,12 @@ const route = {
   timezoneJson: '/timezone/json',
   virtualAssessment: '/virtual-assessment',
   date: '/date',
+  uploadAvatar: '/upload-avatar',
+  changePassword: '/change-password',
   transactions: '/transaction-history',
   activityLog: '/activity-log',
   payment: '/payment',
-  withdraw: '/withdraw',
-  topUp: '/top-up',
+  updateBalance: '/transactions',
 };
 
 export { route };

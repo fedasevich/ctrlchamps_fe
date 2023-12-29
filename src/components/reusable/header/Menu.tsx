@@ -15,7 +15,7 @@ import { removeUser } from 'src/redux/slices/userSlice';
 import { useLocales } from 'src/locales';
 import { useAppDispatch, useTypedSelector } from 'src/redux/store';
 import { TRANSACTION_EXAMPLE, USER_ROLE } from 'src/constants';
-import { useTopUpMutation, useWithdrawMutation } from 'src/redux/api/paymentApi';
+import { useUpdateBalanceMutation } from 'src/redux/api/paymentApi';
 import { useGetUserInfoQuery } from 'src/redux/api/userApi';
 import {
   Arrow,
@@ -27,6 +27,7 @@ import {
   MenuItemStyled,
   OperationButton,
   StyledMenu,
+  HalfVisibleParagraph,
 } from './styles';
 
 interface MenuDropdownProps {
@@ -38,8 +39,7 @@ const MenuDropdown: React.FC<MenuDropdownProps> = ({ children, onClick }): JSX.E
   const router = useRouter();
   const { translate } = useLocales();
   const dispatch = useAppDispatch();
-  const [withdraw] = useWithdrawMutation();
-  const [topUp] = useTopUpMutation();
+  const [updateBalance] = useUpdateBalanceMutation();
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [balance, setBalance] = useState<number>(0);
@@ -71,7 +71,7 @@ const MenuDropdown: React.FC<MenuDropdownProps> = ({ children, onClick }): JSX.E
       dispatch(removeToken());
       dispatch(removeUser());
       handleClose();
-      window.location.reload();
+      router.push(ROUTES.login);
     } catch (error) {
       throw new Error(error);
     }
@@ -83,7 +83,7 @@ const MenuDropdown: React.FC<MenuDropdownProps> = ({ children, onClick }): JSX.E
 
       setBalance((prevBalance) => prevBalance - amount);
 
-      await withdraw(previousBalance - amount);
+      await updateBalance(previousBalance - amount);
     } catch (error) {
       throw new Error(error);
     }
@@ -93,7 +93,7 @@ const MenuDropdown: React.FC<MenuDropdownProps> = ({ children, onClick }): JSX.E
     try {
       setBalance((prevBalance) => prevBalance + amount);
 
-      await topUp(balance + amount);
+      await updateBalance(balance + amount);
     } catch (error) {
       throw new Error(error);
     }
@@ -109,7 +109,7 @@ const MenuDropdown: React.FC<MenuDropdownProps> = ({ children, onClick }): JSX.E
           <BalanceTitle>{translate('menu.balance')}</BalanceTitle>
           <BalanceParagraph>
             <BalanceAmount>
-              <div style={{ opacity: 0.6 }}>$ </div>
+              <HalfVisibleParagraph>$ </HalfVisibleParagraph>
               {balance}
             </BalanceAmount>
             {role === USER_ROLE.Caregiver ? (
@@ -140,7 +140,7 @@ const MenuDropdown: React.FC<MenuDropdownProps> = ({ children, onClick }): JSX.E
         </MenuItemStyled>
         <MenuItemStyled onClick={handleClose}>
           <PersonOutlinedIcon />
-          <MenuListItem>
+          <MenuListItem onClick={(): Promise<boolean> => router.push(ROUTES.account_details)}>
             <div>{translate('menu.acc_details')}</div> <ChevronRightOutlinedIcon />
           </MenuListItem>
         </MenuItemStyled>
@@ -161,7 +161,7 @@ const MenuDropdown: React.FC<MenuDropdownProps> = ({ children, onClick }): JSX.E
         </MenuItemStyled>
         <MenuItemStyled onClick={handleClose}>
           <InfoOutlinedIcon />
-          <MenuListItem>
+          <MenuListItem onClick={(): Promise<boolean> => router.push(ROUTES.faq)}>
             <div>{translate('menu.faq')}</div> <ChevronRightOutlinedIcon />
           </MenuListItem>
         </MenuItemStyled>

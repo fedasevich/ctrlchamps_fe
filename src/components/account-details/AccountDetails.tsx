@@ -1,43 +1,44 @@
-import { ChangeEvent, useState } from 'react';
-import { ReactElement } from 'react-markdown/lib/react-markdown';
-import { Button, FormControlLabel, Switch, FormControl } from '@mui/material';
-import PhotoCameraOutlinedIcon from '@mui/icons-material/PhotoCameraOutlined';
-import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
-import { useForm, ControllerRenderProps, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
+import PhotoCameraOutlinedIcon from '@mui/icons-material/PhotoCameraOutlined';
+import { Button, FormControl, FormControlLabel, Switch } from '@mui/material';
+import { ChangeEvent, useState } from 'react';
+import { Controller, ControllerRenderProps, useForm } from 'react-hook-form';
+import { ReactElement } from 'react-markdown/lib/react-markdown';
 
+import EditSquare from 'src/assets/icons/EditSquare';
+import Modal from 'src/components/reusable/modal/Modal';
+import { USER_ROLE } from 'src/constants';
+import { useLocales } from 'src/locales';
 import { User, useUpdateUserMutation, useUploadAvatarMutation } from 'src/redux/api/userApi';
 import { SECONDARY } from 'src/theme/colors';
-import { useLocales } from 'src/locales';
 import { TYPOGRAPHY } from 'src/theme/fonts';
-import Modal from 'src/components/reusable/modal/Modal';
-import EditSquare from 'src/assets/icons/EditSquare';
-import { USER_ROLE } from 'src/constants';
 
-import PersonalInfoModal from './personal-info-modal/PersonalInfoModal';
 import AddressModal from './address-modal/AddressModal';
+import { MAX_FILE_SIZE_BYTES } from './constants';
+import PersonalInfoModal from './personal-info-modal/PersonalInfoModal';
+import { ErrorMessage } from './personal-info-modal/styles';
 import {
   AvatarContainer,
-  Background,
-  Container,
-  Title,
   AvatarIconContainer,
-  VisuallyHiddenInput,
+  Background,
   Block,
-  Subtitle,
-  List,
+  Container,
+  EditButton,
   Item,
   Label,
-  Value,
-  StyledButton,
-  EditButton,
+  List,
   StyledAvatar,
+  Subtitle,
+  Title,
   TrashButton,
+  Value,
+  VisuallyHiddenInput,
 } from './styles';
 import { AvatarValues } from './types';
+import UpdatePassword from './update-password-form/UpdatePassword';
+import UpdatePasswordSuccess from './update-password-form/UpdatePasswordSuccess';
 import { useAvatarSchema } from './validation';
-import { ErrorMessage } from './personal-info-modal/styles';
-import { MAX_FILE_SIZE_BYTES } from './constants';
 
 interface IProps {
   user: User;
@@ -47,8 +48,10 @@ export default function AccountDetails({ user }: IProps): JSX.Element | null {
   const { translate } = useLocales();
   const [isPersonalInfoModalOpen, setIsPersonalInfoModalOpen] = useState<boolean>(false);
   const [isAddressModalOpen, setIsAddressModalOpen] = useState<boolean>(false);
-  const [isPasswordModalOpen, setIsPasswordModalOpen] = useState<boolean>(false);
+  const [isPasswordBlockVisible, setIsPasswordBlockVisible] = useState<boolean>(false);
   const [avatarURL, setAvatarURL] = useState<string>(user.avatar ? user.avatar : '');
+  const [passwordUpdated, setPasswordUpdated] = useState<boolean>(false);
+
   const [uploadAvatar] = useUploadAvatarMutation();
   const [deleteAvatar] = useUpdateUserMutation();
 
@@ -100,6 +103,9 @@ export default function AccountDetails({ user }: IProps): JSX.Element | null {
       throw new Error(error);
     }
   };
+
+  const openPasswordBlock = (): void => setIsPasswordBlockVisible(!isPasswordBlockVisible);
+  const closePasswordBlock = (): void => setIsPasswordBlockVisible(false);
 
   return (
     <Background>
@@ -203,10 +209,17 @@ export default function AccountDetails({ user }: IProps): JSX.Element | null {
           </EditButton>
         </Block>
         <Block>
-          <Subtitle>{translate('accountDetails.password')}</Subtitle>
-          <StyledButton variant="outlined" onClick={(): void => setIsPasswordModalOpen(true)}>
-            {translate('accountDetails.updatePassword')}
-          </StyledButton>
+          <Subtitle>{translate('changePassword.title')}</Subtitle>
+          <EditButton onClick={openPasswordBlock}>
+            <EditSquare />
+          </EditButton>
+          {isPasswordBlockVisible && (
+            <UpdatePassword
+              email={user.email}
+              onClose={closePasswordBlock}
+              onSuccess={(): void => setPasswordUpdated(true)}
+            />
+          )}
         </Block>
       </Container>
       <Modal
@@ -225,13 +238,10 @@ export default function AccountDetails({ user }: IProps): JSX.Element | null {
       >
         <AddressModal user={user} onClose={(): void => setIsAddressModalOpen(false)} />
       </Modal>
-      <Modal
-        onClose={(): void => setIsPasswordModalOpen(false)}
-        title={translate('accountDetails.updatePassword')}
-        isActive={isPasswordModalOpen}
-      >
-        <p>{translate('accountDetails.updatePassword')}</p>
-      </Modal>
+      <UpdatePasswordSuccess
+        passwordUpdated={passwordUpdated}
+        setPasswordUpdated={setPasswordUpdated}
+      />
     </Background>
   );
 }

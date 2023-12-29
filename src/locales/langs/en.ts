@@ -12,7 +12,7 @@ import {
   MIN_REASON_LENGTH,
 } from 'src/components/appointments/virtual-assessment-modal/constants';
 import { CONFIRM_NOTE_MAX_LENGTH } from 'src/components/confirm-appointment/constants';
-import { MAX_CHARACTERS_LENGTH } from 'src/constants';
+import { MAX_CHARACTERS_LENGTH, MIN_PASSWORD_LENGTH } from 'src/constants';
 
 const en = {
   app_title: 'CtrlChamps',
@@ -376,6 +376,9 @@ const en = {
     openToLivingInClientsHouses: 'Open to living in client’s houses',
     noLocations: 'No location',
     servicesTitle: 'Services',
+    backToHealthQuestionnaire: 'Back to Health questionnaire',
+    toBookAnAppointmentFirstlyChooseYourLocation:
+      'To book an appointment firstly choose your location',
     hourRate: '{{rate}}/h',
     services: {
       personalCare: 'Personal Care Assistance',
@@ -714,6 +717,24 @@ const en = {
     personalInfoModal: { title: 'Edit Personal Information', saveButton: 'Save' },
     addressModal: { title: 'Edit Address' },
   },
+  changePassword: {
+    title: 'Change Password',
+    success: 'Your password has been successfully changed!',
+    placeholder: {
+      oldPass: 'Old password',
+      newPass: 'New password',
+      confirmPass: 'Confirm Password',
+    },
+    errors: {
+      not_match: "'New password' field and 'Confirm password' field must match",
+      required: 'This field is required',
+      invalid_length: `Password should contain at least ${MIN_PASSWORD_LENGTH} characters`,
+      invalid_old_pass: 'Please enter correct password',
+      invalid_pass: 'New password must be different from the old password',
+      incorrect_pass: 'Please enter correct password',
+      unexpected: 'Something went wrong..',
+    }
+},
   transactions: {
     transactions: 'Transactions',
     top_up: 'Top-up',

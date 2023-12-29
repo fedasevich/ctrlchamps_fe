@@ -18,22 +18,15 @@ export const paymentApi = createApi({
     },
   }),
   endpoints: (builder) => ({
-    withdraw: builder.mutation<void, number>({
+    updateBalance: builder.mutation<void, number>({
       query: (balance) => ({
-        url: route.withdraw,
-        method: 'POST',
-        body: { balance },
-      }),
-    }),
-    topUp: builder.mutation<void, number>({
-      query: (balance) => ({
-        url: route.topUp,
-        method: 'POST',
+        url: route.updateBalance,
+        method: 'Patch',
         body: { balance },
       }),
     }),
   }),
 });
 
-export const { useWithdrawMutation, useTopUpMutation } = paymentApi;
+export const { useUpdateBalanceMutation } = paymentApi;
 export default paymentApi;

@@ -40,7 +40,7 @@ const DigitTextField: React.FC<DigitTextFieldProps> = ({
       value={value}
       onChange={handleInputChange}
       onFocus={onFocus}
-      id={`digitInput-${index}`} // Assign a unique ID to each input
+      id={`digitInput-${index}`}
     />
   );
 };

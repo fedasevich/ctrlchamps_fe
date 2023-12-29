@@ -140,7 +140,7 @@ const MenuDropdown: React.FC<MenuDropdownProps> = ({ children, onClick }): JSX.E
         </MenuItemStyled>
         <MenuItemStyled onClick={handleClose}>
           <PersonOutlinedIcon />
-          <MenuListItem>
+          <MenuListItem onClick={(): Promise<boolean> => router.push(ROUTES.account_details)}>
             <div>{translate('menu.acc_details')}</div> <ChevronRightOutlinedIcon />
           </MenuListItem>
         </MenuItemStyled>
@@ -161,7 +161,7 @@ const MenuDropdown: React.FC<MenuDropdownProps> = ({ children, onClick }): JSX.E
         </MenuItemStyled>
         <MenuItemStyled onClick={handleClose}>
           <InfoOutlinedIcon />
-          <MenuListItem>
+          <MenuListItem onClick={(): Promise<boolean> => router.push(ROUTES.faq)}>
             <div>{translate('menu.faq')}</div> <ChevronRightOutlinedIcon />
           </MenuListItem>
         </MenuItemStyled>

@@ -24,8 +24,7 @@ const route = {
   transactions: '/transaction-history',
   activityLog: '/activity-log',
   payment: '/payment',
-  withdraw: '/withdraw',
-  topUp: '/top-up',
+  updateBalance: '/transactions',
 };
 
 export { route };

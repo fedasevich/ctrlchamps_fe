@@ -15,7 +15,7 @@ import { removeUser } from 'src/redux/slices/userSlice';
 import { useLocales } from 'src/locales';
 import { useAppDispatch, useTypedSelector } from 'src/redux/store';
 import { TRANSACTION_EXAMPLE, USER_ROLE } from 'src/constants';
-import { useTopUpMutation, useWithdrawMutation } from 'src/redux/api/paymentApi';
+import { useUpdateBalanceMutation } from 'src/redux/api/paymentApi';
 import { useGetUserInfoQuery } from 'src/redux/api/userApi';
 import {
   Arrow,
@@ -39,8 +39,7 @@ const MenuDropdown: React.FC<MenuDropdownProps> = ({ children, onClick }): JSX.E
   const router = useRouter();
   const { translate } = useLocales();
   const dispatch = useAppDispatch();
-  const [withdraw] = useWithdrawMutation();
-  const [topUp] = useTopUpMutation();
+  const [updateBalance] = useUpdateBalanceMutation();
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [balance, setBalance] = useState<number>(0);
@@ -84,7 +83,7 @@ const MenuDropdown: React.FC<MenuDropdownProps> = ({ children, onClick }): JSX.E
 
       setBalance((prevBalance) => prevBalance - amount);
 
-      await withdraw(previousBalance - amount);
+      await updateBalance(previousBalance - amount);
     } catch (error) {
       throw new Error(error);
     }
@@ -94,7 +93,7 @@ const MenuDropdown: React.FC<MenuDropdownProps> = ({ children, onClick }): JSX.E
     try {
       setBalance((prevBalance) => prevBalance + amount);
 
-      await topUp(balance + amount);
+      await updateBalance(balance + amount);
     } catch (error) {
       throw new Error(error);
     }

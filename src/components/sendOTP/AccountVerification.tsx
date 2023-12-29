@@ -8,6 +8,7 @@ import useVerification from 'src/hooks/useVerification';
 import {
   AccountVerificationContainer,
   IconContainer,
+  InputFieldsBlock,
   StyledErrorText,
   StyledParagraph,
   StyledParagraphMain,
@@ -35,7 +36,7 @@ const OTPMessageField: React.FC<OTPMessageFieldProps> = ({ onSubmit }): JSX.Elem
         </IconContainer>
         <StyledParagraph>{t('account_verification.sent_code')}</StyledParagraph>
         <form>
-          <div style={{ display: 'flex' }}>
+          <InputFieldsBlock>
             {inputFields.map((value, index) => (
               <DigitTextField
                 key={index}
@@ -46,7 +47,7 @@ const OTPMessageField: React.FC<OTPMessageFieldProps> = ({ onSubmit }): JSX.Elem
                 maxLength={inputFields.length}
               />
             ))}
-          </div>
+          </InputFieldsBlock>
           {codeDoesNotMatch && (
             <StyledErrorText>{t('account_verification.invalid_code')}</StyledErrorText>
           )}

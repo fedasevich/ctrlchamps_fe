@@ -99,3 +99,7 @@ export const DigitInput = styled(TextField)`
 export const StyledErrorText = styled(ErrorText)`
   text-align: center;
 `;
+
+export const InputFieldsBlock = styled.div`
+  display: flex;
+`;

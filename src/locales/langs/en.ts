@@ -754,6 +754,18 @@ const en = {
     logOutBtn: 'Log out',
     backBtn: 'Back to complete profile',
   },
+  menu: {
+    balance: 'Balance',
+    top_up: 'Top-up',
+    withdraw: 'Withdraw',
+    transactions: 'Transactions',
+    acc_details: 'Account Details',
+    caregiver_profile: 'Caregiver profile',
+    settings: 'Settings',
+    faq: 'F.A.Q',
+    get_help: 'Get Help',
+    log_out: 'Log Out',
+  },
 };
 
 export default en;

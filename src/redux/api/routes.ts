@@ -24,6 +24,8 @@ const route = {
   changePassword: '/change-password',
   transactions: '/transaction-history',
   activityLog: '/activity-log',
+  payment: '/payment',
+  updateBalance: '/transactions',
 };
 
 export { route };

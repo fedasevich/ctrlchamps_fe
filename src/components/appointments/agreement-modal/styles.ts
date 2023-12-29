@@ -8,7 +8,7 @@ export const Container = styled('div')`
   display: flex;
   flex-direction: column;
   gap: 16px;
-  height: 65vh;
+  height: 55vh;
   overflow-y: auto;
 `;
 

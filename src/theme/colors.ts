@@ -21,7 +21,6 @@ export const SECONDARY = {
   drawer_background: 'rgba(8, 188, 184, 0.04)',
   error_hover: 'rgba(198, 40, 40, 0.08)',
   caregiver_profile_background: 'rgba(255, 255, 255, 1)',
-  light_green: 'rgba(227, 248, 247, 1)',
   error: '#FF0000',
 };
 

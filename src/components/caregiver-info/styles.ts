@@ -1,12 +1,12 @@
 import { Typography, styled } from '@mui/material';
 
 import { HEADER } from 'src/config-global';
-import { SECONDARY } from 'src/theme/colors';
+import { PRIMARY, SECONDARY } from 'src/theme/colors';
 import { TYPOGRAPHY } from 'src/theme/fonts';
 import typography from 'src/theme/typography';
 
 export const Background = styled('div')`
-  background-color: ${SECONDARY.light_green};
+  background-color: ${PRIMARY.light_main};
   min-height: 100vh;
   padding-top: ${HEADER.MAIN_HEIGHT}px;
   display: flex;

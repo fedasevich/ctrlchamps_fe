@@ -715,7 +715,14 @@ const en = {
     addressModal: { title: 'Edit Address' },
   },
   caregiverProfile: {
-    title: 'Caregiver Profile'
+    title: 'Caregiver Profile',
+    qualification: 'Qualification',
+    workExperience: 'Work Experience',
+    skills: 'Skills',
+    availability: 'Availability',
+    rate: 'Rate',
+    bio: 'Bio',
+    perHour: 'h',
   },
   changePassword: {
     title: 'Change Password',
@@ -733,8 +740,8 @@ const en = {
       invalid_pass: 'New password must be different from the old password',
       incorrect_pass: 'Please enter correct password',
       unexpected: 'Something went wrong..',
-    }
-},
+    },
+  },
   transactions: {
     transactions: 'Transactions',
     top_up: 'Top-up',

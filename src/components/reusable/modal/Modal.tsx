@@ -18,6 +18,7 @@ type Props = {
   isActive: boolean;
   footerChildren?: ReactElement | boolean;
   backgroundColor?: string;
+  increaseHeight?: boolean;
 };
 
 export default function Modal({
@@ -27,6 +28,7 @@ export default function Modal({
   isActive,
   footerChildren,
   backgroundColor,
+  increaseHeight = false,
 }: Props): JSX.Element | null {
   if (!isActive) return null;
 
@@ -47,7 +49,10 @@ export default function Modal({
           </CloseButton>
           <HeaderTitle>{title}</HeaderTitle>
         </ModalHeader>
-        <ModalBody backgroundColor={!backgroundColor ? PRIMARY.white : backgroundColor}>
+        <ModalBody
+          increaseHeight={increaseHeight}
+          backgroundColor={!backgroundColor ? PRIMARY.white : backgroundColor}
+        >
           {children}
         </ModalBody>
         {footerChildren && <ModalFooter>{footerChildren}</ModalFooter>}

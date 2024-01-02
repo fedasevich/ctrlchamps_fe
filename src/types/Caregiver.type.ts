@@ -1,3 +1,5 @@
+import { PreferredDay } from 'src/constants/enums';
+
 export type Caregiver = {
   id: string;
   isOpenToSeekerHomeLiving: boolean;
@@ -15,6 +17,7 @@ export type CaregiverInfo = {
   hourlyRate: number;
   description: string;
   videoLink: string;
+  availability: TimeSlot[];
 };
 
 export type WorkExperiences = {
@@ -32,4 +35,10 @@ export type Certificate = {
   link: string;
   dateIssued: string;
   expirationDate: string | null;
+};
+
+export type TimeSlot = {
+  day: PreferredDay;
+  startTime: string;
+  endTime: string;
 };

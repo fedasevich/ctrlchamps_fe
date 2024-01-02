@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { focusNextInput } from 'src/utils/focusOnNextElement';
 import { DigitInput } from 'src/components/sendOTP/styles';
 
 interface DigitTextFieldProps {
@@ -23,13 +24,7 @@ const DigitTextField: React.FC<DigitTextFieldProps> = ({
     const digitValue: string = event.target.value.replace(/\D/g, '').slice(0, 1);
     onChange(digitValue);
 
-    const nextInputIndex = index + 1;
-    if (digitValue !== '' && nextInputIndex < maxLength) {
-      const nextInput = document.getElementById(`digitInput-${nextInputIndex}`) as HTMLInputElement;
-      if (nextInput) {
-        nextInput.focus();
-      }
-    }
+    focusNextInput(index, maxLength);
   };
 
   return (
@@ -40,7 +35,7 @@ const DigitTextField: React.FC<DigitTextFieldProps> = ({
       value={value}
       onChange={handleInputChange}
       onFocus={onFocus}
-      id={`digitInput-${index}`}
+      id={`${index}`}
     />
   );
 };

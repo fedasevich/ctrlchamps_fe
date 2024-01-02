@@ -1,4 +1,6 @@
 import { Dispatch, SetStateAction, useState } from 'react';
+
+import { focusNextInput } from 'src/utils/focusOnNextElement';
 import { OtpContainer, TextInput } from './styles';
 
 type Props = {
@@ -37,6 +39,8 @@ export default function OTPInput({
     if (codeLength === length) {
       setCode(newOtpValues.join(''));
     }
+
+    focusNextInput(index, length);
   }
 
   function validate(codeLength: number, totalLength: number): void {
@@ -59,6 +63,7 @@ export default function OTPInput({
           error={error}
           onChange={(e): void => onChange(e, index)}
           inputProps={{ maxLength: 1, style: { textAlign: 'center' } }}
+          id={`${index}`}
         />
       ))}
     </OtpContainer>

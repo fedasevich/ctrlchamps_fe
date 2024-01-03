@@ -733,8 +733,8 @@ const en = {
       invalid_pass: 'New password must be different from the old password',
       incorrect_pass: 'Please enter correct password',
       unexpected: 'Something went wrong..',
-    }
-},
+    },
+  },
   transactions: {
     transactions: 'Transactions',
     top_up: 'Top-up',
@@ -752,13 +752,14 @@ const en = {
     title: 'FAQ',
     firstQuestionTitle: 'What is the caregiver app?',
     firstQuestionAnswer:
-      'The caregiver app is a mobile application designed to connect caregivers with families or individuals in need of caregiving services. It offers a platform for caregivers to find job opportunities and for families to hire reliable and qualified caregivers for their loved ones.',
+      'The caregiver website is a platform designed to connect caregivers with families or individuals in need of caregiving services. It offers a platform for caregivers to find job opportunities and for families to hire reliable and qualified caregivers for their loved ones.',
     secondQuestionTitle: 'How does the app match caregivers with clients?',
     secondQuestionAnswer:
-      'The app uses a sophisticated matching algorithm that takes into account various factors, including caregiver skills, availability, location, and the specific needs of clients. This ensures that caregivers are matched with clients in a way that best meets the unique requirements of each situation.',
+      "The website matches caregivers by the services the client needs. Also by additional criteria, such as: living in the client's home.",
     thirdQuestionTitle: 'What qualifications do I need to become a caregiver on the app?',
     thirdQuestionAnswer:
-      'To become a caregiver on the app, you typically need to possess relevant qualifications and experience in caregiving. This may include certifications in healthcare or caregiving, a background check, and a demonstrated ability to provide compassionate and reliable care. The app may have specific requirements, so be sure to review and meet those qualifications outlined during the application process.',
+      'The Caregiver must provide at least 1 certificate confirming his/her qualifications in the field of healthcare services. Also, the caregiver must have a minimum of experience in the provision of medical services.',
+  },
   logOutModal: {
     title: 'Incomplete profile information',
     text: 'Are you sure you want to log out before ending completing your profile? Information will not be saved',

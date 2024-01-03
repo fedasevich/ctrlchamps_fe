@@ -29,8 +29,10 @@ import {
   StyledAvatar,
   StyledFormControlLabel,
   StyledListItemText,
+  StyledNextButton,
 } from 'src/components/create-appointment-fourth/styles';
 import { appointmentApi } from 'src/redux/api/appointmentApi';
+import { useTypedSelector } from 'src/redux/store';
 import CreateAppointmentFourthDrawer from './CreateAppointmentFourthDrawer';
 
 interface CreateAppointmentFourthProps {
@@ -43,6 +45,8 @@ export default function CreateAppointmentFourth({
   onBack,
 }: CreateAppointmentFourthProps): JSX.Element {
   const { t: translate } = useTranslation();
+
+  const seekerLocation = useTypedSelector((state) => state.location.location);
 
   const { handleDrawerClose, handleDrawerOpen, isDrawerOpen, selectedCaregiverId } =
     useCreateAppointmentFourth();
@@ -101,6 +105,9 @@ export default function CreateAppointmentFourth({
             />
           ))}
         </FormGroup>
+        <StyledNextButton variant="outlined" onClick={onBack}>
+          {translate('createAppointmentFourth.backToHealthQuestionnaire')}
+        </StyledNextButton>
       </FilterContainer>
       <CaregiverListContainer>
         <List>
@@ -145,7 +152,7 @@ export default function CreateAppointmentFourth({
           onClose={handleDrawerClose}
           selectedCaregiverId={selectedCaregiverId}
           onNext={onNext}
-          onBack={onBack}
+          isSubmitDisabled={!seekerLocation}
         />
       )}
     </Background>

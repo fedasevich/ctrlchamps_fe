@@ -12,7 +12,7 @@ import {
   MIN_REASON_LENGTH,
 } from 'src/components/appointments/virtual-assessment-modal/constants';
 import { CONFIRM_NOTE_MAX_LENGTH } from 'src/components/confirm-appointment/constants';
-import { MAX_CHARACTERS_LENGTH } from 'src/constants';
+import { MAX_CHARACTERS_LENGTH, MIN_PASSWORD_LENGTH } from 'src/constants';
 
 const en = {
   app_title: 'CtrlChamps',
@@ -211,8 +211,9 @@ const en = {
     startDateRequired: 'Start date is required',
     expirationDate: 'Expiration date is required',
 
-    invalidDateFormat: 'Entered data has an invalid format',
+    expirationDateCannotBeBeforeStartDate: 'Expiration date cannot be before start date',
     startDateCannotBeInFuture: 'Start date cannot be in future',
+    invalidDateFormat: 'Entered data has an invalid format',
 
     mainTitle:
       'Please specify your experience and feel free to attach any document to proof your certification',
@@ -343,6 +344,9 @@ const en = {
       min_type_char: `Appointment name should contain more than ${MIN_APPOINTMENT_NAME_LENGTH} characters`,
       max_type_char: `You cannot enter more than ${MAX_APPOINTMENT_NAME_LENGTH} characters`,
       min_appointment_duration: `An appointment should last for at least ${MIN_APPOINTMENT_HOUR_DURATION} hour.`,
+      invalid_date: 'Please select current date or a date in the future.',
+      invalid_start_date:
+        'The selected start date has already passed. Please choose a future date.',
       invalid_week_days:
         'According to the set date period, you can choose in range from {{dayFrom}} to {{dayTo}}',
     },
@@ -372,6 +376,9 @@ const en = {
     openToLivingInClientsHouses: 'Open to living in client’s houses',
     noLocations: 'No location',
     servicesTitle: 'Services',
+    backToHealthQuestionnaire: 'Back to Health questionnaire',
+    toBookAnAppointmentFirstlyChooseYourLocation:
+      'To book an appointment firstly choose your location',
     hourRate: '{{rate}}/h',
     services: {
       personalCare: 'Personal Care Assistance',
@@ -710,6 +717,24 @@ const en = {
     personalInfoModal: { title: 'Edit Personal Information', saveButton: 'Save' },
     addressModal: { title: 'Edit Address' },
   },
+  changePassword: {
+    title: 'Change Password',
+    success: 'Your password has been successfully changed!',
+    placeholder: {
+      oldPass: 'Old password',
+      newPass: 'New password',
+      confirmPass: 'Confirm Password',
+    },
+    errors: {
+      not_match: "'New password' field and 'Confirm password' field must match",
+      required: 'This field is required',
+      invalid_length: `Password should contain at least ${MIN_PASSWORD_LENGTH} characters`,
+      invalid_old_pass: 'Please enter correct password',
+      invalid_pass: 'New password must be different from the old password',
+      incorrect_pass: 'Please enter correct password',
+      unexpected: 'Something went wrong..',
+    }
+},
   transactions: {
     transactions: 'Transactions',
     top_up: 'Top-up',
@@ -734,6 +759,23 @@ const en = {
     thirdQuestionTitle: 'What qualifications do I need to become a caregiver on the app?',
     thirdQuestionAnswer:
       'To become a caregiver on the app, you typically need to possess relevant qualifications and experience in caregiving. This may include certifications in healthcare or caregiving, a background check, and a demonstrated ability to provide compassionate and reliable care. The app may have specific requirements, so be sure to review and meet those qualifications outlined during the application process.',
+  logOutModal: {
+    title: 'Incomplete profile information',
+    text: 'Are you sure you want to log out before ending completing your profile? Information will not be saved',
+    logOutBtn: 'Log out',
+    backBtn: 'Back to complete profile',
+  },
+  menu: {
+    balance: 'Balance',
+    top_up: 'Top-up',
+    withdraw: 'Withdraw',
+    transactions: 'Transactions',
+    acc_details: 'Account Details',
+    caregiver_profile: 'Caregiver profile',
+    settings: 'Settings',
+    faq: 'F.A.Q',
+    get_help: 'Get Help',
+    log_out: 'Log Out',
   },
 };
 

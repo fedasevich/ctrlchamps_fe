@@ -1,6 +1,7 @@
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import NotificationsNoneOutlinedIcon from '@mui/icons-material/NotificationsNoneOutlined';
 import { Alert, Avatar, IconButton, Snackbar, TextField } from '@mui/material';
+import { isBefore, isSameDay } from 'date-fns';
 
 import Cross from 'src/assets/icons/Cross';
 import RightAction from 'src/assets/icons/RightAction';
@@ -9,6 +10,7 @@ import Appointment from 'src/components/create-appointment/Appointment';
 import { selectTimeOptions } from 'src/components/create-appointment/constants';
 import { ErrorText, FilledButton } from 'src/components/reusable';
 import { useLocales } from 'src/locales';
+import { CURRENT_DAY } from 'src/constants';
 
 import {
   AppointmentModal,
@@ -163,6 +165,9 @@ export default function VirtualAssessmentModal({
             {invalidTime && <ErrorText>{translate('request_appointment.invalid_time')}</ErrorText>}
             {startTime && endTime && startTime === endTime && (
               <ErrorText>{translate('request_appointment.equal_time_error')}</ErrorText>
+            )}
+            {date && isBefore(date, CURRENT_DAY) && !isSameDay(date, CURRENT_DAY) && (
+              <ErrorText>{translate('create_appointment.errors.invalid_date')}</ErrorText>
             )}
           </AppointmentModalBlock>
 

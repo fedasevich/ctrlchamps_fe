@@ -12,6 +12,7 @@ export const SectionTitle = styled(Typography)`
 export const TitleWrapper = styled('div')`
   display: flex;
   justify-content: space-between;
+  align-items: center;
 `;
 
 export const Section = styled('section')`

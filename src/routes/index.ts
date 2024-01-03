@@ -12,4 +12,5 @@ export const ROUTES = {
   transactions: '/transactions',
   notifications: '/notifications',
   faq: '/faq',
+  caregiver_profile: '/caregiver-profile',
 };

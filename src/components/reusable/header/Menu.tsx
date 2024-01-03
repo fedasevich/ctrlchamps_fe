@@ -147,7 +147,7 @@ const MenuDropdown: React.FC<MenuDropdownProps> = ({ children, onClick }): JSX.E
         {role === USER_ROLE.Caregiver && (
           <MenuItemStyled onClick={handleClose}>
             <SupportAgentOutlinedIcon />
-            <MenuListItem>
+            <MenuListItem onClick={(): Promise<boolean> => router.push(ROUTES.caregiver_profile)}>
               <div>{translate('menu.caregiver_profile')}</div> <ChevronRightOutlinedIcon />
             </MenuListItem>
           </MenuItemStyled>

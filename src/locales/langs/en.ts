@@ -717,6 +717,16 @@ const en = {
     personalInfoModal: { title: 'Edit Personal Information', saveButton: 'Save' },
     addressModal: { title: 'Edit Address' },
   },
+  caregiverProfile: {
+    title: 'Caregiver Profile',
+    qualification: 'Qualification',
+    workExperience: 'Work Experience',
+    skills: 'Skills',
+    availability: 'Availability',
+    rate: 'Rate',
+    bio: 'Bio',
+    perHour: 'h',
+  },
   changePassword: {
     title: 'Change Password',
     success: 'Your password has been successfully changed!',

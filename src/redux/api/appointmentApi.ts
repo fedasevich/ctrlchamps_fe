@@ -159,7 +159,7 @@ export const appointmentApi = createApi({
     getFilteredCaregivers: builder.query<PreviewCaregiver[], URLSearchParams>({
       query: (params) => ({ url: `${route.caregivers}${route.filter}`, method: 'GET', params }),
     }),
-    getCaregiverDetails: builder.query<Caregiver, string>({
+    getCaregiverDetails: builder.query<Caregiver, string | undefined>({
       query: (caregiverId) => ({ url: `${route.caregivers}/${caregiverId}`, method: 'GET' }),
     }),
   }),
@@ -171,6 +171,7 @@ export const {
   useUpdateAppointmentMutation,
   useCreateAppointmentMutation,
   useGetAppointmentsByDateQuery,
+  useGetCaregiverDetailsQuery,
 } = appointmentApi;
 
 export default appointmentApi;

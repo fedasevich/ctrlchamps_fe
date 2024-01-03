@@ -21,7 +21,7 @@ export const Title = styled(Typography)`
   font-weight: ${typography.fontWeightMedium};
   color: ${SECONDARY.md_gray};
   margin-bottom: 20px;
-  max-width: 405px;
+  max-width: 400px;
 `;
 
 export const SubTitle = styled(Title)`

@@ -1,6 +1,7 @@
 import React from 'react';
 import { useLocales } from 'src/locales';
 import Cross from 'src/assets/icons/Cross';
+import { HELP_EMAIL } from 'src/constants';
 import {
   BackDrop,
   Modal,
@@ -30,9 +31,7 @@ export default function NeedHelpModal({ onClose }: IProps): JSX.Element {
         </ModalHeader>
         <TextContainer>
           <Text>{translate('needHelpModal.text')}</Text>
-          <Link href={`mailto:${translate('needHelpModal.email')}`}>
-            {translate('needHelpModal.email')}
-          </Link>
+          <Link href={`mailto:${HELP_EMAIL}`}>{HELP_EMAIL}</Link>
         </TextContainer>
       </Modal>
     </BackDrop>

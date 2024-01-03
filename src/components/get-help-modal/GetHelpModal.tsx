@@ -14,7 +14,7 @@ export default function GetHelpModal(): JSX.Element {
       </IconContainer>
       <SubTitle>{translate('getHelpModal.subtitle')}</SubTitle>
       <Text>{translate('getHelpModal.text')}</Text>
-      <Link href={`mailto:${translate('needHelpModal.email')}`}>{HELP_EMAIL}</Link>
+      <Link href={`mailto:${HELP_EMAIL}`}>{HELP_EMAIL}</Link>
     </Container>
   );
 }

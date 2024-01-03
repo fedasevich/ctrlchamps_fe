@@ -376,6 +376,9 @@ const en = {
     openToLivingInClientsHouses: 'Open to living in client’s houses',
     noLocations: 'No location',
     servicesTitle: 'Services',
+    backToHealthQuestionnaire: 'Back to Health questionnaire',
+    toBookAnAppointmentFirstlyChooseYourLocation:
+      'To book an appointment firstly choose your location',
     hourRate: '{{rate}}/h',
     services: {
       personalCare: 'Personal Care Assistance',
@@ -730,8 +733,8 @@ const en = {
       invalid_pass: 'New password must be different from the old password',
       incorrect_pass: 'Please enter correct password',
       unexpected: 'Something went wrong..',
-    }
-},
+    },
+  },
   transactions: {
     transactions: 'Transactions',
     top_up: 'Top-up',
@@ -745,11 +748,35 @@ const en = {
     subtitle: 'Need assistance? We`re here to help!',
     text: 'If you have any questions, concerns, or issues, you can reach out to our dedicated support team via email',
   },
+  faq: {
+    title: 'FAQ',
+    firstQuestionTitle: 'What is the caregiver app?',
+    firstQuestionAnswer:
+      'The caregiver website is a platform designed to connect caregivers with families or individuals in need of caregiving services. It offers a platform for caregivers to find job opportunities and for families to hire reliable and qualified caregivers for their loved ones.',
+    secondQuestionTitle: 'How does the app match caregivers with clients?',
+    secondQuestionAnswer:
+      "The website matches caregivers by the services the client needs. Also by additional criteria, such as: living in the client's home.",
+    thirdQuestionTitle: 'What qualifications do I need to become a caregiver on the app?',
+    thirdQuestionAnswer:
+      'The Caregiver must provide at least 1 certificate confirming his/her qualifications in the field of healthcare services. Also, the caregiver must have a minimum of experience in the provision of medical services.',
+  },
   logOutModal: {
     title: 'Incomplete profile information',
     text: 'Are you sure you want to log out before ending completing your profile? Information will not be saved',
     logOutBtn: 'Log out',
     backBtn: 'Back to complete profile',
+  },
+  menu: {
+    balance: 'Balance',
+    top_up: 'Top-up',
+    withdraw: 'Withdraw',
+    transactions: 'Transactions',
+    acc_details: 'Account Details',
+    caregiver_profile: 'Caregiver profile',
+    settings: 'Settings',
+    faq: 'F.A.Q',
+    get_help: 'Get Help',
+    log_out: 'Log Out',
   },
 };
 

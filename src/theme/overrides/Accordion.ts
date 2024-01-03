@@ -1,4 +1,6 @@
 import { Theme } from '@mui/material/styles';
+import typography from 'src/theme/typography';
+import { PRIMARY, SECONDARY } from '../colors';
 
 // ----------------------------------------------------------------------
 
@@ -8,10 +10,8 @@ export default function Accordion(theme: Theme) {
       styleOverrides: {
         root: {
           backgroundColor: 'transparent',
-          '&.Mui-expanded': {
-            boxShadow: theme.customShadows.z8,
-            borderRadius: theme.shape.borderRadius,
-            backgroundColor: theme.palette.background.paper,
+          '&.Mui-expanded:before': {
+            opacity: 1,
           },
           '&.Mui-disabled': {
             backgroundColor: 'transparent',
@@ -31,9 +31,32 @@ export default function Accordion(theme: Theme) {
               color: 'inherit',
             },
           },
+          '&.Mui-expanded': {
+            minHeight: 'auto',
+          },
+          '& .MuiTypography-root': {
+            color: PRIMARY.black,
+            fontWeight: typography.fontWeightMedium,
+          },
         },
-        expandIconWrapper: {
-          color: 'inherit',
+        content: {
+          marginTop: theme.spacing(1.5),
+          marginBottom: theme.spacing(1.5),
+          '&.Mui-expanded': {
+            marginTop: theme.spacing(1.5),
+            marginBottom: theme.spacing(1.5),
+          },
+        },
+      },
+    },
+    MuiAccordionDetails: {
+      styleOverrides: {
+        root: {
+          paddingBottom: 0,
+          '& .MuiTypography-root': {
+            color: SECONDARY.gray_semi_transparent,
+            fontWeight: typography.fontWeightMedium,
+          },
         },
       },
     },

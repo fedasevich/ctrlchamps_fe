@@ -19,16 +19,17 @@ import { caregiverReducer } from './slices/caregiverSlice';
 import { locationReducer } from './slices/locationSlice';
 
 import accountVerificationApi from 'src/redux/api/accountVerificationAPI';
+import activityLogApi from 'src/redux/api/activityLogApi';
 import appointmentApi from 'src/redux/api/appointmentApi';
 import authApi from 'src/redux/api/authApi';
 import questionnaireApi from 'src/redux/api/healthQuestionnaireApi';
+import paymentApi from 'src/redux/api/paymentApi';
 import profileApi from 'src/redux/api/profileCompleteApi';
 import timezoneApi from 'src/redux/api/timezoneApi';
 import transactionsApi from 'src/redux/api/transactionsApi';
 import userApi from 'src/redux/api/userApi';
 import virtualAssessmentApi from 'src/redux/api/virtualAssessmentApi';
 import rootReducer from 'src/redux/rootReducer';
-import activityLogApi from './api/activityLogApi';
 
 const persistConfig = {
   key: 'root',
@@ -63,6 +64,7 @@ const store = configureStore({
     [timezoneApi.reducerPath]: timezoneApi.reducer,
     [userApi.reducerPath]: userApi.reducer,
     [activityLogApi.reducerPath]: activityLogApi.reducer,
+    [paymentApi.reducerPath]: paymentApi.reducer,
     [transactionsApi.reducerPath]: transactionsApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
@@ -80,6 +82,7 @@ const store = configureStore({
       userApi.middleware,
       transactionsApi.middleware,
       activityLogApi.middleware,
+      paymentApi.middleware,
     ]),
 });
 

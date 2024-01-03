@@ -3,15 +3,18 @@ import { appointmentApi } from 'src/redux/api/appointmentApi';
 import { setSelectedCaregiver } from 'src/redux/slices/caregiverSlice';
 import { useAppDispatch } from 'src/redux/store';
 
-import AppointmentBtn from 'src/components/reusable/appointment-btn/AppointmentBtn';
+import { NextButton } from 'src/components/reusable/appointment-btn/styles';
 import CaregiverDrawer from 'src/components/reusable/drawer/caregiver-drawer/CaregiverDrawer';
+import { InfoIcon } from 'src/theme/overrides/CustomIcons';
+import { LocationMessage } from './places-autocomplete/styles';
+import { StyledModalFooter } from './styles';
 
 interface CreateAppointmentFourthDrawerProps {
   open: boolean;
   onClose: () => void;
   selectedCaregiverId: string;
   onNext?: () => void;
-  onBack?: () => void;
+  isSubmitDisabled: boolean;
 }
 
 export default function CreateAppointmentFourthDrawer({
@@ -19,7 +22,7 @@ export default function CreateAppointmentFourthDrawer({
   onClose,
   selectedCaregiverId,
   onNext,
-  onBack,
+  isSubmitDisabled,
 }: CreateAppointmentFourthDrawerProps): JSX.Element | null {
   const { translate } = useLocales();
   const dispatch = useAppDispatch();
@@ -40,13 +43,23 @@ export default function CreateAppointmentFourthDrawer({
       caregiverId={selectedCaregiverId}
       footer={
         onNext && (
-          <AppointmentBtn
-            noPadding
-            nextText={translate('createAppointmentFourth.bookAppointment')}
-            backText={translate('profileQualification.back')}
-            onClick={handleBookClick}
-            onBack={onBack}
-          />
+          <StyledModalFooter>
+            <NextButton
+              onClick={handleBookClick}
+              variant="contained"
+              type="submit"
+              fullWidth
+              disabled={isSubmitDisabled}
+            >
+              {translate('createAppointmentFourth.bookAppointment')}
+            </NextButton>
+            {isSubmitDisabled && (
+              <LocationMessage>
+                <InfoIcon color="primary" />
+                {translate('createAppointmentFourth.toBookAnAppointmentFirstlyChooseYourLocation')}
+              </LocationMessage>
+            )}
+          </StyledModalFooter>
         )
       }
       onClose={onClose}

@@ -18,7 +18,7 @@ import {
 import { AutocompletedLocation } from 'src/components/create-appointment-fourth/types';
 import { useLocales } from 'src/locales';
 import { timezoneApi } from 'src/redux/api/timezoneApi';
-import { setLocation as setCareseekerLocation, setTimezone } from 'src/redux/slices/locationSlice';
+import { setLocation as setSeekerLocation, setTimezone } from 'src/redux/slices/locationSlice';
 import { useAppDispatch } from 'src/redux/store';
 import usePlacesAutocomplete from 'use-places-autocomplete';
 
@@ -69,6 +69,13 @@ function PlacesAutocomplete({
   ): Promise<void> => {
     setAutocompleteValue(newValue);
 
+    if (newValue === null) {
+      dispatch(setTimezone(''));
+      dispatch(setSeekerLocation(''));
+
+      return;
+    }
+
     if (!newValue) {
       return;
     }
@@ -97,7 +104,7 @@ function PlacesAutocomplete({
             .unwrap()
             .then((timeZoneInfo) => {
               dispatch(setTimezone(timeZoneInfo.timeZoneId));
-              dispatch(setCareseekerLocation(placeId));
+              dispatch(setSeekerLocation(placeId));
             });
 
           setAutocompleteError(null);
@@ -140,6 +147,7 @@ function PlacesAutocomplete({
         )}
         renderOption={AutocompleteOption}
       />
+
       {!!autocompleteError && <ErrorMessage>{autocompleteError}</ErrorMessage>}
     </>
   );

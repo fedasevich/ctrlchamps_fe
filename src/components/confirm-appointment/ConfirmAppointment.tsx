@@ -1,21 +1,22 @@
-import { useState } from 'react';
-import { useRouter } from 'next/router';
 import CloseIcon from '@mui/icons-material/Close';
 import { Avatar } from '@mui/material';
+import { useRouter } from 'next/router';
+import { useState } from 'react';
 
 import ArrowForward from 'src/assets/icons/ArrowForward';
 import TasksList from 'src/components/confirm-appointment/TasksList';
-import { useLocales } from 'src/locales';
-import { useAppDispatch, useTypedSelector } from 'src/redux/store';
-import { useCreateAppointmentMutation } from 'src/redux/api/appointmentApi';
-import { APPOINTMENT_STATUS } from 'src/constants';
 import { Appointment } from 'src/components/create-appointment/enums';
-import { ROUTES } from 'src/routes';
 import AppointmentBtn from 'src/components/reusable/appointment-btn/AppointmentBtn';
-import CreateAppointmentFourthDrawer from 'src/components/create-appointment-fourth/CreateAppointmentFourthDrawer';
+import { APPOINTMENT_STATUS } from 'src/constants';
+import { useLocales } from 'src/locales';
+import { useCreateAppointmentMutation } from 'src/redux/api/appointmentApi';
+import { useAppDispatch, useTypedSelector } from 'src/redux/store';
+import { ROUTES } from 'src/routes';
 
+import CaregiverDrawer from 'src/components/reusable/drawer/caregiver-drawer/CaregiverDrawer';
 import { cancelAppointment as resetAppointmentInfo } from 'src/redux/slices/appointmentSlice';
 import { resetAllInfo } from 'src/redux/slices/healthQuestionnaireSlice';
+import { CONFIRM_NOTE_MAX_LENGTH } from './constants';
 import {
   Container,
   Header,
@@ -28,7 +29,6 @@ import {
   TasksWrapper,
   Typography,
 } from './style';
-import { CONFIRM_NOTE_MAX_LENGTH } from './constants';
 
 export default function ConfirmAppointment({ onBack }: { onBack: () => void }): JSX.Element {
   const { translate } = useLocales();
@@ -137,10 +137,10 @@ export default function ConfirmAppointment({ onBack }: { onBack: () => void }): 
         </InnerContainer>
       </Container>
       {caregiver && (
-        <CreateAppointmentFourthDrawer
+        <CaregiverDrawer
           open={isCaregiverDrawerOpen}
           onClose={closeDrawer}
-          selectedCaregiverId={caregiver.id}
+          caregiverId={caregiver.id}
         />
       )}
     </PageBackground>

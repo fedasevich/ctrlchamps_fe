@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from 'react';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
+import { useEffect } from 'react';
 import { Background } from 'src/components/appointments/styles';
 import MainHeader from 'src/components/reusable/header/MainHeader';
-import { ActiveTab } from 'src/components/reusable/header/types';
 import TransactionsModal from 'src/components/transactions/TransactionsModal';
 import { DEFAULT_REDIRECT_PATH } from 'src/constants';
 import { useLocales } from 'src/locales';
@@ -15,7 +14,6 @@ const TransactionsModalPage = (): JSX.Element | null => {
   const router = useRouter();
   const { translate } = useLocales();
 
-  const [activeTab, setActiveTab] = useState<ActiveTab>(null);
   const user = useTypedSelector((state) => state.user.user);
 
   useEffect(() => {
@@ -36,7 +34,7 @@ const TransactionsModalPage = (): JSX.Element | null => {
       <Head>
         <title>{translate('app_title')}</title>
       </Head>
-      <MainHeader activeTab={activeTab} setActiveTab={setActiveTab} />
+      <MainHeader />
       <Background>
         <TransactionsModal transactions={transactions} role={role as UserRole} />
       </Background>

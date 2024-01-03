@@ -8,10 +8,10 @@ import { USER_ROLE } from 'src/constants';
 import { useLocales } from 'src/locales';
 import { useTypedSelector } from 'src/redux/store';
 import { ROUTES } from 'src/routes';
+import MenuDropdown from './Menu';
 import {
   AppointmentsSection,
   AppointmentsText,
-  Arrow,
   AvatarWrapper,
   FirstPart,
   IconWrapper,
@@ -23,6 +23,7 @@ import {
   ProfileSection,
   SecondPart,
 } from './styles';
+import { ActiveTab } from './types';
 
 type Props = {
   isCalendarVisible?: boolean;
@@ -89,9 +90,9 @@ export default function MainHeader({
             <Avatar />
           </AvatarWrapper>
           <ProfileName>{`${firstName} ${lastName}`}</ProfileName>
-          <Arrow onClick={openMenu} className={isMenuVisible ? 'active' : ''}>
+          <MenuDropdown onClick={openMenu}>
             <KeyboardArrowDownIcon />
-          </Arrow>
+          </MenuDropdown>
         </ProfileSection>
       </MenuSection>
     </MainHeaderWrapper>

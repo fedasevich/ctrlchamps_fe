@@ -70,7 +70,7 @@ export function useAppointmentDrawer({
   };
   const handleCancelModalClose = (): void => {
     setIsCancelModalOpen(false);
-    setIsDrawerOpen(true);
+    setIsDrawerOpen(false);
   };
 
   const handleCompleteModalOpen = (): void => {

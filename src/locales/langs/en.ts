@@ -563,6 +563,7 @@ const en = {
     activityLog: 'Activity Log',
     reviewActivityLog: 'Review Activity Log',
     confirm: 'Confirm',
+    accept: 'Accept',
     reject: 'Reject',
     reviewed: 'Reviewed',
     filled: 'Filled',

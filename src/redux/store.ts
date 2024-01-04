@@ -27,7 +27,6 @@ import timezoneApi from 'src/redux/api/timezoneApi';
 import userApi from 'src/redux/api/userApi';
 import virtualAssessmentApi from 'src/redux/api/virtualAssessmentApi';
 import activityLogApi from 'src/redux/api/activityLogApi';
-import paymentApi from 'src/redux/api/paymentApi';
 import transactionsApi from 'src/redux/api/transactionsApi';
 import { RootState } from 'src/redux/rootReducer';
 
@@ -64,7 +63,6 @@ const store = configureStore({
     [timezoneApi.reducerPath]: timezoneApi.reducer,
     [userApi.reducerPath]: userApi.reducer,
     [activityLogApi.reducerPath]: activityLogApi.reducer,
-    [paymentApi.reducerPath]: paymentApi.reducer,
     [transactionsApi.reducerPath]: transactionsApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
@@ -82,7 +80,6 @@ const store = configureStore({
       userApi.middleware,
       transactionsApi.middleware,
       activityLogApi.middleware,
-      paymentApi.middleware,
     ]),
 });
 

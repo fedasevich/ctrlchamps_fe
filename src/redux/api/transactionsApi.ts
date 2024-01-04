@@ -29,9 +29,16 @@ export const transactionsApi = createApi({
     getTransactions: builder.query<Transaction[], string>({
       query: (userId) => ({ url: `${route.transactions}/${userId}` }),
     }),
+    updateBalance: builder.mutation<void, number>({
+      query: (balance) => ({
+        url: route.transactions,
+        method: 'PATCH',
+        body: { balance },
+      }),
+    }),
   }),
 });
 
-export const { useGetTransactionsQuery } = transactionsApi;
+export const { useGetTransactionsQuery, useUpdateBalanceMutation } = transactionsApi;
 
 export default transactionsApi;

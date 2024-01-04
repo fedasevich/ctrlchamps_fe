@@ -132,7 +132,9 @@ export default function AccountDetails({ user }: IProps): JSX.Element | null {
                 control={control}
                 render={({ field }): ReactElement => (
                   <Button component="label">
-                    {translate('accountDetails.avatarText')}
+                    {user.avatar || avatar
+                      ? translate('accountDetails.updateAvatar')
+                      : translate('accountDetails.avatarText')}
                     <VisuallyHiddenInput
                       type="file"
                       accept="image/png, image/jpeg, image/heic"

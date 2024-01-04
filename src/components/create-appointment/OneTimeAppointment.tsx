@@ -31,6 +31,8 @@ export default function OneTimeAppointment({ onNext, onBack }: Props): JSX.Eleme
   const [date, setDate] = useState<Date | null>(oneTimeDate.startTime);
   const [startTime, setStartTime] = useState<string>('');
   const [endTime, setEndTime] = useState<string>('');
+  const [identicalTime, setIdenticalTime] = useState<boolean>(false);
+  const [invalidTime, setInvalidTime] = useState<boolean>(false);
 
   const { hours, minutes, isDurationSet, minValidDuration } = useShowDuration(startTime, endTime);
   const { chooseStartTime, chooseEndTime } = useChooseTime(
@@ -51,6 +53,22 @@ export default function OneTimeAppointment({ onNext, onBack }: Props): JSX.Eleme
       setEndTime(endDateTime);
     }
   }, [oneTimeDate.startTime, oneTimeDate.endTime]);
+
+  useEffect(() => {
+    if (!startTime || !endTime) return;
+
+    if (startTime === endTime) {
+      setIdenticalTime(true);
+    } else {
+      setIdenticalTime(false);
+    }
+
+    if (startTime > endTime) {
+      setInvalidTime(true);
+    } else {
+      setInvalidTime(false);
+    }
+  }, [startTime, endTime]);
 
   const chooseDate = (value: Date | null): void => setDate(value);
 
@@ -78,14 +96,19 @@ export default function OneTimeAppointment({ onNext, onBack }: Props): JSX.Eleme
             chooseEndTime={chooseEndTime}
             chooseDate={chooseDate}
           />
-
-          {startTime && endTime && isDurationSet && !minValidDuration && (
+          {invalidTime && (
+            <ErrorText>{translate('create_appointment.errors.invalid_time')}</ErrorText>
+          )}
+          {identicalTime && (
+            <ErrorText>{translate('create_appointment.errors.identical_time')}</ErrorText>
+          )}
+          {startTime && endTime && startTime !== endTime && isDurationSet && !minValidDuration && (
             <ErrorText>{translate('create_appointment.errors.min_appointment_duration')}</ErrorText>
           )}
           {date && isBefore(date, CURRENT_DAY) && !isSameDay(date, CURRENT_DAY) && (
             <ErrorText>{translate('create_appointment.errors.invalid_date')}</ErrorText>
           )}
-          {startTime && endTime && date && minValidDuration && (
+          {startTime && endTime && date && minValidDuration && !identicalTime && !invalidTime && (
             <AppointmentDuration>
               <OneTimeIcon />
               {minutes > 0
@@ -108,6 +131,8 @@ export default function OneTimeAppointment({ onNext, onBack }: Props): JSX.Eleme
             !startTime ||
             !endTime ||
             !minValidDuration ||
+            invalidTime ||
+            identicalTime ||
             (isBefore(date, CURRENT_DAY) && !isSameDay(date, CURRENT_DAY))
           }
           onClick={goNext}

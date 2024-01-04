@@ -344,6 +344,9 @@ const en = {
       min_type_char: `Appointment name should contain more than ${MIN_APPOINTMENT_NAME_LENGTH} characters`,
       max_type_char: `You cannot enter more than ${MAX_APPOINTMENT_NAME_LENGTH} characters`,
       min_appointment_duration: `An appointment should last for at least ${MIN_APPOINTMENT_HOUR_DURATION} hour.`,
+      invalid_time:
+        'Appointment cannot be ended before the start. Please choose another value in End Time field.',
+      identical_time: 'You cannot choose identical time',
       invalid_date: 'Please select current date or a date in the future.',
       invalid_start_date:
         'The selected start date has already passed. Please choose a future date.',

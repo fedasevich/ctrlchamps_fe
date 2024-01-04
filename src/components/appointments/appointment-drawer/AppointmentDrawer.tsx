@@ -56,6 +56,7 @@ import {
   DateText,
   DisabledText,
   DoubleButtonBox,
+  AcceptRejectButtonsBox,
   DrawerAvatar,
   DrawerBody,
   ModalFooter,
@@ -173,16 +174,22 @@ export default function AppointmentDrawer({
 
   const DRAWER_FOOTERS = {
     [APPOINTMENT_STATUS.Pending]: (
-      <DoubleButtonBox>
-        {role === USER_ROLE.Caregiver && (
-          <StyledButton type="button" variant="contained" onClick={handleAcceptAppointment}>
-            {translate('appointments_page.accept_button')}
-          </StyledButton>
+      <>
+        {role === USER_ROLE.Caregiver ? (
+          <AcceptRejectButtonsBox>
+            <StyledButton type="button" variant="contained" onClick={handleAcceptAppointment}>
+              {translate('appointments_page.accept')}
+            </StyledButton>
+            <CancelBtn type="button" variant="outlined" onClick={handleCancelModalOpen}>
+              {translate('appointments_page.reject')}
+            </CancelBtn>
+          </AcceptRejectButtonsBox>
+        ) : (
+          <CancelBtn type="button" variant="outlined" onClick={handleCancelModalOpen}>
+            {translate('appointments_page.cancel_button')}
+          </CancelBtn>
         )}
-        <CancelBtn type="button" variant="outlined" onClick={handleCancelModalOpen}>
-          {translate('appointments_page.cancel_button')}
-        </CancelBtn>
-      </DoubleButtonBox>
+      </>
     ),
     [APPOINTMENT_STATUS.Accepted]: (
       <>

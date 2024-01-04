@@ -63,16 +63,12 @@ export default function OneTimeAppointment({ onNext, onBack }: Props): JSX.Eleme
       setIdenticalTime(false);
     }
 
-    checkTimeValidity(startTime > endTime);
-  }, [startTime, endTime]);
-
-  const checkTimeValidity = (condition: boolean): void => {
-    if (condition) {
+    if (startTime > endTime) {
       setInvalidTime(true);
     } else {
       setInvalidTime(false);
     }
-  };
+  }, [startTime, endTime]);
 
   const chooseDate = (value: Date | null): void => setDate(value);
 

@@ -1,5 +1,5 @@
 import { TabPanel } from '@mui/lab';
-import { Avatar, Button, Grid, List, Stack, Tab, Tabs, Typography, styled } from '@mui/material';
+import { Button, Grid, List, Stack, Tab, Tabs, Typography, styled } from '@mui/material';
 import Link from 'next/link';
 import { PRIMARY, SECONDARY } from 'src/theme/colors';
 import { TYPOGRAPHY } from 'src/theme/fonts';
@@ -8,11 +8,6 @@ import typography from 'src/theme/typography';
 export const BookButton = styled(Button)`
   width: 100%;
   border-radius: 4px;
-`;
-
-export const DrawerAvatar = styled(Avatar)`
-  width: 96px;
-  height: 96px;
 `;
 
 export const DrawerItem = styled(Stack)`
@@ -98,4 +93,4 @@ export const StyledStack = styled(Stack)`
   flex-direction: row;
   justify-content: space-evenly;
   width: 100%;
-`
+`;

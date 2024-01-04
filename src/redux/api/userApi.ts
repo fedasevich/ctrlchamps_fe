@@ -83,6 +83,7 @@ export const userApi = createApi({
           body: formData,
         };
       },
+      invalidatesTags: (result, error, { file }) => [{ type: 'User', file }, 'User'],
     }),
     updatePassword: builder.mutation<void, UserPasswordData>({
       query: ({ ...passwordData }) => ({

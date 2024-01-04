@@ -1,7 +1,7 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import PhotoCameraOutlinedIcon from '@mui/icons-material/PhotoCameraOutlined';
-import { Button, FormControl, FormControlLabel, Switch } from '@mui/material';
+import { Button, FormControl, FormControlLabel, Switch, IconButton } from '@mui/material';
 import { ChangeEvent, useState } from 'react';
 import { Controller, ControllerRenderProps, useForm } from 'react-hook-form';
 import { ReactElement } from 'react-markdown/lib/react-markdown';
@@ -31,7 +31,6 @@ import {
   StyledAvatar,
   Subtitle,
   Title,
-  TrashButton,
   Value,
   VisuallyHiddenInput,
   ButtonContainer,
@@ -140,9 +139,9 @@ export default function AccountDetails({ user }: IProps): JSX.Element | null {
                     </Button>
                     {user.avatar ||
                       (avatar && (
-                        <TrashButton onClick={onDeleteAvatar}>
+                        <IconButton onClick={onDeleteAvatar}>
                           <DeleteOutlineIcon color="primary" />
-                        </TrashButton>
+                        </IconButton>
                       ))}
                   </ButtonContainer>
                 )}

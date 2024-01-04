@@ -128,8 +128,3 @@ export const EditButton = styled(IconButton)`
 export const ButtonContainer = styled('div')`
 display: flex;
 `
-export const TrashButton = styled(IconButton)`
-  /* position: absolute;
-  right: 8px;
-  top: 0; */
-`;

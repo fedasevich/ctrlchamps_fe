@@ -698,6 +698,7 @@ const en = {
   accountDetails: {
     title: 'Account Details',
     avatarText: 'Upload Photo',
+    updateAvatar: 'Update Photo',
     personalInfo: 'Personal Information',
     address: 'Address',
     password: 'Password',

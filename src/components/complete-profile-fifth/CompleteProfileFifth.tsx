@@ -42,7 +42,7 @@ function CompleteProfileFifth({ onNext, onBack }: IProps): JSX.Element {
   const {
     control,
     handleSubmit,
-    formState: { isDirty, errors, isValid },
+    formState: { errors, isValid },
   } = useForm<CompleteProfileFifthValues>({
     mode: 'onBlur',
     resolver: yupResolver(completeProfileFifthSchema),
@@ -116,7 +116,7 @@ function CompleteProfileFifth({ onNext, onBack }: IProps): JSX.Element {
         <ProfileBtn
           nextText={translate('btn_next')}
           backText={translate('profileQualification.back')}
-          disabled={!isDirty || !isValid}
+          disabled={!isValid}
           onBack={onBack}
         />
       </StyledForm>

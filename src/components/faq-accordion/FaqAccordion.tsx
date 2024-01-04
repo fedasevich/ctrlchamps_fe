@@ -3,6 +3,7 @@ import { Accordion, AccordionDetails, AccordionSummary, Typography } from '@mui/
 import { SyntheticEvent, useMemo, useState } from 'react';
 import { FIRST_ELEMENT } from 'src/components/complete-profile-fourth/constants';
 import { useLocales } from 'src/locales';
+import { StyledAccordionContainer } from './styles';
 import { FaqQuestion } from './types';
 
 export default function FaqAccordion(): JSX.Element {
@@ -28,7 +29,7 @@ export default function FaqAccordion(): JSX.Element {
     };
 
   return (
-    <>
+    <StyledAccordionContainer>
       {questions.map((question) => (
         <Accordion
           key={question.title}
@@ -47,6 +48,6 @@ export default function FaqAccordion(): JSX.Element {
           </AccordionDetails>
         </Accordion>
       ))}
-    </>
+    </StyledAccordionContainer>
   );
 }

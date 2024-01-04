@@ -17,6 +17,7 @@ import { useAppDispatch, useTypedSelector } from 'src/redux/store';
 import { TRANSACTION_EXAMPLE, USER_ROLE } from 'src/constants';
 import { useUpdateBalanceMutation } from 'src/redux/api/paymentApi';
 import { useGetUserInfoQuery } from 'src/redux/api/userApi';
+import GetHelpModal from 'src/components/get-help-modal/GetHelpModal';
 import {
   Arrow,
   BalanceAmount,
@@ -29,6 +30,7 @@ import {
   StyledMenu,
   HalfVisibleParagraph,
 } from './styles';
+import Modal from '../modal/Modal';
 
 interface MenuDropdownProps {
   children: React.ReactNode;
@@ -43,6 +45,7 @@ const MenuDropdown: React.FC<MenuDropdownProps> = ({ children, onClick }): JSX.E
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [balance, setBalance] = useState<number>(0);
+  const [isHelpModalOpen, setIsHelpModalOpen] = useState<boolean>(false);
   const open = Boolean(anchorEl);
   const user = useTypedSelector((state) => state.user.user);
   const { data: userInfo } = useGetUserInfoQuery(user?.id);
@@ -147,7 +150,7 @@ const MenuDropdown: React.FC<MenuDropdownProps> = ({ children, onClick }): JSX.E
         {role === USER_ROLE.Caregiver && (
           <MenuItemStyled onClick={handleClose}>
             <SupportAgentOutlinedIcon />
-            <MenuListItem>
+            <MenuListItem onClick={(): Promise<boolean> => router.push(ROUTES.caregiver_profile)}>
               <div>{translate('menu.caregiver_profile')}</div> <ChevronRightOutlinedIcon />
             </MenuListItem>
           </MenuItemStyled>
@@ -167,7 +170,7 @@ const MenuDropdown: React.FC<MenuDropdownProps> = ({ children, onClick }): JSX.E
         </MenuItemStyled>
         <MenuItemStyled onClick={handleClose}>
           <FavoriteBorderOutlinedIcon />
-          <MenuListItem>
+          <MenuListItem onClick={(): void => setIsHelpModalOpen(true)}>
             <div>{translate('menu.get_help')}</div> <ChevronRightOutlinedIcon />
           </MenuListItem>
         </MenuItemStyled>
@@ -178,6 +181,13 @@ const MenuDropdown: React.FC<MenuDropdownProps> = ({ children, onClick }): JSX.E
           </MenuListItem>
         </MenuItemStyled>
       </StyledMenu>
+      <Modal
+        title={translate('needHelpModal.title')}
+        onClose={(): void => setIsHelpModalOpen(false)}
+        isActive={isHelpModalOpen}
+      >
+        <GetHelpModal />
+      </Modal>
     </>
   );
 };

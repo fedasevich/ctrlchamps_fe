@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import { Title } from 'src/components/profile/profile-qualification/certificate-form/styles';
+import { Title } from 'src/components/profile/profile-qualification/styles';
 import CertificateList from 'src/components/profile/profile-qualification/certificate-list/CertificateList';
 import { ProfileQuality } from 'src/components/profile/profile-qualification/types';
 import { useLocales } from 'src/locales';

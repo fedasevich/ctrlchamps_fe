@@ -13,6 +13,9 @@ export default function Accordion(theme: Theme) {
           '&.Mui-expanded:before': {
             opacity: 1,
           },
+          '&.Mui-expanded': {
+            marginTop: 0,
+          },
           '&.Mui-disabled': {
             backgroundColor: 'transparent',
           },

@@ -1,4 +1,4 @@
-import { ExpandLess } from '@mui/icons-material';
+import { ExpandMore } from '@mui/icons-material';
 import { Accordion, AccordionDetails, AccordionSummary, Typography } from '@mui/material';
 import { SyntheticEvent, useMemo, useState } from 'react';
 import { FIRST_ELEMENT } from 'src/components/complete-profile-fourth/constants';
@@ -37,7 +37,7 @@ export default function FaqAccordion(): JSX.Element {
         >
           <AccordionSummary
             aria-controls={`${question.title}-content`}
-            expandIcon={<ExpandLess />}
+            expandIcon={<ExpandMore />}
             id={`${question.title}-header`}
           >
             <Typography>{question.title}</Typography>

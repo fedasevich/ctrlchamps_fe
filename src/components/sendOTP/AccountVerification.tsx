@@ -8,11 +8,13 @@ import useVerification from 'src/hooks/useVerification';
 import {
   AccountVerificationContainer,
   IconContainer,
+  InputFieldsBlock,
   StyledErrorText,
   StyledParagraph,
   StyledParagraphMain,
   SubmitButtonContainer,
 } from 'src/components/sendOTP/styles';
+import { OTP_LENGTH } from 'src/constants';
 
 interface OTPMessageFieldProps {
   onSubmit: () => void;
@@ -24,6 +26,8 @@ const OTPMessageField: React.FC<OTPMessageFieldProps> = ({ onSubmit }): JSX.Elem
   const { code, codeDoesNotMatch, handleInputChange, handleSubmit, requestNewCode } =
     useVerification({ onSubmit });
 
+  const inputFields = Array<string>(OTP_LENGTH).fill('');
+
   return (
     <Container component="main" maxWidth="sm">
       <AccountVerificationContainer>
@@ -32,16 +36,18 @@ const OTPMessageField: React.FC<OTPMessageFieldProps> = ({ onSubmit }): JSX.Elem
         </IconContainer>
         <StyledParagraph>{t('account_verification.sent_code')}</StyledParagraph>
         <form>
-          <div style={{ display: 'flex' }}>
-            {[0, 1, 2, 3].map((index) => (
+          <InputFieldsBlock>
+            {inputFields.map((value, index) => (
               <DigitTextField
                 key={index}
                 value={code[index]}
                 onChange={handleInputChange(index)}
                 className={codeDoesNotMatch ? 'error' : ''}
+                index={index}
+                maxLength={inputFields.length}
               />
             ))}
-          </div>
+          </InputFieldsBlock>
           {codeDoesNotMatch && (
             <StyledErrorText>{t('account_verification.invalid_code')}</StyledErrorText>
           )}
@@ -62,4 +68,5 @@ const OTPMessageField: React.FC<OTPMessageFieldProps> = ({ onSubmit }): JSX.Elem
     </Container>
   );
 };
+
 export default OTPMessageField;

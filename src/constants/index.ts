@@ -2,6 +2,7 @@ import { UserRole } from 'src/redux/slices/userSlice';
 import { ROUTES } from 'src/routes';
 import { daySelectedType } from './types';
 
+export const OTP_LENGTH = 4;
 export const EMAIL_ERROR = 'email';
 export const PHONE_ERROR = 'phone';
 export const USER_MIN_AGE = 18;

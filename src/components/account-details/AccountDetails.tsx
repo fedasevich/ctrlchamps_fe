@@ -34,6 +34,7 @@ import {
   TrashButton,
   Value,
   VisuallyHiddenInput,
+  ButtonContainer,
 } from './styles';
 import { AvatarValues } from './types';
 import UpdatePassword from './update-password-form/UpdatePassword';
@@ -114,12 +115,7 @@ export default function AccountDetails({ user }: IProps): JSX.Element | null {
 
         <AvatarContainer>
           {user.avatar || avatar ? (
-            <>
-              <StyledAvatar src={avatarURL} alt="avatar" />
-              <TrashButton onClick={onDeleteAvatar}>
-                <DeleteOutlineIcon color="primary" />
-              </TrashButton>
-            </>
+            <StyledAvatar src={avatarURL} alt="avatar" />
           ) : (
             <AvatarIconContainer>
               <PhotoCameraOutlinedIcon color="primary" sx={{ fontSize: TYPOGRAPHY.xl }} />
@@ -131,16 +127,24 @@ export default function AccountDetails({ user }: IProps): JSX.Element | null {
                 name="avatar"
                 control={control}
                 render={({ field }): ReactElement => (
-                  <Button component="label">
-                    {user.avatar || avatar
-                      ? translate('accountDetails.updateAvatar')
-                      : translate('accountDetails.avatarText')}
-                    <VisuallyHiddenInput
-                      type="file"
-                      accept="image/png, image/jpeg, image/heic"
-                      onChange={(e): Promise<void> => onFileChange(e, field)}
-                    />
-                  </Button>
+                  <ButtonContainer>
+                    <Button component="label">
+                      {user.avatar || avatar
+                        ? translate('accountDetails.updateAvatar')
+                        : translate('accountDetails.avatarText')}
+                      <VisuallyHiddenInput
+                        type="file"
+                        accept="image/png, image/jpeg, image/heic"
+                        onChange={(e): Promise<void> => onFileChange(e, field)}
+                      />
+                    </Button>
+                    {user.avatar ||
+                      (avatar && (
+                        <TrashButton onClick={onDeleteAvatar}>
+                          <DeleteOutlineIcon color="primary" />
+                        </TrashButton>
+                      ))}
+                  </ButtonContainer>
                 )}
               />
             </FormControl>

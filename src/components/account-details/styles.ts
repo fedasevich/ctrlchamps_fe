@@ -125,8 +125,11 @@ export const EditButton = styled(IconButton)`
   right: 8px;
 `;
 
+export const ButtonContainer = styled('div')`
+display: flex;
+`
 export const TrashButton = styled(IconButton)`
-  position: absolute;
+  /* position: absolute;
   right: 8px;
-  top: 0;
+  top: 0; */
 `;

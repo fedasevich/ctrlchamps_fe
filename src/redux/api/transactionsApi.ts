@@ -25,9 +25,11 @@ export const transactionsApi = createApi({
       return headers;
     },
   }),
+  tagTypes: ['Transactions'],
   endpoints: (builder) => ({
     getTransactions: builder.query<Transaction[], string>({
       query: (userId) => ({ url: `${route.transactions}/${userId}` }),
+      providesTags: ['Transactions'],
     }),
     updateBalance: builder.mutation<void, number>({
       query: (balance) => ({
@@ -35,6 +37,10 @@ export const transactionsApi = createApi({
         method: 'PATCH',
         body: { balance },
       }),
+      invalidatesTags: (result, error, balance) => [
+        { type: 'Transactions', balance },
+        'Transactions',
+      ],
     }),
   }),
 });

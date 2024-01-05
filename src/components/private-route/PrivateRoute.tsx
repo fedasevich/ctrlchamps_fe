@@ -8,15 +8,10 @@ import { ROUTES } from 'src/routes';
 
 interface PrivateRouteProps {
   children: React.ReactNode;
-  allowedRole?: UserRole;
-  isIndex?: boolean;
+  allowedRoles?: UserRole[];
 }
 
-export function PrivateRoute({
-  children,
-  allowedRole,
-  isIndex,
-}: PrivateRouteProps): JSX.Element | null {
+export function PrivateRoute({ children, allowedRoles }: PrivateRouteProps): JSX.Element | null {
   const router = useRouter();
   const pathname = usePathname();
 
@@ -48,14 +43,23 @@ export function PrivateRoute({
       return;
     }
 
-    if ((allowedRole && user.role !== allowedRole) || isIndex) {
+    if (
+      (user.role === USER_ROLE.Admin || user.role === USER_ROLE.SuperAdmin) &&
+      !pathname?.includes(ROUTES.adminPanel)
+    ) {
+      router.replace(ROUTES.adminPanel);
+
+      return;
+    }
+
+    if (allowedRoles && !allowedRoles.includes(user.role)) {
       router.replace(ROUTES.home);
 
       return;
     }
 
     setIsAllowedToEnter(true);
-  }, [user, allowedRole, router, isIndex, pathname]);
+  }, [user, allowedRoles, router, pathname]);
 
   return <>{isAllowedToEnter && user && children}</>;
 }

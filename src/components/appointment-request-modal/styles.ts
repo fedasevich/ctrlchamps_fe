@@ -61,6 +61,8 @@ export const HealthQuestionnaireBlock = styled('div')`
 
 export const HealthQuestionnaireModal = styled('div')`
   max-width: 560px;
+  overflow-y: auto;
+  max-height: 500px;
   background-color: ${PRIMARY.white};
   margin: 50px auto;
 `;

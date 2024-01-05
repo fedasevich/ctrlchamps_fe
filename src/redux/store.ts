@@ -23,13 +23,12 @@ import activityLogApi from 'src/redux/api/activityLogApi';
 import appointmentApi from 'src/redux/api/appointmentApi';
 import authApi from 'src/redux/api/authApi';
 import questionnaireApi from 'src/redux/api/healthQuestionnaireApi';
-import paymentApi from 'src/redux/api/paymentApi';
 import profileApi from 'src/redux/api/profileCompleteApi';
 import timezoneApi from 'src/redux/api/timezoneApi';
 import transactionsApi from 'src/redux/api/transactionsApi';
 import userApi from 'src/redux/api/userApi';
 import virtualAssessmentApi from 'src/redux/api/virtualAssessmentApi';
-import rootReducer from 'src/redux/rootReducer';
+import { RootState } from 'src/redux/rootReducer';
 
 const persistConfig = {
   key: 'root',
@@ -64,7 +63,6 @@ const store = configureStore({
     [timezoneApi.reducerPath]: timezoneApi.reducer,
     [userApi.reducerPath]: userApi.reducer,
     [activityLogApi.reducerPath]: activityLogApi.reducer,
-    [paymentApi.reducerPath]: paymentApi.reducer,
     [transactionsApi.reducerPath]: transactionsApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
@@ -82,7 +80,6 @@ const store = configureStore({
       userApi.middleware,
       transactionsApi.middleware,
       activityLogApi.middleware,
-      paymentApi.middleware,
     ]),
 });
 
@@ -92,5 +89,3 @@ export const useTypedSelector: TypedUseSelectorHook<RootState> = useSelector;
 export type AppDispatch = typeof store.dispatch;
 export const useAppDispatch = () => useDispatch<AppDispatch>();
 export { persistor, store };
-
-export type RootState = ReturnType<typeof rootReducer>;

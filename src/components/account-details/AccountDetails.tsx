@@ -1,7 +1,7 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import PhotoCameraOutlinedIcon from '@mui/icons-material/PhotoCameraOutlined';
-import { Button, FormControl, FormControlLabel, Switch } from '@mui/material';
+import { Button, FormControl, FormControlLabel, Switch, IconButton } from '@mui/material';
 import { ChangeEvent, useState } from 'react';
 import { Controller, ControllerRenderProps, useForm } from 'react-hook-form';
 import { ReactElement } from 'react-markdown/lib/react-markdown';
@@ -31,9 +31,9 @@ import {
   StyledAvatar,
   Subtitle,
   Title,
-  TrashButton,
   Value,
   VisuallyHiddenInput,
+  ButtonContainer,
 } from './styles';
 import { AvatarValues } from './types';
 import UpdatePassword from './update-password-form/UpdatePassword';
@@ -114,12 +114,7 @@ export default function AccountDetails({ user }: IProps): JSX.Element | null {
 
         <AvatarContainer>
           {user.avatar || avatar ? (
-            <>
-              <StyledAvatar src={avatarURL} alt="avatar" />
-              <TrashButton onClick={onDeleteAvatar}>
-                <DeleteOutlineIcon color="primary" />
-              </TrashButton>
-            </>
+            <StyledAvatar src={avatarURL} alt="avatar" />
           ) : (
             <AvatarIconContainer>
               <PhotoCameraOutlinedIcon color="primary" sx={{ fontSize: TYPOGRAPHY.xl }} />
@@ -131,14 +126,24 @@ export default function AccountDetails({ user }: IProps): JSX.Element | null {
                 name="avatar"
                 control={control}
                 render={({ field }): ReactElement => (
-                  <Button component="label">
-                    {translate('accountDetails.avatarText')}
-                    <VisuallyHiddenInput
-                      type="file"
-                      accept="image/png, image/jpeg, image/heic"
-                      onChange={(e): Promise<void> => onFileChange(e, field)}
-                    />
-                  </Button>
+                  <ButtonContainer>
+                    <Button component="label">
+                      {user.avatar || avatar
+                        ? translate('accountDetails.updateAvatar')
+                        : translate('accountDetails.avatarText')}
+                      <VisuallyHiddenInput
+                        type="file"
+                        accept="image/png, image/jpeg, image/heic"
+                        onChange={(e): Promise<void> => onFileChange(e, field)}
+                      />
+                    </Button>
+                    {user.avatar ||
+                      (avatar && (
+                        <IconButton onClick={onDeleteAvatar}>
+                          <DeleteOutlineIcon color="primary" />
+                        </IconButton>
+                      ))}
+                  </ButtonContainer>
                 )}
               />
             </FormControl>

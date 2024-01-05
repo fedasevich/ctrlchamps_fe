@@ -15,9 +15,10 @@ import { removeUser } from 'src/redux/slices/userSlice';
 import { useLocales } from 'src/locales';
 import { useAppDispatch, useTypedSelector } from 'src/redux/store';
 import { TRANSACTION_EXAMPLE, USER_ROLE } from 'src/constants';
-import { useUpdateBalanceMutation } from 'src/redux/api/paymentApi';
+import { useUpdateBalanceMutation } from 'src/redux/api/transactionsApi';
 import { useGetUserInfoQuery } from 'src/redux/api/userApi';
 import GetHelpModal from 'src/components/get-help-modal/GetHelpModal';
+import Modal from 'src/components/reusable/modal/Modal';
 import {
   Arrow,
   BalanceAmount,
@@ -30,7 +31,6 @@ import {
   StyledMenu,
   HalfVisibleParagraph,
 } from './styles';
-import Modal from '../modal/Modal';
 
 interface MenuDropdownProps {
   children: React.ReactNode;
@@ -69,7 +69,7 @@ const MenuDropdown: React.FC<MenuDropdownProps> = ({ children, onClick }): JSX.E
     setAnchorEl(null);
   };
 
-  const handleLogOut = async (): Promise<void> => {
+  const handleLogOut = (): void => {
     try {
       dispatch(removeToken());
       dispatch(removeUser());
@@ -127,7 +127,6 @@ const MenuDropdown: React.FC<MenuDropdownProps> = ({ children, onClick }): JSX.E
               <OperationButton
                 variant="contained"
                 onClick={(): Promise<void> => handleTopUp(TRANSACTION_EXAMPLE)}
-                disabled={balance < TRANSACTION_EXAMPLE}
               >
                 {translate('menu.top_up')}
               </OperationButton>

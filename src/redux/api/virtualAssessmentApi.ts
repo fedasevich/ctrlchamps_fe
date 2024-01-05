@@ -2,6 +2,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 import { RootState } from 'src/redux/rootReducer';
 import { route } from './routes';
+import customAppointmentApi from './appointmentApi';
 
 export type VirtualAssessmentRequest = {
   startTime: string;
@@ -47,6 +48,7 @@ export const virtualAssessmentApi = createApi({
       return headers;
     },
   }),
+  tagTypes: ['Appointments'],
   endpoints: (builder) => ({
     updateVirtualAssessmentStatus: builder.mutation<void, Pick<VirtualAssessment, 'id' | 'status'>>(
       {
@@ -55,6 +57,16 @@ export const virtualAssessmentApi = createApi({
           method: 'PATCH',
           body: virtualAssessment,
         }),
+        onQueryStarted: (arg, api) => {
+          api.queryFulfilled.then(() => {
+            api.dispatch(
+              customAppointmentApi.util.invalidateTags([
+                { type: 'Appointments', id: arg.id },
+                'Appointments',
+              ])
+            );
+          });
+        },
       }
     ),
     makeVirtualAssessmentRequest: builder.mutation<void, VirtualAssessmentRequest>({
@@ -70,9 +82,20 @@ export const virtualAssessmentApi = createApi({
         method: 'PATCH',
         body: reschedulingData,
       }),
+      onQueryStarted: (arg, api) => {
+        api.queryFulfilled.then(() => {
+          api.dispatch(
+            customAppointmentApi.util.invalidateTags([
+              { type: 'Appointments', id: arg.appointmentId },
+              'Appointments',
+            ])
+          );
+        });
+      },
     }),
     getVirtualAssessmentInfo: builder.query<VirtualAssessment, string>({
       query: (appointmentId) => ({ url: `/${appointmentId}` }),
+      providesTags: (result, error, appointmentId) => [{ type: 'Appointments', id: appointmentId }],
     }),
   }),
 });

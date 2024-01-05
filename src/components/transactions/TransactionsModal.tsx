@@ -1,9 +1,10 @@
 import React from 'react';
+import { ChevronRight } from '@mui/icons-material';
+import { Button } from '@mui/material';
 
 import { useLocales } from 'src/locales';
 import { USER_ROLE } from 'src/constants';
 import { Transaction } from 'src/redux/api/transactionsApi';
-import { ChevronRight } from '@mui/icons-material';
 import {
   IconWrapper,
   TransactionModalTitle,
@@ -16,9 +17,14 @@ import { InlineBlock } from '../appointment-request-modal/styles';
 type TransactionsModalProps = {
   role: (typeof USER_ROLE)[keyof typeof USER_ROLE];
   transactions: Transaction[];
+  openDrawer: (appointmentId: string) => void;
 };
 
-const TransactionsModal = ({ role, transactions }: TransactionsModalProps): JSX.Element => {
+const TransactionsModal = ({
+  role,
+  transactions,
+  openDrawer,
+}: TransactionsModalProps): JSX.Element => {
   const { translate } = useLocales();
 
   return (
@@ -35,7 +41,14 @@ const TransactionsModal = ({ role, transactions }: TransactionsModalProps): JSX.
                 {getTransactionTitle(transaction.type, role, transaction.amount, translate)}
               </div>
             </InlineBlock>
-            <ChevronRight />
+            {transaction.appointmentId && (
+              <Button
+                color="inherit"
+                onClick={(): void => openDrawer(transaction.appointmentId as string)}
+              >
+                <ChevronRight />
+              </Button>
+            )}
           </TransactionParagraph>
         ))}
     </TransactionsModalWrapper>

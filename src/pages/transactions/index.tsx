@@ -1,6 +1,7 @@
 import Head from 'next/head';
 import { useRouter } from 'next/router';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import AppointmentDrawer from 'src/components/appointments/appointment-drawer/AppointmentDrawer';
 import { Background } from 'src/components/appointments/styles';
 import MainHeader from 'src/components/reusable/header/MainHeader';
 import TransactionsModal from 'src/components/transactions/TransactionsModal';
@@ -13,6 +14,8 @@ import { useTypedSelector } from 'src/redux/store';
 const TransactionsModalPage = (): JSX.Element | null => {
   const router = useRouter();
   const { translate } = useLocales();
+  const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(false);
+  const [selectedAppointmentId, setSelectedAppointmentId] = useState<string>('');
 
   const user = useTypedSelector((state) => state.user.user);
 
@@ -29,6 +32,12 @@ const TransactionsModalPage = (): JSX.Element | null => {
     return null;
   }
 
+  const openDrawer = (appointmentId: string): void => {
+    setIsDrawerOpen(true);
+    setSelectedAppointmentId(appointmentId);
+  };
+  const closeDrawer = (): void => setIsDrawerOpen(false);
+
   return (
     <>
       <Head>
@@ -36,7 +45,20 @@ const TransactionsModalPage = (): JSX.Element | null => {
       </Head>
       <MainHeader />
       <Background>
-        <TransactionsModal transactions={transactions} role={role as UserRole} />
+        <TransactionsModal
+          transactions={transactions}
+          role={role as UserRole}
+          openDrawer={openDrawer}
+        />
+        {selectedAppointmentId && (
+          <AppointmentDrawer
+            role={role}
+            selectedAppointmentId={selectedAppointmentId}
+            isOpen={isDrawerOpen}
+            onClose={closeDrawer}
+            setIsDrawerOpen={setIsDrawerOpen}
+          />
+        )}
       </Background>
     </>
   );

@@ -56,6 +56,7 @@ export const APPOINTMENT_STATUS = {
   Active: 'Active',
   Ongoing: 'Ongoing',
   Completed: 'Completed',
+  Finished: 'Finished',
 };
 
 export const VIRTUAL_ASSESSMENT_STATUS = {

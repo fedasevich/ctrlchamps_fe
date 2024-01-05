@@ -793,6 +793,17 @@ const en = {
     get_help: 'Get Help',
     log_out: 'Log Out',
   },
+  adminMenu: {
+    users: 'Users',
+    adminManagement: 'Admin management',
+    appointments: 'Appointments',
+    taskManagement: 'Task management',
+    training: 'Training',
+    logOut: 'Log out',
+  },
+  adminManagement: {
+    title: 'Admin management',
+  },
 };
 
 export default en;

@@ -1,7 +1,7 @@
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { createSlice } from '@reduxjs/toolkit';
 
-export type UserRole = 'Caregiver' | 'Seeker';
+export type UserRole = 'Caregiver' | 'Seeker' | 'Admin' | 'SuperAdmin';
 
 export type User = {
   id: string;

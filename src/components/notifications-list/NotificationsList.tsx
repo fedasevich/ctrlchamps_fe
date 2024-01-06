@@ -1,42 +1,24 @@
 import { useLocales } from 'src/locales';
+import { Notification } from 'src/redux/api/notificationsApi';
+
 import NotificationItem from './Notification';
 import { Container, Header, List, NoNotificationText } from './styles';
-import { Notification } from './types';
 
-export default function NotificationsList(): JSX.Element {
+type Props = {
+  notifications: Notification[];
+};
+
+export default function NotificationsList({ notifications }: Props): JSX.Element {
   const { translate } = useLocales();
-
-  const mockedNotifications: Notification[] = [
-    {
-      user: 'Smith John',
-      status: 'appoinmentRequested',
-      appointmentId: '404eb2e5-25ed-4c11-8cce-6164270770ab',
-    },
-    {
-      user: 'Henry Lee',
-      status: 'activityLogCompletionRequest',
-      appointmentId: '404eb2e5-25ed-4c11-8cce-6164270770ab',
-    },
-
-    {
-      user: 'Alice Doe',
-      status: 'appointmentRejected',
-      appointmentId: 'c1de73a6-655a-48d0-95ba-5a523afcba91',
-    },
-    { user: 'Ivy Wilson', status: 'activityLogReviewRequest', appointmentId: '' },
-    { user: 'Frank White', status: 'virtualAssessmentRescheduled', appointmentId: '' },
-    { user: 'Grace Turner', status: 'agreementSignOff', appointmentId: '' },
-    { user: 'Eva Martinez', status: 'virtualAssessmentRejected', appointmentId: '' },
-  ];
 
   return (
     <Container>
       <Header>{translate('notifications.title')}</Header>
       <List>
-        {mockedNotifications.length > 0 ? (
-          mockedNotifications.map((notification) => (
+        {notifications.length > 0 ? (
+          notifications.map((notification) => (
             <NotificationItem
-              key={notification.appointmentId}
+              key={notification.id}
               status={notification.status}
               username={notification.user}
               appointmentId={notification.appointmentId}

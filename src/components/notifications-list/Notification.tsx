@@ -5,11 +5,11 @@ import RightAction from 'src/assets/icons/RightAction';
 import { useLocales } from 'src/locales';
 import { PRIMARY } from 'src/theme/colors';
 import { useTypedSelector } from 'src/redux/store';
+import { NotificationStatus } from 'src/redux/api/notificationsApi';
 import AppointmentDrawer from 'src/components/appointments/appointment-drawer/AppointmentDrawer';
 
 import { NOTIFICATION_STATUS } from './constants';
 import { BaseText, BoldText, IconBackground, ListItem } from './styles';
-import { NotificationStatus } from './types';
 
 type Props = {
   status: NotificationStatus;
@@ -19,7 +19,7 @@ type Props = {
 
 export default function NotificationItem({ status, username, appointmentId }: Props): JSX.Element {
   const { translate } = useLocales();
-  const { user } = useTypedSelector((state) => state.user);
+  const user = useTypedSelector((state) => state.user.user);
 
   const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(false);
 

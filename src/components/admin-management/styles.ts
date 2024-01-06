@@ -4,6 +4,7 @@ import {
   styled,
   TableCell as MuiTableCell,
   IconButton as MuiIconButton,
+  Typography,
 } from '@mui/material';
 import { PRIMARY, SECONDARY } from 'src/theme/colors';
 
@@ -81,4 +82,18 @@ export const TableHeader = styled(TableCell)`
 
 export const IconButton = styled(MuiIconButton)`
   padding: 5px;
+`;
+
+export const Title = styled(Typography)`
+  font-weight: ${typography.fontWeightMedium};
+  color: ${SECONDARY.md_gray};
+  margin-bottom: 20px;
+  max-width: 400px;
+`;
+
+export const StyledButton = styled(Button)`
+  border-radius: 4px;
+  width: 100%;
+  height: 40px;
+  margin: 0 auto;
 `;

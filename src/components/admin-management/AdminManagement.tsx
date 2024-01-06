@@ -1,5 +1,6 @@
 import { ChangeEvent, useState } from 'react';
 import {
+  Box,
   InputAdornment,
   OutlinedInput,
   Pagination,
@@ -20,18 +21,25 @@ import {
   MainWrapper,
   ManagementWrapper,
   PageName,
+  StyledButton,
   TableCell,
   TableHeader,
   TableRow,
+  Title,
 } from 'src/components/admin-management/styles';
 import { useLocales } from 'src/locales';
+import { FIRST_PAGE } from 'src/components/admin-management/constants';
+import Modal from 'src/components/reusable/modal/Modal';
 
 function AdminManagement(): JSX.Element {
   const { translate } = useLocales();
 
-  const [page, setPage] = useState(1);
+  const [isDeleteModalActive, setIsDeleteModalActive] = useState<boolean>(false);
+  const [page, setPage] = useState(FIRST_PAGE);
 
-  const handlePageChange = (event: ChangeEvent, value: number) => {
+  const handleDeleteModalToggle = (): void => setIsDeleteModalActive(!isDeleteModalActive);
+
+  const handlePageChange = (event: ChangeEvent<unknown>, value: number) => {
     setPage(value);
   };
 
@@ -96,7 +104,7 @@ function AdminManagement(): JSX.Element {
                     <IconButton>
                       <ModeEditOutlineOutlinedIcon />
                     </IconButton>
-                    <IconButton>
+                    <IconButton onClick={handleDeleteModalToggle}>
                       <DeleteForeverOutlinedIcon />
                     </IconButton>
                   </TableCell>
@@ -109,6 +117,26 @@ function AdminManagement(): JSX.Element {
         <Stack display="flex" direction="row" justifyContent="center" mt={2}>
           <Pagination count={10} page={page} onChange={handlePageChange} />
         </Stack>
+
+        <Modal
+          isActive={isDeleteModalActive}
+          onClose={handleDeleteModalToggle}
+          title={translate('adminManagement.deleteUser')}
+        >
+          <Box display="flex" flexDirection="column">
+            <Title>{translate('adminManagement.deleteWarning')}</Title>
+
+            <Box display="flex" gap={2}>
+              <StyledButton variant="contained" onClick={handleDeleteModalToggle}>
+                {translate('adminManagement.no')}
+              </StyledButton>
+
+              <StyledButton variant="contained" color="error" onClick={(): void => {}}>
+                {translate('adminManagement.yes')}
+              </StyledButton>
+            </Box>
+          </Box>
+        </Modal>
       </ManagementWrapper>
     </MainWrapper>
   );

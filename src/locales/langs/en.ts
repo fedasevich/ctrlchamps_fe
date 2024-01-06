@@ -812,6 +812,10 @@ const en = {
     phone: 'PHONE',
     date: 'DATE',
     action: 'ACTION',
+    deleteUser: 'Delete A User',
+    deleteWarning: 'Are you sure want to delete this user?',
+    yes: 'Yes',
+    no: 'No',
   },
 };
 

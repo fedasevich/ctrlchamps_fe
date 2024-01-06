@@ -1,4 +1,5 @@
 import Head from 'next/head';
+import { Stack } from '@mui/material';
 
 import AdminManagement from 'src/components/admin-management/AdminManagement';
 import AdminMenu from 'src/components/admin-menu/AdminMenu';
@@ -14,8 +15,10 @@ export default function AdminManagementPage(): JSX.Element {
       <Head>
         <title>{translate('adminManagement.title')}</title>
       </Head>
-      <AdminMenu />
-      <AdminManagement />
+      <Stack direction="row">
+        <AdminMenu />
+        <AdminManagement />
+      </Stack>
     </PrivateRoute>
   );
 }

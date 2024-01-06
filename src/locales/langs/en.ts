@@ -803,6 +803,15 @@ const en = {
   },
   adminManagement: {
     title: 'Admin management',
+    userRoles: 'User Roles',
+    addUser: 'Add User',
+    search: 'Search',
+    name: 'NAME',
+    email: 'EMAIL',
+    typeUser: 'Type User',
+    phone: 'PHONE',
+    date: 'DATE',
+    action: 'ACTION',
   },
 };
 

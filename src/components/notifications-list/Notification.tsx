@@ -1,13 +1,15 @@
 import { IconButton } from '@mui/material';
+import { useState } from 'react';
+
 import RightAction from 'src/assets/icons/RightAction';
 import { useLocales } from 'src/locales';
 import { PRIMARY } from 'src/theme/colors';
-import { useState } from 'react';
 import { useTypedSelector } from 'src/redux/store';
+import AppointmentDrawer from 'src/components/appointments/appointment-drawer/AppointmentDrawer';
+
 import { NOTIFICATION_STATUS } from './constants';
 import { BaseText, BoldText, IconBackground, ListItem } from './styles';
 import { NotificationStatus } from './types';
-import AppointmentDrawer from '../appointments/appointment-drawer/AppointmentDrawer';
 
 type Props = {
   status: NotificationStatus;

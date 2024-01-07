@@ -1,4 +1,4 @@
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import {
   Box,
   InputAdornment,
@@ -28,32 +28,69 @@ import {
   Title,
 } from 'src/components/admin-management/styles';
 import { useLocales } from 'src/locales';
-import { FIRST_PAGE } from 'src/components/admin-management/constants';
+import {
+  ADMINS_LIMIT,
+  DEBOUNCE_DELAY,
+  FIRST_PAGE,
+} from 'src/components/admin-management/constants';
 import Modal from 'src/components/reusable/modal/Modal';
+import { useGetFilteredAdminsQuery } from 'src/redux/api/adminPanelAPI';
+import { useDeleteUserMutation } from 'src/redux/api/userApi';
+import { useDebounce } from 'src/hooks/useDebounce';
 
-function AdminManagement(): JSX.Element {
+function AdminManagement(): JSX.Element | null {
   const { translate } = useLocales();
 
   const [isDeleteModalActive, setIsDeleteModalActive] = useState<boolean>(false);
-  const [page, setPage] = useState(FIRST_PAGE);
+  const [page, setPage] = useState<number>(FIRST_PAGE);
+  const [termSearch, setTermSearch] = useState<string>('');
+  const [deleteUserId, setDeleteUserId] = useState<string>('');
 
-  const handleDeleteModalToggle = (): void => setIsDeleteModalActive(!isDeleteModalActive);
+  const debouncedSearchTerm = useDebounce(termSearch.trim(), DEBOUNCE_DELAY);
+
+  const {
+    data: admins,
+    isSuccess,
+    isLoading,
+    refetch,
+  } = useGetFilteredAdminsQuery({
+    termSearch: debouncedSearchTerm,
+    offset: (page - FIRST_PAGE) * ADMINS_LIMIT,
+  });
+
+  const [deleteUser] = useDeleteUserMutation();
+
+  const handleDeleteModalToggle = (): void => {
+    setIsDeleteModalActive(!isDeleteModalActive);
+  };
+
+  const handleCloseModalAndSetUserId = (userId: string): void => {
+    setDeleteUserId(userId);
+    handleDeleteModalToggle();
+  };
 
   const handlePageChange = (event: ChangeEvent<unknown>, value: number) => {
     setPage(value);
   };
 
-  function createData(name: string, calories: any, fat: any, carbs: any, protein: any) {
-    return { name, calories, fat, carbs, protein };
-  }
+  const handleTermSearch = (event: ChangeEvent<HTMLInputElement>): void =>
+    setTermSearch(event.target.value);
 
-  const rows = [
-    createData('Frozen yoghurt', 'Frozen yoghurt', 'Frozen yoghurt', 3242432424, 'may 6, 2022'),
-    createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-    createData('Eclair', 262, 16.0, 24, 6.0),
-    createData('Cupcake', 305, 3.7, 67, 4.3),
-    createData('Gingerbread', 356, 16.0, 49, 3.9),
-  ];
+  const handleDeleteUser = async (): Promise<void> => {
+    try {
+      await deleteUser(deleteUserId).unwrap();
+      refetch();
+      handleDeleteModalToggle();
+    } catch (error) {
+      throw new Error(error);
+    }
+  };
+
+  useEffect(() => {
+    refetch();
+  }, [debouncedSearchTerm, page, refetch]);
+
+  if (isLoading) return null;
 
   return (
     <MainWrapper>
@@ -68,6 +105,7 @@ function AdminManagement(): JSX.Element {
         </Stack>
 
         <OutlinedInput
+          onChange={handleTermSearch}
           placeholder={translate('adminManagement.search')}
           startAdornment={
             <InputAdornment position="start">
@@ -91,31 +129,38 @@ function AdminManagement(): JSX.Element {
               </TableRow>
             </TableHead>
             <TableBody>
-              {rows.map((row) => (
-                <TableRow key={row.name}>
-                  <TableCell>{row.name}</TableCell>
-                  <TableCell>{row.calories}</TableCell>
-                  <TableCell>
-                    <GreenSpan>{row.fat}</GreenSpan>
-                  </TableCell>
-                  <TableCell>{row.carbs}</TableCell>
-                  <TableCell>{row.protein}</TableCell>
-                  <TableCell align="right">
-                    <IconButton>
-                      <ModeEditOutlineOutlinedIcon />
-                    </IconButton>
-                    <IconButton onClick={handleDeleteModalToggle}>
-                      <DeleteForeverOutlinedIcon />
-                    </IconButton>
-                  </TableCell>
-                </TableRow>
-              ))}
+              {isSuccess &&
+                admins.data.map((admin) => (
+                  <TableRow key={admin.id}>
+                    <TableCell>
+                      {admin.firstName} {admin.lastName}
+                    </TableCell>
+                    <TableCell>{admin.email}</TableCell>
+                    <TableCell>
+                      <GreenSpan>{admin.role}</GreenSpan>
+                    </TableCell>
+                    <TableCell>{admin.phoneNumber}</TableCell>
+                    <TableCell>{admin.dateOfBirth}</TableCell>
+                    <TableCell align="right">
+                      <IconButton>
+                        <ModeEditOutlineOutlinedIcon />
+                      </IconButton>
+                      <IconButton onClick={(): void => handleCloseModalAndSetUserId(admin.id)}>
+                        <DeleteForeverOutlinedIcon />
+                      </IconButton>
+                    </TableCell>
+                  </TableRow>
+                ))}
             </TableBody>
           </Table>
         </Stack>
 
         <Stack display="flex" direction="row" justifyContent="center" mt={2}>
-          <Pagination count={10} page={page} onChange={handlePageChange} />
+          <Pagination
+            count={Math.ceil(admins!.count / ADMINS_LIMIT)}
+            page={page}
+            onChange={handlePageChange}
+          />
         </Stack>
 
         <Modal
@@ -131,7 +176,7 @@ function AdminManagement(): JSX.Element {
                 {translate('adminManagement.no')}
               </StyledButton>
 
-              <StyledButton variant="contained" color="error" onClick={(): void => {}}>
+              <StyledButton variant="contained" color="error" onClick={handleDeleteUser}>
                 {translate('adminManagement.yes')}
               </StyledButton>
             </Box>

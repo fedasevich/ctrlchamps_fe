@@ -6,8 +6,8 @@ import {
   IconButton as MuiIconButton,
   Typography,
 } from '@mui/material';
-import { PRIMARY, SECONDARY } from 'src/theme/colors';
 
+import { PRIMARY, SECONDARY } from 'src/theme/colors';
 import { TYPOGRAPHY } from 'src/theme/fonts';
 import typography from 'src/theme/typography';
 

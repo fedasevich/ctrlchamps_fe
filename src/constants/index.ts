@@ -72,3 +72,13 @@ export const APPOINTMENT_TYPE = {
 
 export const HELP_EMAIL = 'help@ctrlchamps@gmail.com';
 export const TRANSACTION_EXAMPLE = 100;
+
+export const USER_STATUS = {
+  Active: 'Active',
+  Inactive: 'Inactive',
+};
+
+export const TRANSACTION_TYPE = {
+  Income: 'Income',
+  Outcome: 'Outcome',
+};

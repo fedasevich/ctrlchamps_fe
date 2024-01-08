@@ -793,6 +793,20 @@ const en = {
     get_help: 'Get Help',
     log_out: 'Log Out',
   },
+  userList: {
+    title: 'Users',
+    search: 'Search',
+    userName: 'User Name',
+    role: 'Role',
+    status: 'Status',
+    transactions: 'Transactions',
+    date: 'Date and time',
+    type: 'Type',
+    amount: 'Amount',
+    wallet: 'Wallet',
+    withdrawal: 'Withdrawal',
+    replenishment: 'Replenishment',
+  },
 };
 
 export default en;

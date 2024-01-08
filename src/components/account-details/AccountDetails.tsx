@@ -1,17 +1,29 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import PhotoCameraOutlinedIcon from '@mui/icons-material/PhotoCameraOutlined';
-import { Button, FormControl, FormControlLabel, Switch, IconButton } from '@mui/material';
+import {
+  Button,
+  FormControl,
+  FormControlLabel,
+  Switch,
+  IconButton,
+  MenuItem,
+  TableContainer,
+  TableHead,
+  TableRow,
+  TableBody,
+} from '@mui/material';
 import { ChangeEvent, useState } from 'react';
 import { Controller, ControllerRenderProps, useForm } from 'react-hook-form';
 import { ReactElement } from 'react-markdown/lib/react-markdown';
 
 import EditSquare from 'src/assets/icons/EditSquare';
 import Modal from 'src/components/reusable/modal/Modal';
-import { USER_ROLE } from 'src/constants';
+import { TRANSACTION_TYPE, USER_ROLE, USER_STATUS } from 'src/constants';
 import { useLocales } from 'src/locales';
 import { User, useUpdateUserMutation, useUploadAvatarMutation } from 'src/redux/api/userApi';
-import { SECONDARY } from 'src/theme/colors';
+import { useGetTransactionsQuery } from 'src/redux/api/transactionsApi';
+import { PRIMARY, SECONDARY } from 'src/theme/colors';
 import { TYPOGRAPHY } from 'src/theme/fonts';
 
 import AddressModal from './address-modal/AddressModal';
@@ -34,6 +46,10 @@ import {
   Value,
   VisuallyHiddenInput,
   ButtonContainer,
+  StatusBlock,
+  StyledSelect,
+  StyledTable,
+  StyledSell,
 } from './styles';
 import { AvatarValues } from './types';
 import UpdatePassword from './update-password-form/UpdatePassword';
@@ -42,15 +58,18 @@ import { useAvatarSchema } from './validation';
 
 interface IProps {
   user: User;
+  isAdmin?: boolean;
 }
 
-export default function AccountDetails({ user }: IProps): JSX.Element | null {
+export default function AccountDetails({ user, isAdmin }: IProps): JSX.Element | null {
   const { translate } = useLocales();
   const [isPersonalInfoModalOpen, setIsPersonalInfoModalOpen] = useState<boolean>(false);
   const [isAddressModalOpen, setIsAddressModalOpen] = useState<boolean>(false);
   const [isPasswordBlockVisible, setIsPasswordBlockVisible] = useState<boolean>(false);
   const [avatarURL, setAvatarURL] = useState<string>(user.avatar ? user.avatar : '');
   const [passwordUpdated, setPasswordUpdated] = useState<boolean>(false);
+
+  const { data: transactions = [] } = useGetTransactionsQuery(user.id);
 
   const [uploadAvatar] = useUploadAvatarMutation();
   const [deleteAvatar] = useUpdateUserMutation();
@@ -110,7 +129,13 @@ export default function AccountDetails({ user }: IProps): JSX.Element | null {
   return (
     <Background>
       <Container>
-        <Title>{translate('accountDetails.title')}</Title>
+        {isAdmin ? (
+          <Title>
+            {translate('userList.title')} / {user.firstName} {user.lastName}
+          </Title>
+        ) : (
+          <Title>{translate('accountDetails.title')}</Title>
+        )}
 
         <AvatarContainer>
           {user.avatar || avatar ? (
@@ -213,19 +238,63 @@ export default function AccountDetails({ user }: IProps): JSX.Element | null {
             <EditSquare />
           </EditButton>
         </Block>
-        <Block>
-          <Subtitle>{translate('changePassword.title')}</Subtitle>
-          <EditButton onClick={openPasswordBlock}>
-            <EditSquare />
-          </EditButton>
-          {isPasswordBlockVisible && (
-            <UpdatePassword
-              email={user.email}
-              onClose={closePasswordBlock}
-              onSuccess={(): void => setPasswordUpdated(true)}
-            />
-          )}
-        </Block>
+        {!isAdmin && (
+          <Block>
+            <Subtitle>{translate('changePassword.title')}</Subtitle>
+            <EditButton onClick={openPasswordBlock}>
+              <EditSquare />
+            </EditButton>
+            {isPasswordBlockVisible && (
+              <UpdatePassword
+                email={user.email}
+                onClose={closePasswordBlock}
+                onSuccess={(): void => setPasswordUpdated(true)}
+              />
+            )}
+          </Block>
+        )}
+        {isAdmin && (
+          <>
+            <StatusBlock>
+              <Subtitle>{translate('userList.status')}:</Subtitle>
+              <StyledSelect defaultValue={user.status}>
+                <MenuItem value={USER_STATUS.Active}>{USER_STATUS.Active}</MenuItem>
+                <MenuItem value={USER_STATUS.Inactive}>{USER_STATUS.Inactive}</MenuItem>
+              </StyledSelect>
+            </StatusBlock>
+            <Block>
+              <Subtitle>{translate('userList.transactions')}</Subtitle>
+              <TableContainer>
+                <StyledTable>
+                  <TableHead>
+                    <TableRow>
+                      <StyledSell>{translate('userList.date')}</StyledSell>
+                      <StyledSell>{translate('userList.type')}</StyledSell>
+                      <StyledSell>{translate('userList.amount')}</StyledSell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {transactions.map((transaction) => (
+                      <TableRow key={transaction.id}>
+                        <StyledSell> </StyledSell>
+                        <StyledSell>
+                          {transaction.type === TRANSACTION_TYPE.Income
+                            ? translate('userList.replenishment')
+                            : translate('userList.withdrawal')}
+                        </StyledSell>
+                        <StyledSell>{transaction.amount}$</StyledSell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </StyledTable>
+              </TableContainer>
+            </Block>
+            <StatusBlock>
+              <Subtitle>{translate('userList.wallet')}:</Subtitle>
+              <Subtitle>{user.balance} $</Subtitle>
+            </StatusBlock>
+          </>
+        )}
       </Container>
       <Modal
         onClose={(): void => setIsPersonalInfoModalOpen(false)}

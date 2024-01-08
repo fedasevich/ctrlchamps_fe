@@ -272,8 +272,11 @@ const en = {
       workPlaceLength: `Work place must be at most ${MAX_CHARACTERS_LENGTH} characters`,
       workTypeRequired: 'Work type is required',
       startDateRequired: 'Start date is required',
-      startDateMax: 'Start date cannot exceed today`s date',
+      startDateMax: 'Start date cannot be in future',
       endDateRequired: 'End date is required',
+      endDateCannotBeBeforeStartDate: 'End date cannot be before start date',
+      invalidDateFormat: 'Entered data has an invalid format',
+      endDateMax: 'End date cannot be in future',
     },
   },
   completeProfileThird: {

@@ -1,8 +1,8 @@
 import { usePathname, useRouter } from 'next/navigation';
 
+import { MENU_ITEMS } from 'src/components/admin-menu/constants';
 import { MenuItem, MenuList } from 'src/components/admin-menu/styles';
 import { MenuItem as MenuItemType } from 'src/components/admin-menu/types';
-import { USER_ROLE } from 'src/constants';
 import { useLocales } from 'src/locales';
 import { removeToken } from 'src/redux/slices/tokenSlice';
 import { removeUser } from 'src/redux/slices/userSlice';
@@ -17,18 +17,6 @@ function AdminMenu(): JSX.Element {
 
   const user = useTypedSelector((state) => state.user.user);
   const dispatch = useAppDispatch();
-
-  const MENU_ITEMS: MenuItemType[] = [
-    { label: 'adminMenu.users', route: ROUTES.adminPanel },
-    {
-      label: 'adminMenu.adminManagement',
-      route: ROUTES.adminManagement,
-      role: USER_ROLE.SuperAdmin,
-    },
-    { label: 'adminMenu.appointments', route: ROUTES.appointments },
-    { label: 'adminMenu.taskManagement', route: ROUTES.taskManagement },
-    { label: 'adminMenu.training', route: ROUTES.training },
-  ];
 
   const handleLogOut = (): void => {
     dispatch(removeToken());

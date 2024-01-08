@@ -5,7 +5,7 @@ import { User } from 'src/redux/api/userApi';
 import { RootState } from 'src/redux/rootReducer';
 
 type AdminSearchParams = {
-  termSearch: string;
+  search: string;
   offset: number;
 };
 
@@ -33,11 +33,7 @@ export const adminPanelApi = createApi({
     getFilteredAdmins: builder.query<Admins, AdminSearchParams>({
       query: (params) => ({
         url: route.admins,
-        params: {
-          email: params.termSearch,
-          name: params.termSearch,
-          offset: params.offset,
-        },
+        params,
       }),
     }),
   }),

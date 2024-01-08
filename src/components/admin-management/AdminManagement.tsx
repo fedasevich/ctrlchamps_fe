@@ -54,7 +54,7 @@ function AdminManagement(): JSX.Element | null {
     isLoading,
     refetch,
   } = useGetFilteredAdminsQuery({
-    termSearch: debouncedSearchTerm,
+    search: debouncedSearchTerm,
     offset: (page - FIRST_PAGE) * ADMINS_LIMIT,
   });
 

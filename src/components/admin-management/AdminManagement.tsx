@@ -29,7 +29,7 @@ import {
 } from 'src/components/admin-management/styles';
 import { useLocales } from 'src/locales';
 import {
-  ADMINS_LIMIT,
+  PAGINATION_ADMINS_LIMIT,
   DEBOUNCE_DELAY,
   FIRST_PAGE,
 } from 'src/components/admin-management/constants';
@@ -55,7 +55,7 @@ function AdminManagement(): JSX.Element | null {
     refetch,
   } = useGetFilteredAdminsQuery({
     search: debouncedSearchTerm,
-    offset: (page - FIRST_PAGE) * ADMINS_LIMIT,
+    offset: (page - FIRST_PAGE) * PAGINATION_ADMINS_LIMIT,
   });
 
   const [deleteUser] = useDeleteUserMutation();
@@ -157,7 +157,7 @@ function AdminManagement(): JSX.Element | null {
 
         <Stack display="flex" direction="row" justifyContent="center" mt={2}>
           <Pagination
-            count={Math.ceil(admins!.count / ADMINS_LIMIT)}
+            count={Math.ceil(admins!.count / PAGINATION_ADMINS_LIMIT)}
             page={page}
             onChange={handlePageChange}
           />

@@ -7,7 +7,7 @@ export const MenuList = styled(MuiMenuList)`
   width: 230px;
   min-height: 100vh;
   padding-top: 60px;
-  border-right: 1px solid;
+  border-right: 2px solid ${SECONDARY.gray_shadow};
 `;
 
 export const MenuItem = styled(MuiMenuItem)`

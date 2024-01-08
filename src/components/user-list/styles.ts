@@ -8,7 +8,7 @@ export const Container = styled('div')`
 `;
 
 export const Title = styled('h2')`
-  color: ${PRIMARY.violet};
+  color: ${PRIMARY.main};
   font-size: ${TYPOGRAPHY.l}px;
   font-weight: ${typography.fontWeightMedium};
   line-height: 1.5;

@@ -6,7 +6,6 @@ export const PRIMARY = {
   light_main: 'rgba(8, 188, 184, 0.12)',
   white: '#fff',
   black: '#000',
-  violet: '#424cb3',
 };
 
 export const SECONDARY = {

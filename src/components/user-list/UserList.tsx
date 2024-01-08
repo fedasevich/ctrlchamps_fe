@@ -70,14 +70,14 @@ export default function UserList(): JSX.Element {
               type="text"
               endAdornment={
                 <InputAdornment position="end">
-                  <SearchIcon />
+                  <SearchIcon sx={{ color: PRIMARY.main }} />
                 </InputAdornment>
               }
             />
           </FormControl>
         </form>
         <IconButton size="large">
-          <FormatLineSpacingIcon fontSize="large" sx={{ color: PRIMARY.black }} />
+          <FormatLineSpacingIcon fontSize="large" sx={{ color: PRIMARY.main }} />
         </IconButton>
       </SearchContainer>
       <TableContainer>
@@ -109,10 +109,10 @@ export default function UserList(): JSX.Element {
                       router.push(`${ROUTES.account_details}/${user.id}`)
                     }
                   >
-                    <EditSquare color={PRIMARY.black} />
+                    <EditSquare />
                   </IconButton>
                   <IconButton>
-                    <DeleteOutlineIcon sx={{ color: PRIMARY.black }} />
+                    <DeleteOutlineIcon sx={{ color: PRIMARY.main }} />
                   </IconButton>
                 </StyledSell>
               </TableRow>
@@ -122,11 +122,11 @@ export default function UserList(): JSX.Element {
       </TableContainer>
       <PaginationContainer>
         <IconButton onClick={handlePrevPage} disabled={page <= FIRST_PAGE}>
-          <KeyboardArrowLeftOutlinedIcon sx={{ color: PRIMARY.black }} />
+          <KeyboardArrowLeftOutlinedIcon sx={{ color: PRIMARY.main }} />
         </IconButton>
         {page}
         <IconButton onClick={handleNextPage}>
-          <KeyboardArrowRightOutlinedIcon sx={{ color: PRIMARY.black }} />
+          <KeyboardArrowRightOutlinedIcon sx={{ color: PRIMARY.main }} />
         </IconButton>
       </PaginationContainer>
     </Container>

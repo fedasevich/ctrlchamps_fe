@@ -238,22 +238,7 @@ export default function AccountDetails({ user, isAdmin }: IProps): JSX.Element |
             <EditSquare />
           </EditButton>
         </Block>
-        {!isAdmin && (
-          <Block>
-            <Subtitle>{translate('changePassword.title')}</Subtitle>
-            <EditButton onClick={openPasswordBlock}>
-              <EditSquare />
-            </EditButton>
-            {isPasswordBlockVisible && (
-              <UpdatePassword
-                email={user.email}
-                onClose={closePasswordBlock}
-                onSuccess={(): void => setPasswordUpdated(true)}
-              />
-            )}
-          </Block>
-        )}
-        {isAdmin && (
+        {isAdmin ? (
           <>
             <StatusBlock>
               <Subtitle>{translate('userList.status')}:</Subtitle>
@@ -294,6 +279,20 @@ export default function AccountDetails({ user, isAdmin }: IProps): JSX.Element |
               <Subtitle>{user.balance} $</Subtitle>
             </StatusBlock>
           </>
+        ) : (
+          <Block>
+            <Subtitle>{translate('changePassword.title')}</Subtitle>
+            <EditButton onClick={openPasswordBlock}>
+              <EditSquare />
+            </EditButton>
+            {isPasswordBlockVisible && (
+              <UpdatePassword
+                email={user.email}
+                onClose={closePasswordBlock}
+                onSuccess={(): void => setPasswordUpdated(true)}
+              />
+            )}
+          </Block>
         )}
       </Container>
       <Modal

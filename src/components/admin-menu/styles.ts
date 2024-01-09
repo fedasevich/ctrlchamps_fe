@@ -1,6 +1,6 @@
 import { MenuList as MuiMenuList, styled, MenuItem as MuiMenuItem } from '@mui/material';
 
-import { SECONDARY } from 'src/theme/colors';
+import { PRIMARY, SECONDARY } from 'src/theme/colors';
 import { TYPOGRAPHY } from 'src/theme/fonts';
 
 export const MenuList = styled(MuiMenuList)`
@@ -14,6 +14,6 @@ export const MenuItem = styled(MuiMenuItem)`
   font-size: ${TYPOGRAPHY.sm}px;
 
   &.Mui-selected {
-    color: ${SECONDARY.blue};
+    color: ${PRIMARY.navy};
   }
 `;

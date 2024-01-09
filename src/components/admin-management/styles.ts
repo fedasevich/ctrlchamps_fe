@@ -54,11 +54,6 @@ export const AddUserButton = styled(Button)`
   height: 50px;
   font-weight: ${typography.fontWeightRegular};
   font-size: ${TYPOGRAPHY.base_xs}px;
-  background-color: ${PRIMARY.black};
-
-  &:hover {
-    background-color: ${SECONDARY.light_brown};
-  }
 `;
 
 export const TableRow = styled(MuiTableRow)`

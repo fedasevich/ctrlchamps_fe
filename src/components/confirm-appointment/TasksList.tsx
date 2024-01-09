@@ -96,9 +96,11 @@ export default function TasksList({
   };
 
   const deleteCustomTask = (task: string): void => {
-    const filteredTasks = customTasks.filter((el) => el !== task);
-    setCustomTasks(filteredTasks);
-    setChosenTasks(filteredTasks);
+    const filterTasks = (tasksToFilter: string[]): string[] =>
+      tasksToFilter.filter((el) => el !== task);
+
+    setChosenTasks(filterTasks(chosenTasks));
+    setCustomTasks(filterTasks(customTasks));
   };
 
   return (

@@ -21,6 +21,9 @@ import { useLocales } from 'src/locales';
 import { USER_STATUS } from 'src/constants';
 import { ROUTES } from 'src/routes';
 
+import { UserWithStatus } from './types';
+import { USERS } from './mocks';
+import { FIRST_PAGE, PAGINATION_USERS_LIMIT } from './constants';
 import {
   MainWrapper,
   SearchContainer,
@@ -29,9 +32,6 @@ import {
   StyledTableCell,
   ManagementWrapper,
 } from './styles';
-import { UserWithStatus } from './types';
-import { USERS } from './mocks';
-import { FIRST_PAGE, PAGINATION_USERS_LIMIT } from './constants';
 
 export default function UserList(): JSX.Element {
   const { translate } = useLocales();

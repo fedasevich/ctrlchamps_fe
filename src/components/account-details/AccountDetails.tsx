@@ -30,6 +30,10 @@ import AddressModal from './address-modal/AddressModal';
 import { MAX_FILE_SIZE_BYTES } from './constants';
 import PersonalInfoModal from './personal-info-modal/PersonalInfoModal';
 import { ErrorMessage } from './personal-info-modal/styles';
+import { AvatarValues } from './types';
+import UpdatePassword from './update-password-form/UpdatePassword';
+import UpdatePasswordSuccess from './update-password-form/UpdatePasswordSuccess';
+import { useAvatarSchema } from './validation';
 import {
   AvatarContainer,
   AvatarIconContainer,
@@ -49,10 +53,7 @@ import {
   StatusBlock,
   StyledSelect,
 } from './styles';
-import { AvatarValues } from './types';
-import UpdatePassword from './update-password-form/UpdatePassword';
-import UpdatePasswordSuccess from './update-password-form/UpdatePasswordSuccess';
-import { useAvatarSchema } from './validation';
+
 import { StyledTableCell, StyledTableRow, TableHeader } from '../user-list/styles';
 import { MOCKED_DATA } from '../user-list/mocks';
 

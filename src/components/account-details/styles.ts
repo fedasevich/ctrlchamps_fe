@@ -1,4 +1,4 @@
-import { Avatar, Button, IconButton, Select, Table, TableCell, styled } from '@mui/material';
+import { Avatar, Button, IconButton, Select, styled } from '@mui/material';
 import { PRIMARY, SECONDARY } from 'src/theme/colors';
 import { TYPOGRAPHY } from 'src/theme/fonts';
 import typography from 'src/theme/typography';

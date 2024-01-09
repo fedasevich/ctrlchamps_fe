@@ -1,5 +1,5 @@
 import { ArrowForwardIos } from '@mui/icons-material';
-import { Avatar, Typography, styled } from '@mui/material';
+import { Typography, styled } from '@mui/material';
 import { FilledButton } from 'src/components/reusable';
 import { HEADER } from 'src/config-global';
 import { PRIMARY, SECONDARY } from 'src/theme/colors';
@@ -157,11 +157,6 @@ const Arrow = styled(ArrowForwardIos)`
   }
 `;
 
-const AvatarIcon = styled(Avatar)`
-  width: 24px;
-  height: 24px;
-`;
-
 const Text = styled('span')`
   color: ${SECONDARY.grayish};
   font-size: ${TYPOGRAPHY.base}px;
@@ -180,7 +175,6 @@ export {
   AppointmentInfo,
   AppointmentsContainer,
   Arrow,
-  AvatarIcon,
   Background,
   BaseText,
   CalendarBtn,

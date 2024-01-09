@@ -58,6 +58,7 @@ export const APPOINTMENT_STATUS = {
   Active: 'Active',
   Ongoing: 'Ongoing',
   Completed: 'Completed',
+  Finished: 'Finished',
 };
 
 export const VIRTUAL_ASSESSMENT_STATUS = {
@@ -74,3 +75,6 @@ export const APPOINTMENT_TYPE = {
 
 export const HELP_EMAIL = 'help@ctrlchamps@gmail.com';
 export const TRANSACTION_EXAMPLE = 100;
+export const TINY_AVATAR_SIZE = 24;
+export const SMALL_AVATAR_SIZE = 48;
+export const BIG_AVATAR_SIZE = 96;

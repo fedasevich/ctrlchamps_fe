@@ -137,12 +137,11 @@ export default function AccountDetails({ user }: IProps): JSX.Element | null {
                         onChange={(e): Promise<void> => onFileChange(e, field)}
                       />
                     </Button>
-                    {user.avatar ||
-                      (avatar && (
-                        <IconButton onClick={onDeleteAvatar}>
-                          <DeleteOutlineIcon color="primary" />
-                        </IconButton>
-                      ))}
+                    {(user.avatar || avatar) && (
+                      <IconButton onClick={onDeleteAvatar}>
+                        <DeleteOutlineIcon color="primary" />
+                      </IconButton>
+                    )}
                   </ButtonContainer>
                 )}
               />

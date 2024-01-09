@@ -15,11 +15,17 @@ import {
 import { ChangeEvent, useState } from 'react';
 import { Controller, ControllerRenderProps, useForm } from 'react-hook-form';
 import { ReactElement } from 'react-markdown/lib/react-markdown';
-import format from 'date-fns/format';
+import { parseISO, format } from 'date-fns';
 
 import EditSquare from 'src/assets/icons/EditSquare';
 import Modal from 'src/components/reusable/modal/Modal';
-import { DATE_FORMAT, TRANSACTION_TYPE, USER_ROLE, USER_STATUS } from 'src/constants';
+import {
+  DATE_FORMAT,
+  DISPLAY_TIME_FORMAT,
+  TRANSACTION_TYPE,
+  USER_ROLE,
+  USER_STATUS,
+} from 'src/constants';
 import { useLocales } from 'src/locales';
 import { User, useUpdateUserMutation, useUploadAvatarMutation } from 'src/redux/api/userApi';
 import { useGetTransactionsQuery } from 'src/redux/api/transactionsApi';
@@ -55,7 +61,6 @@ import {
 } from './styles';
 
 import { StyledTableCell, StyledTableRow, TableHeader } from '../user-list/styles';
-import { MOCKED_DATA } from '../user-list/mocks';
 
 interface IProps {
   user: User;
@@ -260,7 +265,12 @@ export default function AccountDetails({ user, isAdmin }: IProps): JSX.Element |
                 <TableBody>
                   {transactions.map((transaction) => (
                     <StyledTableRow key={transaction.id}>
-                      <StyledTableCell>{format(MOCKED_DATA, DATE_FORMAT)}</StyledTableCell>
+                      <StyledTableCell>
+                        {format(
+                          parseISO(transaction.createdAt),
+                          `${DATE_FORMAT} ${DISPLAY_TIME_FORMAT}`
+                        )}
+                      </StyledTableCell>
                       <StyledTableCell>
                         {transaction.type === TRANSACTION_TYPE.Income
                           ? translate('userList.replenishment')

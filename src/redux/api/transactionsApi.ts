@@ -8,6 +8,7 @@ export interface Transaction {
   appointmentId?: string;
   amount: number;
   type: string;
+  createdAt: string;
 }
 
 export const transactionsApi = createApi({

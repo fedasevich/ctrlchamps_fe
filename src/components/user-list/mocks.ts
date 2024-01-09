@@ -79,5 +79,3 @@ export const USERS = {
   ],
   count: 50,
 };
-
-export const MOCKED_DATA = new Date(2024, 1, 1);

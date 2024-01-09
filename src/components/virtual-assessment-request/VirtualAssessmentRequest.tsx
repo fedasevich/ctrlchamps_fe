@@ -131,7 +131,7 @@ const VirtualAssessmentRequestModal = ({
                 {translate('request_appointment.caregiver')}
               </AppointmentModalBlockParagraph>
               <InlineBlock>
-                <UserAvatar userId={appointment.user.id} size={SMALL_AVATAR_SIZE} />
+                <UserAvatar userId={appointment.caregiverInfo.user.id} size={SMALL_AVATAR_SIZE} />
                 <NameParagraph>{`${appointment.caregiverInfo.user.firstName} ${appointment.caregiverInfo.user.lastName}`}</NameParagraph>
               </InlineBlock>
             </AppointmentModalBlock>

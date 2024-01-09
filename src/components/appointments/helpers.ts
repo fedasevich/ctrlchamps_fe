@@ -1,8 +1,5 @@
 import { format, parseISO, differenceInHours } from 'date-fns';
-import { DRAWER_DATE_FORMAT, MOCK_USER_AVATAR_URL } from './constants';
-
-export const getMockCaregiverAvatar = (size: number): string =>
-  `${MOCK_USER_AVATAR_URL}/${size}/${size}`;
+import { DRAWER_DATE_FORMAT } from './constants';
 
 export const getFormattedDate = (date: string): string =>
   format(parseISO(date), DRAWER_DATE_FORMAT);

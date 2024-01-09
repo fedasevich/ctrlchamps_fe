@@ -23,7 +23,7 @@ export default function CaregiverProfile(): JSX.Element | null {
   if (isLoading) return null;
 
   return (
-    <PrivateRoute allowedRole={USER_ROLE.Caregiver}>
+    <PrivateRoute allowedRoles={[USER_ROLE.Caregiver]}>
       <Head>
         <title>{translate('caregiverProfile.title')}</title>
       </Head>

@@ -8,6 +8,7 @@ import { USER_ROLE } from 'src/constants';
 import { useLocales } from 'src/locales';
 import { useTypedSelector } from 'src/redux/store';
 import { ROUTES } from 'src/routes';
+import { useGetUserInfoQuery } from 'src/redux/api/userApi';
 import MenuDropdown from './Menu';
 import {
   AppointmentsSection,
@@ -23,7 +24,6 @@ import {
   ProfileSection,
   SecondPart,
 } from './styles';
-import { ActiveTab } from './types';
 
 type Props = {
   isCalendarVisible?: boolean;
@@ -37,7 +37,9 @@ export default function MainHeader({
   const { translate } = useLocales();
   const { push, route } = useRouter();
 
-  const user = useTypedSelector((state) => state.user.user);
+  const userId = useTypedSelector((state) => state.user.user?.id);
+
+  const { data: user } = useGetUserInfoQuery(userId);
 
   const [isMenuVisible, setIsMenuVisible] = useState<boolean>(false);
 
@@ -87,7 +89,7 @@ export default function MainHeader({
         </IconWrapper>
         <ProfileSection>
           <AvatarWrapper>
-            <Avatar />
+            <Avatar src={user.avatar} />
           </AvatarWrapper>
           <ProfileName>{`${firstName} ${lastName}`}</ProfileName>
           <MenuDropdown onClick={openMenu}>

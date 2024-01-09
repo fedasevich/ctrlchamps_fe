@@ -5,6 +5,7 @@ import ArrowBackFilled from 'src/assets/icons/ArrowBackFilled';
 import FreeCancellation from 'src/assets/icons/FreeCancellation';
 import MonetizationOn from 'src/assets/icons/MonetizationOn';
 import Drawer from 'src/components/reusable/drawer/Drawer';
+import UserAvatar from 'src/components/reusable/user-avatar/UserAvatar';
 import {
   DrawerBody,
   DrawerFooter,
@@ -13,12 +14,11 @@ import {
 } from 'src/components/reusable/drawer/styles';
 import { useLocales } from 'src/locales';
 import { appointmentApi } from 'src/redux/api/appointmentApi';
+import { BIG_AVATAR_SIZE } from 'src/constants';
 
-import { getMockCaregiverAvatar } from 'src/components/create-appointment-fourth/helpers';
-import { BIG_CAREGIVER_AVATAR_SIZE, FIRST_SELECTED_TAB } from './constants';
+import { FIRST_SELECTED_TAB } from './constants';
 import { formatWorkExperienceDateRange, formatWorkExperienceDateRangeTenure } from './helpers';
 import {
-  DrawerAvatar,
   DrawerDateTenure,
   DrawerItem,
   DrawerStats,
@@ -72,10 +72,7 @@ export default function CaregiverDrawer({
         </DrawerTitle>
       </DrawerHeader>
       <DrawerStats flexDirection="row">
-        <DrawerAvatar
-          src={getMockCaregiverAvatar(BIG_CAREGIVER_AVATAR_SIZE)}
-          alt={`${selectedCaregiver.firstName} ${selectedCaregiver.lastName}`}
-        />
+        <UserAvatar userId={selectedCaregiver.id} size={BIG_AVATAR_SIZE} />
         <StyledStack>
           <Stack flexDirection="column" alignItems="center">
             <FreeCancellation />

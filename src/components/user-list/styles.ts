@@ -1,19 +1,28 @@
-import { Table, TableCell, styled } from '@mui/material';
+import { TableCell, TableRow, styled } from '@mui/material';
 import { PRIMARY, SECONDARY } from 'src/theme/colors';
 import { TYPOGRAPHY } from 'src/theme/fonts';
 import typography from 'src/theme/typography';
 
-export const Container = styled('div')`
-  padding: 24px;
+export const MainWrapper = styled('div')`
+  width: 100%;
+  margin: 40px 25px 40px 15px;
+  padding-left: 20px;
+  padding-top: 15px;
+  background-color: ${SECONDARY.background_gray};
+  font-weight: ${typography.fontWeightBold};
+  font-size: ${TYPOGRAPHY.sm}px;
 `;
 
-export const Title = styled('h2')`
-  color: ${PRIMARY.navy};
-  font-size: ${TYPOGRAPHY.l}px;
-  font-weight: ${typography.fontWeightMedium};
-  line-height: 1.5;
-  letter-spacing: 0.15px;
-  margin-bottom: 24px;
+export const ManagementWrapper = styled('div')`
+  margin: 20px 12px 40px 5px;
+  padding: 20px;
+  padding-bottom: 0;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  background-color: ${PRIMARY.white};
+  height: 100%;
+  font-weight: ${typography.fontWeightBold};
+  font-size: ${TYPOGRAPHY.sm}px;
 `;
 
 export const SearchContainer = styled('div')`
@@ -23,44 +32,15 @@ export const SearchContainer = styled('div')`
   margin-bottom: 24px;
 `;
 
-export const StyledTable = styled(Table)`
-  width: 100%;
-  background-color: ${SECONDARY.table_background};
-  margin-left: auto;
-  margin-right: auto;
+export const StyledTableRow = styled(TableRow)`
+  border-bottom: 1px solid ${SECONDARY.light_gray};
 `;
 
-export const StyledSell = styled(TableCell)`
-  border: 1px solid ${SECONDARY.backdrop_background};
-  text-align: center;
-  color: ${PRIMARY.black};
+export const StyledTableCell = styled(TableCell)`
+  font-weight: ${typography.fontWeightSemiBold};
   font-size: ${TYPOGRAPHY.base}px;
-  font-weight: ${typography.fontWeightMedium};
-  line-height: 1.5;
-  letter-spacing: 0.15px;
-  width: 20%;
 `;
 
-export const NameSell = styled(TableCell)`
-  border: 1px solid ${SECONDARY.backdrop_background};
-  text-align: center;
-  color: ${PRIMARY.black};
-  font-size: ${TYPOGRAPHY.base}px;
-  font-weight: ${typography.fontWeightMedium};
-  line-height: 1.5;
-  letter-spacing: 0.15px;
-  width: 40%;
-`;
-
-export const PaginationContainer = styled('div')`
-  display: flex;
-  justify-content: center;
-  gap: 4px;
-  align-items: center;
-  margin-top: 24px;
-  color: ${PRIMARY.black};
-  font-size: ${TYPOGRAPHY.base}px;
-  font-weight: ${typography.fontWeightMedium};
-  line-height: 1.5;
-  letter-spacing: 0.15px;
+export const TableHeader = styled(StyledTableCell)`
+  font-weight: ${typography.fontWeightBold};
 `;

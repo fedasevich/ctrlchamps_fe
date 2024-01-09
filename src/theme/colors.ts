@@ -23,6 +23,7 @@ export const SECONDARY = {
   caregiver_profile_background: 'rgba(255, 255, 255, 1)',
   error: '#FF0000',
   table_background: 'rgba(0, 0, 0, 0.05)',
+  background_gray: '#ecf4f3',
 };
 
 export const TEXT_COLOR = {

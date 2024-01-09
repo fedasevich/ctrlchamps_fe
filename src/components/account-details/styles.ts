@@ -141,19 +141,3 @@ export const StyledSelect = styled(Select)`
   width: 200px;
   height: 40px;
 `;
-
-export const StyledTable = styled(Table)`
-  width: 100%;
-  background-color: ${SECONDARY.table_background};
-`;
-
-export const StyledSell = styled(TableCell)`
-  border: 1px solid ${SECONDARY.backdrop_background};
-  text-align: center;
-  color: ${PRIMARY.black};
-  font-size: ${TYPOGRAPHY.base}px;
-  font-weight: ${typography.fontWeightMedium};
-  line-height: 1.5;
-  letter-spacing: 0.15px;
-  width: 25%;
-`;

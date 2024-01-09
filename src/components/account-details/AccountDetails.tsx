@@ -8,22 +8,22 @@ import {
   Switch,
   IconButton,
   MenuItem,
-  TableContainer,
   TableHead,
-  TableRow,
   TableBody,
+  Table,
 } from '@mui/material';
 import { ChangeEvent, useState } from 'react';
 import { Controller, ControllerRenderProps, useForm } from 'react-hook-form';
 import { ReactElement } from 'react-markdown/lib/react-markdown';
+import format from 'date-fns/format';
 
 import EditSquare from 'src/assets/icons/EditSquare';
 import Modal from 'src/components/reusable/modal/Modal';
-import { TRANSACTION_TYPE, USER_ROLE, USER_STATUS } from 'src/constants';
+import { DATE_FORMAT, TRANSACTION_TYPE, USER_ROLE, USER_STATUS } from 'src/constants';
 import { useLocales } from 'src/locales';
 import { User, useUpdateUserMutation, useUploadAvatarMutation } from 'src/redux/api/userApi';
 import { useGetTransactionsQuery } from 'src/redux/api/transactionsApi';
-import { PRIMARY, SECONDARY } from 'src/theme/colors';
+import { SECONDARY } from 'src/theme/colors';
 import { TYPOGRAPHY } from 'src/theme/fonts';
 
 import AddressModal from './address-modal/AddressModal';
@@ -48,13 +48,13 @@ import {
   ButtonContainer,
   StatusBlock,
   StyledSelect,
-  StyledTable,
-  StyledSell,
 } from './styles';
 import { AvatarValues } from './types';
 import UpdatePassword from './update-password-form/UpdatePassword';
 import UpdatePasswordSuccess from './update-password-form/UpdatePasswordSuccess';
 import { useAvatarSchema } from './validation';
+import { StyledTableCell, StyledTableRow, TableHeader } from '../user-list/styles';
+import { MOCKED_DATA } from '../user-list/mocks';
 
 interface IProps {
   user: User;
@@ -248,30 +248,28 @@ export default function AccountDetails({ user, isAdmin }: IProps): JSX.Element |
             </StatusBlock>
             <Block>
               <Subtitle>{translate('userList.transactions')}</Subtitle>
-              <TableContainer>
-                <StyledTable>
-                  <TableHead>
-                    <TableRow>
-                      <StyledSell>{translate('userList.date')}</StyledSell>
-                      <StyledSell>{translate('userList.type')}</StyledSell>
-                      <StyledSell>{translate('userList.amount')}</StyledSell>
-                    </TableRow>
-                  </TableHead>
-                  <TableBody>
-                    {transactions.map((transaction) => (
-                      <TableRow key={transaction.id}>
-                        <StyledSell> </StyledSell>
-                        <StyledSell>
-                          {transaction.type === TRANSACTION_TYPE.Income
-                            ? translate('userList.replenishment')
-                            : translate('userList.withdrawal')}
-                        </StyledSell>
-                        <StyledSell>{transaction.amount}$</StyledSell>
-                      </TableRow>
-                    ))}
-                  </TableBody>
-                </StyledTable>
-              </TableContainer>
+              <Table>
+                <TableHead>
+                  <StyledTableRow>
+                    <TableHeader>{translate('userList.date')}</TableHeader>
+                    <TableHeader>{translate('userList.type')}</TableHeader>
+                    <TableHeader>{translate('userList.amount')}</TableHeader>
+                  </StyledTableRow>
+                </TableHead>
+                <TableBody>
+                  {transactions.map((transaction) => (
+                    <StyledTableRow key={transaction.id}>
+                      <StyledTableCell>{format(MOCKED_DATA, DATE_FORMAT)}</StyledTableCell>
+                      <StyledTableCell>
+                        {transaction.type === TRANSACTION_TYPE.Income
+                          ? translate('userList.replenishment')
+                          : translate('userList.withdrawal')}
+                      </StyledTableCell>
+                      <StyledTableCell>{transaction.amount}$</StyledTableCell>
+                    </StyledTableRow>
+                  ))}
+                </TableBody>
+              </Table>
             </Block>
             <StatusBlock>
               <Subtitle>{translate('userList.wallet')}:</Subtitle>

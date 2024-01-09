@@ -795,6 +795,7 @@ const en = {
   },
   notifications: {
     title: 'Notifications',
+    loading: 'Fetching notifications...',
     no_notifications: 'No notifications yet',
     requestAccepted: 'accepted your request. You can schedule a Virtual Assessment now',
     requestRejected: 'rejected your request for an appointment',

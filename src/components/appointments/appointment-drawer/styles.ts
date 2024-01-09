@@ -1,4 +1,4 @@
-import { Avatar, Button, IconButton, Typography, styled } from '@mui/material';
+import { Button, IconButton, Typography, styled } from '@mui/material';
 import { PRIMARY, SECONDARY, TEXT_COLOR } from 'src/theme/colors';
 import { TYPOGRAPHY } from 'src/theme/fonts';
 import typography from 'src/theme/typography';
@@ -50,11 +50,6 @@ export const CaregiverName = styled('p')`
   font-weight: ${typography.fontWeightMedium};
   line-height: 1.2;
   letter-spacing: 0.15px;
-`;
-
-export const DrawerAvatar = styled(Avatar)`
-  width: 48px;
-  height: 48px;
 `;
 
 export const StyledIconButton = styled(IconButton)`

@@ -1,6 +1,6 @@
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import NotificationsNoneOutlinedIcon from '@mui/icons-material/NotificationsNoneOutlined';
-import { Alert, Avatar, IconButton, Snackbar, TextField } from '@mui/material';
+import { Alert, IconButton, Snackbar, TextField } from '@mui/material';
 import { isBefore, isSameDay } from 'date-fns';
 
 import Cross from 'src/assets/icons/Cross';
@@ -9,8 +9,9 @@ import { CloseButton, HeaderTitle } from 'src/components/confirm-appointment/sty
 import Appointment from 'src/components/create-appointment/Appointment';
 import { selectTimeOptions } from 'src/components/create-appointment/constants';
 import { ErrorText, FilledButton } from 'src/components/reusable';
+import UserAvatar from 'src/components/reusable/user-avatar/UserAvatar';
 import { useLocales } from 'src/locales';
-import { CURRENT_DAY } from 'src/constants';
+import { CURRENT_DAY, SMALL_AVATAR_SIZE } from 'src/constants';
 
 import {
   AppointmentModal,
@@ -43,6 +44,7 @@ type Props = {
   openCaregiverProfile?: () => void;
   openVirtualAssessmentSuccess: () => void;
   caregiverName: string;
+  caregiverId: string;
   appointmentId: string;
 };
 
@@ -54,6 +56,7 @@ export default function VirtualAssessmentModal({
   openCaregiverProfile,
   openVirtualAssessmentSuccess,
   caregiverName,
+  caregiverId,
   appointmentId,
 }: Props): JSX.Element | null {
   const { translate } = useLocales();
@@ -119,7 +122,7 @@ export default function VirtualAssessmentModal({
                   {translate('request_appointment.caregiver')}
                 </AppointmentModalBlockParagraph>
                 <InlineBlock>
-                  <Avatar />
+                  <UserAvatar userId={caregiverId} size={SMALL_AVATAR_SIZE} />
                   <NameParagraph>{caregiverName}</NameParagraph>
                   <StyledIconButton color="secondary" onClick={openCaregiverProfile}>
                     <RightAction />

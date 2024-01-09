@@ -2,11 +2,10 @@ import { MouseEvent } from 'react';
 import { ChevronRight } from '@mui/icons-material';
 
 import { useLocales } from 'src/locales';
-import { USER_ROLE } from 'src/constants';
+import { USER_ROLE, SMALL_AVATAR_SIZE } from 'src/constants';
 import Cross from 'src/assets/icons/Cross';
-import { SMALL_CAREGIVER_AVATAR_SIZE } from 'src/components/appointments/constants';
-import { getMockCaregiverAvatar } from 'src/components/appointments/helpers';
 import { DetailedAppointment } from 'src/redux/api/appointmentApi';
+import UserAvatar from 'src/components/reusable/user-avatar/UserAvatar';
 
 import {
   BackDrop,
@@ -18,7 +17,6 @@ import {
   ModalBody,
   CaregiverBlock,
   CaregiverName,
-  DrawerAvatar,
   StyledIconButton,
   SubTitle,
   TaskList,
@@ -83,10 +81,7 @@ export default function CompleteAppointmentModal({
             <Block>
               <SubTitle>{translate('appointments_page.drawer.caregiver')}</SubTitle>
               <CaregiverBlock>
-                <DrawerAvatar
-                  src={getMockCaregiverAvatar(SMALL_CAREGIVER_AVATAR_SIZE)}
-                  alt={`${appointment.caregiverInfo.user.firstName} ${appointment.caregiverInfo.user.lastName}`}
-                />
+                <UserAvatar userId={appointment.caregiverInfo.user.id} size={SMALL_AVATAR_SIZE} />
                 <CaregiverName>
                   {appointment.caregiverInfo.user.firstName}{' '}
                   {appointment.caregiverInfo.user.lastName}
@@ -97,10 +92,7 @@ export default function CompleteAppointmentModal({
             <Block>
               <SubTitle>{translate('appointments_page.drawer.patient')}</SubTitle>
               <CaregiverBlock>
-                <DrawerAvatar
-                  src={getMockCaregiverAvatar(SMALL_CAREGIVER_AVATAR_SIZE)}
-                  alt={`${appointment?.user.firstName} ${appointment?.user.lastName}`}
-                />
+                <UserAvatar userId={appointment.user.id} size={SMALL_AVATAR_SIZE} />
                 <CaregiverName>
                   {appointment?.user.firstName} {appointment?.user.lastName}
                 </CaregiverName>

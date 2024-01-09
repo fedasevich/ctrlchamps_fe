@@ -1,5 +1,4 @@
 import CloseIcon from '@mui/icons-material/Close';
-import { Avatar } from '@mui/material';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 
@@ -7,15 +6,17 @@ import ArrowForward from 'src/assets/icons/ArrowForward';
 import TasksList from 'src/components/confirm-appointment/TasksList';
 import { Appointment } from 'src/components/create-appointment/enums';
 import AppointmentBtn from 'src/components/reusable/appointment-btn/AppointmentBtn';
-import { APPOINTMENT_STATUS } from 'src/constants';
+import { APPOINTMENT_STATUS, SMALL_AVATAR_SIZE } from 'src/constants';
 import { useLocales } from 'src/locales';
 import { useCreateAppointmentMutation } from 'src/redux/api/appointmentApi';
 import { useAppDispatch, useTypedSelector } from 'src/redux/store';
 import { ROUTES } from 'src/routes';
 
 import CaregiverDrawer from 'src/components/reusable/drawer/caregiver-drawer/CaregiverDrawer';
+import UserAvatar from 'src/components/reusable/user-avatar/UserAvatar';
 import { cancelAppointment as resetAppointmentInfo } from 'src/redux/slices/appointmentSlice';
 import { resetAllInfo } from 'src/redux/slices/healthQuestionnaireSlice';
+
 import { CONFIRM_NOTE_MAX_LENGTH } from './constants';
 import {
   Container,
@@ -101,7 +102,7 @@ export default function ConfirmAppointment({ onBack }: { onBack: () => void }): 
           <Header>
             <Typography>{translate('confirm_appointment.caregiver')}</Typography>
             <LinkToProfile onClick={openDrawer}>
-              <Avatar />
+              {caregiver && <UserAvatar userId={caregiver.id} size={SMALL_AVATAR_SIZE} />}
               <Name>{`${caregiver?.firstName} ${caregiver?.lastName}`}</Name>
               <ArrowForward />
             </LinkToProfile>

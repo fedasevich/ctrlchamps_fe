@@ -19,6 +19,7 @@ export default function AppointmentStatus({ status }: IProps): JSX.Element {
     [APPOINTMENT_STATUS.SignedSeeker]: translate('appointments_page.status.virtual'),
     [APPOINTMENT_STATUS.SignedCaregiver]: translate('appointments_page.status.virtual'),
     [APPOINTMENT_STATUS.Rejected]: translate('appointments_page.status.rejected'),
+    [APPOINTMENT_STATUS.Finished]: translate('appointments_page.status.completed'),
   };
 
   return <StatusWrapper status={status}>{STATUS_TEXTS[status]}</StatusWrapper>;

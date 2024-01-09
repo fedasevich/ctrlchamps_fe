@@ -79,7 +79,7 @@ function Profile(): JSX.Element | null {
   };
 
   return (
-    <PrivateRoute allowedRole={USER_ROLE.Caregiver}>
+    <PrivateRoute allowedRoles={[USER_ROLE.Caregiver]}>
       <Head>
         <title>{translate('profile.pageTitle')}</title>
       </Head>

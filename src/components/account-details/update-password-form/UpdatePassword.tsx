@@ -1,13 +1,13 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { FormControl, IconButton, InputAdornment, OutlinedInput } from '@mui/material';
 import { SetStateAction, useEffect, useState } from 'react';
-import { useForm } from 'react-hook-form';
 
-import { useLocales } from 'src/locales';
 import Visibility from 'src/assets/icons/Visibility';
 import VisibilityOff from 'src/assets/icons/VisibilityOff';
-import { useUpdatePasswordMutation } from 'src/redux/api/userApi';
 import { BAD_REQUEST_STATUS } from 'src/constants';
+import { useLocales } from 'src/locales';
+import { useUpdatePasswordMutation } from 'src/redux/api/userApi';
+import { useCustomForm } from 'src/hooks/useCustomForm';
 
 import { Container, ErrorMessage, StyledButton, StyledForm } from './styles';
 import { FormValues, useUpdatePassword } from './validation';
@@ -36,8 +36,9 @@ export default function UpdatePassword({ email, onClose, onSuccess }: Props): JS
     handleSubmit,
     reset,
     formState: { errors, isValid },
-  } = useForm<FormValues>({
+  } = useCustomForm<FormValues>({
     resolver: yupResolver(updatePassSchema),
+    trim: true,
     mode: 'onChange',
   });
 

@@ -155,6 +155,7 @@ export const appointmentApi = createApi({
         method: 'POST',
         body,
       }),
+      invalidatesTags: ['Appointments'],
     }),
     getFilteredCaregivers: builder.query<PreviewCaregiver[], URLSearchParams>({
       query: (params) => ({ url: `${route.caregivers}${route.filter}`, method: 'GET', params }),

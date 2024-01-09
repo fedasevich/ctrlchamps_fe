@@ -44,21 +44,21 @@ const MenuDropdown: React.FC<MenuDropdownProps> = ({ children, onClick }): JSX.E
   const [updateBalance] = useUpdateBalanceMutation();
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-  const [balance, setBalance] = useState<number>(0);
   const [isHelpModalOpen, setIsHelpModalOpen] = useState<boolean>(false);
-  const open = Boolean(anchorEl);
   const user = useTypedSelector((state) => state.user.user);
-  const { data: userInfo } = useGetUserInfoQuery(user?.id);
+  const { data: userInfo, refetch } = useGetUserInfoQuery(user?.id);
+
+  const [balance, setBalance] = React.useState<number>(userInfo?.balance || 0);
+
+  const open = Boolean(anchorEl);
+  const [isUpdatingBalance, setIsUpdatingBalance] = useState<boolean>(false);
+  const { role } = user || {};
 
   useEffect(() => {
-    if (userInfo?.balance !== undefined) {
-      setBalance(userInfo.balance);
-    }
-  }, [userInfo]);
+    refetch();
+  }, [refetch]);
 
   if (!user) return null;
-
-  const { role } = user;
 
   const handleClick = (event: React.MouseEvent<HTMLElement>): void => {
     setAnchorEl(event.currentTarget);
@@ -82,22 +82,32 @@ const MenuDropdown: React.FC<MenuDropdownProps> = ({ children, onClick }): JSX.E
 
   const handleWithdraw = async (amount: number): Promise<void> => {
     try {
-      const previousBalance = balance;
-
-      setBalance((prevBalance) => prevBalance - amount);
-
-      await updateBalance(previousBalance - amount);
+      if (userInfo && !isUpdatingBalance) {
+        setIsUpdatingBalance(true);
+        const newBalance = userInfo.balance - amount;
+        setBalance(newBalance);
+        await updateBalance(newBalance);
+        refetch();
+        setIsUpdatingBalance(false);
+      }
     } catch (error) {
+      setIsUpdatingBalance(false);
       throw new Error(error);
     }
   };
 
   const handleTopUp = async (amount: number): Promise<void> => {
     try {
-      setBalance((prevBalance) => prevBalance + amount);
-
-      await updateBalance(balance + amount);
+      if (userInfo && !isUpdatingBalance) {
+        setIsUpdatingBalance(true);
+        const newBalance = userInfo.balance + amount;
+        setBalance(newBalance);
+        await updateBalance(newBalance);
+        refetch();
+        setIsUpdatingBalance(false);
+      }
     } catch (error) {
+      setIsUpdatingBalance(false);
       throw new Error(error);
     }
   };
@@ -119,7 +129,7 @@ const MenuDropdown: React.FC<MenuDropdownProps> = ({ children, onClick }): JSX.E
               <OperationButton
                 variant="contained"
                 onClick={(): Promise<void> => handleWithdraw(TRANSACTION_EXAMPLE)}
-                disabled={balance < TRANSACTION_EXAMPLE}
+                disabled={balance < TRANSACTION_EXAMPLE || isUpdatingBalance}
               >
                 {translate('menu.withdraw')}
               </OperationButton>
@@ -127,6 +137,7 @@ const MenuDropdown: React.FC<MenuDropdownProps> = ({ children, onClick }): JSX.E
               <OperationButton
                 variant="contained"
                 onClick={(): Promise<void> => handleTopUp(TRANSACTION_EXAMPLE)}
+                disabled={isUpdatingBalance}
               >
                 {translate('menu.top_up')}
               </OperationButton>

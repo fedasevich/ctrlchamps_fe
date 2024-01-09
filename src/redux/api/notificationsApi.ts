@@ -3,18 +3,18 @@ import type { RootState } from 'src/redux/rootReducer';
 import { route } from 'src/redux/api/routes';
 
 export type NotificationStatus =
-  | 'appoinmentRequested'
-  | 'appointmentRejected'
-  | 'appointmentRequestAccepted'
-  | 'appointmentRequestRejected'
-  | 'virtualAssessmentAccepted'
-  | 'virtualAssessmentRejected'
-  | 'virtualAssessmentRescheduled'
-  | 'agreementSignOff'
-  | 'activityLogCompletionRequest'
-  | 'activityLogReviewRequest'
-  | 'activityLogApprove'
-  | 'activityLogReject';
+  | 'REQUEST_ACCEPTED'
+  | 'REQUEST_REJECTED'
+  | 'REQUESTED_APPOINTMENT'
+  | 'REJECTED_APPOINTMENT'
+  | 'ACCEPTED_VA'
+  | 'REJECTED_VA'
+  | 'RESCHEDULE_VA'
+  | 'SIGN_OFF'
+  | 'ACTIVITY_LOG_REQUEST'
+  | 'ACTIVITY_LOG_REVIEW'
+  | 'ACTIVITY_LOG_APPROVED'
+  | 'ACTIVITY_LOG_REJECTED';
 
 export type Notification = {
   id: string;

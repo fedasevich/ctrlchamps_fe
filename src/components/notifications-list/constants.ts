@@ -26,48 +26,48 @@ const ICON_TYPE = {
 };
 
 const NOTIFICATION_STATUS = {
-  appoinmentRequested: {
+  REQUESTED_APPOINTMENT: {
     text: 'notifications.requestedAppointment',
     icon: ICON_TYPE.acceptAppointment,
   },
-  appointmentRejected: {
+  REJECTED_APPOINTMENT: {
     text: 'notifications.rejectedAppointment',
     icon: ICON_TYPE.rejectAppointment,
   },
-  appointmentRequestAccepted: {
+  REQUEST_ACCEPTED: {
     text: 'notifications.requestAccepted',
     icon: ICON_TYPE.acceptAppointment,
   },
-  appointmentRequestRejected: {
+  REQUEST_REJECTED: {
     text: 'notifications.requestRejected',
     icon: ICON_TYPE.rejectAppointment,
   },
-  virtualAssessmentAccepted: {
+  ACCEPTED_VA: {
     text: 'notifications.acceptedVA',
     icon: ICON_TYPE.acceptVA,
   },
-  virtualAssessmentRejected: {
+  REJECTED_VA: {
     text: 'notifications.rejectedVA',
     icon: ICON_TYPE.rejectVA,
   },
-  virtualAssessmentRescheduled: {
+  RESCHEDULE_VA: {
     text: 'notifications.rescheduleVA',
     icon: ICON_TYPE.acceptVA,
   },
-  agreementSignOff: {
+  SIGN_OFF: {
     text: 'notifications.signOff',
     icon: ICON_TYPE.sign,
   },
-  activityLogCompletionRequest: {
+  ACTIVITY_LOG_REQUEST: {
     text: 'notifications.activityLogRequest',
     icon: ICON_TYPE.sign,
   },
-  activityLogReviewRequest: {
+  ACTIVITY_LOG_REVIEW: {
     text: 'notifications.activityLogReview',
     icon: ICON_TYPE.sign,
   },
-  activityLogApprove: { text: 'notifications.activityLogApproved', icon: ICON_TYPE.sign },
-  activityLogReject: { text: 'notifications.activityLogRejected', icon: ICON_TYPE.signOff },
+  ACTIVITY_LOG_APPROVED: { text: 'notifications.activityLogApproved', icon: ICON_TYPE.sign },
+  ACTIVITY_LOG_REJECTED: { text: 'notifications.activityLogRejected', icon: ICON_TYPE.signOff },
 };
 
 export { colorMap, IconColor, ICON_TYPE, NOTIFICATION_STATUS };

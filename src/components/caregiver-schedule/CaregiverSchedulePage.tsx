@@ -12,7 +12,7 @@ export default function CaregiverSchedulePage(): JSX.Element | null {
   const [isCalendarVisible, setIsCalendarVisible] = useState<boolean>(false);
 
   return (
-    <PrivateRoute allowedRole={USER_ROLE.Caregiver}>
+    <PrivateRoute allowedRoles={[USER_ROLE.Caregiver]}>
       <Head>
         <title>{translate('app_title')}</title>
       </Head>

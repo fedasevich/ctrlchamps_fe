@@ -1,8 +1,9 @@
 import styled from '@emotion/styled';
+
+import { APPOINTMENT_STATUS } from 'src/constants';
 import { TEXT_COLOR } from 'src/theme/colors';
 import { TYPOGRAPHY } from 'src/theme/fonts';
 import typography from 'src/theme/typography';
-import { APPOINTMENT_STATUS } from 'src/constants';
 
 export const StatusWrapper = styled.p<{ status: string }>`
   font-size: ${TYPOGRAPHY.base}px;
@@ -15,6 +16,7 @@ export const StatusWrapper = styled.p<{ status: string }>`
       [APPOINTMENT_STATUS.Accepted]: TEXT_COLOR.active,
       [APPOINTMENT_STATUS.Active]: TEXT_COLOR.active,
       [APPOINTMENT_STATUS.Completed]: TEXT_COLOR.active,
+      [APPOINTMENT_STATUS.Finished]: TEXT_COLOR.active,
       [APPOINTMENT_STATUS.Ongoing]: TEXT_COLOR.active,
       [APPOINTMENT_STATUS.Virtual]: TEXT_COLOR.active,
       [APPOINTMENT_STATUS.SignedCaregiver]: TEXT_COLOR.active,

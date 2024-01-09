@@ -13,4 +13,5 @@ export const ROUTES = {
   notifications: '/notifications',
   faq: '/faq',
   caregiver_profile: '/caregiver-profile',
+  adminPanel: '/admin-panel',
 };

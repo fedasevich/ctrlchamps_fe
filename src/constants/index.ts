@@ -82,3 +82,8 @@ export const TRANSACTION_TYPE = {
   Income: 'Income',
   Outcome: 'Outcome',
 };
+
+export const TINY_AVATAR_SIZE = 24;
+export const SMALL_AVATAR_SIZE = 48;
+export const BIG_AVATAR_SIZE = 96;
+

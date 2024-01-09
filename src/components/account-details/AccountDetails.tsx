@@ -162,12 +162,11 @@ export default function AccountDetails({ user, isAdmin }: IProps): JSX.Element |
                         onChange={(e): Promise<void> => onFileChange(e, field)}
                       />
                     </Button>
-                    {user.avatar ||
-                      (avatar && (
-                        <IconButton onClick={onDeleteAvatar}>
-                          <DeleteOutlineIcon color="primary" />
-                        </IconButton>
-                      ))}
+                    {(user.avatar || avatar) && (
+                      <IconButton onClick={onDeleteAvatar}>
+                        <DeleteOutlineIcon color="primary" />
+                      </IconButton>
+                    )}
                   </ButtonContainer>
                 )}
               />

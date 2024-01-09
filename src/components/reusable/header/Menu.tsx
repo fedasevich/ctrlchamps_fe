@@ -52,13 +52,14 @@ const MenuDropdown: React.FC<MenuDropdownProps> = ({ children, onClick }): JSX.E
 
   const open = Boolean(anchorEl);
   const [isUpdatingBalance, setIsUpdatingBalance] = useState<boolean>(false);
-  const { role } = user || {};
 
   useEffect(() => {
     refetch();
   }, [refetch]);
 
   if (!user) return null;
+
+  const { role } = user;
 
   const handleClick = (event: React.MouseEvent<HTMLElement>): void => {
     setAnchorEl(event.currentTarget);

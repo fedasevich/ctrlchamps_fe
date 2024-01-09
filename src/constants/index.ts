@@ -26,6 +26,8 @@ export const GOOGLE_MAP_API = 'https://maps.googleapis.com/maps/api';
 export const USER_ROLE: Record<UserRole, UserRole> = {
   Caregiver: 'Caregiver',
   Seeker: 'Seeker',
+  Admin: 'Admin',
+  SuperAdmin: 'SuperAdmin',
 };
 
 export const DEFAULT_REDIRECT_PATH = ROUTES.login;
@@ -56,6 +58,7 @@ export const APPOINTMENT_STATUS = {
   Active: 'Active',
   Ongoing: 'Ongoing',
   Completed: 'Completed',
+  Finished: 'Finished',
 };
 
 export const VIRTUAL_ASSESSMENT_STATUS = {

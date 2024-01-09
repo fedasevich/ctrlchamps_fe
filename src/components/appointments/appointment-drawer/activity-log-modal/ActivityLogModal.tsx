@@ -1,5 +1,5 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Button, Checkbox } from '@mui/material';
+import { Button, Checkbox, FormControlLabel } from '@mui/material';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useAppDispatch } from 'src/redux/store';
 
@@ -12,6 +12,7 @@ import {
   Container,
   DoubleButtonBox,
   ErrorMessage,
+  StyledCheckBoxLabel,
   StyledTask,
   StyledTaskList,
   StyledTitle,
@@ -89,8 +90,11 @@ export default function ActivityLogModal({
           <StyledTaskList>
             {seekerTasks.map((task) => (
               <StyledTask key={task.name}>
-                <Checkbox {...register('tasks')} value={task.name} />
-                {task.name}
+                <FormControlLabel
+                  name={task.name}
+                  control={<Checkbox {...register('tasks')} value={task.name} />}
+                  label={<StyledCheckBoxLabel>{task.name}</StyledCheckBoxLabel>}
+                />
               </StyledTask>
             ))}
           </StyledTaskList>

@@ -13,8 +13,7 @@ import typography from 'src/theme/typography';
 
 export const MainWrapper = styled('div')`
   width: 100%;
-  margin: 40px 25px 40px 15px;
-  padding-left: 20px;
+  padding: 0 5px;
   padding-top: 15px;
   background-color: ${SECONDARY.background_gray};
   font-weight: ${typography.fontWeightBold};
@@ -46,14 +45,6 @@ export const PageName = styled('div')`
   align-items: center;
   font-weight: ${typography.fontWeightBold};
   font-size: ${TYPOGRAPHY.sm}px;
-`;
-
-export const AddUserButton = styled(Button)`
-  max-width: 150px;
-  width: 100%;
-  height: 50px;
-  font-weight: ${typography.fontWeightRegular};
-  font-size: ${TYPOGRAPHY.base_xs}px;
 `;
 
 export const TableRow = styled(MuiTableRow)`

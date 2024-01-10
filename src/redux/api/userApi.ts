@@ -5,7 +5,6 @@ import { route } from './routes';
 export interface User {
   id: string;
   email: string;
-  password: string;
   firstName: string;
   lastName: string;
   phoneNumber: string;
@@ -18,6 +17,7 @@ export interface User {
   zipCode: string;
   address: string;
   balance: number;
+  status: string;
   avatar?: string;
 }
 
@@ -60,7 +60,7 @@ export const userApi = createApi({
   }),
   tagTypes: ['User'],
   endpoints: (builder) => ({
-    getUserInfo: builder.query<User, string | undefined>({
+    getUserInfo: builder.query<User, string | string[] | undefined>({
       query: (userId) => ({ url: `/${userId}`, method: 'GET', userId }),
       providesTags: ['User'],
     }),

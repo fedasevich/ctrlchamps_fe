@@ -15,7 +15,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 
 import { MAX_BIRTH_DATE, MAX_PHONE_CHARACTERS } from 'src/components/sign-up-second/constants';
-import { DATE_FORMAT, USER_ROLE } from 'src/constants';
+import { CURRENT_DAY, DATE_FORMAT, USER_ROLE } from 'src/constants';
 import { useLocales } from 'src/locales';
 import { savePersonalDetails } from 'src/redux/slices/personalDetailsSlice';
 import { useAppDispatch } from 'src/redux/store';
@@ -40,7 +40,7 @@ interface IProps {
 function SignUpSecond({ role, onNext }: IProps): JSX.Element {
   const dispatch = useAppDispatch();
   const { translate } = useLocales();
-  const signUpSecondSchema = useSignUpSecondSchema();
+  const signUpSecondSchema = useSignUpSecondSchema(role);
   const { defaultValues, onAccountCheck } = useSignUpSecond(onNext);
 
   const {
@@ -54,7 +54,7 @@ function SignUpSecond({ role, onNext }: IProps): JSX.Element {
     formState: { errors, isValid },
   } = useForm<SignUpSecondValues>({
     resolver: yupResolver(signUpSecondSchema),
-    mode: 'onBlur',
+    mode: 'onChange',
     defaultValues: { ...defaultValues },
   });
 
@@ -180,16 +180,12 @@ function SignUpSecond({ role, onNext }: IProps): JSX.Element {
           name="dateOfBirth"
           control={control}
           defaultValue={MAX_BIRTH_DATE}
-          rules={{
-            validate: (value) =>
-              value <= MAX_BIRTH_DATE || translate('signUpSecondForm.birthDateMax'),
-          }}
           render={({ field }): JSX.Element => (
             <DatePicker
               {...field}
               label={translate('signUpSecondForm.placeholderBirthDate')}
               inputFormat={DATE_FORMAT}
-              maxDate={MAX_BIRTH_DATE}
+              maxDate={role === USER_ROLE.Caregiver ? MAX_BIRTH_DATE : CURRENT_DAY}
               openTo="year"
               renderInput={(params): JSX.Element => (
                 <TextField variant="filled" {...params} fullWidth error={!!errors.dateOfBirth} />

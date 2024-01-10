@@ -92,6 +92,12 @@ export const userApi = createApi({
         body: passwordData,
       }),
     }),
+    deleteUser: builder.mutation<void, string>({
+      query: (userId) => ({
+        url: userId,
+        method: 'DELETE',
+      }),
+    }),
   }),
 });
 
@@ -100,6 +106,7 @@ export const {
   useUpdateUserMutation,
   useUploadAvatarMutation,
   useUpdatePasswordMutation,
+  useDeleteUserMutation,
 } = userApi;
 
 export default userApi;

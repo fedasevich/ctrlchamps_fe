@@ -1,4 +1,5 @@
 import Head from 'next/head';
+import AdminAppointmentList from 'src/components/admin-appointment-list/AppointmentList';
 
 import { PrivateRoute } from 'src/components/private-route/PrivateRoute';
 import { USER_ROLE } from 'src/constants';
@@ -12,6 +13,7 @@ export default function AdminPanelPage(): JSX.Element | null {
       <Head>
         <title>{translate('app_title')}</title>
       </Head>
+      <AdminAppointmentList />
     </PrivateRoute>
   );
 }

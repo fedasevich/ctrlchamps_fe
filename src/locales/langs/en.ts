@@ -811,6 +811,18 @@ const en = {
     withdrawal: 'Withdrawal',
     replenishment: 'Replenishment',
   },
+  adminAppointmentList: {
+    title: 'Appointments',
+    id: 'Appointment ID',
+    type: 'Type',
+    duration: 'Duration',
+    creation_date: 'Date of creation',
+    end_date: 'End date',
+    status: 'Appointment status',
+    clientName: 'Client name',
+    caregiverName: 'Caregiver name',
+    actions: 'Actions',
+  },
 };
 
 export default en;

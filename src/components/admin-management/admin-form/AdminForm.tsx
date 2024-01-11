@@ -24,14 +24,14 @@ import {
   ManagementWrapper,
   PageName,
 } from 'src/components/admin-management/styles';
-import { MAX_PHONE_CHARACTERS } from 'src/components/sign-up-second/constants';
 
 import { format, parseISO } from 'date-fns';
 import { useTranslation } from 'react-i18next';
 import { AUTO_HIDEOUT_DELAY, DATE_FORMAT, DISPLAY_TIME_FORMAT } from 'src/constants';
 import { Admin } from 'src/redux/api/adminPanelAPI';
 import { getISODateWithoutUTC } from 'src/utils/getISODateWithoutUTC';
-import { DEFAULT_ADMIN_FORM_VALUES, END_INDEX, START_INDEX, ZERO } from './constants';
+import { DEFAULT_ADMIN_FORM_VALUES } from './constants';
+import { validatePhoneNumber } from './helpers';
 import { useAdminForm } from './hooks';
 import {
   ErrorMessage,
@@ -104,7 +104,7 @@ function AdminForm({ selectedAdmin, onSubmit }: AdminFormProps): JSX.Element | n
           <PageName>
             <Cylinder />
             {isEditingExistingAdmin
-              ? translate('adminManagement.adminForm.changeAdminTitle')
+              ? translate('adminManagement.adminForm.editAdminTitle')
               : translate('adminManagement.adminForm.createAdminTitle')}
           </PageName>
         </Stack>
@@ -156,46 +156,17 @@ function AdminForm({ selectedAdmin, onSubmit }: AdminFormProps): JSX.Element | n
                     render={({ field, fieldState }): JSX.Element => (
                       <MuiTelInput
                         {...field}
-                        onChange={(value: string): void => {
-                          const currentValue = getValues('phoneNumber');
-                          field.onChange(value);
-                          if (value.slice(START_INDEX, END_INDEX) === ZERO) {
-                            field.onChange('');
-                            setError('phoneNumber', {
-                              type: 'manual',
-                              message: `${translate('adminManagement.adminForm.phoneInvalid')}`,
-                            });
-
-                            return;
-                          }
-                          if (value.slice(START_INDEX, END_INDEX) === '') {
-                            field.onChange('');
-                            setError('phoneNumber', {
-                              type: 'manual',
-                              message: `${translate('adminManagement.adminForm.phoneInvalid1')}`,
-                            });
-
-                            return;
-                          }
-                          if (value.length <= MAX_PHONE_CHARACTERS) {
-                            field.onChange(value);
-                            setValue('phoneNumber', value);
-
-                            return;
-                          }
-                          if (value.length > MAX_PHONE_CHARACTERS) {
-                            field.onChange(currentValue);
-                            setError('phoneNumber', {
-                              type: 'manual',
-                              message: `${translate(
-                                'adminManagement.adminForm.phoneLengthInvalid'
-                              )}`,
-                            });
-
-                            return;
-                          }
-                          clearErrors('phoneNumber');
-                        }}
+                        onChange={(value): void =>
+                          validatePhoneNumber({
+                            clearErrors,
+                            field,
+                            getValues,
+                            setError,
+                            setValue,
+                            translate,
+                            value,
+                          })
+                        }
                         variant="filled"
                         defaultCountry="US"
                         focusOnSelectCountry

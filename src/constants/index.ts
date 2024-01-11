@@ -15,10 +15,12 @@ export const UTC_BIAS = 'Z';
 
 export const CURRENT_DAY = new Date();
 export const DISPLAY_TIME_FORMAT = 'HH:mm';
+export const FULL_WEEKDAY_FORMAT = 'EEEE';
 export const ONE_DAY = 1;
 
 export const TIMEZONE_FORMAT = Intl.DateTimeFormat().resolvedOptions().timeZone;
-export const URL_PATTERN = /^https:\/\/.+$/;
+export const URL_PATTERN =
+  /^(https?):\/\/[-a-zA-Z0-9@:%._+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_+.~#?&//=]*)$/;
 export const ONLY_LETTERS_PATTERN = /^[a-zA-Z\s]*$/;
 
 export const GOOGLE_MAP_API = 'https://maps.googleapis.com/maps/api';

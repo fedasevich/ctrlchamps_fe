@@ -31,7 +31,7 @@ import { useTranslation } from 'react-i18next';
 import { AUTO_HIDEOUT_DELAY, DATE_FORMAT, DISPLAY_TIME_FORMAT } from 'src/constants';
 import { Admin } from 'src/redux/api/adminPanelAPI';
 import { getISODateWithoutUTC } from 'src/utils/getISODateWithoutUTC';
-import { DEFAULT_ADMIN_FORM_VALUES } from './constants';
+import { DEFAULT_ADMIN_FORM_VALUES, END_INDEX, START_INDEX, ZERO } from './constants';
 import { useAdminForm } from './hooks';
 import {
   ErrorMessage,
@@ -159,7 +159,7 @@ function AdminForm({ selectedAdmin, onSubmit }: AdminFormProps): JSX.Element | n
                         onChange={(value: string): void => {
                           const currentValue = getValues('phoneNumber');
                           field.onChange(value);
-                          if (value.slice(2, 3) === '0') {
+                          if (value.slice(START_INDEX, END_INDEX) === ZERO) {
                             field.onChange('');
                             setError('phoneNumber', {
                               type: 'manual',
@@ -168,7 +168,7 @@ function AdminForm({ selectedAdmin, onSubmit }: AdminFormProps): JSX.Element | n
 
                             return;
                           }
-                          if (value.slice(2, 3) === '') {
+                          if (value.slice(START_INDEX, END_INDEX) === '') {
                             field.onChange('');
                             setError('phoneNumber', {
                               type: 'manual',

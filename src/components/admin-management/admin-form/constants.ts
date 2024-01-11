@@ -9,3 +9,7 @@ export const DEFAULT_ADMIN_FORM_VALUES: AdminFormValues = {
   email: '',
   password: '',
 };
+
+export const START_INDEX = 2;
+export const END_INDEX = 3;
+export const ZERO = '0';

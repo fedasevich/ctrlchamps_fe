@@ -176,12 +176,12 @@ export default function AppointmentDrawer({
       <>
         {role === USER_ROLE.Caregiver ? (
           <AcceptRejectButtonsBox>
-            <StyledButton type="button" variant="contained" onClick={handleAcceptAppointment}>
-              {translate('appointments_page.accept')}
-            </StyledButton>
             <CancelBtn type="button" variant="outlined" onClick={handleCancelModalOpen}>
               {translate('appointments_page.reject')}
             </CancelBtn>
+            <StyledButton type="button" variant="contained" onClick={handleAcceptAppointment}>
+              {translate('appointments_page.accept')}
+            </StyledButton>
           </AcceptRejectButtonsBox>
         ) : (
           <CancelBtn type="button" variant="outlined" onClick={handleCancelModalOpen}>

@@ -1,4 +1,4 @@
-import { Avatar, Button, IconButton, styled } from '@mui/material';
+import { Avatar, Button, IconButton, Select, styled } from '@mui/material';
 import { PRIMARY, SECONDARY } from 'src/theme/colors';
 import { TYPOGRAPHY } from 'src/theme/fonts';
 import typography from 'src/theme/typography';
@@ -126,5 +126,20 @@ export const EditButton = styled(IconButton)`
 `;
 
 export const ButtonContainer = styled('div')`
-display: flex;
-`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+export const StatusBlock = styled('div')`
+  padding: 8px 16px 24px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+`;
+
+export const StyledSelect = styled(Select)`
+  width: 200px;
+  height: 40px;
+`;

@@ -24,6 +24,8 @@ const route = {
   changePassword: '/change-password',
   activityLog: '/activity-log',
   transactions: '/transactions',
+  adminPanel: '/admin-panel',
+  admins: '/admins',
 };
 
 export { route };

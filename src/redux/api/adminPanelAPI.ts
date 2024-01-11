@@ -3,6 +3,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { route } from 'src/redux/api/routes';
 import { User } from 'src/redux/api/userApi';
 import { RootState } from 'src/redux/rootReducer';
+import { UserRole } from 'src/redux/slices/userSlice';
 
 type AdminSearchParams = {
   search: string;
@@ -14,8 +15,20 @@ type Admins = {
   count: number;
 };
 
+export type Admin = {
+  id: string;
+  email: string;
+  firstName: string;
+  lastName: string;
+  phoneNumber: string;
+  role: UserRole;
+  password: string;
+  updatedAt: string;
+};
+
 export const adminPanelApi = createApi({
   reducerPath: 'adminPanelApi',
+  tagTypes: ['Admins'],
   baseQuery: fetchBaseQuery({
     baseUrl: `${process.env.NEXT_PUBLIC_API_URL}${route.adminPanel}`,
     prepareHeaders: (headers, { getState }) => {
@@ -34,6 +47,34 @@ export const adminPanelApi = createApi({
       query: (params) => ({
         url: route.admins,
         params,
+      }),
+      providesTags: ['Admins'],
+    }),
+    getAdminInfo: builder.query<Admin, string>({
+      query: (id) => ({ url: `/${id}` }),
+      providesTags: (result, error, id) => [{ type: 'Admins', id }],
+    }),
+    updateAdmin: builder.mutation<void, Partial<Admin> & Pick<Admin, 'id'>>({
+      query: ({ id, ...admin }) => ({
+        url: `/${id}`,
+        method: 'PATCH',
+        body: admin,
+      }),
+      invalidatesTags: (result, error, { id }) => [{ type: 'Admins', id }, 'Admins'],
+    }),
+    createAdmin: builder.mutation<void, Omit<Admin, 'id' | 'updatedAt'>>({
+      query: (body) => ({
+        url: '',
+        method: 'POST',
+        body,
+      }),
+      invalidatesTags: ['Admins'],
+    }),
+    updateAdminPassword: builder.mutation<void, Pick<Admin, 'id' | 'password'>>({
+      query: ({ id, password }) => ({
+        url: `${route.updatePassword}/${id}`,
+        method: 'PATCH',
+        body: { password },
       }),
     }),
   }),

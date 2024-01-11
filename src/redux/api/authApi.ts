@@ -35,7 +35,7 @@ interface AccountCheckData {
   phoneNumber: string;
 }
 
-interface AccountCheckResponse {
+export interface AccountCheckResponse {
   statusCode?: number;
   message?: string;
 }

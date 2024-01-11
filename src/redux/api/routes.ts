@@ -26,6 +26,8 @@ const route = {
   transactions: '/transactions',
   adminPanel: '/admin-panel',
   admins: '/admins',
+  admin: '/admin',
+  updatePassword: '/update-password',
 };
 
 export { route };

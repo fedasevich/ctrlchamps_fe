@@ -837,6 +837,8 @@ const en = {
     wallet: 'Wallet',
     withdrawal: 'Withdrawal',
     replenishment: 'Replenishment',
+    anyUsers: `You don't have any users yet`,
+    anyTransactions: `User doesn't have any transactions yet`,
   },
 };
 

@@ -28,6 +28,8 @@ import { useGetFilteredUsersQuery, useUpdateUserMutation } from 'src/redux/api/u
 import { DEBOUNCE_DELAY, FIRST_PAGE, PAGINATION_USERS_LIMIT } from './constants';
 import {
   MainWrapper,
+  PageName,
+  Cylinder,
   SearchContainer,
   StyledTableRow,
   TableHeader,
@@ -109,76 +111,88 @@ export default function UserList(): JSX.Element | null {
 
   return (
     <MainWrapper>
-      {translate('userList.title')}
       <ManagementWrapper>
-        <SearchContainer>
-          <OutlinedInput
-            onChange={handleTermSearch}
-            placeholder={translate('userList.search')}
-            startAdornment={
-              <InputAdornment position="start">
-                <SearchIcon />
-              </InputAdornment>
-            }
-            fullWidth
-            size="small"
-          />
-          <IconButton size="large" onClick={handleChangeSorting}>
-            <FormatLineSpacingIcon fontSize="large" />
-          </IconButton>
-        </SearchContainer>
-        <Stack mt={3}>
-          <Table>
-            <TableHead>
-              <StyledTableRow>
-                <TableHeader>{translate('userList.userName')}</TableHeader>
-                <TableHeader>{translate('userList.role')}</TableHeader>
-                <TableHeader>{translate('userList.status')}</TableHeader>
-                <TableHeader> </TableHeader>
-              </StyledTableRow>
-            </TableHead>
-            <TableBody>
-              {isSuccess &&
-                users.data.map((user) => (
-                  <StyledTableRow key={user.id}>
-                    <StyledTableCell>
-                      {user.firstName} {user.lastName}
-                    </StyledTableCell>
-                    <StyledTableCell>{user.role}</StyledTableCell>
-                    <StyledTableCell>
-                      <Select
-                        value={user.status}
-                        fullWidth
-                        onChange={(event): Promise<void> => handleChangeStatus(event, user.id)}
-                      >
-                        <MenuItem value={USER_STATUS.Active}>{USER_STATUS.Active}</MenuItem>
-                        <MenuItem value={USER_STATUS.Inactive}>{USER_STATUS.Inactive}</MenuItem>
-                      </Select>
-                    </StyledTableCell>
-                    <StyledTableCell align="right">
-                      <IconButton
-                        onClick={(): Promise<boolean> =>
-                          router.push(`${ROUTES.adminAccountDetails}${user.id}`)
-                        }
-                      >
-                        <ModeEditOutlineOutlinedIcon />
-                      </IconButton>
-                      <IconButton onClick={(): void => handleCloseModalAndSetUserId(user.id)}>
-                        <DeleteForeverOutlinedIcon />
-                      </IconButton>
-                    </StyledTableCell>
+        <Stack direction="row" justifyContent="space-between" mb={3}>
+          <PageName>
+            <Cylinder />
+            {translate('userList.title')}
+          </PageName>
+        </Stack>
+
+        {isSuccess && users.data.length > 0 ? (
+          <>
+            <SearchContainer>
+              <OutlinedInput
+                onChange={handleTermSearch}
+                placeholder={translate('userList.search')}
+                startAdornment={
+                  <InputAdornment position="start">
+                    <SearchIcon />
+                  </InputAdornment>
+                }
+                fullWidth
+                size="small"
+              />
+              <IconButton size="large" onClick={handleChangeSorting}>
+                <FormatLineSpacingIcon fontSize="large" />
+              </IconButton>
+            </SearchContainer>
+            <Stack mt={3}>
+              <Table>
+                <TableHead>
+                  <StyledTableRow>
+                    <TableHeader>{translate('userList.userName')}</TableHeader>
+                    <TableHeader>{translate('userList.role')}</TableHeader>
+                    <TableHeader>{translate('userList.status')}</TableHeader>
+                    <TableHeader> </TableHeader>
                   </StyledTableRow>
-                ))}
-            </TableBody>
-          </Table>
-        </Stack>
-        <Stack display="flex" direction="row" justifyContent="center" mt={2}>
-          <Pagination
-            count={Math.ceil(users!.count / PAGINATION_USERS_LIMIT)}
-            page={page}
-            onChange={handlePageChange}
-          />
-        </Stack>
+                </TableHead>
+                <TableBody>
+                  {users.data.map((user) => (
+                    <StyledTableRow key={user.id}>
+                      <StyledTableCell>
+                        {user.firstName} {user.lastName}
+                      </StyledTableCell>
+                      <StyledTableCell>{user.role}</StyledTableCell>
+                      <StyledTableCell>
+                        <Select
+                          value={user.status}
+                          fullWidth
+                          onChange={(event): Promise<void> => handleChangeStatus(event, user.id)}
+                        >
+                          <MenuItem value={USER_STATUS.Active}>{USER_STATUS.Active}</MenuItem>
+                          <MenuItem value={USER_STATUS.Inactive}>{USER_STATUS.Inactive}</MenuItem>
+                        </Select>
+                      </StyledTableCell>
+                      <StyledTableCell align="right">
+                        <IconButton
+                          onClick={(): Promise<boolean> =>
+                            router.push(`${ROUTES.adminAccountDetails}${user.id}`)
+                          }
+                        >
+                          <ModeEditOutlineOutlinedIcon />
+                        </IconButton>
+                        <IconButton onClick={(): void => handleCloseModalAndSetUserId(user.id)}>
+                          <DeleteForeverOutlinedIcon />
+                        </IconButton>
+                      </StyledTableCell>
+                    </StyledTableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </Stack>
+            <Stack display="flex" direction="row" justifyContent="center" mt={2}>
+              <Pagination
+                count={Math.ceil(users!.count / PAGINATION_USERS_LIMIT)}
+                page={page}
+                onChange={handlePageChange}
+              />
+            </Stack>
+          </>
+        ) : (
+          <PageName>{translate('userList.anyUsers')}</PageName>
+        )}
+
         <Modal
           isActive={isDeleteModalActive}
           onClose={handleDeleteModalToggle}

@@ -268,33 +268,37 @@ export default function AccountDetails({ user, isAdmin }: IProps): JSX.Element |
             </StatusBlock>
             <Block>
               <Subtitle>{translate('userList.transactions')}</Subtitle>
-              <Table>
-                <TableHead>
-                  <StyledTableRow>
-                    <TableHeader>{translate('userList.date')}</TableHeader>
-                    <TableHeader>{translate('userList.type')}</TableHeader>
-                    <TableHeader>{translate('userList.amount')}</TableHeader>
-                  </StyledTableRow>
-                </TableHead>
-                <TableBody>
-                  {transactions.map((transaction) => (
-                    <StyledTableRow key={transaction.id}>
-                      <StyledTableCell>
-                        {format(
-                          parseISO(transaction.createdAt),
-                          `${DATE_FORMAT} ${DISPLAY_TIME_FORMAT}`
-                        )}
-                      </StyledTableCell>
-                      <StyledTableCell>
-                        {transaction.type === TRANSACTION_TYPE.Income
-                          ? translate('userList.replenishment')
-                          : translate('userList.withdrawal')}
-                      </StyledTableCell>
-                      <StyledTableCell>{transaction.amount}$</StyledTableCell>
+              {transactions.length > 0 ? (
+                <Table>
+                  <TableHead>
+                    <StyledTableRow>
+                      <TableHeader>{translate('userList.date')}</TableHeader>
+                      <TableHeader>{translate('userList.type')}</TableHeader>
+                      <TableHeader>{translate('userList.amount')}</TableHeader>
                     </StyledTableRow>
-                  ))}
-                </TableBody>
-              </Table>
+                  </TableHead>
+                  <TableBody>
+                    {transactions.map((transaction) => (
+                      <StyledTableRow key={transaction.id}>
+                        <StyledTableCell>
+                          {format(
+                            parseISO(transaction.createdAt),
+                            `${DATE_FORMAT} ${DISPLAY_TIME_FORMAT}`
+                          )}
+                        </StyledTableCell>
+                        <StyledTableCell>
+                          {transaction.type === TRANSACTION_TYPE.Income
+                            ? translate('userList.replenishment')
+                            : translate('userList.withdrawal')}
+                        </StyledTableCell>
+                        <StyledTableCell>{transaction.amount}$</StyledTableCell>
+                      </StyledTableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              ) : (
+                <Value>{translate('userList.anyTransactions')}</Value>
+              )}
             </Block>
             <StatusBlock>
               <Subtitle>{translate('userList.wallet')}:</Subtitle>

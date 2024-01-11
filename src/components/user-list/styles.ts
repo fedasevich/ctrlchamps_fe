@@ -67,3 +67,18 @@ export const StyledButton = styled(Button)`
   height: 40px;
   margin: 0 auto;
 `;
+
+export const Cylinder = styled('div')`
+  width: 7px;
+  height: 20px;
+  border-radius: 10px;
+  background-color: ${PRIMARY.black};
+  margin-right: 10px;
+`;
+
+export const PageName = styled('div')`
+  display: flex;
+  align-items: center;
+  font-weight: ${typography.fontWeightBold};
+  font-size: ${TYPOGRAPHY.sm}px;
+`;

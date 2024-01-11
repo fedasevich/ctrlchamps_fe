@@ -19,6 +19,9 @@ export interface User {
   balance: number;
   status: string;
   avatar?: string;
+  updatedAt: string;
+  createdAt: string;
+  isDeletedByAdmin: boolean;
 }
 
 export interface UpdateUser {
@@ -35,6 +38,8 @@ export interface UpdateUser {
   zipCode?: string;
   address?: string;
   avatar?: string | null;
+  status?: string;
+  isDeletedByAdmin?: boolean;
 }
 
 interface UserPasswordData {
@@ -42,6 +47,18 @@ interface UserPasswordData {
   oldPassword: string;
   newPassword: string;
 }
+
+type Users = {
+  data: User[];
+  count: number;
+  sort: string;
+};
+
+type UserSearchParams = {
+  search: string;
+  offset: number;
+  sort: string;
+};
 
 export const userApi = createApi({
   reducerPath: 'userApi',
@@ -98,6 +115,12 @@ export const userApi = createApi({
         method: 'DELETE',
       }),
     }),
+    getFilteredUsers: builder.query<Users, UserSearchParams>({
+      query: (params) => ({
+        url: '',
+        params,
+      }),
+    }),
   }),
 });
 
@@ -107,6 +130,7 @@ export const {
   useUploadAvatarMutation,
   useUpdatePasswordMutation,
   useDeleteUserMutation,
+  useGetFilteredUsersQuery,
 } = userApi;
 
 export default userApi;

@@ -11,6 +11,8 @@ import {
   TableHead,
   TableBody,
   Table,
+  SelectChangeEvent,
+  Select,
 } from '@mui/material';
 import { ChangeEvent, useState } from 'react';
 import { Controller, ControllerRenderProps, useForm } from 'react-hook-form';
@@ -57,7 +59,6 @@ import {
   VisuallyHiddenInput,
   ButtonContainer,
   StatusBlock,
-  StyledSelect,
 } from './styles';
 
 import { StyledTableCell, StyledTableRow, TableHeader } from '../user-list/styles';
@@ -79,6 +80,7 @@ export default function AccountDetails({ user, isAdmin }: IProps): JSX.Element |
 
   const [uploadAvatar] = useUploadAvatarMutation();
   const [deleteAvatar] = useUpdateUserMutation();
+  const [updateUser] = useUpdateUserMutation();
 
   const schema = useAvatarSchema();
 
@@ -132,12 +134,20 @@ export default function AccountDetails({ user, isAdmin }: IProps): JSX.Element |
   const openPasswordBlock = (): void => setIsPasswordBlockVisible(!isPasswordBlockVisible);
   const closePasswordBlock = (): void => setIsPasswordBlockVisible(false);
 
+  const handleChangeStatus = async (event: SelectChangeEvent, id: string): Promise<void> => {
+    try {
+      await updateUser({ id, status: event.target.value }).unwrap();
+    } catch (error) {
+      throw new Error(error);
+    }
+  };
+
   return (
-    <Background>
-      <Container>
+    <Background isAdmin={isAdmin}>
+      <Container isAdmin={isAdmin}>
         {isAdmin ? (
           <Title>
-            {translate('userList.title')} / {user.firstName} {user.lastName}
+            {user.firstName} {user.lastName}
           </Title>
         ) : (
           <Title>{translate('accountDetails.title')}</Title>
@@ -247,10 +257,14 @@ export default function AccountDetails({ user, isAdmin }: IProps): JSX.Element |
           <>
             <StatusBlock>
               <Subtitle>{translate('userList.status')}:</Subtitle>
-              <StyledSelect defaultValue={user.status}>
+              <Select
+                value={user.status}
+                sx={{ width: 200, height: 40 }}
+                onChange={(event): Promise<void> => handleChangeStatus(event, user.id)}
+              >
                 <MenuItem value={USER_STATUS.Active}>{USER_STATUS.Active}</MenuItem>
                 <MenuItem value={USER_STATUS.Inactive}>{USER_STATUS.Inactive}</MenuItem>
-              </StyledSelect>
+              </Select>
             </StatusBlock>
             <Block>
               <Subtitle>{translate('userList.transactions')}</Subtitle>

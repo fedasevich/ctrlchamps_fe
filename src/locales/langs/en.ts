@@ -41,6 +41,9 @@ const en = {
     resetPassword: 'Reset Password',
     signUp: 'Sign Up',
     authError: 'Please enter valid credentials',
+    isDeletedByAdmin: `This account didn't exist`,
+    isInactive:
+      'Your profile has been suspended, please contact your administrator to find out why support@gmail.com',
   },
   signUpFirstForm: {
     Seeker: {

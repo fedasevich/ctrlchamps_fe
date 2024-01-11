@@ -3,7 +3,6 @@ import React, { memo, useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { useRouter } from 'next/router';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { FetchBaseQueryError } from '@reduxjs/toolkit/dist/query';
 
 import { useAppDispatch } from 'src/redux/store';
 import { setToken } from 'src/redux/slices/tokenSlice';
@@ -54,8 +53,19 @@ function LoginForm(): JSX.Element {
           dispatch(setToken(token));
           router.push(ROUTES.home);
         })
-        .catch((error: FetchBaseQueryError) => {
-          if (error) {
+        .catch((error) => {
+          const errorMessage = error.data.message;
+          if (errorMessage === translate('loginForm.isDeletedByAdmin')) {
+            setError('password', {
+              type: 'manual',
+              message: `${translate('loginForm.isDeletedByAdmin')}`,
+            });
+          } else if (errorMessage === translate('loginForm.isInactive')) {
+            setError('password', {
+              type: 'manual',
+              message: `${translate('loginForm.isInactive')}`,
+            });
+          } else if (error) {
             setError('password', {
               type: 'manual',
               message: `${translate('loginForm.authError')}`,

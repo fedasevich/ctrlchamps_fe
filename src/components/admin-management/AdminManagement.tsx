@@ -12,6 +12,7 @@ import {
 import SearchIcon from '@mui/icons-material/Search';
 import ModeEditOutlineOutlinedIcon from '@mui/icons-material/ModeEditOutlineOutlined';
 import DeleteForeverOutlinedIcon from '@mui/icons-material/DeleteForeverOutlined';
+import { format, parseISO } from 'date-fns';
 
 import {
   AddUserButton,
@@ -37,6 +38,7 @@ import Modal from 'src/components/reusable/modal/Modal';
 import { useGetFilteredAdminsQuery } from 'src/redux/api/adminPanelAPI';
 import { useDeleteUserMutation } from 'src/redux/api/userApi';
 import { useDebounce } from 'src/hooks/useDebounce';
+import { DATE_FORMAT } from 'src/constants';
 
 function AdminManagement(): JSX.Element | null {
   const { translate } = useLocales();
@@ -140,7 +142,7 @@ function AdminManagement(): JSX.Element | null {
                       <GreenSpan>{admin.role}</GreenSpan>
                     </TableCell>
                     <TableCell>{admin.phoneNumber}</TableCell>
-                    <TableCell>{admin.dateOfBirth}</TableCell>
+                    <TableCell>{format(parseISO(admin.updatedAt), DATE_FORMAT)}</TableCell>
                     <TableCell align="right">
                       <IconButton>
                         <ModeEditOutlineOutlinedIcon />

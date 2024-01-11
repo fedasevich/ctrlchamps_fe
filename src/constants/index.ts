@@ -81,6 +81,11 @@ export const USER_STATUS = {
   Inactive: 'Inactive',
 };
 
+export const SORT_ORDER = {
+  ASC: 'ASC',
+  DESC: 'DESC',
+};
+
 export const TRANSACTION_TYPE = {
   Income: 'Income',
   Outcome: 'Outcome',

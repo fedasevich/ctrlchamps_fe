@@ -31,8 +31,8 @@ interface SignUpResponse {
 }
 
 interface AccountCheckData {
-  email: string;
-  phoneNumber: string;
+  email?: string;
+  phoneNumber?: string;
 }
 
 export interface AccountCheckResponse {

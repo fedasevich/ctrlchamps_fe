@@ -47,7 +47,7 @@ export function PrivateRoute({ children, allowedRoles }: PrivateRouteProps): JSX
       (user.role === USER_ROLE.Admin || user.role === USER_ROLE.SuperAdmin) &&
       !pathname?.includes(ROUTES.adminPanel)
     ) {
-      router.replace(ROUTES.users);
+      router.replace(ROUTES.adminPanel);
 
       return;
     }

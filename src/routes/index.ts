@@ -14,7 +14,6 @@ export const ROUTES = {
   faq: '/faq',
   caregiver_profile: '/caregiver-profile',
   adminPanel: '/admin-panel/',
-  users: '/admin-panel/users',
   adminManagement: '/admin-panel/admin-management/',
   createAdmin: '/admin-panel/admin-management/create-admin',
   changeAdmin: '/admin-panel/admin-management/change-admin',

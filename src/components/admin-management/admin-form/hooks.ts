@@ -99,7 +99,10 @@ export const useAdminForm = ({
     }
 
     try {
-      return await accountCheck({ email, phoneNumber })
+      return await accountCheck({
+        email: isEditingExistingAdmin ? undefined : email,
+        phoneNumber,
+      })
         .unwrap()
         .then(() => {
           onSubmit(data);

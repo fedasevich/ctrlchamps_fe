@@ -822,7 +822,7 @@ const en = {
     no: 'No',
     adminForm: {
       createAdminTitle: 'Create Admin',
-      changeAdminTitle: 'Change Admin',
+      editAdminTitle: 'Edit Admin',
       firstName: 'First Name',
       lastName: 'Last Name',
       phoneNumber: 'Phone Number',

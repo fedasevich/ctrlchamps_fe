@@ -51,7 +51,6 @@ interface UserPasswordData {
 type Users = {
   data: User[];
   count: number;
-  sort: string;
 };
 
 type UserSearchParams = {

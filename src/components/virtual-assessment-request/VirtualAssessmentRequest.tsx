@@ -1,7 +1,7 @@
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import NotificationsNoneOutlinedIcon from '@mui/icons-material/NotificationsNoneOutlined';
-import { Avatar, Button, IconButton, List, ListItemText, Typography } from '@mui/material';
+import { Button, IconButton, List, ListItemText, Typography } from '@mui/material';
 import { format } from 'date-fns';
 import jwt_decode from 'jwt-decode';
 import { useMemo, useState } from 'react';
@@ -10,9 +10,10 @@ import { DRAWER_DATE_FORMAT } from 'src/components/appointments/constants';
 import VirtualAssessmentSuccess from 'src/components/appointments/request-sent-modal/VirtualAssessmentSuccess';
 import VirtualAssessmentModal from 'src/components/appointments/virtual-assessment-modal/VirtualAssessmentModal';
 import { AssessmentPurpose } from 'src/components/appointments/virtual-assessment-modal/enums';
+import UserAvatar from 'src/components/reusable/user-avatar/UserAvatar';
 import { FilledButton } from 'src/components/reusable';
 import FlowHeader from 'src/components/reusable/header/FlowHeader';
-import { USER_ROLE, VIRTUAL_ASSESSMENT_STATUS } from 'src/constants';
+import { SMALL_AVATAR_SIZE, USER_ROLE, VIRTUAL_ASSESSMENT_STATUS } from 'src/constants';
 import { useLocales } from 'src/locales';
 import { virtualAssessmentApi } from 'src/redux/api/virtualAssessmentApi';
 import { useTypedSelector } from 'src/redux/store';
@@ -48,6 +49,7 @@ const VirtualAssessmentRequestModal = ({
   const { translate } = useLocales();
 
   const token = useTypedSelector((state) => state.token.token);
+  const { user } = useTypedSelector((state) => state.user);
 
   const [reschedulingModalOpen, setReschedulingModalOpen] = useState<boolean>(false);
   const [isVirtualAssessmentSuccessOpen, setIsVirtualAssessmentSuccessOpen] =
@@ -113,15 +115,27 @@ const VirtualAssessmentRequestModal = ({
               </IconButton>
             </AppointmentModalBlockParagraph>
           </AppointmentModalBlock>
-          <AppointmentModalBlock>
-            <AppointmentModalBlockParagraph>
-              {translate('request_appointment.client')}
-            </AppointmentModalBlockParagraph>
-            <InlineBlock>
-              <Avatar />
-              <NameParagraph>{`${appointment.user.firstName} ${appointment.user.lastName}`}</NameParagraph>
-            </InlineBlock>
-          </AppointmentModalBlock>
+          {user?.role === USER_ROLE.Caregiver ? (
+            <AppointmentModalBlock>
+              <AppointmentModalBlockParagraph>
+                {translate('request_appointment.client')}
+              </AppointmentModalBlockParagraph>
+              <InlineBlock>
+                <UserAvatar userId={appointment.user.id} size={SMALL_AVATAR_SIZE} />
+                <NameParagraph>{`${appointment.user.firstName} ${appointment.user.lastName}`}</NameParagraph>
+              </InlineBlock>
+            </AppointmentModalBlock>
+          ) : (
+            <AppointmentModalBlock>
+              <AppointmentModalBlockParagraph>
+                {translate('request_appointment.caregiver')}
+              </AppointmentModalBlockParagraph>
+              <InlineBlock>
+                <UserAvatar userId={appointment.caregiverInfo.user.id} size={SMALL_AVATAR_SIZE} />
+                <NameParagraph>{`${appointment.caregiverInfo.user.firstName} ${appointment.caregiverInfo.user.lastName}`}</NameParagraph>
+              </InlineBlock>
+            </AppointmentModalBlock>
+          )}
           <AppointmentModalBlock>
             <AppointmentModalBlockParagraph>
               {translate('request_appointment.date_and_time')}
@@ -173,7 +187,6 @@ const VirtualAssessmentRequestModal = ({
                     fullWidth
                     onClick={async (): Promise<void> => {
                       await handleStatusChange(VIRTUAL_ASSESSMENT_STATUS.Accepted);
-                      window.location.reload();
                     }}
                   >
                     {translate('request_appointment.btns.accept')}
@@ -181,7 +194,8 @@ const VirtualAssessmentRequestModal = ({
                 </InlineBlock>
               )}
             {appointment.virtualAssessment?.status === VIRTUAL_ASSESSMENT_STATUS.Proposed &&
-              appointment.virtualAssessment?.wasRescheduled && (
+              appointment.virtualAssessment?.wasRescheduled &&
+              user?.role === USER_ROLE.Seeker && (
                 <InlineBlock>
                   <Button
                     variant="outlined"
@@ -189,7 +203,6 @@ const VirtualAssessmentRequestModal = ({
                     fullWidth
                     onClick={async (): Promise<void> => {
                       await handleStatusChange(VIRTUAL_ASSESSMENT_STATUS.Rejected);
-                      window.location.reload();
                     }}
                   >
                     {translate('request_appointment.btns.reject')}
@@ -200,7 +213,6 @@ const VirtualAssessmentRequestModal = ({
                     fullWidth
                     onClick={async (): Promise<void> => {
                       await handleStatusChange(VIRTUAL_ASSESSMENT_STATUS.Accepted);
-                      window.location.reload();
                     }}
                   >
                     {translate('request_appointment.btns.accept')}
@@ -214,6 +226,7 @@ const VirtualAssessmentRequestModal = ({
       <VirtualAssessmentModal
         purpose={AssessmentPurpose.reschedule}
         caregiverName={`${appointment?.caregiverInfo.user.firstName} ${appointment?.caregiverInfo.user.lastName}`}
+        caregiverId={appointment.caregiverInfo.user.id}
         appointmentId={appointment.id}
         onClose={closeReschedulingModal}
         isActive={reschedulingModalOpen && !appointment.virtualAssessment?.wasRescheduled}

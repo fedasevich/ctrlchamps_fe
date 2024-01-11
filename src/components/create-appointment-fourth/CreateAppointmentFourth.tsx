@@ -11,11 +11,8 @@ import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import MonetizationOn from 'src/assets/icons/MonetizationOn';
 import RightAction from 'src/assets/icons/RightAction';
-import { SMALL_CAREGIVER_AVATAR_SIZE } from 'src/components/create-appointment-fourth/constants';
-import {
-  getMockCaregiverAvatar,
-  serializeCaregiverFilterStateToQueryString,
-} from 'src/components/create-appointment-fourth/helpers';
+import { SMALL_AVATAR_SIZE } from 'src/constants';
+import { serializeCaregiverFilterStateToQueryString } from 'src/components/create-appointment-fourth/helpers';
 import {
   useCaregiverFilter,
   useCreateAppointmentFourth,
@@ -26,7 +23,6 @@ import {
   BaseText,
   CaregiverListContainer,
   FilterContainer,
-  StyledAvatar,
   StyledFormControlLabel,
   StyledListItemText,
   StyledNextButton,
@@ -34,6 +30,7 @@ import {
 import { appointmentApi } from 'src/redux/api/appointmentApi';
 import { useTypedSelector } from 'src/redux/store';
 import CreateAppointmentFourthDrawer from './CreateAppointmentFourthDrawer';
+import UserAvatar from '../reusable/user-avatar/UserAvatar';
 
 interface CreateAppointmentFourthProps {
   onNext: () => void;
@@ -126,11 +123,9 @@ export default function CreateAppointmentFourth({
                 }
               >
                 <ListItemAvatar>
-                  <StyledAvatar
-                    src={getMockCaregiverAvatar(SMALL_CAREGIVER_AVATAR_SIZE)}
-                    alt={`${caregiver.firstName} ${caregiver.lastName}`}
-                  />
+                  <UserAvatar userId={caregiver.id} size={SMALL_AVATAR_SIZE} />
                 </ListItemAvatar>
+
                 <StyledListItemText
                   primary={`${caregiver.firstName} ${caregiver.lastName}`}
                   secondary={

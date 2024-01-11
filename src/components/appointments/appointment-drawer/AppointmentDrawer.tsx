@@ -10,8 +10,6 @@ import AgreementModal from 'src/components/appointments/agreement-modal/Agreemen
 import AppointmentStatus from 'src/components/appointments/appointment-status/AppointmentStatus';
 import CancelModal from 'src/components/appointments/cancel-modal/CancelModal';
 import CompleteAppointmentModal from 'src/components/appointments/complete-appointment-modal/CompleteAppointmentModal';
-import { SMALL_CAREGIVER_AVATAR_SIZE } from 'src/components/appointments/constants';
-import { getMockCaregiverAvatar } from 'src/components/appointments/helpers';
 import { STEPS } from 'src/components/health-questionnaire/constants';
 import Drawer from 'src/components/reusable/drawer/Drawer';
 import { DrawerFooter, DrawerHeader, DrawerTitle } from 'src/components/reusable/drawer/styles';
@@ -21,12 +19,14 @@ import {
   DATE_FORMAT,
   USER_ROLE,
   VIRTUAL_ASSESSMENT_STATUS,
+  SMALL_AVATAR_SIZE,
 } from 'src/constants';
 import { useLocales } from 'src/locales';
 
 import VirtualAssessmentSuccess from 'src/components/appointments/request-sent-modal/VirtualAssessmentSuccess';
 import VirtualAssessmentModal from 'src/components/appointments/virtual-assessment-modal/VirtualAssessmentModal';
 import VirtualAssessmentRequestModal from 'src/components/virtual-assessment-request/VirtualAssessmentRequest';
+import UserAvatar from 'src/components/reusable/user-avatar/UserAvatar';
 import { useUpdateAppointmentMutation } from 'src/redux/api/appointmentApi';
 
 import { ChildModal } from 'src/components/appointment-request-modal/ChildModal';
@@ -57,7 +57,6 @@ import {
   DisabledText,
   DoubleButtonBox,
   AcceptRejectButtonsBox,
-  DrawerAvatar,
   DrawerBody,
   ModalFooter,
   StyledButton,
@@ -177,12 +176,12 @@ export default function AppointmentDrawer({
       <>
         {role === USER_ROLE.Caregiver ? (
           <AcceptRejectButtonsBox>
-            <StyledButton type="button" variant="contained" onClick={handleAcceptAppointment}>
-              {translate('appointments_page.accept')}
-            </StyledButton>
             <CancelBtn type="button" variant="outlined" onClick={handleCancelModalOpen}>
               {translate('appointments_page.reject')}
             </CancelBtn>
+            <StyledButton type="button" variant="contained" onClick={handleAcceptAppointment}>
+              {translate('appointments_page.accept')}
+            </StyledButton>
           </AcceptRejectButtonsBox>
         ) : (
           <CancelBtn type="button" variant="outlined" onClick={handleCancelModalOpen}>
@@ -297,10 +296,7 @@ export default function AppointmentDrawer({
             <Block>
               <SubTitle>{translate('appointments_page.drawer.caregiver')}</SubTitle>
               <CaregiverBlock>
-                <DrawerAvatar
-                  src={getMockCaregiverAvatar(SMALL_CAREGIVER_AVATAR_SIZE)}
-                  alt={`${appointment?.caregiverInfo.user.firstName} ${appointment?.caregiverInfo.user.lastName}`}
-                />
+                <UserAvatar userId={appointment.caregiverInfo.user.id} size={SMALL_AVATAR_SIZE} />
                 <CaregiverName>
                   {appointment?.caregiverInfo.user.firstName}{' '}
                   {appointment?.caregiverInfo.user.lastName}
@@ -320,10 +316,7 @@ export default function AppointmentDrawer({
             <Block>
               <SubTitle>{translate('appointments_page.drawer.patient')}</SubTitle>
               <CaregiverBlock>
-                <DrawerAvatar
-                  src={getMockCaregiverAvatar(SMALL_CAREGIVER_AVATAR_SIZE)}
-                  alt={`${appointment?.user.firstName} ${appointment?.user.lastName}`}
-                />
+                <UserAvatar userId={appointment.user.id} size={SMALL_AVATAR_SIZE} />
                 <CaregiverName>
                   {appointment?.user.firstName} {appointment?.user.lastName}
                 </CaregiverName>
@@ -468,6 +461,7 @@ export default function AppointmentDrawer({
         <VirtualAssessmentModal
           purpose={AssessmentPurpose.request}
           caregiverName={`${appointment?.caregiverInfo.user.firstName} ${appointment?.caregiverInfo.user.lastName}`}
+          caregiverId={appointment.caregiverInfo.user.id}
           appointmentId={selectedAppointmentId}
           onClose={handleVirtualAssessmentModalClose}
           isActive={isVirtualAssessmentModalOpen && !appointment.virtualAssessment?.wasRescheduled}

@@ -11,11 +11,10 @@ export const Container = styled('div')`
 export const DoubleButtonBox = styled('div')`
   flex-direction: column;
   display: flex;
-  gap: 16px;
+  gap: 8px;
 `;
 
 export const StyledTitle = styled(Typography)`
-  padding-left: 8px;
   color: ${SECONDARY.gray_semi_transparent};
   font-size: ${TYPOGRAPHY.xs}px;
   font-weight: ${typography.fontWeightMedium};
@@ -40,4 +39,11 @@ export const ErrorMessage = styled(Typography)`
   color: ${({ theme }): string => theme.palette.error.main};
   font-size: ${TYPOGRAPHY.xss}px;
   font-weight: ${typography.fontWeightMedium};
+`;
+
+export const StyledCheckBoxLabel = styled(Typography)`
+  font-size: ${TYPOGRAPHY.sm}px;
+  font-weight: ${typography.fontWeightMedium};
+  line-height: 1.6;
+  letter-spacing: 0.15px;
 `;

@@ -6,14 +6,16 @@ import {
   IconButton as MuiIconButton,
   Typography,
 } from '@mui/material';
+import { APPOINTMENT_STATUS } from 'src/constants';
 
-import { PRIMARY, SECONDARY } from 'src/theme/colors';
+import { PRIMARY, SECONDARY, TEXT_COLOR } from 'src/theme/colors';
 import { TYPOGRAPHY } from 'src/theme/fonts';
 import typography from 'src/theme/typography';
 
 export const MainWrapper = styled('div')`
   width: 100%;
-  padding: 0 5px;
+  margin: 40px 25px 40px 15px;
+  padding-left: 20px;
   padding-top: 15px;
   background-color: ${SECONDARY.background_gray};
   font-weight: ${typography.fontWeightBold};
@@ -47,6 +49,12 @@ export const PageName = styled('div')`
   font-size: ${TYPOGRAPHY.sm}px;
 `;
 
+export const ActionBar = styled('div')`
+  display: flex;
+  justify-content: space-between;
+  width: 300px;
+`;
+
 export const TableRow = styled(MuiTableRow)`
   border-bottom: 1px solid ${SECONDARY.light_gray};
 `;
@@ -54,17 +62,53 @@ export const TableRow = styled(MuiTableRow)`
 export const TableCell = styled(MuiTableCell)`
   font-weight: ${typography.fontWeightSemiBold};
   font-size: ${TYPOGRAPHY.base}px;
+  text-align: center;
 `;
 
-export const GreenSpan = styled('span')`
+export const GreenSpan = styled('span')<{ status: string }>`
+  display: flex;
+  justify-content: space-around;
+  text-align: center;
   background-color: ${SECONDARY.light_green};
-  color: ${SECONDARY.green};
-  padding: 5px 12px;
+  color: ${(props): string => {
+    const colorMap: Record<string, string> = {
+      [APPOINTMENT_STATUS.Pending]: TEXT_COLOR.pending,
+      [APPOINTMENT_STATUS.Accepted]: TEXT_COLOR.active,
+      [APPOINTMENT_STATUS.Active]: TEXT_COLOR.active,
+      [APPOINTMENT_STATUS.Completed]: TEXT_COLOR.active,
+      [APPOINTMENT_STATUS.Finished]: TEXT_COLOR.active,
+      [APPOINTMENT_STATUS.Ongoing]: TEXT_COLOR.active,
+      [APPOINTMENT_STATUS.Virtual]: TEXT_COLOR.active,
+      [APPOINTMENT_STATUS.SignedCaregiver]: TEXT_COLOR.active,
+      [APPOINTMENT_STATUS.SignedSeeker]: TEXT_COLOR.active,
+      [APPOINTMENT_STATUS.Rejected]: TEXT_COLOR.rejected,
+    };
+
+    return colorMap[props.status];
+  }};
+  background-color: ${(props): string => {
+    const colorMap: Record<string, string> = {
+      [APPOINTMENT_STATUS.Pending]: SECONDARY.light_yellow,
+      [APPOINTMENT_STATUS.Accepted]: SECONDARY.light_green,
+      [APPOINTMENT_STATUS.Active]: SECONDARY.light_green,
+      [APPOINTMENT_STATUS.Completed]: SECONDARY.light_green,
+      [APPOINTMENT_STATUS.Finished]: SECONDARY.light_green,
+      [APPOINTMENT_STATUS.Ongoing]: SECONDARY.light_green,
+      [APPOINTMENT_STATUS.Virtual]: SECONDARY.light_green,
+      [APPOINTMENT_STATUS.SignedCaregiver]: SECONDARY.light_green,
+      [APPOINTMENT_STATUS.SignedSeeker]: SECONDARY.light_green,
+      [APPOINTMENT_STATUS.Rejected]: SECONDARY.light_red,
+    };
+
+    return colorMap[props.status];
+  }};
+  padding: 5px 8px;
   border-radius: 15px;
 `;
 
 export const TableHeader = styled(TableCell)`
   font-weight: ${typography.fontWeightBold};
+  text-align: center;
 `;
 
 export const IconButton = styled(MuiIconButton)`

@@ -110,6 +110,7 @@ export interface DetailedAppointment {
   seekerTasks: SeekerTask[];
   virtualAssessment: VirtualAssessment | null;
   activityLog: ActivityLog[];
+  createdAt: string;
 }
 
 export const appointmentApi = createApi({

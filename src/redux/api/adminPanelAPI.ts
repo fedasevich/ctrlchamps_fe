@@ -4,10 +4,18 @@ import { route } from 'src/redux/api/routes';
 import { User } from 'src/redux/api/userApi';
 import { RootState } from 'src/redux/rootReducer';
 import { DetailedAppointment } from 'src/redux/api/appointmentApi';
+import { SortOrder } from 'src/constants/enums';
 
 type AdminSearchParams = {
   search: string;
   offset: number;
+};
+
+type AppointmentsSearchParams = {
+  name: string;
+  offset: number;
+  limit: number;
+  sort: SortOrder.ASC | SortOrder.DESC;
 };
 
 type Admins = {
@@ -42,7 +50,7 @@ export const adminPanelApi = createApi({
         params,
       }),
     }),
-    getAllAppointments: builder.query<AppointmentsWithCount, AdminSearchParams>({
+    getAllAppointments: builder.query<AppointmentsWithCount, AppointmentsSearchParams>({
       query: (params) => ({
         url: route.appointments,
         params,

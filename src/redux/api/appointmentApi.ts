@@ -7,7 +7,7 @@ import { route } from 'src/redux/api/routes';
 import { RootState } from 'src/redux/rootReducer';
 import { Caregiver } from 'src/types/Caregiver.type';
 import { ActivityLog } from './activityLogApi';
-import { VirtualAssessment } from './virtualAssessmentApi';
+import type { VirtualAssessment } from './virtualAssessmentApi';
 
 export interface AppointmentPayload {
   caregiverInfoId: string | undefined;
@@ -155,6 +155,7 @@ export const appointmentApi = createApi({
         method: 'POST',
         body,
       }),
+      invalidatesTags: ['Appointments'],
     }),
     getFilteredCaregivers: builder.query<PreviewCaregiver[], URLSearchParams>({
       query: (params) => ({ url: `${route.caregivers}${route.filter}`, method: 'GET', params }),

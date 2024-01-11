@@ -28,6 +28,8 @@ export const GOOGLE_MAP_API = 'https://maps.googleapis.com/maps/api';
 export const USER_ROLE: Record<UserRole, UserRole> = {
   Caregiver: 'Caregiver',
   Seeker: 'Seeker',
+  Admin: 'Admin',
+  SuperAdmin: 'SuperAdmin',
 };
 
 export const DEFAULT_REDIRECT_PATH = ROUTES.login;
@@ -58,6 +60,7 @@ export const APPOINTMENT_STATUS = {
   Active: 'Active',
   Ongoing: 'Ongoing',
   Completed: 'Completed',
+  Finished: 'Finished',
 };
 
 export const VIRTUAL_ASSESSMENT_STATUS = {
@@ -74,3 +77,17 @@ export const APPOINTMENT_TYPE = {
 
 export const HELP_EMAIL = 'help@ctrlchamps@gmail.com';
 export const TRANSACTION_EXAMPLE = 100;
+
+export const USER_STATUS = {
+  Active: 'Active',
+  Inactive: 'Inactive',
+};
+
+export const TRANSACTION_TYPE = {
+  Income: 'Income',
+  Outcome: 'Outcome',
+};
+
+export const TINY_AVATAR_SIZE = 24;
+export const SMALL_AVATAR_SIZE = 48;
+export const BIG_AVATAR_SIZE = 96;

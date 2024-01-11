@@ -46,6 +46,3 @@ export const serializeCaregiverFilterStateToQueryString = (
 
   return searchParams;
 };
-
-export const getMockCaregiverAvatar = (size: number): string =>
-  `https://picsum.photos/${size}/${size}`;

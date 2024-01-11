@@ -40,15 +40,20 @@ const isWithinAppointmentInterval = (now: Date, startDate: string, endDate: stri
  */
 export const isActivityLogShown = (appointment: DetailedAppointment): boolean => {
   const { startDate, endDate, status, timezone, type, weekday } = appointment;
-
-  if (type === APPOINTMENT_TYPE.OneTime && status === APPOINTMENT_STATUS.Completed) {
+  if (
+    type === APPOINTMENT_TYPE.OneTime &&
+    [APPOINTMENT_STATUS.Completed, APPOINTMENT_STATUS.Finished].includes(status)
+  ) {
     return true;
   }
 
-  if (
-    type === APPOINTMENT_TYPE.Recurring &&
-    (status === APPOINTMENT_STATUS.Completed || status === APPOINTMENT_STATUS.Active)
-  ) {
+  const isAppointmentStatusAboutFinished = [
+    APPOINTMENT_STATUS.Completed,
+    APPOINTMENT_STATUS.Active,
+    APPOINTMENT_STATUS.Finished,
+  ].includes(status);
+
+  if (type === APPOINTMENT_TYPE.Recurring && isAppointmentStatusAboutFinished) {
     const now = utcToZonedTime(new Date(), timezone);
     const { isWorkingDay, hasPassedStartTime, hasPassedEndTime } = calculateDateInfo(
       now,
@@ -121,27 +126,36 @@ export const isActivityLogReviewedShown = (
 ): boolean => {
   const { activityLog, type, status, startDate, endDate, timezone, weekday } = appointment;
 
-  const now = utcToZonedTime(new Date(), timezone);
+  if (
+    activityLog.length &&
+    role === USER_ROLE.Caregiver &&
+    type === APPOINTMENT_TYPE.OneTime &&
+    [APPOINTMENT_STATUS.Completed, APPOINTMENT_STATUS.Finished].includes(status)
+  ) {
+    return true;
+  }
 
-  if (!isWithinAppointmentInterval(now, startDate, endDate)) return false;
+  const now = utcToZonedTime(new Date(), timezone);
 
   if (
     role === USER_ROLE.Seeker &&
-    (status === APPOINTMENT_STATUS.Completed || status === APPOINTMENT_STATUS.Active) &&
+    [APPOINTMENT_STATUS.Completed, APPOINTMENT_STATUS.Active, APPOINTMENT_STATUS.Finished].includes(
+      status
+    ) &&
+    activityLog.length &&
     activityLog.every((item) => item.status !== ActivityLogStatus.Pending)
   ) {
     return true;
   }
 
-  if (activityLog.length && role === USER_ROLE.Caregiver && type === APPOINTMENT_TYPE.OneTime) {
-    return true;
-  }
-
   if (
+    isWithinAppointmentInterval(now, startDate, endDate) &&
     !!activityLog.length &&
     role === USER_ROLE.Caregiver &&
     type === APPOINTMENT_TYPE.Recurring &&
-    (status === APPOINTMENT_STATUS.Completed || status === APPOINTMENT_STATUS.Active)
+    [APPOINTMENT_STATUS.Completed, APPOINTMENT_STATUS.Active, APPOINTMENT_STATUS.Finished].includes(
+      status
+    )
   ) {
     return (
       activityLog.some((item) => isToday(parseISO(item.createdAt))) &&

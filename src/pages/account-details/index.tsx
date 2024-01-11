@@ -7,7 +7,7 @@ import { useLocales } from 'src/locales';
 import { useGetUserInfoQuery } from 'src/redux/api/userApi';
 import { useTypedSelector } from 'src/redux/store';
 
-export default function CaregiverSchedulePage(): JSX.Element | null {
+export default function AccountDetailsPage(): JSX.Element | null {
   const { translate } = useLocales();
   const userId = useTypedSelector((state) => state.user.user?.id);
 

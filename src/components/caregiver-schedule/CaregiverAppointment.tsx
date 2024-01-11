@@ -1,7 +1,7 @@
 import { Stack } from '@mui/material';
 import AccessTimeIcon from 'src/assets/icons/AccessTimeIcon';
 import AppointmentStatus from 'src/components/appointments/appointment-status/AppointmentStatus';
-import { DISPLAY_TIME_FORMAT } from 'src/constants';
+import { DISPLAY_TIME_FORMAT, TINY_AVATAR_SIZE } from 'src/constants';
 import { useLocales } from 'src/locales';
 import { formatTimeToTimezone } from 'src/utils/formatTime';
 import {
@@ -9,7 +9,6 @@ import {
   AppointmentHeader,
   AppointmentInfo,
   Arrow,
-  AvatarIcon,
   Details,
   HeaderText,
   Task,
@@ -17,6 +16,7 @@ import {
   Text,
 } from './styles';
 import { CaregiverAppointmentI } from './types';
+import UserAvatar from '../reusable/user-avatar/UserAvatar';
 
 type Props = {
   appointmentDays: CaregiverAppointmentI[];
@@ -49,7 +49,7 @@ export default function CaregiverAppointment({ appointmentDays, openDrawer }: Pr
                 </Text>
               </Details>
               <Details>
-                <AvatarIcon />
+                <UserAvatar userId={appointment.user.id} size={TINY_AVATAR_SIZE} />
                 <Text>{`${appointment.user.firstName} ${appointment.user.lastName}`}</Text>
               </Details>
             </AppointmentDetails>

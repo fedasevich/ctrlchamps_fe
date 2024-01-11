@@ -1,4 +1,4 @@
-import { Avatar, FormControlLabel, ListItemText, Typography, styled } from '@mui/material';
+import { FormControlLabel, ListItemText, Typography, styled } from '@mui/material';
 import { NextButton } from 'src/components/reusable/appointment-btn/styles';
 import { HEADER } from 'src/config-global';
 import { PRIMARY, SECONDARY } from 'src/theme/colors';
@@ -42,11 +42,6 @@ export const StyledFormControlLabel = styled(FormControlLabel)`
     font-size: ${TYPOGRAPHY.base}px;
     font-weight: ${typography.fontWeightMedium};
   }
-`;
-
-export const StyledAvatar = styled(Avatar)`
-  width: 48px;
-  height: 48px;
 `;
 
 export const StyledListItemText = styled(ListItemText)`

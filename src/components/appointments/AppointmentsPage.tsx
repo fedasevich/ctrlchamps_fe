@@ -15,7 +15,7 @@ export default function AppointmentsPage(): JSX.Element | null {
   if (isLoading) return null;
 
   return (
-    <PrivateRoute allowedRole={USER_ROLE.Seeker}>
+    <PrivateRoute allowedRoles={[USER_ROLE.Seeker]}>
       <Head>
         <title>{translate('app_title')}</title>
       </Head>

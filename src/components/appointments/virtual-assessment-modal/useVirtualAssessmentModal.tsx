@@ -109,6 +109,8 @@ export default function useVirtualAssessmentModal(
     selectStartTime(value);
     setInvalidTime(false);
 
+    if (startTime) checkTimeValidity(endTime < value);
+
     const halfAnHourDifference = calculateEndTime(
       selectTimeOptions,
       value,

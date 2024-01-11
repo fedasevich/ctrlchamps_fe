@@ -58,7 +58,7 @@ export default function WorkForm({ onClose, onSave, editingWorkPlaces }: Props):
     formState: { errors, isValid },
   } = useForm<ProfileExperience>({
     resolver: yupResolver(profileExperienceSchema),
-    mode: 'onBlur',
+    mode: 'onChange',
     defaultValues: editingWorkPlaces ?? DEFAULT_EXPERIENCE_VALUES,
   });
 

@@ -26,7 +26,7 @@ import { SortOrder } from 'src/constants/enums';
 import {
   ActionBar,
   Cylinder,
-  GreenSpan,
+  ColorSpan,
   IconButton,
   MainWrapper,
   ManagementWrapper,
@@ -173,9 +173,9 @@ function AdminAppointmentList(): JSX.Element | null {
                     <TableCell>{format(new Date(appointment.createdAt), DATE_FORMAT)}</TableCell>
                     <TableCell>{format(new Date(appointment.endDate), DATE_FORMAT)}</TableCell>
                     <TableCell>
-                      <GreenSpan status={appointment.status}>
+                      <ColorSpan status={appointment.status}>
                         <AppointmentStatus status={appointment.status} />
-                      </GreenSpan>
+                      </ColorSpan>
                     </TableCell>
                     <TableCell>
                       {appointment.user.firstName} {appointment.user.lastName}

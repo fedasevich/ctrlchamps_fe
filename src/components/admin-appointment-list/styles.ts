@@ -65,7 +65,7 @@ export const TableCell = styled(MuiTableCell)`
   text-align: center;
 `;
 
-export const GreenSpan = styled('span')<{ status: string }>`
+export const ColorSpan = styled('span')<{ status: string }>`
   display: flex;
   justify-content: space-around;
   text-align: center;

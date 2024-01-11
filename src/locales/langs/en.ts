@@ -350,6 +350,7 @@ const en = {
       min_appointment_duration: `An appointment should last for at least ${MIN_APPOINTMENT_HOUR_DURATION} hour.`,
       invalid_time:
         'Appointment cannot be ended before the start. Please choose another value in End Time field.',
+      invalid_today_time: 'Please choose the time to be later than the current time.',
       identical_time: 'You cannot choose identical time',
       invalid_date: 'Please select current date or a date in the future.',
       invalid_start_date:

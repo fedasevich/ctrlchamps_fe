@@ -1,4 +1,4 @@
-import { format, isBefore, isSameDay } from 'date-fns';
+import { format, isBefore, isSameDay, isToday } from 'date-fns';
 import { Dispatch, SetStateAction, useState } from 'react';
 
 import { selectTimeOptions } from 'src/components/create-appointment/constants';
@@ -8,6 +8,7 @@ import { virtualAssessmentApi } from 'src/redux/api/virtualAssessmentApi';
 
 import { calculateTimeDifference, calculateEndTime } from 'src/utils/calculateTimeDifference';
 import useChooseTime from 'src/hooks/useChooseTime';
+import { isTimeAfterNow } from 'src/utils/checkTime';
 import {
   INTERVAL_30_MINUTES_IDX,
   MAX_ASSESSMENT_HOURS_DURATION,
@@ -81,7 +82,8 @@ export default function useVirtualAssessmentModal(
     invalidTime ||
     startTime === endTime ||
     !validLink ||
-    (date && isBefore(date, CURRENT_DAY) && !isSameDay(date, CURRENT_DAY));
+    (date && isBefore(date, CURRENT_DAY) && !isSameDay(date, CURRENT_DAY)) ||
+    (!isTimeAfterNow(startTime) && isToday(date));
   const isRescheduleBtnDisabled = isButtonDisabled || minReasonLength || maxReasonLength;
 
   const checkTimeValidity = (condition: boolean): void => {

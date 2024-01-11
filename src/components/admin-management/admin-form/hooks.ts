@@ -15,7 +15,7 @@ import { useRouter } from 'next/router';
 import { useTranslation } from 'react-i18next';
 import { EMAIL_ERROR, PHONE_ERROR } from 'src/constants';
 import { adminPanelApi } from 'src/redux/api/adminPanelAPI';
-import { useAccountCheckMutation } from 'src/redux/api/authApi';
+import { authApi } from 'src/redux/api/authApi';
 import { ROUTES } from 'src/routes';
 import { AdminFormValues } from './types';
 
@@ -64,7 +64,7 @@ export const useAdminForm = ({
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [isPasswordRegenerated, setIsPasswordRegenerated] = useState<boolean>(false);
 
-  const [accountCheck] = useAccountCheckMutation();
+  const [accountCheck] = authApi.useAccountCheckMutation();
 
   const [regeneratePassword] = adminPanelApi.useUpdateAdminPasswordMutation();
 

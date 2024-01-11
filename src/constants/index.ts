@@ -9,6 +9,7 @@ export const USER_MIN_AGE = 18;
 export const MIN_PASSWORD_LENGTH = 8;
 export const MAX_CHARACTERS_LENGTH = 100;
 export const BAD_REQUEST_STATUS = 400;
+export const AUTO_HIDEOUT_DELAY = 2000;
 export const DATE_FORMAT = 'MM/dd/yyyy';
 export const BACKEND_DATE_FORMAT = 'yyyy-MM-dd';
 export const UTC_BIAS = 'Z';
@@ -20,6 +21,7 @@ export const ONE_DAY = 1;
 export const TIMEZONE_FORMAT = Intl.DateTimeFormat().resolvedOptions().timeZone;
 export const URL_PATTERN = /^https:\/\/.+$/;
 export const ONLY_LETTERS_PATTERN = /^[a-zA-Z\s]*$/;
+export const EMAIL_PATTERN = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/;
 
 export const GOOGLE_MAP_API = 'https://maps.googleapis.com/maps/api';
 
@@ -89,3 +91,6 @@ export const TRANSACTION_TYPE = {
 export const TINY_AVATAR_SIZE = 24;
 export const SMALL_AVATAR_SIZE = 48;
 export const BIG_AVATAR_SIZE = 96;
+
+export const ASCI_LETTERS_START = 33;
+export const ASCI_LETTERS_RANGE = 94;

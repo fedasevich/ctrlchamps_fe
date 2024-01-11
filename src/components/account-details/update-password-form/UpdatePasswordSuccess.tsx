@@ -1,5 +1,6 @@
 import { Alert, Snackbar } from '@mui/material';
-import React, { Dispatch, SetStateAction } from 'react';
+import { Dispatch, SetStateAction } from 'react';
+import { AUTO_HIDEOUT_DELAY } from 'src/constants';
 import { useLocales } from 'src/locales';
 
 type Props = {
@@ -16,7 +17,7 @@ export default function UpdatePasswordSuccess({
   return (
     <Snackbar
       open={passwordUpdated}
-      autoHideDuration={2000}
+      autoHideDuration={AUTO_HIDEOUT_DELAY}
       onClose={(): void => setPasswordUpdated(false)}
       anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
     >

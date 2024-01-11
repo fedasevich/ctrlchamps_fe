@@ -75,6 +75,17 @@ export const APPOINTMENT_TYPE = {
 
 export const HELP_EMAIL = 'help@ctrlchamps@gmail.com';
 export const TRANSACTION_EXAMPLE = 100;
+
+export const USER_STATUS = {
+  Active: 'Active',
+  Inactive: 'Inactive',
+};
+
+export const TRANSACTION_TYPE = {
+  Income: 'Income',
+  Outcome: 'Outcome',
+};
+
 export const TINY_AVATAR_SIZE = 24;
 export const SMALL_AVATAR_SIZE = 48;
 export const BIG_AVATAR_SIZE = 96;

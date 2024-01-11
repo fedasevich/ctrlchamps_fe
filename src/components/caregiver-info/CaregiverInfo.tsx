@@ -44,7 +44,6 @@ export default function CaregiverInfo({ caregiverInfo, refetchCaregiverInfo }: P
           onClose={handleModalClose}
           title={ActiveStepLabel}
           isActive={isStepModalOpen}
-          increaseHeight
         >
           <ProfileWrapper>{ActiveStepComponent}</ProfileWrapper>
         </Modal>

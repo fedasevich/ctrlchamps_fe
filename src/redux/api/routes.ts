@@ -25,6 +25,8 @@ const route = {
   activityLog: '/activity-log',
   transactions: '/transactions',
   notifications: '/notifications',
+  adminPanel: '/admin-panel',
+  admins: '/admins',
 };
 
 export { route };

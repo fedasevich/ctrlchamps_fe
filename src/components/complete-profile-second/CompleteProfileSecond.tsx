@@ -1,12 +1,9 @@
-import { memo, useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 
 import { useLocales } from 'src/locales';
 import WorkForm from 'src/components/complete-profile-second/work-form/WorkForm';
 import WorkList from 'src/components/complete-profile-second/work-list/WorkList';
-import {
-  useLazyGetWorkExperienceQuery,
-  useCreateWorkExperienceMutation,
-} from 'src/redux/api/profileCompleteApi';
+import { profileApi } from 'src/redux/api/profileCompleteApi';
 import { saveWorkExperiences } from 'src/redux/slices/workEperienceSlice';
 import { useAppDispatch, useTypedSelector } from 'src/redux/store';
 import { ProfileExperience } from 'src/components/complete-profile-second/types';
@@ -17,7 +14,7 @@ interface IProps {
   onBack: () => void;
 }
 
-function CompleteProfileSecond({ onNext, onBack }: IProps): JSX.Element | null {
+export default function CompleteProfileSecond({ onNext, onBack }: IProps): JSX.Element | null {
   const [editingWorkPlaces, setEditingWorkPlaces] = useState<ProfileExperience | null>(null);
   const [isModalActive, setIsModalActive] = useState<boolean>(false);
   const workPlaces = useTypedSelector((state) => state.workExperience.workExperiences);
@@ -25,8 +22,8 @@ function CompleteProfileSecond({ onNext, onBack }: IProps): JSX.Element | null {
   const { translate } = useLocales();
   const dispatch = useAppDispatch();
 
-  const [getWorkExperiences] = useLazyGetWorkExperienceQuery();
-  const [createWorkPlace, { isLoading }] = useCreateWorkExperienceMutation();
+  const [getWorkExperiences] = profileApi.useLazyGetWorkExperienceQuery();
+  const [createWorkPlace] = profileApi.useCreateWorkExperienceMutation();
 
   useEffect(() => {
     getWorkExperiences()
@@ -36,8 +33,6 @@ function CompleteProfileSecond({ onNext, onBack }: IProps): JSX.Element | null {
         dispatch(saveWorkExperiences([]));
       });
   }, [dispatch, getWorkExperiences]);
-
-  if (isLoading) return null;
 
   const onOpenModal = (): void => setIsModalActive(true);
 
@@ -101,5 +96,3 @@ function CompleteProfileSecond({ onNext, onBack }: IProps): JSX.Element | null {
     </>
   );
 }
-
-export default memo(CompleteProfileSecond);

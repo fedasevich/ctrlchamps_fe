@@ -1,6 +1,5 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Checkbox, FormControlLabel } from '@mui/material';
-import { memo } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 
 import { useCompleteProfileThird } from 'src/components/complete-profile-third/hooks';
@@ -13,7 +12,7 @@ import { useAppDispatch, useTypedSelector } from 'src/redux/store';
 
 import { servicesSchema } from './validation';
 
-function CompleteProfileThird({ onNext, onBack }: IProps): JSX.Element {
+export default function CompleteProfileThird({ onNext, onBack }: IProps): JSX.Element {
   const { translate } = useLocales();
   const dispatch = useAppDispatch();
   const { onUpdateServices } = useCompleteProfileThird(onNext);
@@ -150,5 +149,3 @@ function CompleteProfileThird({ onNext, onBack }: IProps): JSX.Element {
     </Wrapper>
   );
 }
-
-export default memo(CompleteProfileThird);

@@ -32,12 +32,14 @@ import uuidv4 from 'src/utils/uuidv4';
 type Props = {
   onClose: () => void;
   onSave: (certificate: ProfileQuality) => void;
+  onSuccess?: () => void;
   editingCertificate: ProfileQuality | null;
 };
 
 export default function CertificateForm({
   onClose,
   onSave,
+  onSuccess,
   editingCertificate,
 }: Props): JSX.Element {
   const { translate } = useLocales();
@@ -54,7 +56,6 @@ export default function CertificateForm({
     watch,
     setValue,
     trigger,
-    getValues,
     formState: { errors, isValid },
   } = useForm<ProfileQuality>({
     resolver: yupResolver(profileQualificationSchema),
@@ -80,8 +81,9 @@ export default function CertificateForm({
         : undefined,
     };
 
-    if (editingCertificate) {
+    if (editingCertificate && onSuccess) {
       onSave(updatedCertificate);
+      onSuccess();
     } else {
       const updatedCertificates: Certificate[] = [
         ...certificates,

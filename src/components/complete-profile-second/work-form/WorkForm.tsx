@@ -35,10 +35,16 @@ import { useLocales } from 'src/locales';
 type Props = {
   onClose: () => void;
   onSave: (workPlace: ProfileExperience) => void;
+  onSuccess?: () => void;
   editingWorkPlaces: ProfileExperience | null;
 };
 
-export default function WorkForm({ onClose, onSave, editingWorkPlaces }: Props): JSX.Element {
+export default function WorkForm({
+  onClose,
+  onSave,
+  onSuccess,
+  editingWorkPlaces,
+}: Props): JSX.Element {
   const { translate } = useLocales();
   const dispatch = useAppDispatch();
 
@@ -78,8 +84,9 @@ export default function WorkForm({ onClose, onSave, editingWorkPlaces }: Props):
       endDate: values.endDate ? format(values.endDate as Date, BACKEND_DATE_FORMAT) : undefined,
     };
 
-    if (editingWorkPlaces) {
+    if (editingWorkPlaces && onSuccess) {
       onSave(updatedWorkPlace);
+      onSuccess();
     } else {
       const updatedWorkPlaces: WorkExperience[] = [
         ...workPlaces,

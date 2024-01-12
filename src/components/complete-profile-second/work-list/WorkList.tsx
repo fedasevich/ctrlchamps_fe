@@ -8,6 +8,7 @@ import { saveWorkExperiences } from 'src/redux/slices/workEperienceSlice';
 import { useAppDispatch, useTypedSelector } from 'src/redux/store';
 import WorkForm from 'src/components/complete-profile-second/work-form/WorkForm';
 import Modal from 'src/components/reusable/modal/Modal';
+import UpdateSuccess from 'src/components/reusable/update-success/UpdateSuccess';
 import { ProfileExperience } from 'src/components/complete-profile-second/types';
 import { BACKEND_DATE_FORMAT } from 'src/constants';
 import { useLocales } from 'src/locales';
@@ -45,6 +46,7 @@ export default function WorkList({
 
   const [isDeleteModalActive, setIsDeleteModalActive] = useState<boolean>(false);
   const [deleteWorkPlaceId, setDeleteWorkPlaceId] = useState<string>('');
+  const [workUpdated, setWorkUpdated] = useState<boolean>(false);
 
   const [createWorkPlace] = useCreateWorkExperienceMutation();
   const workplaces = useTypedSelector((state) => state.workExperience.workExperiences);
@@ -64,7 +66,10 @@ export default function WorkList({
         workExperiences: filteredWorkPlaces,
       })
         .unwrap()
-        .then(() => dispatch(saveWorkExperiences(filteredWorkPlaces)))
+        .then(() => {
+          dispatch(saveWorkExperiences(filteredWorkPlaces));
+          setWorkUpdated(true);
+        })
         .catch((error) => {
           throw new Error(error);
         })
@@ -139,7 +144,12 @@ export default function WorkList({
         onClose={onClose}
         isActive={isModalActive}
       >
-        <WorkForm editingWorkPlaces={editingWorkPlaces} onSave={onSave} onClose={onClose} />
+        <WorkForm
+          editingWorkPlaces={editingWorkPlaces}
+          onSave={onSave}
+          onClose={onClose}
+          onSuccess={(): void => setWorkUpdated(true)}
+        />
       </Modal>
 
       <Modal
@@ -159,6 +169,12 @@ export default function WorkList({
           </Box>
         </Box>
       </Modal>
+
+      <UpdateSuccess
+        dataUpdated={workUpdated}
+        setDataUpdated={setWorkUpdated}
+        message={translate('completeProfileSecond.updatedSuccess')}
+      />
     </>
   );
 }

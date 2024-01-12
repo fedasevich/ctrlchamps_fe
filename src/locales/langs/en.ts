@@ -40,7 +40,6 @@ const en = {
     link: 'Don`t have an account?',
     resetPassword: 'Reset Password',
     signUp: 'Sign Up',
-    authError: 'Please enter valid credentials',
   },
   signUpFirstForm: {
     Seeker: {
@@ -852,6 +851,8 @@ const en = {
     wallet: 'Wallet',
     withdrawal: 'Withdrawal',
     replenishment: 'Replenishment',
+    anyUsers: `You don't have any users yet`,
+    anyTransactions: `User doesn't have any transactions yet`,
   },
 };
 

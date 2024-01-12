@@ -4,22 +4,27 @@ import { TYPOGRAPHY } from 'src/theme/fonts';
 import typography from 'src/theme/typography';
 import { HEADER } from 'src/config-global';
 
-export const Background = styled('div')`
-  background-color: ${PRIMARY.light_main};
+interface BackgroundProps {
+  isAdmin: boolean | undefined;
+}
+
+export const Background = styled('div')<BackgroundProps>`
+  background-color: ${(props): string =>
+    props.isAdmin ? SECONDARY.background_gray : PRIMARY.light_main};
   min-height: 100vh;
   display: flex;
   justify-content: center;
   padding-top: ${HEADER.MAIN_HEIGHT}px;
 `;
 
-export const Container = styled('div')`
+export const Container = styled('div')<BackgroundProps>`
   background-color: ${PRIMARY.white};
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   gap: 16px;
   padding: 16px;
-  margin-top: 16px;
+  margin-top: ${(props): string => (props.isAdmin ? '0' : '16px')};
   margin-bottom: 30px;
   height: fit-content;
   width: 688px;
@@ -137,9 +142,4 @@ export const StatusBlock = styled('div')`
   align-items: center;
   gap: 16px;
   width: 100%;
-`;
-
-export const StyledSelect = styled(Select)`
-  width: 200px;
-  height: 40px;
 `;

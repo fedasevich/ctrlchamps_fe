@@ -52,7 +52,7 @@ export const PageName = styled('div')`
 export const ActionBar = styled('div')`
   display: flex;
   justify-content: space-between;
-  width: 300px;
+  gap: 15px;
 `;
 
 export const TableRow = styled(MuiTableRow)`

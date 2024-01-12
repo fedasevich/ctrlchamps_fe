@@ -10,7 +10,7 @@ import {
   TableHead,
 } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
-import FilterListIcon from '@mui/icons-material/FilterList';
+import FormatLineSpacingIcon from '@mui/icons-material/FormatLineSpacing';
 import DeleteForeverOutlinedIcon from '@mui/icons-material/DeleteForeverOutlined';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 
@@ -23,6 +23,7 @@ import { calculateDateDifference } from 'src/utils/calculateDateDifference';
 import { format } from 'date-fns';
 import { APPOINTMENT_STATUS, DATE_FORMAT, USER_ROLE } from 'src/constants';
 import { SortOrder } from 'src/constants/enums';
+import { PRIMARY } from 'src/theme/colors';
 import {
   ActionBar,
   Cylinder,
@@ -133,14 +134,15 @@ function AdminAppointmentList(): JSX.Element | null {
               </InputAdornment>
             }
             size="small"
+            fullWidth
           />
           {sort === SortOrder.DESC ? (
             <IconButton onClick={toggleSort}>
-              <FilterListIcon />
+              <FormatLineSpacingIcon />
             </IconButton>
           ) : (
-            <IconButton onClick={toggleSort} sx={{ transform: 'rotate(180deg)' }}>
-              <FilterListIcon />
+            <IconButton onClick={toggleSort} sx={{ color: PRIMARY.main }}>
+              <FormatLineSpacingIcon />
             </IconButton>
           )}
         </ActionBar>

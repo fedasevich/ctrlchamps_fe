@@ -24,6 +24,7 @@ import { SORT_ORDER, USER_STATUS } from 'src/constants';
 import { ROUTES } from 'src/routes';
 import { useDebounce } from 'src/hooks/useDebounce';
 import { useGetFilteredUsersQuery, useUpdateUserMutation } from 'src/redux/api/userApi';
+import { PRIMARY } from 'src/theme/colors';
 
 import { DEBOUNCE_DELAY, FIRST_PAGE, PAGINATION_USERS_LIMIT } from './constants';
 import {
@@ -133,9 +134,15 @@ export default function UserList(): JSX.Element | null {
                 fullWidth
                 size="small"
               />
-              <IconButton size="large" onClick={handleChangeSorting}>
-                <FormatLineSpacingIcon fontSize="large" />
-              </IconButton>
+              {sortingOrder === SORT_ORDER.DESC ? (
+                <IconButton size="large" onClick={handleChangeSorting}>
+                  <FormatLineSpacingIcon fontSize="large" />
+                </IconButton>
+              ) : (
+                <IconButton size="large" onClick={handleChangeSorting} sx={{ color: PRIMARY.main }}>
+                  <FormatLineSpacingIcon fontSize="large" />
+                </IconButton>
+              )}
             </SearchContainer>
             <Stack mt={3}>
               <Table>

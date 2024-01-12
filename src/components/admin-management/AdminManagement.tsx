@@ -11,13 +11,10 @@ import {
   TableBody,
   TableHead,
 } from '@mui/material';
-import { ChangeEvent, useEffect, useState } from 'react';
-import SearchIcon from '@mui/icons-material/Search';
-import ModeEditOutlineOutlinedIcon from '@mui/icons-material/ModeEditOutlineOutlined';
-import DeleteForeverOutlinedIcon from '@mui/icons-material/DeleteForeverOutlined';
 import { format, parseISO } from 'date-fns';
-
 import { useRouter } from 'next/router';
+import { ChangeEvent, useEffect, useState } from 'react';
+
 import {
   DEBOUNCE_DELAY,
   FIRST_PAGE,
@@ -38,13 +35,12 @@ import {
   Title,
 } from 'src/components/admin-management/styles';
 import Modal from 'src/components/reusable/modal/Modal';
+import { DATE_FORMAT } from 'src/constants';
 import { useDebounce } from 'src/hooks/useDebounce';
 import { useLocales } from 'src/locales';
 import { useGetFilteredAdminsQuery } from 'src/redux/api/adminPanelAPI';
 import { useDeleteUserMutation } from 'src/redux/api/userApi';
 import { ROUTES } from 'src/routes';
-import { useDebounce } from 'src/hooks/useDebounce';
-import { DATE_FORMAT } from 'src/constants';
 
 function AdminManagement(): JSX.Element | null {
   const { translate } = useLocales();

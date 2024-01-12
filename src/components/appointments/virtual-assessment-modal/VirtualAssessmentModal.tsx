@@ -1,6 +1,6 @@
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import NotificationsNoneOutlinedIcon from '@mui/icons-material/NotificationsNoneOutlined';
-import { Alert, Avatar, IconButton, Snackbar, TextField } from '@mui/material';
+import { Alert, IconButton, Snackbar, TextField } from '@mui/material';
 import { isBefore, isSameDay, isToday } from 'date-fns';
 
 import Cross from 'src/assets/icons/Cross';
@@ -10,10 +10,12 @@ import Appointment from 'src/components/create-appointment/Appointment';
 import { selectTimeOptions } from 'src/components/create-appointment/constants';
 import { ErrorText, FilledButton } from 'src/components/reusable';
 import UserAvatar from 'src/components/reusable/user-avatar/UserAvatar';
+import { AUTO_HIDEOUT_DELAY, CURRENT_DAY, SMALL_AVATAR_SIZE } from 'src/constants';
 import { useLocales } from 'src/locales';
-import { CURRENT_DAY, SMALL_AVATAR_SIZE } from 'src/constants';
-
 import { isTimeAfterNow } from 'src/utils/checkTime';
+import { MIN_VALUE } from './constants';
+import { AssessmentPurpose } from './enums';
+
 import {
   AppointmentModal,
   AppointmentModalBlock,
@@ -34,8 +36,6 @@ import {
   StyledIconButton,
 } from './styles';
 import useVirtualAssessmentModal from './useVirtualAssessmentModal';
-import { MIN_VALUE } from './constants';
-import { AssessmentPurpose } from './enums';
 
 type Props = {
   purpose: 'request' | 'reschedule';
@@ -230,7 +230,7 @@ export default function VirtualAssessmentModal({
 
       <Snackbar
         open={isLinkCopied}
-        autoHideDuration={1500}
+        autoHideDuration={AUTO_HIDEOUT_DELAY}
         onClose={(): void => setIsLinkCopied(false)}
         anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
       >

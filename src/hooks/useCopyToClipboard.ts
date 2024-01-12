@@ -9,10 +9,13 @@ type CopyFn = (text: string) => Promise<boolean>;
 type ReturnType = {
   copy: CopyFn;
   copiedText: CopiedValue;
+  resetCopiedText: () => void;
 };
 
 function useCopyToClipboard(): ReturnType {
   const [copiedText, setCopiedText] = useState<CopiedValue>(null);
+
+  const resetCopiedText = (): void => setCopiedText(null);
 
   const copy: CopyFn = async (text) => {
     if (!navigator?.clipboard) {
@@ -29,12 +32,12 @@ function useCopyToClipboard(): ReturnType {
     } catch (error) {
       // eslint-disable-next-line
       console.log('Copy failed', error);
-      setCopiedText(null);
+      resetCopiedText();
       return false;
     }
   };
 
-  return { copiedText, copy };
+  return { copiedText, copy, resetCopiedText };
 }
 
 export default useCopyToClipboard;

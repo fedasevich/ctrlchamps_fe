@@ -2,6 +2,7 @@ import { Stack } from '@mui/material';
 import Head from 'next/head';
 import AdminMenu from 'src/components/admin-menu/AdminMenu';
 
+import AdminMenu from 'src/components/admin-menu/AdminMenu';
 import { PrivateRoute } from 'src/components/private-route/PrivateRoute';
 import UserList from 'src/components/user-list/UserList';
 import { USER_ROLE } from 'src/constants';

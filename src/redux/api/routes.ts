@@ -29,6 +29,7 @@ const route = {
   admins: '/admins',
   admin: '/admin',
   updatePassword: '/update-password',
+  appointments: '/appointments',
 };
 
 export { route };

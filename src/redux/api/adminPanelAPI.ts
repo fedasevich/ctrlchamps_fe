@@ -4,16 +4,27 @@ import { route } from 'src/redux/api/routes';
 import { User } from 'src/redux/api/userApi';
 import { RootState } from 'src/redux/rootReducer';
 import { UserRole } from 'src/redux/slices/userSlice';
+import { DetailedAppointment } from 'src/redux/api/appointmentApi';
+import { SortOrder } from 'src/constants/enums';
+
 
 type AdminSearchParams = {
   search: string;
   offset: number;
 };
 
+type AppointmentsSearchParams = {
+  name: string;
+  offset: number;
+  limit: number;
+  sort: SortOrder;
+};
+
 type Admins = {
   data: User[];
   count: number;
 };
+
 
 export type Admin = {
   id: string;
@@ -24,6 +35,11 @@ export type Admin = {
   role: UserRole;
   password: string;
   updatedAt: string;
+}
+
+type AppointmentsWithCount = {
+  appointments: DetailedAppointment[];
+  count: number;
 };
 
 export const adminPanelApi = createApi({
@@ -42,6 +58,7 @@ export const adminPanelApi = createApi({
       return headers;
     },
   }),
+  tagTypes: ['Appointments'],
   endpoints: (builder) => ({
     getFilteredAdmins: builder.query<Admins, AdminSearchParams>({
       query: (params) => ({
@@ -77,9 +94,16 @@ export const adminPanelApi = createApi({
         body: { password },
       }),
     }),
+    getAllAppointments: builder.query<AppointmentsWithCount, AppointmentsSearchParams>({
+      query: (params) => ({
+        url: route.appointments,
+        params,
+      }),
+      providesTags: ['Appointments'],
+    }),
   }),
 });
 
-export const { useGetFilteredAdminsQuery } = adminPanelApi;
+export const { useGetFilteredAdminsQuery, useGetAllAppointmentsQuery } = adminPanelApi;
 
 export default adminPanelApi;

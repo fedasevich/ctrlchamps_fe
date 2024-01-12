@@ -40,7 +40,6 @@ const en = {
     link: 'Don`t have an account?',
     resetPassword: 'Reset Password',
     signUp: 'Sign Up',
-    authError: 'Please enter valid credentials',
   },
   signUpFirstForm: {
     Seeker: {
@@ -835,7 +834,7 @@ const en = {
     date: 'DATE',
     action: 'ACTION',
     deleteUser: 'Delete A User',
-    deleteWarning: 'Are you sure want to delete this user?',
+    deleteWarning: 'Are you sure you want to delete this user?',
     yes: 'Yes',
     no: 'No',
     adminForm: {
@@ -885,6 +884,25 @@ const en = {
     wallet: 'Wallet',
     withdrawal: 'Withdrawal',
     replenishment: 'Replenishment',
+    anyUsers: `You don't have any users yet`,
+    anyTransactions: `User doesn't have any transactions yet`,
+  },
+  adminAppointmentList: {
+    title: 'Appointments',
+    search: 'Search',
+    id: 'Appointment ID',
+    type: 'Type',
+    duration: 'Duration',
+    creation_date: 'Date of creation',
+    end_date: 'End date',
+    status: 'Appointment status',
+    clientName: 'Client name',
+    caregiverName: 'Caregiver name',
+    actions: 'Actions',
+    deleteAppointment: 'Delete An Appointment',
+    deleteWarning: 'Are you sure you want to delete this appointment?',
+    yes: 'Yes',
+    no: 'No',
   },
 };
 

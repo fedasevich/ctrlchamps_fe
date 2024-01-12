@@ -20,4 +20,5 @@ export const ROUTES = {
   appointments: '/admin-panel/appointments/',
   taskManagement: '/admin-panel/task-management',
   training: '/admin-panel/training',
+  adminAccountDetails: '/admin-panel/account-details/',
 };

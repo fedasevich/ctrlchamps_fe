@@ -1,4 +1,4 @@
-import { TableCell, TableRow, styled } from '@mui/material';
+import { Button, TableCell, TableRow, Typography, styled } from '@mui/material';
 import { PRIMARY, SECONDARY } from 'src/theme/colors';
 import { TYPOGRAPHY } from 'src/theme/fonts';
 import typography from 'src/theme/typography';
@@ -43,4 +43,42 @@ export const StyledTableCell = styled(TableCell)`
 
 export const TableHeader = styled(StyledTableCell)`
   font-weight: ${typography.fontWeightBold};
+`;
+
+export const BackButton = styled(Button)`
+  color: ${PRIMARY.black};
+  font-weight: ${typography.fontWeightBold};
+  font-size: ${TYPOGRAPHY.sm}px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+`;
+
+export const Title = styled(Typography)`
+  font-weight: ${typography.fontWeightMedium};
+  color: ${SECONDARY.md_gray};
+  margin-bottom: 20px;
+  max-width: 400px;
+`;
+
+export const StyledButton = styled(Button)`
+  border-radius: 4px;
+  width: 100%;
+  height: 40px;
+  margin: 0 auto;
+`;
+
+export const Cylinder = styled('div')`
+  width: 7px;
+  height: 20px;
+  border-radius: 10px;
+  background-color: ${PRIMARY.black};
+  margin-right: 10px;
+`;
+
+export const PageName = styled('div')`
+  display: flex;
+  align-items: center;
+  font-weight: ${typography.fontWeightBold};
+  font-size: ${TYPOGRAPHY.sm}px;
 `;

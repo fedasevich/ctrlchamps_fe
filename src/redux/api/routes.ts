@@ -24,6 +24,7 @@ const route = {
   changePassword: '/change-password',
   activityLog: '/activity-log',
   transactions: '/transactions',
+  notifications: '/notifications',
   adminPanel: '/admin-panel',
   admins: '/admins',
   admin: '/admin',

@@ -11,6 +11,7 @@ export const PRIMARY = {
 export const SECONDARY = {
   light_gray: 'rgba(0, 0, 0, 0.12)',
   md_gray: '#555555',
+  ml_gray: '#888',
   lg_gray: '#666666',
   gray_semi_transparent: 'rgba(0, 0, 0, 0.60)',
   backdrop_background: 'rgba(0, 0, 0, 0.20)',

@@ -1,7 +1,7 @@
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import NotificationsNoneOutlinedIcon from '@mui/icons-material/NotificationsNoneOutlined';
-import { Alert, IconButton, Snackbar, TextField } from '@mui/material';
-import { isBefore, isSameDay } from 'date-fns';
+import { Alert, Avatar, IconButton, Snackbar, TextField } from '@mui/material';
+import { isBefore, isSameDay, isToday } from 'date-fns';
 
 import Cross from 'src/assets/icons/Cross';
 import RightAction from 'src/assets/icons/RightAction';
@@ -12,9 +12,10 @@ import { ErrorText, FilledButton } from 'src/components/reusable';
 import UserAvatar from 'src/components/reusable/user-avatar/UserAvatar';
 import { AUTO_HIDEOUT_DELAY, CURRENT_DAY, SMALL_AVATAR_SIZE } from 'src/constants';
 import { useLocales } from 'src/locales';
-
 import { MIN_VALUE } from './constants';
 import { AssessmentPurpose } from './enums';
+import { isTimeAfterNow } from 'src/utils/checkTime';
+
 import {
   AppointmentModal,
   AppointmentModalBlock,
@@ -164,6 +165,9 @@ export default function VirtualAssessmentModal({
             />
             {maxDurationExceeded && !invalidTime && startTime !== endTime && (
               <ErrorText>{translate('appointments_page.assessment_duration_exceeded')}</ErrorText>
+            )}
+            {date && isToday(date) && !isTimeAfterNow(startTime) && (
+              <ErrorText> {translate('create_appointment.errors.invalid_today_time')}</ErrorText>
             )}
             {invalidTime && <ErrorText>{translate('request_appointment.invalid_time')}</ErrorText>}
             {startTime && endTime && startTime === endTime && (

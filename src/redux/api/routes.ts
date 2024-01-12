@@ -27,6 +27,7 @@ const route = {
   notifications: '/notifications',
   adminPanel: '/admin-panel',
   admins: '/admins',
+  appointments: '/appointments',
 };
 
 export { route };

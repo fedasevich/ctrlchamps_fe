@@ -1,5 +1,5 @@
 import { MAX_PHONE_CHARACTERS } from 'src/components/sign-up-second/constants';
-import { EMAIL_PATTERN, MIN_PASSWORD_LENGTH } from 'src/constants';
+import { EMAIL_PATTERN, MAX_CHARACTERS_LENGTH, MIN_PASSWORD_LENGTH } from 'src/constants';
 import { useLocales } from 'src/locales';
 import { UserRole } from 'src/redux/slices/userSlice';
 import { AnyObject, ObjectSchema, mixed, object, string } from 'yup';
@@ -25,16 +25,16 @@ export const useAdminFormSchema = (
   return object({
     firstName: string()
       .trim()
-      .max(100, translate('adminManagement.adminForm.firstNameInvalid'))
+      .max(MAX_CHARACTERS_LENGTH, translate('adminManagement.adminForm.firstNameInvalid'))
       .required(translate('adminManagement.adminForm.firstNameRequired')),
     lastName: string()
       .trim()
-      .max(100, translate('adminManagement.adminForm.lastNameInvalid'))
+      .max(MAX_CHARACTERS_LENGTH, translate('adminManagement.adminForm.lastNameInvalid'))
       .required(translate('adminManagement.adminForm.lastNameRequired')),
     email: string()
       .trim()
       .matches(EMAIL_PATTERN, translate('adminManagement.adminForm.emailInvalid'))
-      .max(100, translate('adminManagement.adminForm.emailLengthInvalid'))
+      .max(MAX_CHARACTERS_LENGTH, translate('adminManagement.adminForm.emailLengthInvalid'))
       .required(translate('adminManagement.adminForm.emailRequired')),
     phoneNumber: string()
       .trim()

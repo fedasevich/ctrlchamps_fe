@@ -102,7 +102,6 @@ function AdminAppointmentList(): JSX.Element | null {
   const handleDeleteAppointment = async (): Promise<void> => {
     try {
       await deleteAppointment(deleteAppointmentId).unwrap();
-      refetch();
       handleDeleteModalToggle();
     } catch (error) {
       throw new Error(error);
@@ -188,7 +187,7 @@ function AdminAppointmentList(): JSX.Element | null {
                       align="right"
                       sx={{ display: 'flex', justifyContent: 'space-evenly' }}
                     >
-                      {appointment.status === APPOINTMENT_STATUS.Rejected && (
+                      {appointment.status === APPOINTMENT_STATUS.Finished && (
                         <IconButton
                           onClick={(): void => handleCloseModalAndSetAppointmentId(appointment.id)}
                         >

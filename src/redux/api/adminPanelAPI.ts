@@ -15,7 +15,7 @@ type AppointmentsSearchParams = {
   name: string;
   offset: number;
   limit: number;
-  sort: SortOrder.ASC | SortOrder.DESC;
+  sort: SortOrder;
 };
 
 type Admins = {
@@ -43,6 +43,7 @@ export const adminPanelApi = createApi({
       return headers;
     },
   }),
+  tagTypes: ['Appointments'],
   endpoints: (builder) => ({
     getFilteredAdmins: builder.query<Admins, AdminSearchParams>({
       query: (params) => ({
@@ -55,6 +56,7 @@ export const adminPanelApi = createApi({
         url: route.appointments,
         params,
       }),
+      providesTags: ['Appointments'],
     }),
   }),
 });

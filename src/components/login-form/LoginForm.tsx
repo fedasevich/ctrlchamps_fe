@@ -55,20 +55,10 @@ function LoginForm(): JSX.Element {
         })
         .catch((error) => {
           const errorMessage = error.data.message;
-          if (errorMessage === translate('loginForm.isDeletedByAdmin')) {
+          if (error) {
             setError('password', {
               type: 'manual',
-              message: `${translate('loginForm.isDeletedByAdmin')}`,
-            });
-          } else if (errorMessage === translate('loginForm.isInactive')) {
-            setError('password', {
-              type: 'manual',
-              message: `${translate('loginForm.isInactive')}`,
-            });
-          } else if (error) {
-            setError('password', {
-              type: 'manual',
-              message: `${translate('loginForm.authError')}`,
+              message: errorMessage,
             });
           } else {
             clearErrors('password');

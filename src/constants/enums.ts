@@ -7,3 +7,8 @@ export enum PreferredDay {
   Saturday = 'Saturday',
   Sunday = 'Sunday',
 }
+
+export enum SortOrder {
+  ASC = 'ASC',
+  DESC = 'DESC',
+}

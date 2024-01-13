@@ -20,16 +20,17 @@ import { locationReducer } from './slices/locationSlice';
 
 import accountVerificationApi from 'src/redux/api/accountVerificationAPI';
 import activityLogApi from 'src/redux/api/activityLogApi';
+import adminPanelApi from 'src/redux/api/adminPanelAPI';
 import appointmentApi from 'src/redux/api/appointmentApi';
 import authApi from 'src/redux/api/authApi';
 import questionnaireApi from 'src/redux/api/healthQuestionnaireApi';
+import notificationsApi from 'src/redux/api/notificationsApi';
 import profileApi from 'src/redux/api/profileCompleteApi';
 import timezoneApi from 'src/redux/api/timezoneApi';
 import transactionsApi from 'src/redux/api/transactionsApi';
 import userApi from 'src/redux/api/userApi';
 import virtualAssessmentApi from 'src/redux/api/virtualAssessmentApi';
 import { RootState } from 'src/redux/rootReducer';
-import adminPanelApi from 'src/redux/api/adminPanelAPI';
 
 const persistConfig = {
   key: 'root',
@@ -65,6 +66,7 @@ const store = configureStore({
     [userApi.reducerPath]: userApi.reducer,
     [activityLogApi.reducerPath]: activityLogApi.reducer,
     [transactionsApi.reducerPath]: transactionsApi.reducer,
+    [notificationsApi.reducerPath]: notificationsApi.reducer,
     [adminPanelApi.reducerPath]: adminPanelApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
@@ -82,6 +84,7 @@ const store = configureStore({
       userApi.middleware,
       transactionsApi.middleware,
       activityLogApi.middleware,
+      notificationsApi.middleware,
       adminPanelApi.middleware,
     ]),
 });

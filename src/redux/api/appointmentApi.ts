@@ -110,6 +110,7 @@ export interface DetailedAppointment {
   seekerTasks: SeekerTask[];
   virtualAssessment: VirtualAssessment | null;
   activityLog: ActivityLog[];
+  createdAt: string;
 }
 
 export const appointmentApi = createApi({
@@ -149,6 +150,13 @@ export const appointmentApi = createApi({
       }),
       invalidatesTags: (result, error, { id }) => [{ type: 'Appointments', id }, 'Appointments'],
     }),
+    deleteAppointment: builder.mutation<void, string>({
+      query: (id) => ({
+        url: `${route.appointment}/${id}`,
+        method: 'DELETE',
+      }),
+      invalidatesTags: (result, error, id) => [{ type: 'Appointments', id }, 'Appointments'],
+    }),
     createAppointment: builder.mutation<void, AppointmentPayload>({
       query: (body) => ({
         url: route.appointment,
@@ -170,6 +178,7 @@ export const {
   useGetAllAppointmentsQuery,
   useGetAppointmentQuery,
   useUpdateAppointmentMutation,
+  useDeleteAppointmentMutation,
   useCreateAppointmentMutation,
   useGetAppointmentsByDateQuery,
   useGetCaregiverDetailsQuery,

@@ -1,12 +1,12 @@
 import { Box, FormControl, InputLabel, MenuItem, Select, TextField } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import { addDays, isBefore, isSameDay } from 'date-fns';
+import { addDays, format, isBefore, isSameDay, isToday } from 'date-fns';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import OneTimeIcon from 'src/assets/icons/OneTimeIcon';
 import AppointmentBtn from 'src/components/reusable/appointment-btn/AppointmentBtn';
-import { CURRENT_DAY, DATE_FORMAT, weekDays } from 'src/constants';
+import { CURRENT_DAY, DATE_FORMAT, FULL_WEEKDAY_FORMAT, weekDays } from 'src/constants';
 import { setRecurringAppointmentTime } from 'src/redux/slices/appointmentSlice';
 import { useAppDispatch, useTypedSelector } from 'src/redux/store';
 import { setCustomTime } from 'src/utils/defineCustomTime';
@@ -15,6 +15,7 @@ import { getWeekDaysRange } from 'src/utils/getWeekDaysRange';
 import { ErrorText } from 'src/components/reusable';
 import useChooseTime from 'src/hooks/useChooseTime';
 
+import { isTimeAfterNow } from 'src/utils/checkTime';
 import {
   FIRST_WEEK_DAY_IDX,
   LAST_WEEK_DAY_IDX,
@@ -68,7 +69,10 @@ export default function RecurringAppointment({ onNext, onBack }: Props): JSX.Ele
     !minValidDuration ||
     isBefore(endDate, startDate) ||
     isSameDay(startDate, endDate) ||
-    (isBefore(startDate, CURRENT_DAY) && !isSameDay(startDate, CURRENT_DAY));
+    (isBefore(startDate, CURRENT_DAY) && !isSameDay(startDate, CURRENT_DAY)) ||
+    (!isTimeAfterNow(startTime) &&
+      appointmentDays.includes(format(startDate, FULL_WEEKDAY_FORMAT)) &&
+      isToday(startDate));
 
   const isAppointmentDurationShown =
     startTime && endTime && startDate && endDate && minValidDuration && !invalidWeekDaysRange;
@@ -85,14 +89,27 @@ export default function RecurringAppointment({ onNext, onBack }: Props): JSX.Ele
     }
   }, [recurringDate.startDate, recurringDate.endDate]);
 
+  const checkDaysValidityRange = (availableDaysRange: string[]): void => {
+    const validAppointmentDays = appointmentDays.filter((day) => availableDaysRange.includes(day));
+    setAppointmentDays(validAppointmentDays);
+  };
+
   const chooseStartDate = (value: Date | null): void => {
     setStartDate(value);
     setInvalidWeekDaysRange(false);
+
+    if (!startDate || !endDate) return;
+    const availableDaysToChoose = getWeekDaysRange(value, endDate);
+    checkDaysValidityRange(availableDaysToChoose);
   };
 
   const chooseEndDate = (value: Date | null): void => {
     setEndDate(value);
     setInvalidWeekDaysRange(false);
+
+    if (!startDate || !endDate) return;
+    const availableDaysToChoose = getWeekDaysRange(startDate, value);
+    checkDaysValidityRange(availableDaysToChoose);
   };
 
   const chooseDay = (value: string): void => {
@@ -209,6 +226,12 @@ export default function RecurringAppointment({ onNext, onBack }: Props): JSX.Ele
               </WeekSlot>
             ))}
           </WeekSlotContainer>
+          {startDate &&
+            isToday(startDate) &&
+            !isTimeAfterNow(startTime) &&
+            appointmentDays.includes(format(startDate, FULL_WEEKDAY_FORMAT)) && (
+              <ErrorText> {translate('create_appointment.errors.invalid_today_time')}</ErrorText>
+            )}
           {invalidWeekDaysRange && (
             <ErrorText>
               {translate('create_appointment.errors.invalid_week_days', {

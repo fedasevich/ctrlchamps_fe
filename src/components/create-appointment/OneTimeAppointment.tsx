@@ -1,5 +1,5 @@
 import { Box } from '@mui/material';
-import { isBefore, isSameDay } from 'date-fns';
+import { isBefore, isSameDay, isToday } from 'date-fns';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -13,6 +13,7 @@ import { useAppDispatch, useTypedSelector } from 'src/redux/store';
 import { setCustomTime } from 'src/utils/defineCustomTime';
 import { extractTimeFromDate } from 'src/utils/extractTimeFromDate';
 
+import { isTimeAfterNow } from 'src/utils/checkTime';
 import Appointment from './Appointment';
 import { ONE_HOUR_INTERVAL_INDEX, selectTimeOptions } from './constants';
 import { AppointmentDuration, Container, ContentContainer } from './styles';
@@ -108,6 +109,9 @@ export default function OneTimeAppointment({ onNext, onBack }: Props): JSX.Eleme
           {date && isBefore(date, CURRENT_DAY) && !isSameDay(date, CURRENT_DAY) && (
             <ErrorText>{translate('create_appointment.errors.invalid_date')}</ErrorText>
           )}
+          {date && isToday(date) && !isTimeAfterNow(startTime) && (
+            <ErrorText> {translate('create_appointment.errors.invalid_today_time')}</ErrorText>
+          )}
           {startTime && endTime && date && minValidDuration && !identicalTime && !invalidTime && (
             <AppointmentDuration>
               <OneTimeIcon />
@@ -133,7 +137,8 @@ export default function OneTimeAppointment({ onNext, onBack }: Props): JSX.Eleme
             !minValidDuration ||
             invalidTime ||
             identicalTime ||
-            (isBefore(date, CURRENT_DAY) && !isSameDay(date, CURRENT_DAY))
+            (isBefore(date, CURRENT_DAY) && !isSameDay(date, CURRENT_DAY)) ||
+            (!isTimeAfterNow(startTime) && isToday(date))
           }
           onClick={goNext}
           onBack={onBack}

@@ -2,7 +2,7 @@ import { Alert, FormControl, InputLabel, MenuItem, Select, Snackbar } from '@mui
 import { useTranslation } from 'react-i18next';
 import { ErrorText } from 'src/components/reusable';
 import ProfileBtn from 'src/components/reusable/profile-btn/ProfileBtn';
-import { weekDays } from 'src/constants';
+import { AUTO_HIDEOUT_DELAY, weekDays } from 'src/constants';
 import { availableTimeOptions } from './constants';
 import useCompleteProfileFourth from './hooks';
 import {
@@ -90,7 +90,7 @@ export default function CompleteProfileFourth({ onNext, onBack }: IProps): JSX.E
         )}
         <Snackbar
           open={serverError}
-          autoHideDuration={2500}
+          autoHideDuration={AUTO_HIDEOUT_DELAY}
           onClose={(): void => setServerError(false)}
           anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
         >

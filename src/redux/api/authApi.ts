@@ -31,11 +31,11 @@ interface SignUpResponse {
 }
 
 interface AccountCheckData {
-  email: string;
-  phoneNumber: string;
+  email?: string;
+  phoneNumber?: string;
 }
 
-interface AccountCheckResponse {
+export interface AccountCheckResponse {
   statusCode?: number;
   message?: string;
 }

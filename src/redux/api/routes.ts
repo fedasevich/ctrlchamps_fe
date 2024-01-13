@@ -26,6 +26,7 @@ const route = {
   transactions: '/transactions',
   adminPanel: '/admin-panel',
   admins: '/admins',
+  tasks: '/default-seeker-task',
 };
 
 export { route };

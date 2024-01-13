@@ -13,6 +13,7 @@ import {
 } from 'src/components/appointments/virtual-assessment-modal/constants';
 import { CONFIRM_NOTE_MAX_LENGTH } from 'src/components/confirm-appointment/constants';
 import { MAX_CHARACTERS_LENGTH, MIN_PASSWORD_LENGTH } from 'src/constants';
+import { MAX_TASK_LENGTH, MIN_TASK_LENGTH } from 'src/components/admin-management/tasks/constants';
 
 const en = {
   app_title: 'CtrlChamps',
@@ -27,6 +28,7 @@ const en = {
     client: 'client',
     caregiver: 'caregiver',
   },
+  no_results_match: 'No results found for your search. Please try a different keyword.',
   unexpected_error: 'Something went wrong, try again later...',
   loginForm: {
     emailInvalid: 'Email is incorrect',
@@ -820,6 +822,28 @@ const en = {
     deleteWarning: 'Are you sure want to delete this user?',
     yes: 'Yes',
     no: 'No',
+  },
+  taskManagement: {
+    title: 'Tasks management',
+    addTask: 'Add new',
+    search: 'Search',
+    name: 'Task name',
+    action: 'Actions',
+    enterTask: 'Add task',
+    taskPlaceholder: 'Enter task name',
+    editTaskPlaceholder: 'Your task name',
+    editTask: 'Edit Task',
+    deleteTask: 'Delete Task',
+    deleteWarning: 'Are you sure want to delete this task?',
+    save: 'Save',
+    ok: 'Yes',
+    cancel: 'Cancel',
+    taskMinLength: `Task name should contain at least ${MIN_TASK_LENGTH} characters`,
+    taskMaxLength: `Task name should contain at most ${MAX_TASK_LENGTH} characters`,
+    failedToLoad: 'Failed to load tasks',
+    failedToCreate: 'Task creation failed',
+    failedToUpdate: 'Task update failed',
+    failedToDelete: 'Task deletion failed',
   },
   userList: {
     title: 'Users',

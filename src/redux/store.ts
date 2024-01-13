@@ -30,6 +30,7 @@ import activityLogApi from 'src/redux/api/activityLogApi';
 import transactionsApi from 'src/redux/api/transactionsApi';
 import { RootState } from 'src/redux/rootReducer';
 import adminPanelApi from 'src/redux/api/adminPanelAPI';
+import tasksApi from 'src/redux/api/tasksApi';
 
 const persistConfig = {
   key: 'root',
@@ -66,6 +67,7 @@ const store = configureStore({
     [activityLogApi.reducerPath]: activityLogApi.reducer,
     [transactionsApi.reducerPath]: transactionsApi.reducer,
     [adminPanelApi.reducerPath]: adminPanelApi.reducer,
+    [tasksApi.reducerPath]: tasksApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
@@ -83,6 +85,7 @@ const store = configureStore({
       transactionsApi.middleware,
       activityLogApi.middleware,
       adminPanelApi.middleware,
+      tasksApi.middleware,
     ]),
 });
 

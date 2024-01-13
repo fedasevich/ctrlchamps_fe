@@ -16,6 +16,5 @@ export const ROUTES = {
   adminPanel: '/admin-panel/',
   adminManagement: '/admin-panel/admin-management/',
   appointments: '/admin-panel/appointments/',
-  taskManagement: '/admin-panel/task-management',
-  training: '/admin-panel/training',
+  taskManagement: '/admin-panel/task-management/',
 };

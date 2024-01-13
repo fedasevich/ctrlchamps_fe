@@ -1,7 +1,8 @@
-import { useLocales } from 'src/locales';
-import { AnyObject, ObjectSchema, boolean, object, date, string } from 'yup';
+import { AnyObject, ObjectSchema, boolean, date, object, string } from 'yup';
+
 import { MAX_BIRTH_DATE, MAX_PHONE_CHARACTERS } from 'src/components/sign-up-second/constants';
-import { CURRENT_DAY, USER_ROLE } from 'src/constants';
+import { CURRENT_DAY, EMAIL_PATTERN, USER_ROLE } from 'src/constants';
+import { useLocales } from 'src/locales';
 
 export type SignUpSecondValues = {
   firstName: string;
@@ -28,7 +29,6 @@ export const useSignUpSecondSchema = (
   ''
 > => {
   const { translate } = useLocales();
-  const emailRegExp = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/;
 
   return object({
     firstName: string()
@@ -41,7 +41,7 @@ export const useSignUpSecondSchema = (
       .required(translate('signUpSecondForm.lastNameRequired')),
     email: string()
       .trim()
-      .matches(emailRegExp, translate('signUpSecondForm.emailInvalid'))
+      .matches(EMAIL_PATTERN, translate('signUpSecondForm.emailInvalid'))
       .max(100, translate('signUpSecondForm.emailLengthInvalid'))
       .required(translate('signUpSecondForm.emailRequired')),
     phoneNumber: string()

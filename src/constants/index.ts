@@ -23,6 +23,7 @@ export const TIMEZONE_FORMAT = Intl.DateTimeFormat().resolvedOptions().timeZone;
 export const URL_PATTERN =
   /^(https?):\/\/[-a-zA-Z0-9@:%._+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_+.~#?&//=]*)$/;
 export const ONLY_LETTERS_PATTERN = /^[a-zA-Z\s]*$/;
+export const EMAIL_PATTERN = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/;
 
 export const GOOGLE_MAP_API = 'https://maps.googleapis.com/maps/api';
 
@@ -97,3 +98,6 @@ export const TRANSACTION_TYPE = {
 export const TINY_AVATAR_SIZE = 24;
 export const SMALL_AVATAR_SIZE = 48;
 export const BIG_AVATAR_SIZE = 96;
+
+export const ASCI_LETTERS_START = 33;
+export const ASCI_LETTERS_RANGE = 94;

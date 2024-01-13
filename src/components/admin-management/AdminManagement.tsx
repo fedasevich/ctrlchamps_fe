@@ -1,4 +1,6 @@
-import { ChangeEvent, useEffect, useState } from 'react';
+import DeleteForeverOutlinedIcon from '@mui/icons-material/DeleteForeverOutlined';
+import ModeEditOutlineOutlinedIcon from '@mui/icons-material/ModeEditOutlineOutlined';
+import SearchIcon from '@mui/icons-material/Search';
 import {
   Box,
   InputAdornment,
@@ -9,11 +11,15 @@ import {
   TableBody,
   TableHead,
 } from '@mui/material';
-import SearchIcon from '@mui/icons-material/Search';
-import ModeEditOutlineOutlinedIcon from '@mui/icons-material/ModeEditOutlineOutlined';
-import DeleteForeverOutlinedIcon from '@mui/icons-material/DeleteForeverOutlined';
 import { format, parseISO } from 'date-fns';
+import { useRouter } from 'next/router';
+import { ChangeEvent, useEffect, useState } from 'react';
 
+import {
+  DEBOUNCE_DELAY,
+  FIRST_PAGE,
+  PAGINATION_ADMINS_LIMIT,
+} from 'src/components/admin-management/constants';
 import {
   AddUserButton,
   Cylinder,
@@ -28,20 +34,17 @@ import {
   TableRow,
   Title,
 } from 'src/components/admin-management/styles';
-import { useLocales } from 'src/locales';
-import {
-  PAGINATION_ADMINS_LIMIT,
-  DEBOUNCE_DELAY,
-  FIRST_PAGE,
-} from 'src/components/admin-management/constants';
 import Modal from 'src/components/reusable/modal/Modal';
+import { DATE_FORMAT } from 'src/constants';
+import { useDebounce } from 'src/hooks/useDebounce';
+import { useLocales } from 'src/locales';
 import { useGetFilteredAdminsQuery } from 'src/redux/api/adminPanelAPI';
 import { useDeleteUserMutation } from 'src/redux/api/userApi';
-import { useDebounce } from 'src/hooks/useDebounce';
-import { DATE_FORMAT } from 'src/constants';
+import { ROUTES } from 'src/routes';
 
 function AdminManagement(): JSX.Element | null {
   const { translate } = useLocales();
+  const router = useRouter();
 
   const [isDeleteModalActive, setIsDeleteModalActive] = useState<boolean>(false);
   const [page, setPage] = useState<number>(FIRST_PAGE);
@@ -71,7 +74,7 @@ function AdminManagement(): JSX.Element | null {
     handleDeleteModalToggle();
   };
 
-  const handlePageChange = (event: ChangeEvent<unknown>, value: number) => {
+  const handlePageChange = (event: ChangeEvent<unknown>, value: number): void => {
     setPage(value);
   };
 
@@ -86,6 +89,14 @@ function AdminManagement(): JSX.Element | null {
     } catch (error) {
       throw new Error(error);
     }
+  };
+
+  const handleAddAdminClick = (): void => {
+    router.push(ROUTES.createAdmin);
+  };
+
+  const handleEditAdminClick = (id: string): void => {
+    router.push(`${ROUTES.changeAdmin}/${id}`);
   };
 
   useEffect(() => {
@@ -103,7 +114,9 @@ function AdminManagement(): JSX.Element | null {
             <Cylinder />
             {translate('adminManagement.title')}
           </PageName>
-          <AddUserButton variant="contained">{translate('adminManagement.addUser')}</AddUserButton>
+          <AddUserButton variant="contained" onClick={handleAddAdminClick}>
+            {translate('adminManagement.addUser')}
+          </AddUserButton>
         </Stack>
 
         <OutlinedInput
@@ -144,7 +157,7 @@ function AdminManagement(): JSX.Element | null {
                     <TableCell>{admin.phoneNumber}</TableCell>
                     <TableCell>{format(parseISO(admin.updatedAt), DATE_FORMAT)}</TableCell>
                     <TableCell align="right">
-                      <IconButton>
+                      <IconButton onClick={(): void => handleEditAdminClick(admin.id)}>
                         <ModeEditOutlineOutlinedIcon />
                       </IconButton>
                       <IconButton onClick={(): void => handleCloseModalAndSetUserId(admin.id)}>

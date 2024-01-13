@@ -27,6 +27,8 @@ const route = {
   notifications: '/notifications',
   adminPanel: '/admin-panel',
   admins: '/admins',
+  admin: '/admin',
+  updatePassword: '/update-password',
   appointments: '/appointments',
 };
 

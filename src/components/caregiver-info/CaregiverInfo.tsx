@@ -57,7 +57,7 @@ export default function CaregiverInfo({ caregiverInfo, refetchCaregiverInfo }: P
       <UpdateSuccess
         dataUpdated={availabilityUpdated}
         setDataUpdated={setAvailabilityUpdated}
-        message={translate('caregiverProfile.servicesSuccess')}
+        message={translate('caregiverProfile.availabilitySuccess')}
       />
       <UpdateSuccess
         dataUpdated={rateUpdated}
@@ -67,7 +67,7 @@ export default function CaregiverInfo({ caregiverInfo, refetchCaregiverInfo }: P
       <UpdateSuccess
         dataUpdated={bioUpdated}
         setDataUpdated={setBioUpdated}
-        message={translate('caregiverProfile.rateSuccess')}
+        message={translate('caregiverProfile.bioSuccess')}
       />
     </Background>
   );

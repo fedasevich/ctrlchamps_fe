@@ -752,6 +752,7 @@ const en = {
     servicesSuccess: 'Your services has been successfully changed!',
     availabilitySuccess: 'Your availability has been successfully changed!',
     rateSuccess: 'Your rate has been successfully changed!',
+    bioSuccess: 'Your bio has been successfully changed!',
   },
   changePassword: {
     title: 'Change Password',

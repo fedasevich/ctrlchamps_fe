@@ -14,8 +14,8 @@ type TasksInfo = {
 };
 
 type SearchQuery = {
-  search: string;
-  offset: number;
+  search?: string;
+  offset?: number;
   limit: number;
 };
 

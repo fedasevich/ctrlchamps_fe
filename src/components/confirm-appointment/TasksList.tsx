@@ -12,7 +12,8 @@ import {
 import { ErrorText, FilledButton } from 'src/components/reusable';
 import Modal from 'src/components/reusable/modal/Modal';
 import { useLocales } from 'src/locales';
-import { CONFIRM_NOTE_MAX_LENGTH, suggestedTasks } from './constants';
+import { useGetAllTasksQuery } from 'src/redux/api/tasksApi';
+import { CONFIRM_NOTE_MAX_LENGTH, NO_LIMIT } from './constants';
 import {
   Background,
   BtnContainer,
@@ -48,6 +49,10 @@ export default function TasksList({
   const [newTask, setNewTask] = useState<string>('');
   const [isAddModalActive, setIsAddModalActive] = useState<boolean>(false);
   const [isEditModalOpen, setIsEditOpenModal] = useState<boolean>(false);
+
+  const { data: defaultTasks } = useGetAllTasksQuery({
+    limit: NO_LIMIT,
+  });
 
   const onAddModalClose = (): void => setIsAddModalActive(false);
   const onAddModalOpen = (): void => setIsAddModalActive(true);
@@ -156,9 +161,9 @@ export default function TasksList({
               )}
             </Background>
             <TasksContainer>
-              {suggestedTasks.map((task) => (
-                <Task key={task} onClick={(): void => chooseTask(task)}>
-                  {task} {chosenTasks.includes(task) && <CheckIcon />}
+              {defaultTasks?.data.map((task) => (
+                <Task key={task.id} onClick={(): void => chooseTask(task.name)}>
+                  {task.name} {chosenTasks.includes(task.name) && <CheckIcon />}
                 </Task>
               ))}
               {customTasks.map((task) => (

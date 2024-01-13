@@ -1,11 +1,12 @@
-import { useState } from 'react';
 import { Alert, Snackbar } from '@mui/material';
+import { useState } from 'react';
 
+import EmailInboxIcon from 'src/assets/icons/EmailInboxIcon';
+import { AUTO_HIDEOUT_DELAY, OTP_LENGTH } from 'src/constants';
 import { useLocales } from 'src/locales';
 import { useRequestResetCodeMutation, useVerifyResetCodeMutation } from 'src/redux/api/authApi';
-import EmailInboxIcon from 'src/assets/icons/EmailInboxIcon';
-import { OTP_LENGTH } from 'src/constants';
 import { ErrorText, FilledButton } from '../reusable';
+import OTPInput from './OTPInput';
 import {
   BtnContainer,
   Container,
@@ -15,7 +16,6 @@ import {
   Text,
   TextBtn,
 } from './styles';
-import OTPInput from './OTPInput';
 
 type VerificationProps = { userEmail: string; next: () => void; back: () => void };
 
@@ -103,7 +103,7 @@ export default function Verification({ userEmail, next, back }: VerificationProp
       </FormWrapper>
       <Snackbar
         open={toastShown}
-        autoHideDuration={2500}
+        autoHideDuration={AUTO_HIDEOUT_DELAY}
         onClose={(): void => setToastShown(false)}
         anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
       >
@@ -111,7 +111,7 @@ export default function Verification({ userEmail, next, back }: VerificationProp
       </Snackbar>
       <Snackbar
         open={errorToastShown}
-        autoHideDuration={2500}
+        autoHideDuration={AUTO_HIDEOUT_DELAY}
         onClose={(): void => setErrorToastShown(false)}
         anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
       >

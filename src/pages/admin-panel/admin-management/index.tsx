@@ -1,5 +1,5 @@
-import Head from 'next/head';
 import { Stack } from '@mui/material';
+import Head from 'next/head';
 
 import AdminManagement from 'src/components/admin-management/AdminManagement';
 import AdminMenu from 'src/components/admin-menu/AdminMenu';

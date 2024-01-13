@@ -1,24 +1,23 @@
-import { Stack } from '@mui/material';
 import Head from 'next/head';
-import AdminMenu from 'src/components/admin-menu/AdminMenu';
+import { Stack } from '@mui/material';
 
+import AdminAppointmentList from 'src/components/admin-appointment-list/AppointmentList';
 import AdminMenu from 'src/components/admin-menu/AdminMenu';
 import { PrivateRoute } from 'src/components/private-route/PrivateRoute';
-import UserList from 'src/components/user-list/UserList';
 import { USER_ROLE } from 'src/constants';
 import { useLocales } from 'src/locales';
 
-export default function AdminPanelPage(): JSX.Element | null {
+export default function AdminManagementPage(): JSX.Element {
   const { translate } = useLocales();
 
   return (
-    <PrivateRoute allowedRoles={[USER_ROLE.Admin, USER_ROLE.SuperAdmin]}>
+    <PrivateRoute allowedRoles={[USER_ROLE.SuperAdmin, USER_ROLE.Admin]}>
       <Head>
-        <title>{translate('userList.title')}</title>
+        <title>{translate('adminAppointmentList.title')}</title>
       </Head>
       <Stack direction="row">
         <AdminMenu />
-        <UserList />
+        <AdminAppointmentList />
       </Stack>
     </PrivateRoute>
   );

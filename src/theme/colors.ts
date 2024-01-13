@@ -11,6 +11,7 @@ export const PRIMARY = {
 export const SECONDARY = {
   light_gray: 'rgba(0, 0, 0, 0.12)',
   md_gray: '#555555',
+  ml_gray: '#888',
   lg_gray: '#666666',
   gray_semi_transparent: 'rgba(0, 0, 0, 0.60)',
   backdrop_background: 'rgba(0, 0, 0, 0.20)',
@@ -23,6 +24,8 @@ export const SECONDARY = {
   caregiver_profile_background: 'rgba(255, 255, 255, 1)',
   error: '#FF0000',
   light_green: '#e2f5e2',
+  light_yellow: '#f0d0023b',
+  light_red: '#ff000021',
   green: '#5cb25c',
   background_gray: '#ecf4f3',
 };

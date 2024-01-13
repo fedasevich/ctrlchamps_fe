@@ -1,13 +1,10 @@
-import {
-  Background,
-  MainTitle,
-  Wrapper,
-} from 'src/components/caregiver-info/styles';
+import { Background, MainTitle, Wrapper } from 'src/components/caregiver-info/styles';
 import { Caregiver } from 'src/types/Caregiver.type';
 import Modal from 'src/components/reusable/modal/Modal';
 import { ProfileWrapper } from 'src/components/reusable/profile-wrapper/ProfileWrapper';
 import CaregiverInfoSection from 'src/components/caregiver-info/caregiver-info-section/CaregiverInfoSection';
 import useCaregiverInfo from 'src/components/caregiver-info/hooks';
+import UpdateSuccess from 'src/components/reusable/update-success/UpdateSuccess';
 
 type Props = {
   caregiverInfo: Caregiver;
@@ -23,6 +20,14 @@ export default function CaregiverInfo({ caregiverInfo, refetchCaregiverInfo }: P
     handleModalOpen,
     isStepModalOpen,
     translate,
+    servicesUpdated,
+    setServicesUpdated,
+    availabilityUpdated,
+    setAvailabilityUpdated,
+    rateUpdated,
+    setRateUpdated,
+    bioUpdated,
+    setBioUpdated,
   } = useCaregiverInfo({ caregiverInfo, refetchCaregiverInfo });
 
   return (
@@ -40,14 +45,30 @@ export default function CaregiverInfo({ caregiverInfo, refetchCaregiverInfo }: P
           </CaregiverInfoSection>
         ))}
 
-        <Modal
-          onClose={handleModalClose}
-          title={ActiveStepLabel}
-          isActive={isStepModalOpen}
-        >
+        <Modal onClose={handleModalClose} title={ActiveStepLabel} isActive={isStepModalOpen}>
           <ProfileWrapper>{ActiveStepComponent}</ProfileWrapper>
         </Modal>
       </Wrapper>
+      <UpdateSuccess
+        dataUpdated={servicesUpdated}
+        setDataUpdated={setServicesUpdated}
+        message={translate('caregiverProfile.servicesSuccess')}
+      />
+      <UpdateSuccess
+        dataUpdated={availabilityUpdated}
+        setDataUpdated={setAvailabilityUpdated}
+        message={translate('caregiverProfile.servicesSuccess')}
+      />
+      <UpdateSuccess
+        dataUpdated={rateUpdated}
+        setDataUpdated={setRateUpdated}
+        message={translate('caregiverProfile.rateSuccess')}
+      />
+      <UpdateSuccess
+        dataUpdated={bioUpdated}
+        setDataUpdated={setBioUpdated}
+        message={translate('caregiverProfile.rateSuccess')}
+      />
     </Background>
   );
 }

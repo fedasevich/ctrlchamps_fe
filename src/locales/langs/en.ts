@@ -749,6 +749,9 @@ const en = {
     rate: 'Rate',
     bio: 'Bio',
     perHour: 'h',
+    servicesSuccess: 'Your services has been successfully changed!',
+    availabilitySuccess: 'Your availability has been successfully changed!',
+    rateSuccess: 'Your rate has been successfully changed!',
   },
   changePassword: {
     title: 'Change Password',

@@ -1,4 +1,4 @@
-import { Fragment, useState } from 'react';
+import { Dispatch, Fragment, SetStateAction, useState } from 'react';
 
 import { SectionItem, Video } from 'src/components/caregiver-info/styles';
 import CompleteProfileFifth from 'src/components/complete-profile-fifth/CompleteProfileFifth';
@@ -7,7 +7,6 @@ import CompleteProfileSecond from 'src/components/complete-profile-second/Comple
 import CompleteProfileThird from 'src/components/complete-profile-third/CompleteProfileThird';
 import { Bio } from 'src/components/profile/bio/Bio';
 import ProfileQualification from 'src/components/profile/profile-qualification/ProfileQualification';
-import { Step } from 'src/components/profile/profile-qualification/types';
 import { FIRST_STEP_INDEX, SECOND_STEP_INDEX } from 'src/constants';
 import { useLocales } from 'src/locales';
 import { Caregiver } from 'src/types/Caregiver.type';
@@ -30,6 +29,14 @@ type ReturnType = {
   CAREGIVER_INFO_SECTIONS: CaregiverInfoSection[];
   isStepModalOpen: boolean;
   translate: (text: string) => string;
+  servicesUpdated: boolean;
+  setServicesUpdated: Dispatch<SetStateAction<boolean>>;
+  availabilityUpdated: boolean;
+  setAvailabilityUpdated: Dispatch<SetStateAction<boolean>>;
+  rateUpdated: boolean;
+  setRateUpdated: Dispatch<SetStateAction<boolean>>;
+  bioUpdated: boolean;
+  setBioUpdated: Dispatch<SetStateAction<boolean>>;
 };
 
 export default function useCaregiverInfo({
@@ -40,6 +47,10 @@ export default function useCaregiverInfo({
 
   const [activeStepIndex, setActiveStepIndex] = useState<number>(FIRST_STEP_INDEX);
   const [isStepModalOpen, setIsStepModalOpen] = useState<boolean>(false);
+  const [servicesUpdated, setServicesUpdated] = useState<boolean>(false);
+  const [availabilityUpdated, setAvailabilityUpdated] = useState<boolean>(false);
+  const [rateUpdated, setRateUpdated] = useState<boolean>(false);
+  const [bioUpdated, setBioUpdated] = useState<boolean>(false);
 
   const handleNext = (): void => setActiveStepIndex(activeStepIndex + SECOND_STEP_INDEX);
   const handleBack = (): void => setActiveStepIndex(activeStepIndex - SECOND_STEP_INDEX);
@@ -55,19 +66,37 @@ export default function useCaregiverInfo({
     },
     {
       label: translate('profile.services'),
-      component: <CompleteProfileThird onNext={handleNext} onBack={handleBack} />,
+      component: (
+        <CompleteProfileThird
+          onNext={handleNext}
+          onBack={handleBack}
+          onSuccess={(): void => setServicesUpdated(true)}
+        />
+      ),
     },
     {
       label: translate('profile.availability'),
-      component: <CompleteProfileFourth onNext={handleNext} onBack={handleBack} />,
+      component: (
+        <CompleteProfileFourth
+          onNext={handleNext}
+          onBack={handleBack}
+          onSuccess={(): void => setAvailabilityUpdated(true)}
+        />
+      ),
     },
     {
       label: translate('profile.rates'),
-      component: <CompleteProfileFifth onNext={handleNext} onBack={handleBack} />,
+      component: (
+        <CompleteProfileFifth
+          onNext={handleNext}
+          onBack={handleBack}
+          onSuccess={(): void => setRateUpdated(true)}
+        />
+      ),
     },
     {
       label: translate('profile.bio'),
-      component: <Bio onBack={handleBack} />,
+      component: <Bio onBack={handleBack} onSuccess={(): void => setBioUpdated(true)} />,
     },
   ];
 
@@ -141,5 +170,13 @@ export default function useCaregiverInfo({
     CAREGIVER_INFO_SECTIONS,
     translate,
     isStepModalOpen,
+    servicesUpdated,
+    setServicesUpdated,
+    availabilityUpdated,
+    setAvailabilityUpdated,
+    rateUpdated,
+    setRateUpdated,
+    bioUpdated,
+    setBioUpdated,
   };
 }

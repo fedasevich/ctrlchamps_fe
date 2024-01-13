@@ -12,7 +12,7 @@ import { useAppDispatch, useTypedSelector } from 'src/redux/store';
 
 import { servicesSchema } from './validation';
 
-export default function CompleteProfileThird({ onNext, onBack }: IProps): JSX.Element {
+export default function CompleteProfileThird({ onNext, onBack, onSuccess }: IProps): JSX.Element {
   const { translate } = useLocales();
   const dispatch = useAppDispatch();
   const { onUpdateServices } = useCompleteProfileThird(onNext);
@@ -32,6 +32,9 @@ export default function CompleteProfileThird({ onNext, onBack }: IProps): JSX.El
   const onSubmit = handleSubmit((data) => {
     dispatch(saveServices(data));
     onUpdateServices(data);
+    if (onSuccess) {
+      onSuccess();
+    }
   });
 
   return (

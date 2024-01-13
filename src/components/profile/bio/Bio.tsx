@@ -34,9 +34,10 @@ import { ROUTES } from 'src/routes';
 
 interface IProps {
   onBack: () => void;
+  onSuccess?: () => void;
 }
 
-export function Bio({ onBack }: IProps): JSX.Element {
+export function Bio({ onBack, onSuccess }: IProps): JSX.Element {
   const [videoPreviewURL, setVideoPreviewURL] = useState<string>('');
   const [videoUpdated, setVideoUpdated] = useState<boolean>(false);
   const [uploadVideoMutation] = useUploadFileMutation();
@@ -77,6 +78,9 @@ export function Bio({ onBack }: IProps): JSX.Element {
         .then((response) => {
           if (response.token) {
             dispatch(setToken(response.token));
+          }
+          if (onSuccess) {
+            onSuccess();
           }
           router.push(ROUTES.home);
         });

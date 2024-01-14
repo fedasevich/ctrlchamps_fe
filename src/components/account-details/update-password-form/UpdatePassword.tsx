@@ -144,7 +144,7 @@ export default function UpdatePassword({ email, onClose, onSuccess }: Props): JS
             id="confirmPassword"
             autoComplete="off"
             placeholder={translate('changePassword.placeholder.confirmPass')}
-            error={!!errors.confirmPassword}
+            error={!!errors.confirmPassword && !isValid}
             type={isConfirmPassVisible ? 'text' : 'password'}
             endAdornment={
               <InputAdornment position="end">
@@ -157,7 +157,7 @@ export default function UpdatePassword({ email, onClose, onSuccess }: Props): JS
               </InputAdornment>
             }
           />
-          {errors?.confirmPassword && (
+          {!isValid && errors?.confirmPassword && (
             <ErrorMessage variant="caption">{errors.confirmPassword?.message}</ErrorMessage>
           )}
         </FormControl>

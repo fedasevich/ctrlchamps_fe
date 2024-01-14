@@ -905,6 +905,7 @@ const en = {
     anyUsers: `You don't have any users yet`,
     anyTransactions: `User doesn't have any transactions yet`,
     statusSuccess: 'User status has been successfully changed!',
+    userDeleted: 'User has been successfully deleted!',
   },
   adminAppointmentList: {
     title: 'Appointments',

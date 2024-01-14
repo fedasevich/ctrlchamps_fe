@@ -904,6 +904,7 @@ const en = {
     replenishment: 'Replenishment',
     anyUsers: `You don't have any users yet`,
     anyTransactions: `User doesn't have any transactions yet`,
+    statusSuccess: 'User status has been successfully changed!',
   },
   adminAppointmentList: {
     title: 'Appointments',

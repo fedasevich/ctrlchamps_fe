@@ -78,6 +78,7 @@ export default function AccountDetails({ user, isAdmin }: IProps): JSX.Element |
   const [avatarUpdated, setAvatarUpdated] = useState<boolean>(false);
   const [personalInfoUpdated, setPersonalInfoUpdated] = useState<boolean>(false);
   const [addressUpdated, setAddressUpdated] = useState<boolean>(false);
+  const [statusUpdated, setStatusUpdated] = useState<boolean>(false);
 
   const { data: transactions = [] } = useGetTransactionsQuery(user.id);
 
@@ -141,7 +142,9 @@ export default function AccountDetails({ user, isAdmin }: IProps): JSX.Element |
 
   const handleChangeStatus = async (event: SelectChangeEvent, id: string): Promise<void> => {
     try {
-      await updateUser({ id, status: event.target.value }).unwrap();
+      await updateUser({ id, status: event.target.value })
+        .unwrap()
+        .then(() => setStatusUpdated(true));
     } catch (error) {
       throw new Error(error);
     }
@@ -370,6 +373,11 @@ export default function AccountDetails({ user, isAdmin }: IProps): JSX.Element |
         dataUpdated={addressUpdated}
         setDataUpdated={setAddressUpdated}
         message={translate('accountDetails.addressModal.success')}
+      />
+      <UpdateSuccess
+        dataUpdated={statusUpdated}
+        setDataUpdated={setStatusUpdated}
+        message={translate('userList.statusSuccess')}
       />
     </Background>
   );

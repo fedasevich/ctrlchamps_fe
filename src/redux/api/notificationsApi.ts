@@ -38,6 +38,7 @@ export const notificationsApi = createApi({
       return headers;
     },
   }),
+  refetchOnFocus: true,
   tagTypes: ['Notifications'],
   endpoints: (builder) => ({
     fetchNotifications: builder.query<Notification[], string>({

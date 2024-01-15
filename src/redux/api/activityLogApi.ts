@@ -35,6 +35,7 @@ export const activityLogApi = createApi({
       return headers;
     },
   }),
+  refetchOnFocus: true,
   endpoints: (builder) => ({
     createActivityLog: builder.mutation<void, Omit<ActivityLog, 'createdAt' | 'id'>>({
       query: (body) => ({

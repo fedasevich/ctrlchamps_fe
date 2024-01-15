@@ -33,6 +33,8 @@ import virtualAssessmentApi from 'src/redux/api/virtualAssessmentApi';
 
 import { forbiddenErrorMiddleware } from 'src/redux/forbiddenErrorMiddleware';
 import { RootState } from 'src/redux/rootReducer';
+import adminPanelApi from 'src/redux/api/adminPanelAPI';
+import { setupListeners } from '@reduxjs/toolkit/dist/query';
 
 const persistConfig = {
   key: 'root',
@@ -91,6 +93,8 @@ const store = configureStore({
       adminPanelApi.middleware,
     ]),
 });
+
+setupListeners(store.dispatch);
 
 const persistor = persistStore(store);
 

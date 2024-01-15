@@ -17,9 +17,10 @@ import {
 interface IProps {
   onNext: () => void;
   onBack: () => void;
+  onSuccess?: () => void;
 }
 
-export default function CompleteProfileFourth({ onNext, onBack }: IProps): JSX.Element {
+export default function CompleteProfileFourth({ onNext, onBack, onSuccess }: IProps): JSX.Element {
   const { t: translate } = useTranslation();
   const {
     daySelected,
@@ -35,7 +36,7 @@ export default function CompleteProfileFourth({ onNext, onBack }: IProps): JSX.E
     isButtonDisabled,
     serverError,
     setServerError,
-  } = useCompleteProfileFourth(onNext);
+  } = useCompleteProfileFourth({ onNext, onSuccess });
 
   return (
     <Wrapper>

@@ -226,6 +226,7 @@ const en = {
     back: 'Back',
 
     addCertificate: 'Add Another Certificate',
+    updatedSuccess: 'Your certificate has been successfully changed!',
 
     placeholderCertificationName: 'Certification Name',
     placeholderCertificationNumber: 'Certification Number (ID)',
@@ -267,6 +268,7 @@ const en = {
     deleteWorkPlace: 'Delete a work place',
     deleteWarning: 'Are you sure you want to delete this work place? Information will not be saved',
     qualifications: { hospital: 'Hospital', clinic: 'Clinic', agency: 'Agency', other: 'Other' },
+    updatedSuccess: 'Your work place has been successfully changed!',
     errors: {
       workPlaceRequired: 'Work place is required',
       workPlaceLength: `Work place must be at most ${MAX_CHARACTERS_LENGTH} characters`,
@@ -287,6 +289,7 @@ const en = {
     mealPreparation: 'Meal Preparation',
     housekeeping: 'Housekeeping and Laundry',
     socialActivities: 'Social and Recreational Activities',
+    updatedSuccess: 'Your services has been successfully changed!',
   },
   completeProfileFourth: {
     specify_time: ' Please specify your preferred time and your availability throughout the week',
@@ -295,6 +298,7 @@ const en = {
     invalid_time:
       'Appointment cannot be ended before the start. Please choose another value in To field.',
     equal_time_error: 'You cannot choose identical time',
+    updatedSuccess: 'Your availability has been successfully changed!',
   },
   completeProfileFifth: {
     placeholderRate: 'Rate ($/h)',
@@ -723,8 +727,16 @@ const en = {
       zip: 'ZIP Code',
       street: 'Street, suite, etc',
     },
-    personalInfoModal: { title: 'Edit Personal Information', saveButton: 'Save' },
-    addressModal: { title: 'Edit Address' },
+    personalInfoModal: {
+      title: 'Edit Personal Information',
+      saveButton: 'Save',
+      success: 'Your personal information has been successfully changed!',
+    },
+    addressModal: {
+      title: 'Edit Address',
+      success: 'Your address has been successfully changed!',
+    },
+    avatarSuccess: 'Your avatar has been successfully changed!',
   },
   caregiverProfile: {
     title: 'Caregiver Profile',
@@ -735,6 +747,10 @@ const en = {
     rate: 'Rate',
     bio: 'Bio',
     perHour: 'h',
+    servicesSuccess: 'Your services has been successfully changed!',
+    availabilitySuccess: 'Your availability has been successfully changed!',
+    rateSuccess: 'Your rate has been successfully changed!',
+    bioSuccess: 'Your bio has been successfully changed!',
   },
   changePassword: {
     title: 'Change Password',
@@ -813,7 +829,7 @@ const en = {
     activityLogReview: 'requested you to review completed activity log',
     activityLogApproved: 'approved your activity log',
     activityLogRejected: 'rejected your activity log',
-},
+  },
   adminMenu: {
     users: 'Users',
     adminManagement: 'Admin management',
@@ -886,6 +902,8 @@ const en = {
     replenishment: 'Replenishment',
     anyUsers: `You don't have any users yet`,
     anyTransactions: `User doesn't have any transactions yet`,
+    statusSuccess: 'User status has been successfully changed!',
+    userDeleted: 'User has been successfully deleted!',
   },
   adminAppointmentList: {
     title: 'Appointments',

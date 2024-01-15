@@ -251,8 +251,6 @@ const en = {
 
     addVideo: 'Add video',
     submit: 'Submit',
-
-    updatedSuccess: 'Your video has been successfully changed!',
   },
   completeProfileSecond: {
     title: 'Please specify your experience and the places you have worked',

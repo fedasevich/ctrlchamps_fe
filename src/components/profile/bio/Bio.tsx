@@ -25,7 +25,6 @@ import {
 import { BioFormValues } from 'src/components/profile/bio/types';
 import { useBioFormSchema } from 'src/components/profile/bio/validation';
 import ProfileBtn from 'src/components/reusable/profile-btn/ProfileBtn';
-import UpdateSuccess from 'src/components/reusable/update-success/UpdateSuccess';
 import { useLocales } from 'src/locales';
 import { useUpdateProfileMutation, useUploadFileMutation } from 'src/redux/api/profileCompleteApi';
 import { setToken } from 'src/redux/slices/tokenSlice';
@@ -39,7 +38,6 @@ interface IProps {
 
 export function Bio({ onBack, onSuccess }: IProps): JSX.Element {
   const [videoPreviewURL, setVideoPreviewURL] = useState<string>('');
-  const [videoUpdated, setVideoUpdated] = useState<boolean>(false);
   const [uploadVideoMutation] = useUploadFileMutation();
   const [updateDescription] = useUpdateProfileMutation();
 
@@ -97,7 +95,6 @@ export function Bio({ onBack, onSuccess }: IProps): JSX.Element {
       const file = e.target.files[0];
       field.onChange(file);
       setVideoPreviewURL(URL.createObjectURL(file));
-      setVideoUpdated(true);
     }
   };
 
@@ -105,7 +102,6 @@ export function Bio({ onBack, onSuccess }: IProps): JSX.Element {
     resetField('video');
     URL.revokeObjectURL(videoPreviewURL);
     setVideoPreviewURL('');
-    setVideoUpdated(true);
   };
 
   const renderVideoPreview = (videoFormat?: string): JSX.Element => {
@@ -121,69 +117,62 @@ export function Bio({ onBack, onSuccess }: IProps): JSX.Element {
   };
 
   return (
-    <>
-      <StyledForm onSubmit={handleSubmit(onSubmit)}>
-        <FormControl fullWidth variant="filled">
-          <InputLabel htmlFor="certificationName">
-            {translate('profileBio.fewFactsAboutYou')}
-          </InputLabel>
+    <StyledForm onSubmit={handleSubmit(onSubmit)}>
+      <FormControl fullWidth variant="filled">
+        <InputLabel htmlFor="certificationName">
+          {translate('profileBio.fewFactsAboutYou')}
+        </InputLabel>
+        <Controller
+          name="description"
+          control={control}
+          render={({ field }): ReactElement => (
+            <FilledInput {...field} multiline maxRows={4} error={!!errors.description} />
+          )}
+        />
+        {errors?.description && <ErrorMessage>{errors.description?.message}</ErrorMessage>}
+      </FormControl>
+
+      {videoPreviewURL && (
+        <MediaWrapper>
+          {renderVideoPreview(video?.type)}
+          <StyledIconButton onClick={onDeleteVideo} size="small" edge="start" color="inherit">
+            <Close />
+          </StyledIconButton>
+        </MediaWrapper>
+      )}
+
+      {errors?.video && <ErrorMessage>{errors.video?.message}</ErrorMessage>}
+
+      <StyledFormControl fullWidth variant="filled">
+        {!video && (
           <Controller
-            name="description"
+            name="video"
             control={control}
             render={({ field }): ReactElement => (
-              <FilledInput {...field} multiline maxRows={4} error={!!errors.description} />
+              <Button
+                component="label"
+                variant="outlined"
+                startIcon={<VideocamOutlinedIcon fontSize="large" />}
+              >
+                {translate('profileBio.addVideo')}
+                <input
+                  type="file"
+                  accept="video/*"
+                  onChange={(e): void => onFileChange(e, field)}
+                  hidden
+                />
+              </Button>
             )}
           />
-          {errors?.description && <ErrorMessage>{errors.description?.message}</ErrorMessage>}
-        </FormControl>
-
-        {videoPreviewURL && (
-          <MediaWrapper>
-            {renderVideoPreview(video?.type)}
-            <StyledIconButton onClick={onDeleteVideo} size="small" edge="start" color="inherit">
-              <Close />
-            </StyledIconButton>
-          </MediaWrapper>
         )}
+      </StyledFormControl>
 
-        {errors?.video && <ErrorMessage>{errors.video?.message}</ErrorMessage>}
-
-        <StyledFormControl fullWidth variant="filled">
-          {!video && (
-            <Controller
-              name="video"
-              control={control}
-              render={({ field }): ReactElement => (
-                <Button
-                  component="label"
-                  variant="outlined"
-                  startIcon={<VideocamOutlinedIcon fontSize="large" />}
-                >
-                  {translate('profileBio.addVideo')}
-                  <input
-                    type="file"
-                    accept="video/*"
-                    onChange={(e): void => onFileChange(e, field)}
-                    hidden
-                  />
-                </Button>
-              )}
-            />
-          )}
-        </StyledFormControl>
-
-        <ProfileBtn
-          nextText={translate('profileBio.submit')}
-          backText={translate('profileQualification.back')}
-          disabled={!isValid}
-          onBack={onBack}
-        />
-      </StyledForm>
-      <UpdateSuccess
-        dataUpdated={videoUpdated}
-        setDataUpdated={setVideoUpdated}
-        message={translate('profileBio.updatedSuccess')}
+      <ProfileBtn
+        nextText={translate('profileBio.submit')}
+        backText={translate('profileQualification.back')}
+        disabled={!isValid}
+        onBack={onBack}
       />
-    </>
+    </StyledForm>
   );
 }

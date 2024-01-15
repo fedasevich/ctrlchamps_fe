@@ -168,7 +168,7 @@ export default function CertificateForm({
                 {...field}
                 label={translate('profileQualification.placeholderExpirationDate')}
                 inputFormat={DATE_FORMAT}
-                minDate={watch('dateIssued')}
+                minDate={CURRENT_DAY}
                 openTo="year"
                 value={isExpirationDateDisabled ? null : field.value}
                 onChange={(date): void => field.onChange(date)}

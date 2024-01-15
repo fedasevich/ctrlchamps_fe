@@ -212,6 +212,7 @@ const en = {
     expirationDate: 'Expiration date is required',
 
     expirationDateCannotBeBeforeStartDate: 'Expiration date cannot be before start date',
+    expirationDateCannotBeBeforeToday: 'Expiration date cannot be before today',
     startDateCannotBeInFuture: 'Start date cannot be in future',
     invalidDateFormat: 'Entered data has an invalid format',
 

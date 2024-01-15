@@ -48,6 +48,7 @@ export const virtualAssessmentApi = createApi({
       return headers;
     },
   }),
+  refetchOnFocus: true,
   tagTypes: ['Appointments'],
   endpoints: (builder) => ({
     updateVirtualAssessmentStatus: builder.mutation<void, Pick<VirtualAssessment, 'id' | 'status'>>(

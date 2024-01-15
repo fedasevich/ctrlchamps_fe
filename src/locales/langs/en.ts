@@ -634,7 +634,7 @@ const en = {
       payment_text3: ' of the week/month.',
       mileage_text1:
         'CARE RECIPIENT shall reimburse CAREGIVER for all out-of-pocket expenses borne by CAREGIVER that are directly related to the provision of services outlined herein. Such expenses shall include mileage at the rate of $',
-      mileage_text2: ' cents per mile.',
+      mileage_text2: ' per mile.',
       home_living_text1:
         'If CARE RECIPIENT lives in the CAREGIVER’s home: In addition, CARE RECIPIENT shall pay CAREGIVER $',
       home_living_text2:

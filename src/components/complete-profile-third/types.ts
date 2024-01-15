@@ -10,6 +10,7 @@ export type CompleteProfileThirdValues = {
 export interface IProps {
   onNext: () => void;
   onBack: () => void;
+  onSuccess?: () => void;
 }
 
 export type ReturnType = {

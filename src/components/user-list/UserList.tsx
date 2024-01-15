@@ -40,6 +40,7 @@ import {
   StyledButton,
 } from './styles';
 import Modal from '../reusable/modal/Modal';
+import UpdateSuccess from '../reusable/update-success/UpdateSuccess';
 
 export default function UserList(): JSX.Element | null {
   const { translate } = useLocales();
@@ -50,6 +51,8 @@ export default function UserList(): JSX.Element | null {
   const [isDeleteModalActive, setIsDeleteModalActive] = useState<boolean>(false);
   const [termSearch, setTermSearch] = useState<string>('');
   const [deleteUserId, setDeleteUserId] = useState<string>('');
+  const [statusUpdated, setStatusUpdated] = useState<boolean>(false);
+  const [userDeleted, setUserDeleted] = useState<boolean>(false);
 
   const debouncedSearchTerm = useDebounce(termSearch.trim(), DEBOUNCE_DELAY);
 
@@ -82,7 +85,9 @@ export default function UserList(): JSX.Element | null {
 
   const handleDeleteUser = async (): Promise<void> => {
     try {
-      await updateUser({ id: deleteUserId, isDeletedByAdmin: true }).unwrap();
+      await updateUser({ id: deleteUserId, isDeletedByAdmin: true })
+        .unwrap()
+        .then(() => setUserDeleted(true));
       refetch();
       handleDeleteModalToggle();
     } catch (error) {
@@ -92,7 +97,9 @@ export default function UserList(): JSX.Element | null {
 
   const handleChangeStatus = async (event: SelectChangeEvent, id: string): Promise<void> => {
     try {
-      await updateUser({ id, status: event.target.value }).unwrap();
+      await updateUser({ id, status: event.target.value })
+        .unwrap()
+        .then(() => setStatusUpdated(true));
       refetch();
     } catch (error) {
       throw new Error(error);
@@ -220,6 +227,16 @@ export default function UserList(): JSX.Element | null {
           </Box>
         </Modal>
       </ManagementWrapper>
+      <UpdateSuccess
+        dataUpdated={statusUpdated}
+        setDataUpdated={setStatusUpdated}
+        message={translate('userList.statusSuccess')}
+      />
+      <UpdateSuccess
+        dataUpdated={userDeleted}
+        setDataUpdated={setUserDeleted}
+        message={translate('userList.userDeleted')}
+      />
     </MainWrapper>
   );
 }

@@ -13,6 +13,7 @@ import {
 } from 'src/components/profile/profile-qualification/certificate-list/styles';
 import { ProfileQuality } from 'src/components/profile/profile-qualification/types';
 import Modal from 'src/components/reusable/modal/Modal';
+import UpdateSuccess from 'src/components/reusable/update-success/UpdateSuccess';
 import { BACKEND_DATE_FORMAT } from 'src/constants';
 import { useLocales } from 'src/locales';
 import { profileApi } from 'src/redux/api/profileCompleteApi';
@@ -42,6 +43,7 @@ export default function CertificateList({
 
   const [isDeleteModalActive, setIsDeleteModalActive] = useState<boolean>(false);
   const [deleteCertificateId, setDeleteCertificateId] = useState<string>('');
+  const [certificateUpdated, setCertificateUpdated] = useState<boolean>(false);
 
   const [createCertificate] = profileApi.useCreateCertificateMutation();
   const dispatch = useAppDispatch();
@@ -65,6 +67,7 @@ export default function CertificateList({
         .unwrap()
         .then(() => {
           dispatch(saveCertificates(filteredCertificates));
+          setCertificateUpdated(true);
         })
         .catch((error) => {
           throw new Error(error);
@@ -144,6 +147,7 @@ export default function CertificateList({
           editingCertificate={editingCertificate}
           onSave={onSave}
           onClose={onClose}
+          onSuccess={(): void => setCertificateUpdated(true)}
         />
       </Modal>
 
@@ -166,6 +170,12 @@ export default function CertificateList({
           </Box>
         </Box>
       </Modal>
+
+      <UpdateSuccess
+        dataUpdated={certificateUpdated}
+        setDataUpdated={setCertificateUpdated}
+        message={translate('profileQualification.updatedSuccess')}
+      />
     </>
   );
 }

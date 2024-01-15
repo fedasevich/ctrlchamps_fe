@@ -21,6 +21,7 @@ import { parseISO, format } from 'date-fns';
 
 import EditSquare from 'src/assets/icons/EditSquare';
 import Modal from 'src/components/reusable/modal/Modal';
+import UpdateSuccess from 'src/components/reusable/update-success/UpdateSuccess';
 import {
   DATE_FORMAT,
   DISPLAY_TIME_FORMAT,
@@ -40,7 +41,6 @@ import PersonalInfoModal from './personal-info-modal/PersonalInfoModal';
 import { ErrorMessage } from './personal-info-modal/styles';
 import { AvatarValues } from './types';
 import UpdatePassword from './update-password-form/UpdatePassword';
-import UpdatePasswordSuccess from './update-password-form/UpdatePasswordSuccess';
 import { useAvatarSchema } from './validation';
 import {
   AvatarContainer,
@@ -75,6 +75,10 @@ export default function AccountDetails({ user, isAdmin }: IProps): JSX.Element |
   const [isPasswordBlockVisible, setIsPasswordBlockVisible] = useState<boolean>(false);
   const [avatarURL, setAvatarURL] = useState<string>(user.avatar ? user.avatar : '');
   const [passwordUpdated, setPasswordUpdated] = useState<boolean>(false);
+  const [avatarUpdated, setAvatarUpdated] = useState<boolean>(false);
+  const [personalInfoUpdated, setPersonalInfoUpdated] = useState<boolean>(false);
+  const [addressUpdated, setAddressUpdated] = useState<boolean>(false);
+  const [statusUpdated, setStatusUpdated] = useState<boolean>(false);
 
   const { data: transactions = [] } = useGetTransactionsQuery(user.id);
 
@@ -109,6 +113,7 @@ export default function AccountDetails({ user, isAdmin }: IProps): JSX.Element |
           file,
         });
         setAvatarURL(URL.createObjectURL(file));
+        setAvatarUpdated(true);
       } else {
         setError('avatar', {
           type: 'manual',
@@ -126,6 +131,7 @@ export default function AccountDetails({ user, isAdmin }: IProps): JSX.Element |
       URL.revokeObjectURL(avatarURL);
       setAvatarURL('');
       await deleteAvatar({ id: user.id, avatar: null });
+      setAvatarUpdated(true);
     } catch (error) {
       throw new Error(error);
     }
@@ -136,7 +142,9 @@ export default function AccountDetails({ user, isAdmin }: IProps): JSX.Element |
 
   const handleChangeStatus = async (event: SelectChangeEvent, id: string): Promise<void> => {
     try {
-      await updateUser({ id, status: event.target.value }).unwrap();
+      await updateUser({ id, status: event.target.value })
+        .unwrap()
+        .then(() => setStatusUpdated(true));
     } catch (error) {
       throw new Error(error);
     }
@@ -327,7 +335,11 @@ export default function AccountDetails({ user, isAdmin }: IProps): JSX.Element |
         isActive={isPersonalInfoModalOpen}
         backgroundColor={SECONDARY.drawer_background}
       >
-        <PersonalInfoModal user={user} onClose={(): void => setIsPersonalInfoModalOpen(false)} />
+        <PersonalInfoModal
+          user={user}
+          onClose={(): void => setIsPersonalInfoModalOpen(false)}
+          onSuccess={(): void => setPersonalInfoUpdated(true)}
+        />
       </Modal>
       <Modal
         onClose={(): void => setIsAddressModalOpen(false)}
@@ -335,11 +347,37 @@ export default function AccountDetails({ user, isAdmin }: IProps): JSX.Element |
         isActive={isAddressModalOpen}
         backgroundColor={SECONDARY.drawer_background}
       >
-        <AddressModal user={user} onClose={(): void => setIsAddressModalOpen(false)} />
+        <AddressModal
+          user={user}
+          onClose={(): void => setIsAddressModalOpen(false)}
+          onSuccess={(): void => setAddressUpdated(true)}
+        />
       </Modal>
-      <UpdatePasswordSuccess
-        passwordUpdated={passwordUpdated}
-        setPasswordUpdated={setPasswordUpdated}
+
+      <UpdateSuccess
+        dataUpdated={passwordUpdated}
+        setDataUpdated={setPasswordUpdated}
+        message={translate('changePassword.success')}
+      />
+      <UpdateSuccess
+        dataUpdated={avatarUpdated}
+        setDataUpdated={setAvatarUpdated}
+        message={translate('accountDetails.avatarSuccess')}
+      />
+      <UpdateSuccess
+        dataUpdated={personalInfoUpdated}
+        setDataUpdated={setPersonalInfoUpdated}
+        message={translate('accountDetails.personalInfoModal.success')}
+      />
+      <UpdateSuccess
+        dataUpdated={addressUpdated}
+        setDataUpdated={setAddressUpdated}
+        message={translate('accountDetails.addressModal.success')}
+      />
+      <UpdateSuccess
+        dataUpdated={statusUpdated}
+        setDataUpdated={setStatusUpdated}
+        message={translate('userList.statusSuccess')}
       />
     </Background>
   );

@@ -830,6 +830,8 @@ const en = {
     activityLogReview: 'requested you to review completed activity log',
     activityLogApproved: 'approved your activity log',
     activityLogRejected: 'rejected your activity log',
+    requestedVA: 'has requested the Virtual Assessment',
+    fiveMinBeforeVA: 'the Virtual Assessment will begin in 5 minutes',
   },
   adminMenu: {
     users: 'Users',

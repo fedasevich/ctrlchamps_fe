@@ -9,6 +9,7 @@ export const USER_MIN_AGE = 18;
 export const MIN_PASSWORD_LENGTH = 8;
 export const MAX_CHARACTERS_LENGTH = 100;
 export const BAD_REQUEST_STATUS = 400;
+export const FORBIDDEN_REQUEST_STATUS = 403;
 export const AUTO_HIDEOUT_DELAY = 2000;
 export const DATE_FORMAT = 'MM/dd/yyyy';
 export const BACKEND_DATE_FORMAT = 'yyyy-MM-dd';

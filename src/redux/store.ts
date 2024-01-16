@@ -31,10 +31,9 @@ import transactionsApi from 'src/redux/api/transactionsApi';
 import userApi from 'src/redux/api/userApi';
 import virtualAssessmentApi from 'src/redux/api/virtualAssessmentApi';
 
+import { setupListeners } from '@reduxjs/toolkit/dist/query';
 import { forbiddenErrorMiddleware } from 'src/redux/forbiddenErrorMiddleware';
 import { RootState } from 'src/redux/rootReducer';
-import adminPanelApi from 'src/redux/api/adminPanelAPI';
-import { setupListeners } from '@reduxjs/toolkit/dist/query';
 
 const persistConfig = {
   key: 'root',

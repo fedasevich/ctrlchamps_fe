@@ -16,6 +16,7 @@ import {
   MIN_REASON_LENGTH,
   MIN_VALUE,
 } from './constants';
+import { convertLocalTimeToUTC } from './helpers';
 
 type ReturnType = {
   startTime: string;
@@ -142,8 +143,8 @@ export default function useVirtualAssessmentModal(
       if (!isLoading) setServerError(false);
 
       await requestVirtualAssessment({
-        startTime,
-        endTime,
+        startTime: convertLocalTimeToUTC(startTime),
+        endTime: convertLocalTimeToUTC(endTime),
         assessmentDate: format(date, BACKEND_DATE_FORMAT),
         meetingLink,
         appointmentId,

@@ -100,5 +100,7 @@ export const TINY_AVATAR_SIZE = 24;
 export const SMALL_AVATAR_SIZE = 48;
 export const BIG_AVATAR_SIZE = 96;
 
+export const PAGINATION_LIMIT = 10;
+
 export const ASCI_LETTERS_START = 33;
 export const ASCI_LETTERS_RANGE = 94;

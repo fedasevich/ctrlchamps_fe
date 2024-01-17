@@ -11,5 +11,4 @@ export const MENU_ITEMS: MenuItem[] = [
   },
   { label: 'adminMenu.appointments', route: ROUTES.appointments },
   { label: 'adminMenu.taskManagement', route: ROUTES.taskManagement },
-  { label: 'adminMenu.training', route: ROUTES.training },
 ];

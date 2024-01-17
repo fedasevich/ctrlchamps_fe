@@ -30,7 +30,12 @@ import timezoneApi from 'src/redux/api/timezoneApi';
 import transactionsApi from 'src/redux/api/transactionsApi';
 import userApi from 'src/redux/api/userApi';
 import virtualAssessmentApi from 'src/redux/api/virtualAssessmentApi';
-
+import activityLogApi from 'src/redux/api/activityLogApi';
+import transactionsApi from 'src/redux/api/transactionsApi';
+import notificationsApi from 'src/redux/api/notificationsApi';
+import { RootState } from 'src/redux/rootReducer';
+import adminPanelApi from 'src/redux/api/adminPanelAPI';
+import tasksApi from 'src/redux/api/tasksApi';
 import { setupListeners } from '@reduxjs/toolkit/dist/query';
 import { forbiddenErrorMiddleware } from 'src/redux/forbiddenErrorMiddleware';
 import { RootState } from 'src/redux/rootReducer';
@@ -71,6 +76,7 @@ const store = configureStore({
     [transactionsApi.reducerPath]: transactionsApi.reducer,
     [notificationsApi.reducerPath]: notificationsApi.reducer,
     [adminPanelApi.reducerPath]: adminPanelApi.reducer,
+    [tasksApi.reducerPath]: tasksApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
@@ -90,6 +96,7 @@ const store = configureStore({
       activityLogApi.middleware,
       notificationsApi.middleware,
       adminPanelApi.middleware,
+      tasksApi.middleware,
     ]),
 });
 

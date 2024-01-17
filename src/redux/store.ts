@@ -32,6 +32,7 @@ import notificationsApi from 'src/redux/api/notificationsApi';
 import { RootState } from 'src/redux/rootReducer';
 import adminPanelApi from 'src/redux/api/adminPanelAPI';
 import tasksApi from 'src/redux/api/tasksApi';
+import { setupListeners } from '@reduxjs/toolkit/dist/query';
 
 const persistConfig = {
   key: 'root',
@@ -91,6 +92,8 @@ const store = configureStore({
       tasksApi.middleware,
     ]),
 });
+
+setupListeners(store.dispatch);
 
 const persistor = persistStore(store);
 

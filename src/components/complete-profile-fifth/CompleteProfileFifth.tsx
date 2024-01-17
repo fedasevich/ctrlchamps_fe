@@ -1,6 +1,5 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { FilledInput, FormControl, InputLabel, Slider } from '@mui/material';
-import { memo } from 'react';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 
 import {
@@ -28,9 +27,10 @@ import ProfileBtn from 'src/components/reusable/profile-btn/ProfileBtn';
 interface IProps {
   onNext: () => void;
   onBack: () => void;
+  onSuccess?: () => void;
 }
 
-function CompleteProfileFifth({ onNext, onBack }: IProps): JSX.Element {
+export default function CompleteProfileFifth({ onNext, onBack, onSuccess }: IProps): JSX.Element {
   const { translate } = useLocales();
   const dispatch = useAppDispatch();
   const completeProfileFifthSchema = useCompleteProfileFifthSchema();
@@ -59,7 +59,12 @@ function CompleteProfileFifth({ onNext, onBack }: IProps): JSX.Element {
         updateProfileDto: { hourlyRate: data.hourlyRate },
       })
         .unwrap()
-        .then(() => onNext());
+        .then(() => {
+          if (onSuccess) {
+            onSuccess();
+          }
+          onNext();
+        });
     } catch (error) {
       throw new Error(error);
     }
@@ -123,5 +128,3 @@ function CompleteProfileFifth({ onNext, onBack }: IProps): JSX.Element {
     </Wrapper>
   );
 }
-
-export default memo(CompleteProfileFifth);

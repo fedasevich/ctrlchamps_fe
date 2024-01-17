@@ -35,6 +35,7 @@ import {
   Title,
 } from 'src/components/admin-management/styles';
 import Modal from 'src/components/reusable/modal/Modal';
+import UpdateSuccess from 'src/components/reusable/update-success/UpdateSuccess';
 import { DATE_FORMAT } from 'src/constants';
 import { useDebounce } from 'src/hooks/useDebounce';
 import { useLocales } from 'src/locales';
@@ -50,6 +51,7 @@ function AdminManagement(): JSX.Element | null {
   const [page, setPage] = useState<number>(FIRST_PAGE);
   const [termSearch, setTermSearch] = useState<string>('');
   const [deleteUserId, setDeleteUserId] = useState<string>('');
+  const [userDeleted, setUserDeleted] = useState<boolean>(false);
 
   const debouncedSearchTerm = useDebounce(termSearch.trim(), DEBOUNCE_DELAY);
 
@@ -83,7 +85,9 @@ function AdminManagement(): JSX.Element | null {
 
   const handleDeleteUser = async (): Promise<void> => {
     try {
-      await deleteUser(deleteUserId).unwrap();
+      await deleteUser(deleteUserId)
+        .unwrap()
+        .then(() => setUserDeleted(true));
       refetch();
       handleDeleteModalToggle();
     } catch (error) {
@@ -198,6 +202,11 @@ function AdminManagement(): JSX.Element | null {
           </Box>
         </Modal>
       </ManagementWrapper>
+      <UpdateSuccess
+        dataUpdated={userDeleted}
+        setDataUpdated={setUserDeleted}
+        message={translate('userList.userDeleted')}
+      />
     </MainWrapper>
   );
 }

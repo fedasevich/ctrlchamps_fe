@@ -15,6 +15,8 @@ import {
 } from '@mui/material';
 import { MuiTelInput } from 'mui-tel-input';
 import { Controller, useForm } from 'react-hook-form';
+import { format, parseISO } from 'date-fns';
+import { useTranslation } from 'react-i18next';
 
 import Visibility from 'src/assets/icons/Visibility';
 import VisibilityOff from 'src/assets/icons/VisibilityOff';
@@ -24,12 +26,12 @@ import {
   ManagementWrapper,
   PageName,
 } from 'src/components/admin-management/styles';
+import UpdateSuccess from 'src/components/reusable/update-success/UpdateSuccess';
 
-import { format, parseISO } from 'date-fns';
-import { useTranslation } from 'react-i18next';
 import { AUTO_HIDEOUT_DELAY, DATE_FORMAT, DISPLAY_TIME_FORMAT } from 'src/constants';
 import { Admin } from 'src/redux/api/adminPanelAPI';
 import { getISODateWithoutUTC } from 'src/utils/getISODateWithoutUTC';
+
 import { DEFAULT_ADMIN_FORM_VALUES } from './constants';
 import { validatePhoneNumber } from './helpers';
 import { useAdminForm } from './hooks';
@@ -284,16 +286,11 @@ function AdminForm({ selectedAdmin, onSubmit }: AdminFormProps): JSX.Element | n
       >
         <Alert severity="success">{translate('adminManagement.adminForm.passwordWasCopied')}</Alert>
       </Snackbar>
-      <Snackbar
-        open={isPasswordRegenerated}
-        autoHideDuration={AUTO_HIDEOUT_DELAY}
-        onClose={(): void => setIsPasswordRegenerated(false)}
-        anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-      >
-        <Alert severity="success">
-          {translate('adminManagement.adminForm.passwordWasRegenerated')}
-        </Alert>
-      </Snackbar>
+      <UpdateSuccess
+        dataUpdated={isPasswordRegenerated}
+        setDataUpdated={setIsPasswordRegenerated}
+        message={translate('adminManagement.adminForm.passwordWasRegenerated')}
+      />
     </MainWrapper>
   );
 }

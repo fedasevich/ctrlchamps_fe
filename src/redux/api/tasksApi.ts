@@ -37,7 +37,7 @@ export const tasksApi = createApi({
   tagTypes: ['Tasks'],
   endpoints: (builder) => ({
     getAllTasks: builder.query<TasksInfo, SearchQuery>({
-      query: (params) => ({ url: `${route.tasks}`, method: 'GET', params }),
+      query: (params) => ({ url: `${route.tasks}`, params }),
       providesTags: ['Tasks'],
     }),
     createTask: builder.mutation<void, Pick<Task, 'name'>>({

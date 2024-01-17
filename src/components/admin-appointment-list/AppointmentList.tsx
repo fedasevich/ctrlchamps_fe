@@ -105,6 +105,7 @@ function AdminAppointmentList(): JSX.Element | null {
     try {
       await deleteAppointment(deleteAppointmentId).unwrap();
       handleDeleteModalToggle();
+      refetch();
     } catch (error) {
       throw new Error(error);
     }

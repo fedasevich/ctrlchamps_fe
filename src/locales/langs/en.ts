@@ -597,6 +597,7 @@ const en = {
       active: 'Active',
       ongoing: 'Ongoing',
       completed: 'Completed',
+      paused: 'Paused',
     },
     activityLogModal: {
       tasksRequired: 'At least one task is required',
@@ -948,6 +949,12 @@ const en = {
     deleteWarning: 'Are you sure you want to delete this appointment?',
     yes: 'Yes',
     no: 'No',
+  },
+  appointmentDebtModal: {
+    title: 'Complete payment to Create new appointment',
+    text: 'To proceed with scheduling a new appointment, please top up your balance to cover the outstanding amount',
+    mailText:
+      'If you have any questions, concerns, or issues, you can reach out to our dedicated support team via email',
   },
 };
 

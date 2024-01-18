@@ -4,9 +4,12 @@ import { persistReducer, persistStore } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 
 import { addressReducer } from 'src/redux/slices/addressSlice';
+import { appointmentReducer } from 'src/redux/slices/appointmentSlice';
 import { availableDaysReducer } from 'src/redux/slices/availableDaysSlice';
+import { caregiverReducer } from 'src/redux/slices/caregiverSlice';
 import { certificateReducer } from 'src/redux/slices/certificateSlice';
 import { healthQuestionnaireReducer } from 'src/redux/slices/healthQuestionnaireSlice';
+import { locationReducer } from 'src/redux/slices/locationSlice';
 import { personalDetailsReducer } from 'src/redux/slices/personalDetailsSlice';
 import { rateReducer } from 'src/redux/slices/rateSlice';
 import { roleReducer } from 'src/redux/slices/roleSlice';
@@ -14,10 +17,8 @@ import { servicesReducer } from 'src/redux/slices/servicesSlice';
 import { tokenReducer } from 'src/redux/slices/tokenSlice';
 import { userReducer } from 'src/redux/slices/userSlice';
 import { workExperienceReducer } from 'src/redux/slices/workEperienceSlice';
-import { appointmentReducer } from './slices/appointmentSlice';
-import { caregiverReducer } from './slices/caregiverSlice';
-import { locationReducer } from './slices/locationSlice';
 
+import { setupListeners } from '@reduxjs/toolkit/dist/query';
 import accountVerificationApi from 'src/redux/api/accountVerificationAPI';
 import activityLogApi from 'src/redux/api/activityLogApi';
 import adminPanelApi from 'src/redux/api/adminPanelAPI';
@@ -26,10 +27,12 @@ import authApi from 'src/redux/api/authApi';
 import questionnaireApi from 'src/redux/api/healthQuestionnaireApi';
 import notificationsApi from 'src/redux/api/notificationsApi';
 import profileApi from 'src/redux/api/profileCompleteApi';
+import tasksApi from 'src/redux/api/tasksApi';
 import timezoneApi from 'src/redux/api/timezoneApi';
 import transactionsApi from 'src/redux/api/transactionsApi';
 import userApi from 'src/redux/api/userApi';
 import virtualAssessmentApi from 'src/redux/api/virtualAssessmentApi';
+import { forbiddenErrorMiddleware } from 'src/redux/forbiddenErrorMiddleware';
 import { RootState } from 'src/redux/rootReducer';
 
 const persistConfig = {
@@ -68,12 +71,14 @@ const store = configureStore({
     [transactionsApi.reducerPath]: transactionsApi.reducer,
     [notificationsApi.reducerPath]: notificationsApi.reducer,
     [adminPanelApi.reducerPath]: adminPanelApi.reducer,
+    [tasksApi.reducerPath]: tasksApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: false,
       immutableCheck: false,
     }).concat([
+      forbiddenErrorMiddleware,
       authApi.middleware,
       accountVerificationApi.middleware,
       profileApi.middleware,
@@ -86,8 +91,11 @@ const store = configureStore({
       activityLogApi.middleware,
       notificationsApi.middleware,
       adminPanelApi.middleware,
+      tasksApi.middleware,
     ]),
 });
+
+setupListeners(store.dispatch);
 
 const persistor = persistStore(store);
 

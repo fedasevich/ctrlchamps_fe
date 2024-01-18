@@ -20,9 +20,10 @@ import {
 interface IProps {
   user: User;
   onClose: () => void;
+  onSuccess: () => void;
 }
 
-export default function AddressModal({ user, onClose }: IProps): JSX.Element {
+export default function AddressModal({ user, onClose, onSuccess }: IProps): JSX.Element {
   const { translate } = useLocales();
 
   const [updateAddress] = useUpdateUserMutation();
@@ -54,7 +55,10 @@ export default function AddressModal({ user, onClose }: IProps): JSX.Element {
     try {
       await updateAddress({ id: user.id, ...data })
         .unwrap()
-        .then(() => onClose());
+        .then(() => {
+          onSuccess();
+          onClose();
+        });
     } catch (error) {
       throw new Error(error);
     }

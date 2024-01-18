@@ -6,7 +6,6 @@ import { useRouter } from 'next/router';
 import { ChangeEvent, ReactElement, useState } from 'react';
 import { Controller, ControllerRenderProps, SubmitHandler, useForm } from 'react-hook-form';
 
-import { useSelector } from 'react-redux';
 import {
   AVI_FORMAT,
   DEFAULT_BIO_VALUES,
@@ -28,20 +27,19 @@ import { useBioFormSchema } from 'src/components/profile/bio/validation';
 import ProfileBtn from 'src/components/reusable/profile-btn/ProfileBtn';
 import { useLocales } from 'src/locales';
 import { useUpdateProfileMutation, useUploadFileMutation } from 'src/redux/api/profileCompleteApi';
-import { RootState } from 'src/redux/rootReducer';
 import { setToken } from 'src/redux/slices/tokenSlice';
 import { useAppDispatch } from 'src/redux/store';
 import { ROUTES } from 'src/routes';
 
 interface IProps {
   onBack: () => void;
+  onSuccess?: () => void;
 }
 
-export function Bio({ onBack }: IProps): JSX.Element {
+export function Bio({ onBack, onSuccess }: IProps): JSX.Element {
   const [videoPreviewURL, setVideoPreviewURL] = useState<string>('');
   const [uploadVideoMutation] = useUploadFileMutation();
   const [updateDescription] = useUpdateProfileMutation();
-  const token = useSelector((state: RootState) => state.token.token);
 
   const { translate } = useLocales();
   const router = useRouter();
@@ -78,6 +76,9 @@ export function Bio({ onBack }: IProps): JSX.Element {
         .then((response) => {
           if (response.token) {
             dispatch(setToken(response.token));
+          }
+          if (onSuccess) {
+            onSuccess();
           }
           router.push(ROUTES.home);
         });

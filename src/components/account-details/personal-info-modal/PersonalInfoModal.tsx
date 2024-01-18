@@ -28,9 +28,10 @@ import { Container, FormBody, ErrorMessage, FormFooter } from './styles';
 interface IProps {
   user: User;
   onClose: () => void;
+  onSuccess: () => void;
 }
 
-export default function PersonalInfoModal({ user, onClose }: IProps): JSX.Element {
+export default function PersonalInfoModal({ user, onClose, onSuccess }: IProps): JSX.Element {
   const { translate } = useLocales();
 
   const [updatePersonalInfo] = useUpdateUserMutation();
@@ -73,7 +74,10 @@ export default function PersonalInfoModal({ user, onClose }: IProps): JSX.Elemen
     try {
       await updatePersonalInfo({ id: user.id, ...data, dateOfBirth: formattedDate })
         .unwrap()
-        .then(() => onClose());
+        .then(() => {
+          onSuccess();
+          onClose();
+        });
     } catch (error) {
       throw new Error(error);
     }

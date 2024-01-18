@@ -410,7 +410,9 @@ export default function AppointmentDrawer({
             )}
           </Block>
         </DrawerBody>
-        <DrawerFooter>{DRAWER_FOOTERS[appointment!.status]}</DrawerFooter>
+        <DrawerFooter>
+          {role === USER_ROLE.Admin ? null : DRAWER_FOOTERS[appointment!.status]}
+        </DrawerFooter>
       </Drawer>
       <Modal
         onClose={handleCancelModalClose}

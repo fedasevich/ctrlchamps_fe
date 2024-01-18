@@ -13,6 +13,7 @@ import {
 } from 'src/components/appointments/virtual-assessment-modal/constants';
 import { CONFIRM_NOTE_MAX_LENGTH } from 'src/components/confirm-appointment/constants';
 import { MAX_CHARACTERS_LENGTH, MIN_PASSWORD_LENGTH } from 'src/constants';
+import { MAX_TASK_LENGTH, MIN_TASK_LENGTH } from 'src/components/admin-management/tasks/constants';
 
 const en = {
   app_title: 'CtrlChamps',
@@ -27,6 +28,7 @@ const en = {
     client: 'client',
     caregiver: 'caregiver',
   },
+  no_results_match: 'No results found for your search. Please try a different keyword.',
   unexpected_error: 'Something went wrong, try again later...',
   loginForm: {
     emailInvalid: 'Email is incorrect',
@@ -212,6 +214,7 @@ const en = {
     expirationDate: 'Expiration date is required',
 
     expirationDateCannotBeBeforeStartDate: 'Expiration date cannot be before start date',
+    expirationDateCannotBeBeforeToday: 'Expiration date cannot be before today',
     startDateCannotBeInFuture: 'Start date cannot be in future',
     invalidDateFormat: 'Entered data has an invalid format',
 
@@ -226,6 +229,7 @@ const en = {
     back: 'Back',
 
     addCertificate: 'Add Another Certificate',
+    updatedSuccess: 'Your certificate has been successfully changed!',
 
     placeholderCertificationName: 'Certification Name',
     placeholderCertificationNumber: 'Certification Number (ID)',
@@ -267,6 +271,7 @@ const en = {
     deleteWorkPlace: 'Delete a work place',
     deleteWarning: 'Are you sure you want to delete this work place? Information will not be saved',
     qualifications: { hospital: 'Hospital', clinic: 'Clinic', agency: 'Agency', other: 'Other' },
+    updatedSuccess: 'Your work place has been successfully changed!',
     errors: {
       workPlaceRequired: 'Work place is required',
       workPlaceLength: `Work place must be at most ${MAX_CHARACTERS_LENGTH} characters`,
@@ -287,6 +292,7 @@ const en = {
     mealPreparation: 'Meal Preparation',
     housekeeping: 'Housekeeping and Laundry',
     socialActivities: 'Social and Recreational Activities',
+    updatedSuccess: 'Your services has been successfully changed!',
   },
   completeProfileFourth: {
     specify_time: ' Please specify your preferred time and your availability throughout the week',
@@ -295,6 +301,7 @@ const en = {
     invalid_time:
       'Appointment cannot be ended before the start. Please choose another value in To field.',
     equal_time_error: 'You cannot choose identical time',
+    updatedSuccess: 'Your availability has been successfully changed!',
   },
   completeProfileFifth: {
     placeholderRate: 'Rate ($/h)',
@@ -630,7 +637,7 @@ const en = {
       payment_text3: ' of the week/month.',
       mileage_text1:
         'CARE RECIPIENT shall reimburse CAREGIVER for all out-of-pocket expenses borne by CAREGIVER that are directly related to the provision of services outlined herein. Such expenses shall include mileage at the rate of $',
-      mileage_text2: ' cents per mile.',
+      mileage_text2: ' per mile.',
       home_living_text1:
         'If CARE RECIPIENT lives in the CAREGIVER’s home: In addition, CARE RECIPIENT shall pay CAREGIVER $',
       home_living_text2:
@@ -723,8 +730,16 @@ const en = {
       zip: 'ZIP Code',
       street: 'Street, suite, etc',
     },
-    personalInfoModal: { title: 'Edit Personal Information', saveButton: 'Save' },
-    addressModal: { title: 'Edit Address' },
+    personalInfoModal: {
+      title: 'Edit Personal Information',
+      saveButton: 'Save',
+      success: 'Your personal information has been successfully changed!',
+    },
+    addressModal: {
+      title: 'Edit Address',
+      success: 'Your address has been successfully changed!',
+    },
+    avatarSuccess: 'Your avatar has been successfully changed!',
   },
   caregiverProfile: {
     title: 'Caregiver Profile',
@@ -735,6 +750,10 @@ const en = {
     rate: 'Rate',
     bio: 'Bio',
     perHour: 'h',
+    servicesSuccess: 'Your services has been successfully changed!',
+    availabilitySuccess: 'Your availability has been successfully changed!',
+    rateSuccess: 'Your rate has been successfully changed!',
+    bioSuccess: 'Your bio has been successfully changed!',
   },
   changePassword: {
     title: 'Change Password',
@@ -813,7 +832,9 @@ const en = {
     activityLogReview: 'requested you to review completed activity log',
     activityLogApproved: 'approved your activity log',
     activityLogRejected: 'rejected your activity log',
-},
+    requestedVA: 'has requested the Virtual Assessment',
+    fiveMinBeforeVA: 'the Virtual Assessment will begin in 5 minutes',
+  },
   adminMenu: {
     users: 'Users',
     adminManagement: 'Admin management',
@@ -827,12 +848,12 @@ const en = {
     userRoles: 'User Roles',
     addUser: 'Add User',
     search: 'Search',
-    name: 'NAME',
-    email: 'EMAIL',
+    name: 'Name',
+    email: 'Email',
     typeUser: 'Type User',
-    phone: 'PHONE',
-    date: 'DATE',
-    action: 'ACTION',
+    phone: 'Phone',
+    date: 'Date',
+    action: 'Actions',
     deleteUser: 'Delete A User',
     deleteWarning: 'Are you sure you want to delete this user?',
     yes: 'Yes',
@@ -871,6 +892,28 @@ const en = {
       passwordWasRegenerated: 'Password was regenerated',
     },
   },
+  taskManagement: {
+    title: 'Tasks management',
+    addTask: 'Add new',
+    search: 'Search',
+    name: 'Task name',
+    action: 'Actions',
+    enterTask: 'Add task',
+    taskPlaceholder: 'Enter task name',
+    editTaskPlaceholder: 'Your task name',
+    editTask: 'Edit Task',
+    deleteTask: 'Delete Task',
+    deleteWarning: 'Are you sure want to delete this task?',
+    save: 'Save',
+    ok: 'Yes',
+    cancel: 'Cancel',
+    taskMinLength: `Task name should contain at least ${MIN_TASK_LENGTH} characters`,
+    taskMaxLength: `Task name should contain at most ${MAX_TASK_LENGTH} characters`,
+    failedToLoad: 'Failed to load tasks',
+    failedToCreate: 'Task creation failed',
+    failedToUpdate: 'Task update failed',
+    failedToDelete: 'Task deletion failed',
+  },
   userList: {
     title: 'Users',
     search: 'Search',
@@ -886,6 +929,8 @@ const en = {
     replenishment: 'Replenishment',
     anyUsers: `You don't have any users yet`,
     anyTransactions: `User doesn't have any transactions yet`,
+    statusSuccess: 'User status has been successfully changed!',
+    userDeleted: 'User has been successfully deleted!',
   },
   adminAppointmentList: {
     title: 'Appointments',

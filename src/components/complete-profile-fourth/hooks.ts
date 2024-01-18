@@ -8,7 +8,12 @@ import { useAppDispatch, useTypedSelector } from 'src/redux/store';
 import { FIRST_ELEMENT, PLUS_HOUR, availableTimeOptions } from './constants';
 import { HookReturnType } from './types';
 
-export default function useCompleteProfileFourth(onNext: () => void): HookReturnType {
+interface IProps {
+  onNext: () => void;
+  onSuccess?: () => void;
+}
+
+export default function useCompleteProfileFourth({onNext, onSuccess}:IProps): HookReturnType {
   const dispatch = useAppDispatch();
   const { days: availableDays } = useTypedSelector((state) => state.availableDays);
   const [specifyAvailability] = useUpdateProfileMutation();
@@ -163,6 +168,9 @@ export default function useCompleteProfileFourth(onNext: () => void): HookReturn
         .then((data) => {
           if (!data.token) return;
           dispatch(setToken(data.token));
+          if (onSuccess) {
+            onSuccess();
+          }
         });
       onNext();
     } catch (err) {

@@ -1,5 +1,5 @@
 import { ObjectSchema, boolean, date, object, string } from 'yup';
-import { isBefore, isValid, parse, isAfter } from 'date-fns';
+import { isBefore, isValid, parse, isAfter, isToday } from 'date-fns';
 
 import { ProfileQualityFormValues } from 'src/components/profile/profile-qualification/types';
 import {
@@ -76,7 +76,12 @@ export const useProfileQualificationSchema = (): ObjectSchema<ProfileQualityForm
 
             return value;
           })
-          .typeError(translate('profileQualification.invalidDateFormat')),
+          .typeError(translate('profileQualification.invalidDateFormat'))
+          .test(
+            'is-after-yesterday',
+            translate('profileQualification.expirationDateCannotBeBeforeToday'),
+            (value) => isToday(value) || isAfter(value, CURRENT_DAY)
+          ),
       otherwise: (schema) => schema.notRequired(),
     }),
   }) as ObjectSchema<ProfileQualityFormValues>;

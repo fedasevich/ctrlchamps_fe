@@ -27,6 +27,7 @@ const route = {
   notifications: '/notifications',
   adminPanel: '/admin-panel',
   admins: '/admins',
+  tasks: '/default-seeker-task',
   admin: '/admin',
   updatePassword: '/update-password',
   appointments: '/appointments',

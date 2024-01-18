@@ -54,6 +54,14 @@ const NOTIFICATION_STATUS = {
     text: 'notifications.rescheduleVA',
     icon: ICON_TYPE.acceptVA,
   },
+  REQUESTED_VA: {
+    text: 'notifications.requestedVA',
+    icon: ICON_TYPE.acceptAppointment,
+  },
+  FIVE_MIN_BEFORE_VA: {
+    text: 'notifications.fiveMinBeforeVA',
+    icon: ICON_TYPE.acceptAppointment,
+  },
   SIGN_OFF: {
     text: 'notifications.signOff',
     icon: ICON_TYPE.sign,

@@ -8,6 +8,7 @@ import {
   Table,
   TableBody,
   TableHead,
+  Typography,
 } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import FormatLineSpacingIcon from '@mui/icons-material/FormatLineSpacing';
@@ -104,6 +105,7 @@ function AdminAppointmentList(): JSX.Element | null {
     try {
       await deleteAppointment(deleteAppointmentId).unwrap();
       handleDeleteModalToggle();
+      refetch();
     } catch (error) {
       throw new Error(error);
     }
@@ -147,72 +149,85 @@ function AdminAppointmentList(): JSX.Element | null {
           )}
         </ActionBar>
 
-        <Stack mt={3}>
-          <Table>
-            <TableHead>
-              <TableRow>
-                <TableHeader>{translate('adminAppointmentList.id')}</TableHeader>
-                <TableHeader>{translate('adminAppointmentList.type')}</TableHeader>
-                <TableHeader>{translate('adminAppointmentList.duration')}</TableHeader>
-                <TableHeader>{translate('adminAppointmentList.creation_date')}</TableHeader>
-                <TableHeader>{translate('adminAppointmentList.end_date')}</TableHeader>
-                <TableHeader>{translate('adminAppointmentList.status')}</TableHeader>
-                <TableHeader>{translate('adminAppointmentList.clientName')}</TableHeader>
-                <TableHeader>{translate('adminAppointmentList.caregiverName')}</TableHeader>
-                <TableHeader align="right">{translate('adminAppointmentList.actions')}</TableHeader>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {isSuccess &&
-                appointments.appointments.map((appointment) => (
-                  <TableRow key={appointment.id}>
-                    <TableCell>{appointment.id}</TableCell>
-                    <TableCell>{appointment.type}</TableCell>
-                    <TableCell>
-                      {calculateDateDifference(appointment.startDate, appointment.endDate)}
-                    </TableCell>
-                    <TableCell>{format(new Date(appointment.createdAt), DATE_FORMAT)}</TableCell>
-                    <TableCell>{format(new Date(appointment.endDate), DATE_FORMAT)}</TableCell>
-                    <TableCell>
-                      <ColorSpan status={appointment.status}>
-                        <AppointmentStatus status={appointment.status} />
-                      </ColorSpan>
-                    </TableCell>
-                    <TableCell>
-                      {appointment.user.firstName} {appointment.user.lastName}
-                    </TableCell>
-                    <TableCell>
-                      {appointment.caregiverInfo.user.firstName}{' '}
-                      {appointment.caregiverInfo.user.lastName}
-                    </TableCell>
-                    <TableCell
-                      align="right"
-                      sx={{ display: 'flex', justifyContent: 'space-evenly' }}
-                    >
-                      {appointment.status === APPOINTMENT_STATUS.Finished && (
-                        <IconButton
-                          onClick={(): void => handleCloseModalAndSetAppointmentId(appointment.id)}
-                        >
-                          <DeleteForeverOutlinedIcon />
-                        </IconButton>
-                      )}
-                      <IconButton onClick={(): void => openAppointmentDrawer(appointment.id)}>
-                        <VisibilityIcon />
-                      </IconButton>
-                    </TableCell>
-                  </TableRow>
-                ))}
-            </TableBody>
-          </Table>
-        </Stack>
+        {isSuccess && termSearch && !appointments.appointments.length && (
+          <Typography color="GrayText" mt={2}>
+            {translate('no_results_match')}
+          </Typography>
+        )}
 
-        <Stack display="flex" direction="row" justifyContent="center" mt={2}>
-          <Pagination
-            count={Math.ceil(appointments!.count / PAGINATION_APPOINTMENTS_LIMIT)}
-            page={page}
-            onChange={handlePageChange}
-          />
-        </Stack>
+        {isSuccess && appointments.appointments.length > 0 && (
+          <>
+            <Stack mt={3}>
+              <Table>
+                <TableHead>
+                  <TableRow>
+                    <TableHeader>{translate('adminAppointmentList.id')}</TableHeader>
+                    <TableHeader>{translate('adminAppointmentList.type')}</TableHeader>
+                    <TableHeader>{translate('adminAppointmentList.duration')}</TableHeader>
+                    <TableHeader>{translate('adminAppointmentList.creation_date')}</TableHeader>
+                    <TableHeader>{translate('adminAppointmentList.end_date')}</TableHeader>
+                    <TableHeader>{translate('adminAppointmentList.status')}</TableHeader>
+                    <TableHeader>{translate('adminAppointmentList.clientName')}</TableHeader>
+                    <TableHeader>{translate('adminAppointmentList.caregiverName')}</TableHeader>
+                    <TableHeader align="right">
+                      {translate('adminAppointmentList.actions')}
+                    </TableHeader>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {appointments.appointments.map((appointment) => (
+                    <TableRow key={appointment.id}>
+                      <TableCell>{appointment.id}</TableCell>
+                      <TableCell>{appointment.type}</TableCell>
+                      <TableCell>
+                        {calculateDateDifference(appointment.startDate, appointment.endDate)}
+                      </TableCell>
+                      <TableCell>{format(new Date(appointment.createdAt), DATE_FORMAT)}</TableCell>
+                      <TableCell>{format(new Date(appointment.endDate), DATE_FORMAT)}</TableCell>
+                      <TableCell>
+                        <ColorSpan status={appointment.status}>
+                          <AppointmentStatus status={appointment.status} />
+                        </ColorSpan>
+                      </TableCell>
+                      <TableCell>
+                        {appointment.user.firstName} {appointment.user.lastName}
+                      </TableCell>
+                      <TableCell>
+                        {appointment.caregiverInfo.user.firstName}{' '}
+                        {appointment.caregiverInfo.user.lastName}
+                      </TableCell>
+                      <TableCell
+                        align="right"
+                        sx={{ display: 'flex', justifyContent: 'space-evenly' }}
+                      >
+                        {appointment.status === APPOINTMENT_STATUS.Finished && (
+                          <IconButton
+                            onClick={(): void =>
+                              handleCloseModalAndSetAppointmentId(appointment.id)
+                            }
+                          >
+                            <DeleteForeverOutlinedIcon />
+                          </IconButton>
+                        )}
+                        <IconButton onClick={(): void => openAppointmentDrawer(appointment.id)}>
+                          <VisibilityIcon />
+                        </IconButton>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </Stack>
+
+            <Stack display="flex" direction="row" justifyContent="center" mt={2}>
+              <Pagination
+                count={Math.ceil(appointments!.count / PAGINATION_APPOINTMENTS_LIMIT)}
+                page={page}
+                onChange={handlePageChange}
+              />
+            </Stack>
+          </>
+        )}
 
         <Modal
           isActive={isDeleteModalActive}

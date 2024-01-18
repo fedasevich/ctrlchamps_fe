@@ -1,4 +1,4 @@
-import { FormControlLabel, ListItemText, Typography, styled } from '@mui/material';
+import { Button, FormControlLabel, ListItemText, Typography, styled } from '@mui/material';
 import { NextButton } from 'src/components/reusable/appointment-btn/styles';
 import { HEADER } from 'src/config-global';
 import { PRIMARY, SECONDARY } from 'src/theme/colors';
@@ -66,4 +66,22 @@ export const StyledModalFooter = styled('div')`
   width: 100%;
   gap: 8px;
   flex-direction: column;
+`;
+
+export const StyledDrawerTrigger = styled(Button)`
+  position: absolute;
+  bottom: 32px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: ${PRIMARY.white};
+  display: none;
+  align-items: center;
+  padding: 8px 16px;
+  border-radius: 4px;
+  font-size: ${TYPOGRAPHY.base}px;
+  gap: 8px;
+
+  ${({ theme }): string => theme.breakpoints.down('md')} {
+    display: flex;
+  }
 `;

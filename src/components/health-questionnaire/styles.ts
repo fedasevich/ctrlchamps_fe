@@ -77,6 +77,10 @@ export const ToggleButtonGroupStyled = styled(ToggleButtonGroup)`
   gap: 10px;
   justify-content: space-between;
   border: none;
+
+  ${({ theme }): string => theme.breakpoints.down('sm')} {
+    flex-direction: column;
+  }
 `;
 
 export const ToggleButtonStyled = styled(ToggleButton)`

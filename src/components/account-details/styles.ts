@@ -52,6 +52,7 @@ export const AvatarIconContainer = styled('div')`
   height: 96px;
   background-color: ${PRIMARY.light_main};
   border-radius: 50%;
+  aspect-ratio: 1;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -100,6 +101,9 @@ export const Item = styled('li')`
   flex-direction: column;
   gap: 4px;
   width: 50%;
+  @media (max-width: 600px) {
+    flex-direction: column;
+  }
 `;
 
 export const Label = styled('p')`

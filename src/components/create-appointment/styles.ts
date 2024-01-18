@@ -116,6 +116,7 @@ const WeekSlot = styled('div')`
   background-color: ${PRIMARY.white};
   border: 1px solid ${PRIMARY.main};
   border-radius: 50%;
+  aspect-ratio: 1;
   padding: 11px 13.7px;
   cursor: pointer;
 

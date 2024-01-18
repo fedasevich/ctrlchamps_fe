@@ -73,7 +73,7 @@ const MainHeaderWrapper = styled.header`
   align-items: center;
   border-bottom: 1px solid ${SECONDARY.gray_shadow};
   @media (max-width: 600px) {
-    padding: 0 5px;
+    padding: 0 25px;
     justify-content: space-evenly;
   }
 `;
@@ -172,6 +172,9 @@ const ProfileSection = styled.div`
   display: flex;
   align-items: center;
   cursor: pointer;
+  @media (max-width: 600px) {
+    margin-left: 10px;
+  }
 `;
 
 const ProfileName = styled.p`
@@ -191,6 +194,9 @@ const AvatarWrapper = styled.div`
   display: flex;
   align-items: center;
   margin-right: 16px;
+  @media (max-width: 600px) {
+    margin-right: 0;
+  }
 `;
 
 const IconWrapper = styled.div`

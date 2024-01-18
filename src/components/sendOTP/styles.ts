@@ -31,6 +31,7 @@ export const IconContainer = styled.div`
   justify-content: center;
   width: 10em;
   height: 10em;
+  aspect-ratio: 1;
   border-radius: 50%;
   background-color: ${SECONDARY.selected};
 `;

@@ -29,6 +29,9 @@ export const HeadContainer = styled('div')`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  @media (max-width: 600px) {
+    gap: 50px;
+  }
 `;
 
 export const Title = styled('h2')`
@@ -37,9 +40,15 @@ export const Title = styled('h2')`
   font-weight: ${typography.fontWeightMedium};
   line-height: 1.5;
   letter-spacing: 0.15px;
+  @media (max-width: 600px) {
+    font-size: ${TYPOGRAPHY.md}px;
+  }
 `;
 
 export const StyledButton = styled(Button)`
   border-radius: 4px;
   height: 42px;
+  @media (max-width: 600px) {
+    line-height: 1.05;
+  }
 `;

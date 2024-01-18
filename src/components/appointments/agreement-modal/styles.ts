@@ -4,7 +4,7 @@ import { TYPOGRAPHY } from 'src/theme/fonts';
 import typography from 'src/theme/typography';
 
 export const Container = styled('div')`
-  width: 430px;
+  max-width: 430px;
   display: flex;
   flex-direction: column;
   gap: 16px;

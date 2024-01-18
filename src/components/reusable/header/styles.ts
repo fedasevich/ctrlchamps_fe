@@ -12,9 +12,6 @@ const Header = styled.header`
   align-items: center;
   justify-content: space-between;
   background: ${PRIMARY.white};
-  @media (max-width: 600px) {
-    justify-content: space-around;
-  }
 `;
 
 const Container = styled.div`

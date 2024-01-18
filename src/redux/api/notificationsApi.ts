@@ -21,6 +21,12 @@ export type Notification = {
   appointmentId: string;
   status: NotificationStatus;
   user: string;
+  isRead: boolean;
+};
+
+export type UnreadNotification = {
+  data: Notification[];
+  count: number;
 };
 
 export const notificationsApi = createApi({
@@ -39,15 +45,30 @@ export const notificationsApi = createApi({
     },
   }),
   refetchOnFocus: true,
-  tagTypes: ['Notifications'],
+  tagTypes: ['Notifications', 'UnreadNotifications'],
   endpoints: (builder) => ({
     fetchNotifications: builder.query<Notification[], string>({
       query: (userId) => ({ url: `${route.notifications}/${userId}` }),
       providesTags: ['Notifications'],
     }),
+    fetchUnreadNotifications: builder.query<UnreadNotification, string>({
+      query: (userId) => ({ url: `${route.notifications}${route.unread}/${userId}` }),
+      providesTags: ['UnreadNotifications'],
+    }),
+    updateNotificationsToRead: builder.mutation<void, string>({
+      query: (userId) => ({
+        url: `${route.notifications}${route.unread}/${userId}`,
+        method: 'PATCH',
+      }),
+      invalidatesTags: ['UnreadNotifications'],
+    }),
   }),
 });
 
-export const { useFetchNotificationsQuery } = notificationsApi;
+export const {
+  useFetchNotificationsQuery,
+  useFetchUnreadNotificationsQuery,
+  useUpdateNotificationsToReadMutation,
+} = notificationsApi;
 
 export default notificationsApi;

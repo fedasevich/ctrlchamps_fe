@@ -1,6 +1,6 @@
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import NotificationsIcon from '@mui/icons-material/Notifications';
-import { Avatar } from '@mui/material';
+import { Avatar, Badge } from '@mui/material';
 import { useRouter } from 'next/router';
 import { Dispatch, SetStateAction, useState } from 'react';
 import AppointmentsIcon from 'src/assets/icons/AppointmentsIcon';
@@ -9,6 +9,7 @@ import { useLocales } from 'src/locales';
 import { useTypedSelector } from 'src/redux/store';
 import { ROUTES } from 'src/routes';
 import { useGetUserInfoQuery } from 'src/redux/api/userApi';
+import { useFetchUnreadNotificationsQuery } from 'src/redux/api/notificationsApi';
 import MenuDropdown from './Menu';
 import {
   AppointmentsSection,
@@ -37,15 +38,19 @@ export default function MainHeader({
   const { translate } = useLocales();
   const { push, route } = useRouter();
 
-  const userId = useTypedSelector((state) => state.user.user?.id);
+  const user = useTypedSelector((state) => state.user.user);
 
-  const { data: user } = useGetUserInfoQuery(userId);
+  const { id } = user || { id: '' };
+
+  const { data: userInfo } = useGetUserInfoQuery(id);
+
+  const { data: unreadNotifications } = useFetchUnreadNotificationsQuery(id);
 
   const [isMenuVisible, setIsMenuVisible] = useState<boolean>(false);
 
-  if (!user) return null;
+  if (!userInfo) return null;
 
-  const { role, firstName, lastName } = user;
+  const { role, firstName, lastName, avatar } = userInfo;
 
   const openMenu = (): void => setIsMenuVisible(!isMenuVisible);
 
@@ -85,11 +90,13 @@ export default function MainHeader({
           onClick={viewNotifications}
           className={route === ROUTES.notifications ? 'active' : ''}
         >
-          <NotificationsIcon />
+          <Badge badgeContent={unreadNotifications?.count} color="primary" max={99}>
+            <NotificationsIcon />
+          </Badge>
         </IconWrapper>
         <ProfileSection>
           <AvatarWrapper>
-            <Avatar src={user.avatar} />
+            <Avatar src={avatar} />
           </AvatarWrapper>
           <ProfileName>{`${firstName} ${lastName}`}</ProfileName>
           <MenuDropdown onClick={openMenu}>

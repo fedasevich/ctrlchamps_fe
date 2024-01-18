@@ -6,11 +6,11 @@ import {
   Typography,
   styled,
 } from '@mui/material';
-import typography from 'src/theme/typography';
-import { PRIMARY, SECONDARY } from 'src/theme/colors';
-import { TYPOGRAPHY } from 'src/theme/fonts';
 import { FilledButton } from 'src/components/reusable';
 import { HEADER } from 'src/config-global';
+import { PRIMARY, SECONDARY } from 'src/theme/colors';
+import { TYPOGRAPHY } from 'src/theme/fonts';
+import typography from 'src/theme/typography';
 
 export const Background = styled('div')`
   padding-top: 24px;
@@ -30,8 +30,8 @@ export const QuestionnaireContainer = styled('div')`
   box-shadow: 0px 1px 16px 0px rgba(0, 0, 0, 0.1);
   margin-bottom: 5%;
 
-  @media (max-width: 600px) {
-    width: 100%;
+  ${({ theme }): string => theme.breakpoints.down('sm')} {
+    width: 300px;
   }
 `;
 

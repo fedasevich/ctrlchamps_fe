@@ -1,9 +1,9 @@
 import { TextField, Typography, styled } from '@mui/material';
+import { FilledButton } from 'src/components/reusable';
 import { HEADER } from 'src/config-global';
 import { PRIMARY, SECONDARY } from 'src/theme/colors';
 import { TYPOGRAPHY } from 'src/theme/fonts';
 import typography from 'src/theme/typography';
-import { FilledButton } from 'src/components/reusable';
 
 const Background = styled('div')`
   background-color: ${PRIMARY.light_main};
@@ -50,6 +50,10 @@ const Container = styled('div')`
   box-shadow: 0px 1px 16px 0px ${SECONDARY.gray_shadow};
   margin-bottom: 30px;
   width: 360px;
+
+  ${({ theme }): string => theme.breakpoints.down('sm')} {
+    width: 300px;
+  }
 `;
 
 const ContentContainer = styled('div')`

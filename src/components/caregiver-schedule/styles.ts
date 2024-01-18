@@ -156,6 +156,8 @@ const AppointmentDetails = styled('div')`
 
   ${({ theme }): string => theme.breakpoints.down('sm')} {
     gap: 8px;
+    flex-direction: column;
+    align-items: flex-start;
   }
 `;
 

@@ -27,18 +27,13 @@ import questionnaireApi from 'src/redux/api/healthQuestionnaireApi';
 import notificationsApi from 'src/redux/api/notificationsApi';
 import profileApi from 'src/redux/api/profileCompleteApi';
 import timezoneApi from 'src/redux/api/timezoneApi';
-import transactionsApi from 'src/redux/api/transactionsApi';
 import userApi from 'src/redux/api/userApi';
 import virtualAssessmentApi from 'src/redux/api/virtualAssessmentApi';
-import activityLogApi from 'src/redux/api/activityLogApi';
 import transactionsApi from 'src/redux/api/transactionsApi';
-import notificationsApi from 'src/redux/api/notificationsApi';
 import { RootState } from 'src/redux/rootReducer';
-import adminPanelApi from 'src/redux/api/adminPanelAPI';
 import tasksApi from 'src/redux/api/tasksApi';
 import { setupListeners } from '@reduxjs/toolkit/dist/query';
 import { forbiddenErrorMiddleware } from 'src/redux/forbiddenErrorMiddleware';
-import { RootState } from 'src/redux/rootReducer';
 
 const persistConfig = {
   key: 'root',

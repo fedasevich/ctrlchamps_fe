@@ -30,6 +30,7 @@ import {
   OperationButton,
   StyledMenu,
   HalfVisibleParagraph,
+  StyledButton,
 } from './styles';
 
 interface MenuDropdownProps {
@@ -109,9 +110,9 @@ const MenuDropdown: React.FC<MenuDropdownProps> = ({ children, onClick }): JSX.E
 
   return (
     <>
-      <Button onClick={handleClick} sx={{ padding: '15px' }}>
+      <StyledButton onClick={handleClick}>
         <Arrow className={open ? 'active' : ''}>{children}</Arrow>
-      </Button>
+      </StyledButton>
       <StyledMenu anchorEl={anchorEl} open={open} onClose={handleClose}>
         <BalanceBlock>
           <BalanceTitle>{translate('menu.balance')}</BalanceTitle>

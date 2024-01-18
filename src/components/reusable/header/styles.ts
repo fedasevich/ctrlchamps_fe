@@ -12,6 +12,9 @@ const Header = styled.header`
   align-items: center;
   justify-content: space-between;
   background: ${PRIMARY.white};
+  @media (max-width: 600px) {
+    justify-content: space-around;
+  }
 `;
 
 const Container = styled.div`
@@ -69,11 +72,18 @@ const MainHeaderWrapper = styled.header`
   justify-content: space-between;
   align-items: center;
   border-bottom: 1px solid ${SECONDARY.gray_shadow};
+  @media (max-width: 600px) {
+    padding: 0 5px;
+    justify-content: space-evenly;
+  }
 `;
 
 const LogoSection = styled.div`
   display: flex;
   align-items: center;
+  @media (max-width: 600px) {
+    gap: 15px;
+  }
 `;
 
 const LogoName = styled.p`
@@ -89,6 +99,9 @@ const AppointmentsText = styled.p`
   font-weight: ${typography.fontWeightMedium};
   margin: 0 12px;
   cursor: pointer;
+  @media (max-width: 600px) {
+    display: none;
+  }
 `;
 
 const AppointmentsSection = styled.div`
@@ -127,6 +140,9 @@ const Logo = styled(Link)`
   text-decoration: none;
   gap: 2px;
   margin-right: 24px;
+  @media (max-width: 600px) {
+    margin-right: 5px;
+  }
 `;
 
 const FirstPart = styled.p`
@@ -147,6 +163,9 @@ const MenuSection = styled.div`
   display: flex;
   align-items: center;
   gap: 20px;
+  @media (max-width: 600px) {
+    gap: 0;
+  }
 `;
 
 const ProfileSection = styled.div`
@@ -161,6 +180,9 @@ const ProfileName = styled.p`
   font-weight: ${typography.fontWeightMedium};
   margin-left: 16px;
   margin-right: 10px;
+  @media (max-width: 600px) {
+    display: none;
+  }
 `;
 
 const AvatarWrapper = styled.div`
@@ -255,6 +277,13 @@ const MenuListItem = styled.div`
   align-items: center;
 `;
 
+const StyledButton = styled(Button)`
+  padding: 15px;
+  @media (max-width: 600px) {
+    min-width: 0;
+  }
+`;
+
 export {
   Header,
   Container,
@@ -288,4 +317,5 @@ export {
   OperationButton,
   HalfVisibleParagraph,
   StyledMenu,
+  StyledButton,
 };

@@ -16,6 +16,9 @@ const Container = styled('div')`
   display: flex;
   gap: 32px;
   margin-top: ${HEADER.MAIN_HEIGHT}px;
+  @media (max-width: 600px) {
+    flex-direction: column;
+  }
 `;
 
 const CalendarContainer = styled('div')`
@@ -30,6 +33,9 @@ const CalendarContainer = styled('div')`
   }
   .css-169iwlq-MuiCalendarPicker-root {
     max-height: 340px;
+  }
+  @media (max-width: 600px) {
+    z-index: 1;
   }
 `;
 
@@ -154,6 +160,10 @@ const Arrow = styled(ArrowForwardIos)`
   &:hover {
     cursor: pointer;
     opacity: 0.7;
+  }
+  @media (max-width: 600px) {
+    position: absolute;
+    top: -16px;
   }
 `;
 

@@ -23,6 +23,11 @@ export type Notification = {
   user: string;
 };
 
+export interface NotificationRespose {
+  data: Notification[];
+  count: number;
+}
+
 export const notificationsApi = createApi({
   reducerPath: 'notificationsApi',
   baseQuery: fetchBaseQuery({
@@ -41,7 +46,7 @@ export const notificationsApi = createApi({
   refetchOnFocus: true,
   tagTypes: ['Notifications'],
   endpoints: (builder) => ({
-    fetchNotifications: builder.query<Notification[], string>({
+    fetchNotifications: builder.query<NotificationRespose, string>({
       query: (userId) => ({ url: `${route.notifications}/${userId}` }),
       providesTags: ['Notifications'],
     }),

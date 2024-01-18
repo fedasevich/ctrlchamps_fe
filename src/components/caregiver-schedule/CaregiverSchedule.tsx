@@ -19,11 +19,7 @@ import {
   TextContainer,
 } from './styles';
 
-export default function CaregiverSchedule({
-  isCalendarVisible,
-}: {
-  isCalendarVisible: boolean;
-}): JSX.Element | null {
+export default function CaregiverSchedule(): JSX.Element | null {
   const { translate } = useLocales();
 
   const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(false);
@@ -55,21 +51,19 @@ export default function CaregiverSchedule({
   return (
     <Background>
       <Container>
-        {isCalendarVisible && (
-          <CalendarContainer>
-            <CalendarPicker
-              className="calendar-picker"
-              date={chosenDay}
-              onChange={(date): void => chooseDay(date)}
-            />
-            <CalendarBtn onClick={chooseCurrentDate}>
-              {translate('schedule_page.choose_today')}
-            </CalendarBtn>
-          </CalendarContainer>
-        )}
+        <CalendarContainer>
+          <CalendarPicker
+            className="calendar-picker"
+            date={chosenDay}
+            onChange={(date): void => chooseDay(date)}
+          />
+          <CalendarBtn onClick={chooseCurrentDate}>
+            {translate('schedule_page.choose_today')}
+          </CalendarBtn>
+        </CalendarContainer>
 
         {isSuccess && appointments.length > 0 ? (
-          <AppointmentsContainer className={!isCalendarVisible ? 'center' : ''}>
+          <AppointmentsContainer>
             {selectedAppointmentId && (
               <AppointmentDrawer
                 role={USER_ROLE.Caregiver}

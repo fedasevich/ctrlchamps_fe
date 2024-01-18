@@ -82,6 +82,7 @@ const TextContainer = styled('div')`
 
 const Task = styled('div')`
   position: relative;
+  cursor: pointer;
   &:not(:last-child) {
     border-bottom: 1px solid ${SECONDARY.light_gray};
   }
@@ -100,10 +101,6 @@ const AppointmentsContainer = styled('div')`
   overflow-y: scroll;
   box-shadow: 0px 4px 4px 0px ${SECONDARY.light_gray};
   max-width: 820px;
-
-  &.center {
-    margin: 0 auto;
-  }
 
   &::-webkit-scrollbar {
     width: 0px;

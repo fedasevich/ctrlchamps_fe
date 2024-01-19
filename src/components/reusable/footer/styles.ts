@@ -7,6 +7,10 @@ export const Footer = styled('footer')`
   justify-content: center;
   align-items: center;
   margin-top: auto;
+
+  ${({ theme }): string => theme.breakpoints.down('sm')} {
+    flex-direction: column;
+  }
 `;
 
 export const Text = styled(Typography)`

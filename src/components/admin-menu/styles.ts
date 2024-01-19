@@ -8,6 +8,14 @@ export const MenuList = styled(MuiMenuList)`
   min-height: 100vh;
   padding-top: 60px;
   border-right: 2px solid ${SECONDARY.gray_shadow};
+  ${({ theme }): string => theme.breakpoints.down('sm')} {
+    width: 100%;
+    min-height: 0;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    padding-top: 30px;
+  }
 `;
 
 export const MenuItem = styled(MuiMenuItem)`

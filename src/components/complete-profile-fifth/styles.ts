@@ -8,6 +8,10 @@ export const Wrapper = styled('div')`
   flex-direction: column;
   width: 400px;
   margin: 0 auto;
+
+  ${({ theme }): string => theme.breakpoints.down('sm')} {
+    width: clamp(250px, 80%, 500px);
+  }
 `;
 
 export const StyledForm = styled('form')`

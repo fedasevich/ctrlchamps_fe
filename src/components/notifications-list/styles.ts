@@ -17,6 +17,9 @@ export const Container = styled('div')`
   margin: 20px 0;
   background: ${PRIMARY.white};
   box-shadow: 0px 4px 4px 0px ${SECONDARY.light_gray};
+  ${({ theme }): string => theme.breakpoints.down('sm')} {
+    width: 325px;
+  }
 `;
 
 export const Header = styled('p')`
@@ -47,6 +50,7 @@ export const IconBackground = styled('div')<IconBackgroundProps>`
   border-radius: 50%;
   width: 40px;
   height: 40px;
+  aspect-ratio: 1;
   display: flex;
   justify-content: center;
   align-items: center;

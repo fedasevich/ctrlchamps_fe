@@ -1,16 +1,30 @@
+import { ChangeEvent, useState } from 'react';
+import { FIRST_PAGE, PAGINATION_LIMIT } from 'src/constants';
+import { Pagination, Stack } from '@mui/material';
+
 import { useLocales } from 'src/locales';
 import { Notification } from 'src/redux/api/notificationsApi';
 
 import NotificationItem from './Notification';
 import { BaseText, Container, Header, List, NoNotificationText } from './styles';
+import { firstItemIndex } from './constants';
 
 type Props = {
   isLoading: boolean;
   notifications: Notification[];
+  count: number | undefined;
 };
 
-export default function NotificationsList({ isLoading, notifications }: Props): JSX.Element {
+export default function NotificationsList({ isLoading, notifications, count }: Props): JSX.Element {
   const { translate } = useLocales();
+  const [page, setPage] = useState<number>(FIRST_PAGE);
+
+  const startIndex = (page - firstItemIndex) * PAGINATION_LIMIT;
+  const displayedNotifications = notifications.slice(startIndex, startIndex + PAGINATION_LIMIT);
+
+  const handlePageChange = (event: ChangeEvent<unknown>, value: number): void => {
+    setPage(value);
+  };
 
   return (
     <Container>
@@ -19,7 +33,7 @@ export default function NotificationsList({ isLoading, notifications }: Props): 
       {!isLoading && (
         <List>
           {notifications.length > 0 ? (
-            notifications.map((notification) => (
+            displayedNotifications.map((notification) => (
               <NotificationItem
                 key={notification.id}
                 status={notification.status}
@@ -29,6 +43,15 @@ export default function NotificationsList({ isLoading, notifications }: Props): 
             ))
           ) : (
             <NoNotificationText>{translate('notifications.no_notifications')}</NoNotificationText>
+          )}
+          {count && count >= 0 && (
+            <Stack display="flex" direction="row" justifyContent="center" mt={2}>
+              <Pagination
+                count={Math.ceil(count / PAGINATION_LIMIT)}
+                page={page}
+                onChange={handlePageChange}
+              />
+            </Stack>
           )}
         </List>
       )}

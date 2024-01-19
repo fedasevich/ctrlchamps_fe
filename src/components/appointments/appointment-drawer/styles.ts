@@ -12,6 +12,10 @@ export const DrawerBody = styled('div')`
   background-color: ${SECONDARY.drawer_background};
   width: 360px;
   padding: 16px 0;
+
+  ${({ theme }): string => theme.breakpoints.down('sm')} {
+    width: 300px;
+  }
 `;
 
 export const Block = styled('div')`

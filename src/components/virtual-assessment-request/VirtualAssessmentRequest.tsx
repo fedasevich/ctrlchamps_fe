@@ -32,6 +32,7 @@ import {
   NotificationMessage,
 } from './styles';
 import { VirtualAssessmentRequestModalProps } from './types';
+import { formatTimeToTimezone } from '../../utils/formatTime';
 
 const decodeToken = (tokenToDecode: string): string => {
   const decoded: { id: string } = jwt_decode(tokenToDecode);
@@ -140,7 +141,12 @@ const VirtualAssessmentRequestModal = ({
             <AppointmentModalBlockParagraph>
               {translate('request_appointment.date_and_time')}
             </AppointmentModalBlockParagraph>
-            {virtualAssessmentTime && format(new Date(virtualAssessmentTime), DRAWER_DATE_FORMAT)}
+            {virtualAssessmentTime &&
+              formatTimeToTimezone(
+                virtualAssessmentTime.toString(),
+                Intl.DateTimeFormat().resolvedOptions().timeZone,
+                DRAWER_DATE_FORMAT
+              )}
           </AppointmentModalBlock>
           {userId === appointment.caregiverInfo.user.id && (
             <AppointmentModalBlock>

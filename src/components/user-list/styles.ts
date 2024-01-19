@@ -1,4 +1,4 @@
-import { Button, TableCell, TableRow, Typography, styled } from '@mui/material';
+import { Stack, Button, TableCell, TableRow, Typography, styled } from '@mui/material';
 import { PRIMARY, SECONDARY } from 'src/theme/colors';
 import { TYPOGRAPHY } from 'src/theme/fonts';
 import typography from 'src/theme/typography';
@@ -11,6 +11,9 @@ export const MainWrapper = styled('div')`
   background-color: ${SECONDARY.background_gray};
   font-weight: ${typography.fontWeightBold};
   font-size: ${TYPOGRAPHY.sm}px;
+  ${({ theme }): string => theme.breakpoints.down('sm')} {
+    margin: 40px 5px 40px 5px;
+  }
 `;
 
 export const ManagementWrapper = styled('div')`
@@ -30,6 +33,10 @@ export const SearchContainer = styled('div')`
   justify-content: space-between;
   align-items: center;
   margin-bottom: 24px;
+`;
+
+export const StyledStack = styled(Stack)`
+  overflow-x: scroll;
 `;
 
 export const StyledTableRow = styled(TableRow)`

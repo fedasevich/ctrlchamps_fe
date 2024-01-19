@@ -1,14 +1,15 @@
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import NotificationsIcon from '@mui/icons-material/Notifications';
-import { Avatar } from '@mui/material';
+import { Avatar, Badge } from '@mui/material';
 import { useRouter } from 'next/router';
-import { Dispatch, SetStateAction, useState } from 'react';
+import { useState } from 'react';
 import AppointmentsIcon from 'src/assets/icons/AppointmentsIcon';
 import { USER_ROLE } from 'src/constants';
 import { useLocales } from 'src/locales';
 import { useTypedSelector } from 'src/redux/store';
 import { ROUTES } from 'src/routes';
 import { useGetUserInfoQuery } from 'src/redux/api/userApi';
+import { useFetchUnreadNotificationsQuery } from 'src/redux/api/notificationsApi';
 import MenuDropdown from './Menu';
 import {
   AppointmentsSection,
@@ -25,29 +26,22 @@ import {
   SecondPart,
 } from './styles';
 
-type Props = {
-  isCalendarVisible?: boolean;
-  setIsCalendarVisible?: Dispatch<SetStateAction<boolean>>;
-};
-
-export default function MainHeader({
-  isCalendarVisible,
-  setIsCalendarVisible,
-}: Props): JSX.Element | null {
+export default function MainHeader(): JSX.Element | null {
   const { translate } = useLocales();
   const { push, route } = useRouter();
 
-  const userId = useTypedSelector((state) => state.user.user?.id);
+  const user = useTypedSelector((state) => state.user.user);
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
-  const { data: user } = useGetUserInfoQuery(userId);
+  const { id } = user || { id: '' };
 
-  const [isMenuVisible, setIsMenuVisible] = useState<boolean>(false);
+  const { data: userInfo } = useGetUserInfoQuery(id);
 
-  if (!user) return null;
+  const { data: unreadNotifications } = useFetchUnreadNotificationsQuery(id);
 
-  const { role, firstName, lastName } = user;
+  if (!userInfo) return null;
 
-  const openMenu = (): void => setIsMenuVisible(!isMenuVisible);
+  const { role, firstName, lastName, avatar } = userInfo;
 
   const viewNotifications = (): void => {
     if (route !== ROUTES.notifications) push(ROUTES.notifications);
@@ -57,11 +51,10 @@ export default function MainHeader({
     if (route !== ROUTES.home) {
       push(ROUTES.home);
     }
-
-    if (role === USER_ROLE.Caregiver && setIsCalendarVisible) {
-      setIsCalendarVisible(!isCalendarVisible);
-    }
   };
+
+  const toggleMenu = (e: React.MouseEvent<HTMLDivElement>): void =>
+    !anchorEl ? setAnchorEl(e.currentTarget) : setAnchorEl(null);
 
   return (
     <MainHeaderWrapper>
@@ -85,14 +78,20 @@ export default function MainHeader({
           onClick={viewNotifications}
           className={route === ROUTES.notifications ? 'active' : ''}
         >
-          <NotificationsIcon />
+          {unreadNotifications && unreadNotifications.count > 0 ? (
+            <Badge badgeContent={unreadNotifications.count} color="primary" max={99}>
+              <NotificationsIcon />
+            </Badge>
+          ) : (
+            <NotificationsIcon />
+          )}
         </IconWrapper>
-        <ProfileSection>
+        <ProfileSection onClick={(e): void => toggleMenu(e)}>
           <AvatarWrapper>
-            <Avatar src={user.avatar} />
+            <Avatar src={avatar} />
           </AvatarWrapper>
           <ProfileName>{`${firstName} ${lastName}`}</ProfileName>
-          <MenuDropdown onClick={openMenu}>
+          <MenuDropdown anchorEl={anchorEl} setAnchorEl={setAnchorEl}>
             <KeyboardArrowDownIcon />
           </MenuDropdown>
         </ProfileSection>

@@ -31,7 +31,7 @@ export default function CaregiverAppointment({ appointmentDays, openDrawer }: Pr
       <HeaderText>{translate('appointments')}</HeaderText>
 
       {appointmentDays.map((appointment) => (
-        <Task key={appointment.id}>
+        <Task key={appointment.id} onClick={(): void => openDrawer(appointment.id)}>
           <AppointmentInfo>
             <AppointmentHeader>
               <TaskText>{appointment.name}</TaskText>
@@ -54,7 +54,7 @@ export default function CaregiverAppointment({ appointmentDays, openDrawer }: Pr
               </Details>
             </AppointmentDetails>
           </AppointmentInfo>
-          <Arrow onClick={(): void => openDrawer(appointment.id)} />
+          <Arrow />
         </Task>
       ))}
     </Stack>

@@ -40,7 +40,11 @@ export default function NotificationsPage(): JSX.Element | null {
       </Head>
       <MainHeader />
       <Background>
-        <NotificationsList isLoading={isLoading} notifications={notifications || []} />
+        <NotificationsList
+          isLoading={isLoading}
+          notifications={notifications?.data || []}
+          count={notifications?.count}
+        />
       </Background>
     </>
   );

@@ -11,6 +11,11 @@ export interface Transaction {
   createdAt: string;
 }
 
+export interface TransactionRespose {
+  data: Transaction[];
+  count: number;
+}
+
 export const transactionsApi = createApi({
   reducerPath: 'transactionsApi',
   baseQuery: fetchBaseQuery({
@@ -28,7 +33,7 @@ export const transactionsApi = createApi({
   }),
   tagTypes: ['Transactions'],
   endpoints: (builder) => ({
-    getTransactions: builder.query<Transaction[], string>({
+    getTransactions: builder.query<TransactionRespose, string>({
       query: (userId) => ({ url: `${route.transactions}/${userId}` }),
       providesTags: ['Transactions'],
     }),

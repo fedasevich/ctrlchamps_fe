@@ -14,7 +14,8 @@ export type NotificationStatus =
   | 'ACTIVITY_LOG_REQUEST'
   | 'ACTIVITY_LOG_REVIEW'
   | 'ACTIVITY_LOG_APPROVED'
-  | 'ACTIVITY_LOG_REJECTED';
+  | 'ACTIVITY_LOG_REJECTED'
+  | 'INSUFFICIENT_FIRST_HOUR_PAYMENT';
 
 export type Notification = {
   id: string;
@@ -28,6 +29,11 @@ export type UnreadNotification = {
   data: Notification[];
   count: number;
 };
+
+export interface NotificationRespose {
+  data: Notification[];
+  count: number;
+}
 
 export const notificationsApi = createApi({
   reducerPath: 'notificationsApi',
@@ -47,7 +53,7 @@ export const notificationsApi = createApi({
   refetchOnFocus: true,
   tagTypes: ['Notifications', 'UnreadNotifications'],
   endpoints: (builder) => ({
-    fetchNotifications: builder.query<Notification[], string>({
+    fetchNotifications: builder.query<NotificationRespose, string>({
       query: (userId) => ({ url: `${route.notifications}/${userId}` }),
       providesTags: ['Notifications'],
     }),

@@ -39,7 +39,7 @@ export default function AppointmentsList({ appointments }: AppointmentsProps): J
     <>
       <ul>
         {appointments.map((appointment) => (
-          <Item key={appointment.id}>
+          <Item key={appointment.id} onClick={(): void => handleDrawerOpen(appointment.id)}>
             <TextContainer>
               {appointment.status === APPOINTMENT_STATUS.Rejected ? (
                 <RejectedTitle>{appointment.name}</RejectedTitle>
@@ -49,11 +49,7 @@ export default function AppointmentsList({ appointments }: AppointmentsProps): J
 
               <AppointmentStatus status={appointment.status} />
             </TextContainer>
-            <IconButton
-              edge="end"
-              aria-label="open-drawer"
-              onClick={(): void => handleDrawerOpen(appointment.id)}
-            >
+            <IconButton edge="end" aria-label="open-drawer">
               <RightAction />
             </IconButton>
           </Item>

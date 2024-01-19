@@ -1,9 +1,10 @@
 import { TextField } from '@mui/material';
 
 import styled from '@emotion/styled';
-import typography from 'src/theme/typography';
-import { PRIMARY, SECONDARY, TEXT_COLOR } from 'src/theme/colors';
+import { styled as muiStyled } from '@mui/material/styles';
 import { ErrorText } from 'src/components/reusable';
+import { PRIMARY, SECONDARY, TEXT_COLOR } from 'src/theme/colors';
+import typography from 'src/theme/typography';
 
 export const AccountVerificationContainer = styled.div`
   padding-top: 1em;
@@ -70,7 +71,7 @@ export const StyledParagraphSuccess = styled.p`
   padding-bottom: 0.5em;
 `;
 
-export const DigitInput = styled(TextField)`
+export const DigitInput = muiStyled(TextField)`
   width: 5em;
   margin-right: 10px;
   text-align: center;
@@ -94,6 +95,11 @@ export const DigitInput = styled(TextField)`
     input {
       border: none;
     }
+  }
+
+  
+  ${({ theme }): string => theme.breakpoints.down('sm')} {
+    width: 3em;
   }
 `;
 

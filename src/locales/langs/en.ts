@@ -834,6 +834,7 @@ const en = {
     activityLogRejected: 'rejected your activity log',
     requestedVA: 'has requested the Virtual Assessment',
     fiveMinBeforeVA: 'the Virtual Assessment will begin in 5 minutes',
+    insufficientFirstHourPayment: 'Appointment canceled due to insufficient first hour payment.',
   },
   adminMenu: {
     users: 'Users',

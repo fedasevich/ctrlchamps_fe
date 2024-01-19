@@ -14,7 +14,8 @@ export type NotificationStatus =
   | 'ACTIVITY_LOG_REQUEST'
   | 'ACTIVITY_LOG_REVIEW'
   | 'ACTIVITY_LOG_APPROVED'
-  | 'ACTIVITY_LOG_REJECTED';
+  | 'ACTIVITY_LOG_REJECTED'
+  | 'INSUFFICIENT_FIRST_HOUR_PAYMENT';
 
 export type Notification = {
   id: string;

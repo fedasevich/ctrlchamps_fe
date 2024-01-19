@@ -161,6 +161,7 @@ const ProfileName = styled.p`
   font-weight: ${typography.fontWeightMedium};
   margin-left: 16px;
   margin-right: 10px;
+  cursor: pointer;
 `;
 
 const AvatarWrapper = styled.div`

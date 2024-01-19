@@ -65,7 +65,7 @@ export const HealthQuestionnaireModal = styled('div')`
   max-height: 500px;
   background-color: ${PRIMARY.white};
   margin: 50px auto;
-  @media (max-width: 600px) {
+  ${({ theme }): string => theme.breakpoints.down('sm')} {
     width: 350px;
   }
 `;
@@ -81,14 +81,14 @@ export const ListItemStyled = styled(ListItem)`
 
 export const ListItemTextStyled = styled(ListItemText)`
   padding-left: 10px;
-  @media (max-width: 600px) {
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: column;
-    width: 30px;
+  ${({ theme }): string => theme.breakpoints.down('sm')} {
+    word-wrap: break-word;
+    width: 100%;
+    padding-right: 5px;
   }
 `;
 
 export const InactiveStyledButton = styled(Button)`
   min-width: 180px;
+  height: 50px;
 `;

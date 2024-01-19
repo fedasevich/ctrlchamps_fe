@@ -22,7 +22,7 @@ export const DoubleButtonBox = styled('div')`
   display: flex;
   gap: 16px;
   height: 50px;
-  @media (max-width: 600px) {
+  ${({ theme }): string => theme.breakpoints.down('sm')} {
     height: 40px;
   }
 `;
@@ -42,7 +42,7 @@ export const CancelBtn = styled(Button)`
 export const StyledButton = styled(Button)`
   border-radius: 4px;
   width: 100%;
-  @media (max-width: 600px) {
-    line-height: 1.05;
+  ${({ theme }): string => theme.breakpoints.down('sm')} {
+    hline-height: 1.05;
   }
 `;

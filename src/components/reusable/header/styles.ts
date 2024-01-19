@@ -69,7 +69,7 @@ const MainHeaderWrapper = styled.header`
   justify-content: space-between;
   align-items: center;
   border-bottom: 1px solid ${SECONDARY.gray_shadow};
-  @media (max-width: 600px) {
+  ${({ theme }): string => theme.breakpoints.down('sm')} {
     padding: 0 25px;
     justify-content: space-evenly;
   }
@@ -78,7 +78,7 @@ const MainHeaderWrapper = styled.header`
 const LogoSection = styled.div`
   display: flex;
   align-items: center;
-  @media (max-width: 600px) {
+  ${({ theme }): string => theme.breakpoints.down('sm')} {
     gap: 15px;
   }
 `;
@@ -96,7 +96,7 @@ const AppointmentsText = styled.p`
   font-weight: ${typography.fontWeightMedium};
   margin: 0 12px;
   cursor: pointer;
-  @media (max-width: 600px) {
+  ${({ theme }): string => theme.breakpoints.down('sm')} {
     display: none;
   }
 `;
@@ -137,7 +137,7 @@ const Logo = styled(Link)`
   text-decoration: none;
   gap: 2px;
   margin-right: 24px;
-  @media (max-width: 600px) {
+  ${({ theme }): string => theme.breakpoints.down('sm')} {
     margin-right: 5px;
   }
 `;
@@ -160,7 +160,7 @@ const MenuSection = styled.div`
   display: flex;
   align-items: center;
   gap: 20px;
-  @media (max-width: 600px) {
+  ${({ theme }): string => theme.breakpoints.down('sm')} {
     gap: 0;
   }
 `;
@@ -169,7 +169,7 @@ const ProfileSection = styled.div`
   display: flex;
   align-items: center;
   cursor: pointer;
-  @media (max-width: 600px) {
+  ${({ theme }): string => theme.breakpoints.down('sm')} {
     margin-left: 10px;
   }
 `;
@@ -180,7 +180,7 @@ const ProfileName = styled.p`
   font-weight: ${typography.fontWeightMedium};
   margin-left: 16px;
   margin-right: 10px;
-  @media (max-width: 600px) {
+  ${({ theme }): string => theme.breakpoints.down('sm')} {
     display: none;
   }
 `;
@@ -191,7 +191,7 @@ const AvatarWrapper = styled.div`
   display: flex;
   align-items: center;
   margin-right: 16px;
-  @media (max-width: 600px) {
+  ${({ theme }): string => theme.breakpoints.down('sm')} {
     margin-right: 0;
   }
 `;
@@ -282,7 +282,7 @@ const MenuListItem = styled.div`
 
 const StyledButton = styled(Button)`
   padding: 15px;
-  @media (max-width: 600px) {
+  ${({ theme }): string => theme.breakpoints.down('sm')} {
     min-width: 0;
   }
 `;

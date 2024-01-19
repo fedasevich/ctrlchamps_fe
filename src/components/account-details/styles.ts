@@ -101,7 +101,7 @@ export const Item = styled('li')`
   flex-direction: column;
   gap: 4px;
   width: 50%;
-  @media (max-width: 600px) {
+  ${({ theme }): string => theme.breakpoints.down('sm')} {
     flex-direction: column;
   }
 `;

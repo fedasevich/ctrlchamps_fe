@@ -14,7 +14,7 @@ export const BackDrop = styled('div')`
   padding-top: 40px;
   background: ${SECONDARY.backdrop_background};
   z-index: 999;
-  @media (max-width: 600px) {
+  ${({ theme }): string => theme.breakpoints.down('sm')} {
     width: 100%;
   }
 `;

@@ -90,9 +90,13 @@ export default function MainHeader({
           onClick={viewNotifications}
           className={route === ROUTES.notifications ? 'active' : ''}
         >
-          <Badge badgeContent={unreadNotifications?.count} color="primary" max={99}>
+          {unreadNotifications && unreadNotifications.count > 0 ? (
+            <Badge badgeContent={unreadNotifications.count} color="primary" max={99}>
+              <NotificationsIcon />
+            </Badge>
+          ) : (
             <NotificationsIcon />
-          </Badge>
+          )}
         </IconWrapper>
         <ProfileSection>
           <AvatarWrapper>

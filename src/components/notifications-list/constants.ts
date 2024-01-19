@@ -10,6 +10,8 @@ enum IconColor {
   red = 'red',
 }
 
+const firstItemIndex = 1;
+
 const colorMap = {
   main: PRIMARY.main,
   navy: PRIMARY.navy,
@@ -82,4 +84,4 @@ const NOTIFICATION_STATUS = {
   },
 };
 
-export { colorMap, IconColor, ICON_TYPE, NOTIFICATION_STATUS };
+export { colorMap, IconColor, ICON_TYPE, NOTIFICATION_STATUS, firstItemIndex };

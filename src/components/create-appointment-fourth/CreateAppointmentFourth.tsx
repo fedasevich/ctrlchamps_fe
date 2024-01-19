@@ -1,8 +1,9 @@
-import { IconButton, List, ListItem, ListItemAvatar } from '@mui/material';
+import { IconButton, List, ListItem, ListItemAvatar, Palette } from '@mui/material';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import MonetizationOn from 'src/assets/icons/MonetizationOn';
 import RightAction from 'src/assets/icons/RightAction';
+import StarRateIcon from '@mui/icons-material/StarRate';
 import { serializeCaregiverFilterStateToQueryString } from 'src/components/create-appointment-fourth/helpers';
 import {
   useCaregiverFilter,
@@ -11,12 +12,14 @@ import {
 import {
   Background,
   CaregiverListContainer,
+  IconsWrapper,
   StyledListItemText,
 } from 'src/components/create-appointment-fourth/styles';
 import UserAvatar from 'src/components/reusable/user-avatar/UserAvatar';
 import { SMALL_AVATAR_SIZE } from 'src/constants';
 import { appointmentApi } from 'src/redux/api/appointmentApi';
 import { useTypedSelector } from 'src/redux/store';
+import { SECONDARY } from 'src/theme/colors';
 import CreateAppointmentFourthDrawer from './CreateAppointmentFourthDrawer';
 import CreateAppointmentFourthFilter from './CreateAppointmentFourthFilter';
 
@@ -78,12 +81,13 @@ export default function CreateAppointmentFourth({
                 <StyledListItemText
                   primary={`${caregiver.firstName} ${caregiver.lastName}`}
                   secondary={
-                    <>
-                      <MonetizationOn />{' '}
+                    <IconsWrapper>
+                      <StarRateIcon htmlColor={SECONDARY.yellow} /> 4,2
+                      <MonetizationOn />
                       {translate('createAppointmentFourth.hourRate', {
                         rate: caregiver.hourlyRate,
                       })}
-                    </>
+                    </IconsWrapper>
                   }
                 />
               </ListItem>

@@ -105,3 +105,5 @@ export const PAGINATION_LIMIT = 10;
 
 export const ASCI_LETTERS_START = 33;
 export const ASCI_LETTERS_RANGE = 94;
+
+export const STARS_NUMBER = 5;

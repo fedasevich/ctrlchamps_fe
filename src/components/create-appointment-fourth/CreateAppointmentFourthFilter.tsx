@@ -1,5 +1,13 @@
 import TuneIcon from '@mui/icons-material/Tune';
-import { Checkbox, FormGroup, IconButton, Switch, Typography, useMediaQuery } from '@mui/material';
+import {
+  Checkbox,
+  FormGroup,
+  IconButton,
+  Rating,
+  Switch,
+  Typography,
+  useMediaQuery,
+} from '@mui/material';
 import { useTheme } from '@mui/system';
 import { ChangeEvent, Dispatch, SetStateAction, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -8,12 +16,14 @@ import CreateAppointmentFourthAutocomplete from 'src/components/create-appointme
 import {
   BaseText,
   FilterContainer,
+  RatingWrapper,
   StyledDrawerTrigger,
   StyledFormControlLabel,
   StyledNextButton,
 } from 'src/components/create-appointment-fourth/styles';
 import Drawer from 'src/components/reusable/drawer/Drawer';
 import { DrawerBody, DrawerHeader, DrawerTitle } from 'src/components/reusable/drawer/styles';
+import { STARS_NUMBER } from 'src/constants';
 import { DrawerItem } from '../reusable/drawer/caregiver-drawer/styles';
 import { AutocompletedLocation, CaregiverFilterState } from './types';
 
@@ -38,6 +48,7 @@ export default function CreateAppointmentFourthFilter({
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.up('md'));
   const Container = isSmallScreen ? FilterContainer : FilterDrawer;
+  const starsArray = Array.from({ length: STARS_NUMBER }, (_, index) => index + 1);
 
   const handleFilterTriggerClick = (): void => {
     setIsFilterDrawerOpen(true);
@@ -86,6 +97,16 @@ export default function CreateAppointmentFourthFilter({
               }
               label={translate(`createAppointmentFourth.services.${service.label}`)}
             />
+          ))}
+        </FormGroup>
+        <BaseText>{translate('createAppointmentFourth.rating')}</BaseText>
+        <FormGroup>
+          {starsArray.map((ratingItem) => (
+            <RatingWrapper key={ratingItem}>
+              <Checkbox name="rating" value={ratingItem} />
+              {ratingItem}
+              <Rating name="read-only" value={ratingItem} size="small" readOnly />
+            </RatingWrapper>
           ))}
         </FormGroup>
         <StyledNextButton variant="outlined" onClick={onBack}>

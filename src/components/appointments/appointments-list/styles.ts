@@ -9,6 +9,7 @@ export const Item = styled('li')`
   justify-content: space-between;
   padding: 8px 0;
   border-bottom: 1px solid ${SECONDARY.light_gray};
+  cursor: pointer;
 `;
 
 export const TextContainer = styled('div')`

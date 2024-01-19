@@ -35,16 +35,20 @@ import {
 
 interface MenuDropdownProps {
   children: React.ReactNode;
-  onClick: () => void;
+  anchorEl?: HTMLElement | null;
+  setAnchorEl?: React.Dispatch<React.SetStateAction<HTMLElement | null>>;
 }
 
-const MenuDropdown: React.FC<MenuDropdownProps> = ({ children, onClick }): JSX.Element | null => {
+const MenuDropdown: React.FC<MenuDropdownProps> = ({
+  children,
+  anchorEl,
+  setAnchorEl,
+}): JSX.Element | null => {
   const router = useRouter();
   const { translate } = useLocales();
   const dispatch = useAppDispatch();
   const [updateBalance, { isLoading }] = useUpdateBalanceMutation();
 
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [isHelpModalOpen, setIsHelpModalOpen] = useState<boolean>(false);
   const user = useTypedSelector((state) => state.user.user);
   const { data: userInfo, refetch } = useGetUserInfoQuery(user?.id);
@@ -63,12 +67,15 @@ const MenuDropdown: React.FC<MenuDropdownProps> = ({ children, onClick }): JSX.E
   const { role } = user;
 
   const handleClick = (event: React.MouseEvent<HTMLElement>): void => {
-    setAnchorEl(event.currentTarget);
-    onClick();
+    if (setAnchorEl) {
+      setAnchorEl(event.currentTarget);
+    }
   };
 
   const handleClose = (): void => {
-    setAnchorEl(null);
+    if (setAnchorEl) {
+      setAnchorEl(null);
+    }
   };
 
   const handleLogOut = (): void => {
@@ -82,7 +89,11 @@ const MenuDropdown: React.FC<MenuDropdownProps> = ({ children, onClick }): JSX.E
     }
   };
 
-  const handleWithdraw = async (amount: number): Promise<void> => {
+  const handleWithdraw = async (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+    amount: number
+  ): Promise<void> => {
+    e.stopPropagation();
     try {
       if (userInfo && !isLoading) {
         const newBalance = userInfo.balance - amount;
@@ -95,7 +106,11 @@ const MenuDropdown: React.FC<MenuDropdownProps> = ({ children, onClick }): JSX.E
     }
   };
 
-  const handleTopUp = async (amount: number): Promise<void> => {
+  const handleTopUp = async (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+    amount: number
+  ): Promise<void> => {
+    e.stopPropagation();
     try {
       if (userInfo && !isLoading) {
         const newBalance = userInfo.balance + amount;
@@ -113,7 +128,12 @@ const MenuDropdown: React.FC<MenuDropdownProps> = ({ children, onClick }): JSX.E
       <StyledButton onClick={handleClick}>
         <Arrow className={open ? 'active' : ''}>{children}</Arrow>
       </StyledButton>
-      <StyledMenu anchorEl={anchorEl} open={open} onClose={handleClose}>
+      <StyledMenu
+        onClick={(e) => e.preventDefault()}
+        anchorEl={anchorEl}
+        open={open}
+        onClose={handleClose}
+      >
         <BalanceBlock>
           <BalanceTitle>{translate('menu.balance')}</BalanceTitle>
           <BalanceParagraph>
@@ -124,7 +144,7 @@ const MenuDropdown: React.FC<MenuDropdownProps> = ({ children, onClick }): JSX.E
             {role === USER_ROLE.Caregiver ? (
               <OperationButton
                 variant="contained"
-                onClick={(): Promise<void> => handleWithdraw(TRANSACTION_EXAMPLE)}
+                onClick={(e): Promise<void> => handleWithdraw(e, TRANSACTION_EXAMPLE)}
                 disabled={balance < TRANSACTION_EXAMPLE || isLoading}
               >
                 {translate('menu.withdraw')}
@@ -132,7 +152,7 @@ const MenuDropdown: React.FC<MenuDropdownProps> = ({ children, onClick }): JSX.E
             ) : (
               <OperationButton
                 variant="contained"
-                onClick={(): Promise<void> => handleTopUp(TRANSACTION_EXAMPLE)}
+                onClick={(e): Promise<void> => handleTopUp(e, TRANSACTION_EXAMPLE)}
                 disabled={isLoading}
               >
                 {translate('menu.top_up')}

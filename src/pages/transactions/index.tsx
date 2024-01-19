@@ -26,7 +26,7 @@ const TransactionsModalPage = (): JSX.Element | null => {
   }, [user, router]);
 
   const { id, role } = user || { id: '', role: '' };
-  const { data: transactions = [] } = useGetTransactionsQuery(id);
+  const { data: transactions } = useGetTransactionsQuery(id);
 
   if (!user) {
     return null;
@@ -46,7 +46,8 @@ const TransactionsModalPage = (): JSX.Element | null => {
       <MainHeader />
       <Background>
         <TransactionsModal
-          transactions={transactions}
+          transactions={transactions?.data || []}
+          count={transactions?.count || 0}
           role={role as UserRole}
           openDrawer={openDrawer}
         />

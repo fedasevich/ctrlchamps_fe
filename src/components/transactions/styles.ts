@@ -3,15 +3,15 @@ import typography from 'src/theme/typography';
 import { PRIMARY, SECONDARY } from 'src/theme/colors';
 
 export const TransactionsModalWrapper = styled.div`
-  margin-top: 25px;
+  margin: 25px 0;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 20px 0px 60px 0px;
+  padding: 20px 0px;
   background-color: ${PRIMARY.white};
   width: 600px;
   height: 100%;
-  padding-bottom: 50px;
+  border-radius: 4px;
 `;
 
 export const TransactionModalTitle = styled.div`

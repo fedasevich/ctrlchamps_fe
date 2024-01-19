@@ -183,6 +183,7 @@ const ProfileName = styled.p`
   ${({ theme }): string => theme.breakpoints.down('sm')} {
     display: none;
   }
+  cursor: pointer;
 `;
 
 const AvatarWrapper = styled.div`

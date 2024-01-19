@@ -24,4 +24,10 @@ export type CaregiverAppointmentI = {
     firstName: string;
     lastName: string;
   };
+  virtualAssessment?: {
+    id: string;
+    assessmentDate: string;
+    startTime: string;
+    status: string;
+  };
 };

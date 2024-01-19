@@ -1,7 +1,8 @@
 import { Dispatch, SetStateAction, useState } from 'react';
 import { USER_ROLE } from 'src/constants';
 import { DetailedAppointment, useGetAppointmentQuery } from 'src/redux/api/appointmentApi';
-import { getFormattedDate } from '../helpers';
+import { formatTimeToTimezone } from 'src/utils/formatTime';
+import { DRAWER_DATE_FORMAT_WITH_TIMEZONE } from '../constants';
 
 interface IProps {
   role: string;
@@ -58,7 +59,13 @@ export function useAppointmentDrawer({
 
   const { data: appointment, isLoading } = useGetAppointmentQuery(selectedAppointmentId);
 
-  const formattedStartDate = appointment && getFormattedDate(appointment.startDate);
+  const formattedStartDate =
+    appointment &&
+    formatTimeToTimezone(
+      appointment?.startDate,
+      appointment?.timezone,
+      DRAWER_DATE_FORMAT_WITH_TIMEZONE
+    );
 
   const virtualAssessmentDrawerShown =
     appointment?.virtualAssessment?.wasRescheduled || role === USER_ROLE.Caregiver;

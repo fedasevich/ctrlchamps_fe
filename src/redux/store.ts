@@ -20,20 +20,15 @@ import { workExperienceReducer } from 'src/redux/slices/workEperienceSlice';
 
 import { setupListeners } from '@reduxjs/toolkit/dist/query';
 import accountVerificationApi from 'src/redux/api/accountVerificationAPI';
-import activityLogApi from 'src/redux/api/activityLogApi';
-import adminPanelApi from 'src/redux/api/adminPanelAPI';
 import appointmentApi from 'src/redux/api/appointmentApi';
 import authApi from 'src/redux/api/authApi';
 import questionnaireApi from 'src/redux/api/healthQuestionnaireApi';
-import notificationsApi from 'src/redux/api/notificationsApi';
 import profileApi from 'src/redux/api/profileCompleteApi';
 import tasksApi from 'src/redux/api/tasksApi';
 import timezoneApi from 'src/redux/api/timezoneApi';
-import transactionsApi from 'src/redux/api/transactionsApi';
 import userApi from 'src/redux/api/userApi';
 import virtualAssessmentApi from 'src/redux/api/virtualAssessmentApi';
 import { forbiddenErrorMiddleware } from 'src/redux/forbiddenErrorMiddleware';
-import { RootState } from 'src/redux/rootReducer';
 
 const persistConfig = {
   key: 'root',

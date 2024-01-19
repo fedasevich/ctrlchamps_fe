@@ -6,6 +6,7 @@ import {
   MIN_APPOINTMENT_NAME_LENGTH,
 } from 'src/components/create-appointment/constants';
 
+import { MAX_TASK_LENGTH, MIN_TASK_LENGTH } from 'src/components/admin-management/tasks/constants';
 import {
   MAX_ASSESSMENT_HOURS_DURATION,
   MAX_REASON_LENGTH,
@@ -13,7 +14,6 @@ import {
 } from 'src/components/appointments/virtual-assessment-modal/constants';
 import { CONFIRM_NOTE_MAX_LENGTH } from 'src/components/confirm-appointment/constants';
 import { MAX_CHARACTERS_LENGTH, MIN_PASSWORD_LENGTH } from 'src/constants';
-import { MAX_TASK_LENGTH, MIN_TASK_LENGTH } from 'src/components/admin-management/tasks/constants';
 
 const en = {
   app_title: 'CtrlChamps',
@@ -394,6 +394,7 @@ const en = {
     toBookAnAppointmentFirstlyChooseYourLocation:
       'To book an appointment firstly choose your location',
     hourRate: '{{rate}}/h',
+    filter: 'Filter',
     services: {
       personalCare: 'Personal Care Assistance',
       medicationManagement: 'Medication Management',
@@ -834,6 +835,7 @@ const en = {
     activityLogRejected: 'rejected your activity log',
     requestedVA: 'has requested the Virtual Assessment',
     fiveMinBeforeVA: 'the Virtual Assessment will begin in 5 minutes',
+    insufficientFirstHourPayment: 'Appointment canceled due to insufficient first hour payment.',
   },
   adminMenu: {
     users: 'Users',

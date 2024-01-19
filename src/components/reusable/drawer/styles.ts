@@ -11,6 +11,10 @@ export const DrawerHeader = styled('div')`
   width: 360px;
   padding: 8px 12px;
   border-bottom: 1px solid ${SECONDARY.light_gray};
+
+  ${({ theme }): string => theme.breakpoints.down('sm')} {
+    width: 300px;
+  }
 `;
 
 export const DrawerTitle = styled(Typography)`
@@ -30,6 +34,10 @@ export const DrawerBody = styled('div')`
   background-color: ${PRIMARY.white};
   width: 360px;
   padding: 16px;
+
+  ${({ theme }): string => theme.breakpoints.down('sm')} {
+    width: 300px;
+  }
 `;
 
 export const DrawerFooter = styled('div')`
@@ -40,4 +48,8 @@ export const DrawerFooter = styled('div')`
   padding: 16px;
   margin-top: auto;
   border-top: 1px solid ${SECONDARY.light_gray};
+
+  ${({ theme }): string => theme.breakpoints.down('sm')} {
+    width: 300px;
+  }
 `;

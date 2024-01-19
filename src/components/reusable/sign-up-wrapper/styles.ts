@@ -8,4 +8,9 @@ export const Wrapper = styled('div')`
   width: 480px;
   margin: 0 auto;
   padding: 24px 0;
+
+  ${({ theme }): string => theme.breakpoints.down('sm')} {
+    width: 100%;
+    padding-inline: 16px;
+  }
 `;

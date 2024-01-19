@@ -69,11 +69,18 @@ const MainHeaderWrapper = styled.header`
   justify-content: space-between;
   align-items: center;
   border-bottom: 1px solid ${SECONDARY.gray_shadow};
+  ${({ theme }): string => theme.breakpoints.down('sm')} {
+    padding: 0 25px;
+    justify-content: space-evenly;
+  }
 `;
 
 const LogoSection = styled.div`
   display: flex;
   align-items: center;
+  ${({ theme }): string => theme.breakpoints.down('sm')} {
+    gap: 15px;
+  }
 `;
 
 const LogoName = styled.p`
@@ -89,6 +96,9 @@ const AppointmentsText = styled.p`
   font-weight: ${typography.fontWeightMedium};
   margin: 0 12px;
   cursor: pointer;
+  ${({ theme }): string => theme.breakpoints.down('sm')} {
+    display: none;
+  }
 `;
 
 const AppointmentsSection = styled.div`
@@ -127,6 +137,9 @@ const Logo = styled(Link)`
   text-decoration: none;
   gap: 2px;
   margin-right: 24px;
+  ${({ theme }): string => theme.breakpoints.down('sm')} {
+    margin-right: 5px;
+  }
 `;
 
 const FirstPart = styled.p`
@@ -147,12 +160,18 @@ const MenuSection = styled.div`
   display: flex;
   align-items: center;
   gap: 20px;
+  ${({ theme }): string => theme.breakpoints.down('sm')} {
+    gap: 0;
+  }
 `;
 
 const ProfileSection = styled.div`
   display: flex;
   align-items: center;
   cursor: pointer;
+  ${({ theme }): string => theme.breakpoints.down('sm')} {
+    margin-left: 10px;
+  }
 `;
 
 const ProfileName = styled.p`
@@ -161,6 +180,10 @@ const ProfileName = styled.p`
   font-weight: ${typography.fontWeightMedium};
   margin-left: 16px;
   margin-right: 10px;
+  ${({ theme }): string => theme.breakpoints.down('sm')} {
+    display: none;
+  }
+  cursor: pointer;
 `;
 
 const AvatarWrapper = styled.div`
@@ -169,6 +192,9 @@ const AvatarWrapper = styled.div`
   display: flex;
   align-items: center;
   margin-right: 16px;
+  ${({ theme }): string => theme.breakpoints.down('sm')} {
+    margin-right: 0;
+  }
 `;
 
 const IconWrapper = styled.div`
@@ -255,6 +281,13 @@ const MenuListItem = styled.div`
   align-items: center;
 `;
 
+const StyledButton = styled(Button)`
+  padding: 15px;
+  ${({ theme }): string => theme.breakpoints.down('sm')} {
+    min-width: 0;
+  }
+`;
+
 export {
   Header,
   Container,
@@ -288,4 +321,5 @@ export {
   OperationButton,
   HalfVisibleParagraph,
   StyledMenu,
+  StyledButton,
 };

@@ -13,6 +13,7 @@ export const Container = styled('div')`
 export const IconContainer = styled('div')`
   width: 160px;
   height: 160px;
+  aspect-ratio: 1;
   background-color: ${PRIMARY.light_main};
   border-radius: 50%;
   display: flex;

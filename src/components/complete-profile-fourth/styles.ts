@@ -1,8 +1,8 @@
 import { Typography, styled } from '@mui/material';
+import { FilledButton } from 'src/components/reusable/FilledButton';
 import { PRIMARY, SECONDARY } from 'src/theme/colors';
 import { TYPOGRAPHY } from 'src/theme/fonts';
 import typography from 'src/theme/typography';
-import { FilledButton } from 'src/components/reusable/FilledButton';
 
 const Wrapper = styled('div')`
   height: 100%;
@@ -16,6 +16,10 @@ const Container = styled('div')`
   flex-direction: column;
   gap: 24px;
   height: 100%;
+
+  ${({ theme }): string => theme.breakpoints.down('sm')} {
+    width: 300px;
+  }
 `;
 
 const BaseText = styled(Typography)`
@@ -25,13 +29,13 @@ const BaseText = styled(Typography)`
 `;
 
 const WeekSlot = styled('div')`
-  font-size: ${TYPOGRAPHY.xss};
   background-color: ${PRIMARY.white};
   border: 1px solid ${PRIMARY.main};
   border-radius: 50%;
   padding: 11px 13px;
   cursor: pointer;
-  width: 41px;
+  width: 42px;
+  height: 42px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -45,6 +49,10 @@ const WeekSlot = styled('div')`
 const WeekSlotContainer = styled('div')`
   display: flex;
   gap: 15px;
+
+  ${({ theme }): string => theme.breakpoints.down('sm')} {
+    flex-wrap: wrap;
+  }
 `;
 
 const SelectContainer = styled('div')`
@@ -64,12 +72,12 @@ const NextBtn = styled(FilledButton)`
 `;
 
 export {
-  Wrapper,
   BaseText,
+  BtnWrapper,
   Container,
+  NextBtn,
+  SelectContainer,
   WeekSlot,
   WeekSlotContainer,
-  SelectContainer,
-  BtnWrapper,
-  NextBtn,
+  Wrapper,
 };

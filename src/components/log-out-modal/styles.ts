@@ -1,10 +1,14 @@
-import { styled, Button } from '@mui/material';
+import { Button, styled } from '@mui/material';
 import { SECONDARY, TEXT_COLOR } from 'src/theme/colors';
 import { TYPOGRAPHY } from 'src/theme/fonts';
 import typography from 'src/theme/typography';
 
 export const Container = styled('div')`
   width: 430px;
+
+  ${({ theme }): string => theme.breakpoints.down('sm')} {
+    width: 100%;
+  }
 `;
 
 export const SubTitle = styled('p')`
@@ -21,6 +25,10 @@ export const SubTitle = styled('p')`
 export const DoubleButtonBox = styled('div')`
   display: flex;
   gap: 16px;
+
+  ${({ theme }): string => theme.breakpoints.down('sm')} {
+    flex-direction: column;
+  }
 `;
 
 export const CancelBtn = styled(Button)`

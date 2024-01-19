@@ -1,36 +1,24 @@
-import {
-  Checkbox,
-  FormGroup,
-  IconButton,
-  List,
-  ListItem,
-  ListItemAvatar,
-  Switch,
-} from '@mui/material';
+import { IconButton, List, ListItem, ListItemAvatar } from '@mui/material';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import MonetizationOn from 'src/assets/icons/MonetizationOn';
 import RightAction from 'src/assets/icons/RightAction';
-import { SMALL_AVATAR_SIZE } from 'src/constants';
 import { serializeCaregiverFilterStateToQueryString } from 'src/components/create-appointment-fourth/helpers';
 import {
   useCaregiverFilter,
   useCreateAppointmentFourth,
 } from 'src/components/create-appointment-fourth/hooks';
-import CreateAppointmentFourthAutocomplete from 'src/components/create-appointment-fourth/places-autocomplete/CreateAppointmentFourthAutocomplete';
 import {
   Background,
-  BaseText,
   CaregiverListContainer,
-  FilterContainer,
-  StyledFormControlLabel,
   StyledListItemText,
-  StyledNextButton,
 } from 'src/components/create-appointment-fourth/styles';
+import UserAvatar from 'src/components/reusable/user-avatar/UserAvatar';
+import { SMALL_AVATAR_SIZE } from 'src/constants';
 import { appointmentApi } from 'src/redux/api/appointmentApi';
 import { useTypedSelector } from 'src/redux/store';
 import CreateAppointmentFourthDrawer from './CreateAppointmentFourthDrawer';
-import UserAvatar from '../reusable/user-avatar/UserAvatar';
+import CreateAppointmentFourthFilter from './CreateAppointmentFourthFilter';
 
 interface CreateAppointmentFourthProps {
   onNext: () => void;
@@ -59,53 +47,14 @@ export default function CreateAppointmentFourth({
 
   return (
     <Background>
-      <FilterContainer>
-        <BaseText>{translate('createAppointmentFourth.location')}</BaseText>
-        <CreateAppointmentFourthAutocomplete onLocationChange={handleLocationChange} />
-        <BaseText>{translate('createAppointmentFourth.availability')}</BaseText>
-        <StyledFormControlLabel
-          control={
-            <Switch
-              value={caregiverFilter.isShowAvailableCaregivers}
-              checked={caregiverFilter.isShowAvailableCaregivers}
-              onChange={handleSwitchChange}
-              name="isShowAvailableCaregivers"
-            />
-          }
-          label={translate('createAppointmentFourth.showAvailableCaregivers')}
-        />
-        <StyledFormControlLabel
-          control={
-            <Switch
-              value={caregiverFilter.isOpenToSeekerHomeLiving}
-              checked={caregiverFilter.isOpenToSeekerHomeLiving}
-              onChange={handleSwitchChange}
-              name="isOpenToSeekerHomeLiving"
-            />
-          }
-          label={translate('createAppointmentFourth.openToLivingInClientsHouses')}
-        />
-        <BaseText>{translate('createAppointmentFourth.servicesTitle')}</BaseText>
-        <FormGroup>
-          {caregiverFilter.services.map((service) => (
-            <StyledFormControlLabel
-              key={service.label}
-              control={
-                <Checkbox
-                  checked={service.checked}
-                  onChange={handleServicesChange}
-                  name="services"
-                  value={service.label}
-                />
-              }
-              label={translate(`createAppointmentFourth.services.${service.label}`)}
-            />
-          ))}
-        </FormGroup>
-        <StyledNextButton variant="outlined" onClick={onBack}>
-          {translate('createAppointmentFourth.backToHealthQuestionnaire')}
-        </StyledNextButton>
-      </FilterContainer>
+      <CreateAppointmentFourthFilter
+        caregiverFilter={caregiverFilter}
+        handleLocationChange={handleLocationChange}
+        handleServicesChange={handleServicesChange}
+        handleSwitchChange={handleSwitchChange}
+        onBack={onBack}
+      />
+
       <CaregiverListContainer>
         <List>
           {!!filteredCaregivers &&

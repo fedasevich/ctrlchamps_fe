@@ -232,6 +232,10 @@ const TasksBtns = styled('div')`
 
 const ModalContainer = styled('div')`
   width: 480px;
+
+  ${({ theme }): string => theme.breakpoints.down('sm')} {
+    width: 100%;
+  }
 `;
 
 const ModalContent = styled('div')`

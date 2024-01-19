@@ -129,7 +129,7 @@ function FilterDrawer({
         <IconButton size="small" onClick={handleDrawerClose}>
           <ArrowBackFilled />
         </IconButton>
-        <DrawerTitle>{translate('createAppointmentFourth.filterCaregivers')}</DrawerTitle>
+        <DrawerTitle>{translate('createAppointmentFourth.filter')}</DrawerTitle>
       </DrawerHeader>
       <DrawerBody>
         <DrawerItem>{children}</DrawerItem>

@@ -6,13 +6,18 @@ import NotificationsList from 'src/components/notifications-list/NotificationsLi
 import MainHeader from 'src/components/reusable/header/MainHeader';
 import { DEFAULT_REDIRECT_PATH } from 'src/constants';
 import { useLocales } from 'src/locales';
-import { useFetchNotificationsQuery } from 'src/redux/api/notificationsApi';
+import {
+  useFetchNotificationsQuery,
+  useUpdateNotificationsToReadMutation,
+} from 'src/redux/api/notificationsApi';
 import { useTypedSelector } from 'src/redux/store';
 
 export default function NotificationsPage(): JSX.Element | null {
   const { translate } = useLocales();
   const router = useRouter();
   const user = useTypedSelector((state) => state.user.user);
+
+  const [updateNotifications] = useUpdateNotificationsToReadMutation();
 
   const { id } = user || { id: '' };
   const { data: notifications, isLoading } = useFetchNotificationsQuery(id);
@@ -21,7 +26,8 @@ export default function NotificationsPage(): JSX.Element | null {
     if (!user) {
       router.replace(DEFAULT_REDIRECT_PATH);
     }
-  }, [user, router]);
+    updateNotifications(id);
+  }, [user, router, updateNotifications, id]);
 
   if (!user) {
     return null;

@@ -1,4 +1,6 @@
-import { MenuList as MuiMenuList, styled, MenuItem as MuiMenuItem } from '@mui/material';
+import { MenuItem as MuiMenuItem, MenuList as MuiMenuList, styled } from '@mui/material';
+import { styled as muiStyled } from '@mui/material/styles';
+import { Stack } from '@mui/system';
 
 import { PRIMARY, SECONDARY } from 'src/theme/colors';
 import { TYPOGRAPHY } from 'src/theme/fonts';
@@ -23,5 +25,12 @@ export const MenuItem = styled(MuiMenuItem)`
 
   &.Mui-selected {
     color: ${PRIMARY.navy};
+  }
+`;
+
+export const AdminPageStyledStack = muiStyled(Stack)`
+  ${({ theme }): string => theme.breakpoints.down('sm')} {
+    display: flex;
+    flex-direction: column;
   }
 `;

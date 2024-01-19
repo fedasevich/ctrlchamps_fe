@@ -32,6 +32,7 @@ import Modal from 'src/components/reusable/modal/Modal';
 import { DEBOUNCE_DELAY, FIRST_PAGE, PAGINATION_USERS_LIMIT } from './constants';
 import {
   MainWrapper,
+  StyledStack,
   PageName,
   Cylinder,
   SearchContainer,
@@ -152,7 +153,7 @@ export default function UserList(): JSX.Element | null {
                 </IconButton>
               )}
             </SearchContainer>
-            <Stack mt={3}>
+            <StyledStack mt={3}>
               <Table>
                 <TableHead>
                   <StyledTableRow>
@@ -197,7 +198,7 @@ export default function UserList(): JSX.Element | null {
                   ))}
                 </TableBody>
               </Table>
-            </Stack>
+            </StyledStack>
             <Stack display="flex" direction="row" justifyContent="center" mt={2}>
               <Pagination
                 count={Math.ceil(users!.count / PAGINATION_USERS_LIMIT)}

@@ -1,4 +1,4 @@
-import { Button, Typography, Link, styled } from '@mui/material';
+import { Button, Link, Typography, styled } from '@mui/material';
 import { SECONDARY } from 'src/theme/colors';
 import { TYPOGRAPHY } from 'src/theme/fonts';
 
@@ -11,6 +11,11 @@ export const Wrapper = styled('div')`
   margin: 0 auto;
   padding: 24px 0;
   font-size: ${TYPOGRAPHY.base}px;
+
+  ${({ theme }): string => theme.breakpoints.down('sm')} {
+    width: 100%;
+    padding-inline: 16px;
+  }
 `;
 
 export const Title = styled(Typography)`

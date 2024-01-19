@@ -10,6 +10,7 @@ export const IconWrapper = styled('div')`
   border-radius: 50%;
   width: 150px;
   height: 150px;
+  aspect-ratio: 1;
   display: flex;
   align-items: center;
   position: relative;

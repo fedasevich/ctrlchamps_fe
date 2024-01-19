@@ -13,6 +13,10 @@ export const StyledForm = styled('form')`
   margin: 0 auto;
   font-size: ${TYPOGRAPHY.base}px;
   font-weight: ${typography.fontWeightMedium};
+
+  ${({ theme }): string => theme.breakpoints.down('sm')} {
+    width: 300px;
+  }
 `;
 
 export const Title = styled(Typography)`

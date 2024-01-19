@@ -65,6 +65,9 @@ export const HealthQuestionnaireModal = styled('div')`
   max-height: 500px;
   background-color: ${PRIMARY.white};
   margin: 50px auto;
+  ${({ theme }): string => theme.breakpoints.down('sm')} {
+    width: 350px;
+  }
 `;
 
 export const ModalBlock = styled('div')`
@@ -78,8 +81,14 @@ export const ListItemStyled = styled(ListItem)`
 
 export const ListItemTextStyled = styled(ListItemText)`
   padding-left: 10px;
+  ${({ theme }): string => theme.breakpoints.down('sm')} {
+    word-wrap: break-word;
+    width: 100%;
+    padding-right: 5px;
+  }
 `;
 
 export const InactiveStyledButton = styled(Button)`
   min-width: 180px;
+  height: 50px;
 `;

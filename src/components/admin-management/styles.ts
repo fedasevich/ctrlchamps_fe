@@ -19,6 +19,9 @@ export const MainWrapper = styled('div')`
   background-color: ${SECONDARY.background_gray};
   font-weight: ${typography.fontWeightBold};
   font-size: ${TYPOGRAPHY.sm}px;
+  ${({ theme }): string => theme.breakpoints.down('sm')} {
+    margin: 40px 5px 40px 5px;
+  }
 `;
 
 export const ManagementWrapper = styled('div')`

@@ -13,6 +13,10 @@ export const StyledForm = styled('form')`
   font-weight: ${typography.fontWeightMedium};
   line-height: 1.5;
   letter-spacing: 0.15px;
+
+  ${({ theme }): string => theme.breakpoints.down('sm')} {
+    width: 100%;
+  }
 `;
 
 export const InputWrapper = styled('div')`

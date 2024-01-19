@@ -16,6 +16,9 @@ const Container = styled('div')`
   display: flex;
   gap: 32px;
   margin-top: ${HEADER.MAIN_HEIGHT}px;
+  ${({ theme }): string => theme.breakpoints.down('md')} {
+    flex-direction: column;
+  }
 `;
 
 const CalendarContainer = styled('div')`
@@ -23,13 +26,24 @@ const CalendarContainer = styled('div')`
   border-radius: 4px;
   max-width: 360px;
   height: 400px;
+  z-index: 100;
   box-shadow: 0px 4px 4px 0px ${SECONDARY.light_gray};
+
   .calendar-picker {
     width: 360px;
     height: 436px;
   }
+
   .css-169iwlq-MuiCalendarPicker-root {
     max-height: 340px;
+  }
+
+  ${({ theme }): string => theme.breakpoints.down('sm')} {
+    max-width: 280px;
+
+    .calendar-picker {
+      width: 280px;
+    }
   }
 `;
 
@@ -53,6 +67,10 @@ const NoAppointmentsContainer = styled('div')`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+
+  ${({ theme }): string => theme.breakpoints.down('sm')} {
+    width: 300px;
+  }
 `;
 
 const IconBackground = styled('div')`
@@ -132,6 +150,12 @@ const AppointmentDetails = styled('div')`
   align-items: center;
   gap: 16px;
   padding-bottom: 9px;
+
+  ${({ theme }): string => theme.breakpoints.down('sm')} {
+    gap: 8px;
+    flex-direction: column;
+    align-items: flex-start;
+  }
 `;
 
 const TaskText = styled('p')`
@@ -148,6 +172,7 @@ const Arrow = styled(ArrowForwardIos)`
   top: 50%;
   right: 5px;
   transform: translateY(-50%);
+
   &:hover {
     cursor: pointer;
     opacity: 0.7;

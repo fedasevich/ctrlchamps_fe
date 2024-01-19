@@ -14,6 +14,9 @@ export const BackDrop = styled('div')`
   padding-top: 40px;
   background: ${SECONDARY.backdrop_background};
   z-index: 999;
+  ${({ theme }): string => theme.breakpoints.down('sm')} {
+    width: 100%;
+  }
 `;
 
 export const ModalWrapper = styled('div')`

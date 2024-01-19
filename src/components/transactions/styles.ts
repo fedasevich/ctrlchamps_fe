@@ -47,6 +47,7 @@ export const IconWrapper = styled.div<{ backgroundColor: string }>`
   justify-content: center;
   width: 50px;
   height: 50px;
+  aspect-ratio: 1;
   border-radius: 50%;
   margin-right: 5px;
 `;

@@ -30,7 +30,7 @@ export type UnreadNotification = {
   count: number;
 };
 
-export interface NotificationRespose {
+export interface NotificationResponse {
   data: Notification[];
   count: number;
 }
@@ -53,7 +53,7 @@ export const notificationsApi = createApi({
   refetchOnFocus: true,
   tagTypes: ['Notifications', 'UnreadNotifications'],
   endpoints: (builder) => ({
-    fetchNotifications: builder.query<NotificationRespose, string>({
+    fetchNotifications: builder.query<NotificationResponse, string>({
       query: (userId) => ({ url: `${route.notifications}/${userId}` }),
       providesTags: ['Notifications'],
     }),

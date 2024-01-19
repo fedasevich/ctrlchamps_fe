@@ -20,6 +20,8 @@ import {
   TableHeader,
   TableRow,
 } from 'src/components/admin-management/styles';
+
+import { StyledStack } from 'src/components/user-list/styles';
 import { PAGINATION_LIMIT } from 'src/constants';
 import { useDebounce } from 'src/hooks/useDebounce';
 import { useLocales } from 'src/locales';
@@ -66,7 +68,7 @@ export default function TasksManagement(): JSX.Element {
   return (
     <MainWrapper>
       <ManagementWrapper>
-        <Stack direction="row" justifyContent="space-between" mb={3}>
+        <StyledStack direction="row" justifyContent="space-between" mb={3}>
           <PageName>
             <Cylinder />
             {translate('taskManagement.title')}
@@ -74,7 +76,7 @@ export default function TasksManagement(): JSX.Element {
           <AddUserButton onClick={openAddModal} variant="contained">
             {translate('taskManagement.addTask')}
           </AddUserButton>
-        </Stack>
+        </StyledStack>
 
         <OutlinedInput
           value={termSearch}

@@ -15,6 +15,7 @@ import { format, parseISO } from 'date-fns';
 import { useRouter } from 'next/router';
 import { ChangeEvent, useEffect, useState } from 'react';
 
+import { StyledStack } from 'src/components/user-list/styles';
 import {
   DEBOUNCE_DELAY,
   FIRST_PAGE,
@@ -135,7 +136,7 @@ function AdminManagement(): JSX.Element | null {
           size="small"
         />
 
-        <Stack mt={3}>
+        <StyledStack mt={3}>
           <Table>
             <TableHead>
               <TableRow>
@@ -172,7 +173,7 @@ function AdminManagement(): JSX.Element | null {
                 ))}
             </TableBody>
           </Table>
-        </Stack>
+        </StyledStack>
 
         <Stack display="flex" direction="row" justifyContent="center" mt={2}>
           <Pagination

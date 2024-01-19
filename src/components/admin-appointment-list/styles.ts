@@ -5,6 +5,7 @@ import {
   TableCell as MuiTableCell,
   IconButton as MuiIconButton,
   Typography,
+  Stack,
 } from '@mui/material';
 import { APPOINTMENT_STATUS } from 'src/constants';
 
@@ -20,6 +21,9 @@ export const MainWrapper = styled('div')`
   background-color: ${SECONDARY.background_gray};
   font-weight: ${typography.fontWeightBold};
   font-size: ${TYPOGRAPHY.sm}px;
+  ${({ theme }): string => theme.breakpoints.down('sm')} {
+    margin: 40px 5px 40px 5px;
+  }
 `;
 
 export const ManagementWrapper = styled('div')`
@@ -127,4 +131,8 @@ export const StyledButton = styled(Button)`
   width: 100%;
   height: 40px;
   margin: 0 auto;
+`;
+
+export const StyledStack = styled(Stack)`
+  overflow-x: scroll;
 `;

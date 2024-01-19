@@ -38,6 +38,7 @@ import {
   TableHeader,
   TableRow,
   Title,
+  StyledStack,
 } from './styles';
 import { DEBOUNCE_DELAY, FIRST_PAGE, PAGINATION_APPOINTMENTS_LIMIT } from './constants';
 import AppointmentDrawer from '../appointments/appointment-drawer/AppointmentDrawer';
@@ -157,7 +158,7 @@ function AdminAppointmentList(): JSX.Element | null {
 
         {isSuccess && appointments.appointments.length > 0 && (
           <>
-            <Stack mt={3}>
+            <StyledStack mt={3}>
               <Table>
                 <TableHead>
                   <TableRow>
@@ -217,7 +218,7 @@ function AdminAppointmentList(): JSX.Element | null {
                   ))}
                 </TableBody>
               </Table>
-            </Stack>
+            </StyledStack>
 
             <Stack display="flex" direction="row" justifyContent="center" mt={2}>
               <Pagination

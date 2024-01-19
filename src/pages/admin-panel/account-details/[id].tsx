@@ -1,4 +1,4 @@
-import { Stack } from '@mui/material';
+import { Stack } from '@mui/system';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import AccountDetails from 'src/components/account-details/AccountDetails';

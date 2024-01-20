@@ -943,6 +943,8 @@ const en = {
     creation_date: 'Date of creation',
     end_date: 'End date',
     status: 'Appointment status',
+    approved_logs: 'Approved activity logs',
+    rejected_logs: 'Rejected activity logs',
     clientName: 'Client name',
     caregiverName: 'Caregiver name',
     actions: 'Actions',

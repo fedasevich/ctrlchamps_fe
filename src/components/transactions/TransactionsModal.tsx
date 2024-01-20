@@ -35,7 +35,7 @@ const TransactionsModal = ({
 }: TransactionsModalProps): JSX.Element => {
   const { translate } = useLocales();
 
-  const handlePageChange = (event: ChangeEvent<unknown>, value: number) => {
+  const handlePageChange = (event: ChangeEvent<unknown>, value: number): void => {
     setPage(value);
   };
 

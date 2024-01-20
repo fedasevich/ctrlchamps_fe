@@ -13,7 +13,12 @@ import { AssessmentPurpose } from 'src/components/appointments/virtual-assessmen
 import UserAvatar from 'src/components/reusable/user-avatar/UserAvatar';
 import { FilledButton } from 'src/components/reusable';
 import FlowHeader from 'src/components/reusable/header/FlowHeader';
-import { SMALL_AVATAR_SIZE, USER_ROLE, VIRTUAL_ASSESSMENT_STATUS } from 'src/constants';
+import {
+  CURRENT_DAY,
+  SMALL_AVATAR_SIZE,
+  USER_ROLE,
+  VIRTUAL_ASSESSMENT_STATUS,
+} from 'src/constants';
 import { useLocales } from 'src/locales';
 import { virtualAssessmentApi } from 'src/redux/api/virtualAssessmentApi';
 import { useTypedSelector } from 'src/redux/store';
@@ -185,12 +190,17 @@ const VirtualAssessmentRequestModal = ({
                     variant="outlined"
                     color="primary"
                     fullWidth
+                    disabled={new Date(appointment.startDate) < CURRENT_DAY}
                     onClick={openReschedulingModal}
                   >
                     {translate('request_appointment.btns.reschedule')}
                   </Button>
                   <FilledButton
                     fullWidth
+                    disabled={
+                      new Date(appointment.startDate) < CURRENT_DAY ||
+                      new Date(appointment.virtualAssessment.assessmentDate) < CURRENT_DAY
+                    }
                     onClick={async (): Promise<void> => {
                       await handleStatusChange(VIRTUAL_ASSESSMENT_STATUS.Accepted);
                     }}

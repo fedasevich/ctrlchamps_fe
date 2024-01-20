@@ -12,8 +12,8 @@ export interface Transaction {
 }
 
 interface TransactionQuery {
-  offset: number;
-  limit: number;
+  offset?: number;
+  limit?: number;
   userId: string;
 }
 

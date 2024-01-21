@@ -45,7 +45,7 @@ export default function CaregiverAppointment({ appointmentDays, openDrawer }: Pr
                   <Text>
                     {formatTimeToTimezone(
                       `${appointment.virtualAssessment.assessmentDate} ${appointment.virtualAssessment.startTime}`,
-                      appointment.caregiverInfo.timeZone,
+                      appointment.timezone,
                       DISPLAY_TIME_FORMAT
                     )}
                   </Text>
@@ -53,7 +53,7 @@ export default function CaregiverAppointment({ appointmentDays, openDrawer }: Pr
                   <Text>
                     {formatTimeToTimezone(
                       appointment.startDate,
-                      appointment.caregiverInfo.timeZone,
+                      appointment.timezone,
                       DISPLAY_TIME_FORMAT
                     )}
                   </Text>

@@ -66,13 +66,6 @@ const VirtualAssessmentRequestModal = ({
 
   const userId = useMemo(() => decodeToken(token), [token]);
 
-  const virtualAssessmentTime =
-    appointment.virtualAssessment &&
-    setCustomTime(
-      appointment.virtualAssessment.assessmentDate,
-      appointment.virtualAssessment.startTime.slice(0, -3)
-    );
-
   const copyMeetingLink = (): void => {
     if (!appointment.virtualAssessment) return;
     const { meetingLink } = appointment.virtualAssessment;
@@ -146,10 +139,10 @@ const VirtualAssessmentRequestModal = ({
             <AppointmentModalBlockParagraph>
               {translate('request_appointment.date_and_time')}
             </AppointmentModalBlockParagraph>
-            {virtualAssessmentTime &&
+            {appointment.virtualAssessment &&
               formatTimeToTimezone(
-                virtualAssessmentTime.toString(),
-                Intl.DateTimeFormat().resolvedOptions().timeZone,
+                `${appointment.virtualAssessment.assessmentDate} ${appointment.virtualAssessment.startTime}`,
+                appointment.timezone,
                 DRAWER_DATE_FORMAT
               )}
           </AppointmentModalBlock>
@@ -190,7 +183,18 @@ const VirtualAssessmentRequestModal = ({
                     variant="outlined"
                     color="primary"
                     fullWidth
-                    disabled={new Date(appointment.startDate) < CURRENT_DAY}
+                    disabled={
+                      formatTimeToTimezone(
+                        appointment.startDate,
+                        appointment.timezone,
+                        DRAWER_DATE_FORMAT
+                      ) <
+                      formatTimeToTimezone(
+                        CURRENT_DAY.toString(),
+                        appointment.timezone,
+                        DRAWER_DATE_FORMAT
+                      )
+                    }
                     onClick={openReschedulingModal}
                   >
                     {translate('request_appointment.btns.reschedule')}
@@ -198,8 +202,26 @@ const VirtualAssessmentRequestModal = ({
                   <FilledButton
                     fullWidth
                     disabled={
-                      new Date(appointment.startDate) < CURRENT_DAY ||
-                      new Date(appointment.virtualAssessment.assessmentDate) < CURRENT_DAY
+                      formatTimeToTimezone(
+                        appointment.startDate,
+                        appointment.timezone,
+                        DRAWER_DATE_FORMAT
+                      ) <
+                        formatTimeToTimezone(
+                          CURRENT_DAY.toString(),
+                          appointment.timezone,
+                          DRAWER_DATE_FORMAT
+                        ) ||
+                      formatTimeToTimezone(
+                        appointment.virtualAssessment.assessmentDate.toString(),
+                        appointment.timezone,
+                        DRAWER_DATE_FORMAT
+                      ) <
+                        formatTimeToTimezone(
+                          CURRENT_DAY.toString(),
+                          appointment.timezone,
+                          DRAWER_DATE_FORMAT
+                        )
                     }
                     onClick={async (): Promise<void> => {
                       await handleStatusChange(VIRTUAL_ASSESSMENT_STATUS.Accepted);

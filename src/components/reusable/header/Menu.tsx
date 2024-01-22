@@ -1,36 +1,36 @@
-import React, { useEffect, useState } from 'react';
-import { Button } from '@mui/material';
-import ReceiptLongOutlinedIcon from '@mui/icons-material/ReceiptLongOutlined';
-import PersonOutlinedIcon from '@mui/icons-material/PersonOutlined';
-import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
-import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
-import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
-import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
-import SupportAgentOutlinedIcon from '@mui/icons-material/SupportAgentOutlined';
 import ChevronRightOutlinedIcon from '@mui/icons-material/ChevronRightOutlined';
+import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
+import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
+import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
+import PersonOutlinedIcon from '@mui/icons-material/PersonOutlined';
+import ReceiptLongOutlinedIcon from '@mui/icons-material/ReceiptLongOutlined';
+import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
+import SupportAgentOutlinedIcon from '@mui/icons-material/SupportAgentOutlined';
 import { useRouter } from 'next/router';
-import { ROUTES } from 'src/routes';
-import { removeToken } from 'src/redux/slices/tokenSlice';
-import { removeUser } from 'src/redux/slices/userSlice';
-import { useLocales } from 'src/locales';
-import { useAppDispatch, useTypedSelector } from 'src/redux/store';
-import { TRANSACTION_EXAMPLE, USER_ROLE } from 'src/constants';
-import { useUpdateBalanceMutation } from 'src/redux/api/transactionsApi';
-import { useGetUserInfoQuery } from 'src/redux/api/userApi';
+import React, { useEffect, useState } from 'react';
 import GetHelpModal from 'src/components/get-help-modal/GetHelpModal';
 import Modal from 'src/components/reusable/modal/Modal';
+import { TRANSACTION_EXAMPLE, USER_ROLE } from 'src/constants';
+import { useLocales } from 'src/locales';
+import { appointmentApi } from 'src/redux/api/appointmentApi';
+import { useUpdateBalanceMutation } from 'src/redux/api/transactionsApi';
+import { useGetUserInfoQuery } from 'src/redux/api/userApi';
+import { removeToken } from 'src/redux/slices/tokenSlice';
+import { removeUser } from 'src/redux/slices/userSlice';
+import { useAppDispatch, useTypedSelector } from 'src/redux/store';
+import { ROUTES } from 'src/routes';
 import {
   Arrow,
   BalanceAmount,
   BalanceBlock,
   BalanceParagraph,
   BalanceTitle,
-  MenuListItem,
-  MenuItemStyled,
-  OperationButton,
-  StyledMenu,
   HalfVisibleParagraph,
+  MenuItemStyled,
+  MenuListItem,
+  OperationButton,
   StyledButton,
+  StyledMenu,
 } from './styles';
 
 interface MenuDropdownProps {
@@ -115,7 +115,9 @@ const MenuDropdown: React.FC<MenuDropdownProps> = ({
       if (userInfo && !isLoading) {
         const newBalance = userInfo.balance + amount;
         setBalance(newBalance);
-        await updateBalance(newBalance);
+        await updateBalance(newBalance)
+          .unwrap()
+          .then(() => dispatch(appointmentApi.util.invalidateTags(['Appointments'])));
         refetch();
       }
     } catch (error) {
@@ -129,7 +131,7 @@ const MenuDropdown: React.FC<MenuDropdownProps> = ({
         <Arrow className={open ? 'active' : ''}>{children}</Arrow>
       </StyledButton>
       <StyledMenu
-        onClick={(e) => e.preventDefault()}
+        onClick={(e): void => e.preventDefault()}
         anchorEl={anchorEl}
         open={open}
         onClose={handleClose}

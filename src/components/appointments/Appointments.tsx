@@ -7,6 +7,7 @@ import { ROUTES } from 'src/routes';
 import { APPOINTMENT_STATUS } from 'src/constants';
 import AppointmentDebtModal from './appointment-debt-modal/AppointmentDebtModal';
 import AppointmentsList from './appointments-list/AppointmentsList';
+import { AppointmentDebtStatus } from './enums';
 import { Background, Container, HeadContainer, StyledButton, Title } from './styles';
 import { AppointmentsProps } from './types';
 
@@ -17,7 +18,12 @@ export default function Appointments({ appointments }: AppointmentsProps): JSX.E
   const [isDebtModalOpen, setIsDebtModalOpen] = useState<boolean>(false);
 
   const hasDebtAppointments = useMemo(
-    () => appointments.some((appointment) => appointment.status === APPOINTMENT_STATUS.Paused),
+    () =>
+      appointments.some(
+        (appointment) =>
+          appointment.debtStatus === AppointmentDebtStatus.NotAccrued ||
+          appointment.status === APPOINTMENT_STATUS.Paused
+      ),
     [appointments]
   );
 

@@ -670,6 +670,8 @@ const en = {
     invalid_time:
       'Appointment cannot be ended before the start. Please choose another value in End Time field.',
     equal_time_error: 'You cannot choose identical time',
+    invalid_assessment_date:
+      'The virtual assessment should be scheduled to occur before the appointment.',
     server_error: 'Something went wrong',
     btns: {
       reschedule: 'Reschedule',

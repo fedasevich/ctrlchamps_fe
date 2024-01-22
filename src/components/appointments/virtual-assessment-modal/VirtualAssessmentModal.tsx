@@ -13,6 +13,7 @@ import UserAvatar from 'src/components/reusable/user-avatar/UserAvatar';
 import { AUTO_HIDEOUT_DELAY, CURRENT_DAY, SMALL_AVATAR_SIZE } from 'src/constants';
 import { useLocales } from 'src/locales';
 import { isTimeAfterNow } from 'src/utils/checkTime';
+import { DetailedAppointment } from 'src/redux/api/appointmentApi';
 import { MIN_VALUE } from './constants';
 import { AssessmentPurpose } from './enums';
 
@@ -40,25 +41,27 @@ import useVirtualAssessmentModal from './useVirtualAssessmentModal';
 type Props = {
   purpose: 'request' | 'reschedule';
   isActive: boolean;
+  appointment: DetailedAppointment;
   onClose: () => void;
   openDrawer?: () => void;
   openCaregiverProfile?: () => void;
   openVirtualAssessmentSuccess: () => void;
   caregiverName: string;
   caregiverId: string;
-  appointmentId: string;
+  selectedAppointmentId: string;
 };
 
 export default function VirtualAssessmentModal({
   purpose,
   onClose,
   isActive,
+  appointment,
   openDrawer,
   openCaregiverProfile,
   openVirtualAssessmentSuccess,
   caregiverName,
   caregiverId,
-  appointmentId,
+  selectedAppointmentId,
 }: Props): JSX.Element | null {
   const { translate } = useLocales();
   const {
@@ -72,6 +75,7 @@ export default function VirtualAssessmentModal({
     isRescheduleBtnDisabled,
     invalidTime,
     maxDurationExceeded,
+    hasAppointmentTimePassed,
     chooseDate,
     chooseStartTime,
     chooseEndTime,
@@ -85,7 +89,12 @@ export default function VirtualAssessmentModal({
     minReasonLength,
     maxReasonLength,
     serverError,
-  } = useVirtualAssessmentModal(appointmentId, openVirtualAssessmentSuccess, onClose);
+  } = useVirtualAssessmentModal(
+    selectedAppointmentId,
+    openVirtualAssessmentSuccess,
+    onClose,
+    appointment
+  );
   if (!isActive) return null;
 
   return (
@@ -175,6 +184,9 @@ export default function VirtualAssessmentModal({
             )}
             {date && isBefore(date, CURRENT_DAY) && !isSameDay(date, CURRENT_DAY) && (
               <ErrorText>{translate('create_appointment.errors.invalid_date')}</ErrorText>
+            )}
+            {hasAppointmentTimePassed && (
+              <ErrorText>{translate('request_appointment.invalid_assessment_date')}</ErrorText>
             )}
           </AppointmentModalBlock>
 

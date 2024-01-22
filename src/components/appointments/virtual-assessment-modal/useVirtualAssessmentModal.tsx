@@ -1,14 +1,16 @@
 import { format, isBefore, isSameDay, isToday } from 'date-fns';
-import { Dispatch, SetStateAction, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 
 import { selectTimeOptions } from 'src/components/create-appointment/constants';
 import { APPOINTMENT_STATUS, BACKEND_DATE_FORMAT, CURRENT_DAY, URL_PATTERN } from 'src/constants';
-import { useUpdateAppointmentMutation } from 'src/redux/api/appointmentApi';
+import { DetailedAppointment, useUpdateAppointmentMutation } from 'src/redux/api/appointmentApi';
 import { virtualAssessmentApi } from 'src/redux/api/virtualAssessmentApi';
 
 import { calculateTimeDifference, calculateEndTime } from 'src/utils/calculateTimeDifference';
 import useChooseTime from 'src/hooks/useChooseTime';
 import { isTimeAfterNow } from 'src/utils/checkTime';
+import { utcToZonedTime } from 'date-fns-tz';
+import { setCustomTime } from 'src/utils/defineCustomTime';
 import {
   INTERVAL_30_MINUTES_IDX,
   MAX_ASSESSMENT_HOURS_DURATION,
@@ -29,6 +31,7 @@ type ReturnType = {
   isRescheduleBtnDisabled: boolean;
   invalidTime: boolean;
   maxDurationExceeded: boolean;
+  hasAppointmentTimePassed: boolean;
   chooseDate: (value: Date | null) => void;
   chooseStartTime: (value: string) => void;
   chooseEndTime: (value: string) => void;
@@ -47,7 +50,8 @@ type ReturnType = {
 export default function useVirtualAssessmentModal(
   appointmentId: string,
   openVirtualAssessmentSuccess: () => void,
-  onClose: () => void
+  onClose: () => void,
+  appointment: DetailedAppointment
 ): ReturnType {
   const [startTime, setStartTime] = useState<string>('');
   const [endTime, setEndTime] = useState<string>('');
@@ -57,7 +61,21 @@ export default function useVirtualAssessmentModal(
   const [isLinkCopied, setIsLinkCopied] = useState<boolean>(false);
   const [invalidTime, setInvalidTime] = useState<boolean>(false);
   const [maxDurationExceeded, setMaxDurationExceeded] = useState<boolean>(false);
+  const [hasAppointmentTimePassed, setHasAppointmentTimePassed] = useState<boolean>(false);
   const [serverError, setServerError] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (!date) return;
+
+    const virtualAssessmentDate = setCustomTime(date, startTime);
+    const appointmentDate = utcToZonedTime(new Date(appointment.startDate), appointment.timezone);
+
+    if (appointmentDate > virtualAssessmentDate) {
+      setHasAppointmentTimePassed(false);
+    } else {
+      setHasAppointmentTimePassed(true);
+    }
+  }, [date, startTime, appointment.startDate, appointment.timezone]);
 
   const { chooseStartTime: selectStartTime, chooseEndTime: selectEndTime } = useChooseTime(
     selectTimeOptions,
@@ -201,6 +219,7 @@ export default function useVirtualAssessmentModal(
     invalidTime,
     serverError,
     maxDurationExceeded,
+    hasAppointmentTimePassed,
     chooseDate,
     chooseStartTime,
     chooseEndTime,

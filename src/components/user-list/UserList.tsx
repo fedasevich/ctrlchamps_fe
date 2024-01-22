@@ -11,6 +11,7 @@ import {
   Pagination,
   Box,
   SelectChangeEvent,
+  Typography,
 } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import FormatLineSpacingIcon from '@mui/icons-material/FormatLineSpacing';
@@ -128,31 +129,41 @@ export default function UserList(): JSX.Element | null {
             {translate('userList.title')}
           </PageName>
         </Stack>
+        <SearchContainer>
+          <OutlinedInput
+            onChange={handleTermSearch}
+            placeholder={translate('userList.search')}
+            startAdornment={
+              <InputAdornment position="start">
+                <SearchIcon />
+              </InputAdornment>
+            }
+            fullWidth
+            size="small"
+          />
+          {sortingOrder === SORT_ORDER.DESC ? (
+            <IconButton size="large" onClick={handleChangeSorting}>
+              <FormatLineSpacingIcon fontSize="large" />
+            </IconButton>
+          ) : (
+            <IconButton size="large" onClick={handleChangeSorting} sx={{ color: PRIMARY.main }}>
+              <FormatLineSpacingIcon fontSize="large" />
+            </IconButton>
+          )}
+        </SearchContainer>
 
-        {isSuccess && users.data.length > 0 ? (
+        {isSuccess && termSearch && users.data.length <= 0 && (
+          <Typography color="GrayText" mt={2}>
+            {translate('no_results_match')}
+          </Typography>
+        )}
+
+        {isSuccess && !termSearch && users.data.length <= 0 && (
+          <PageName>{translate('userList.anyUsers')}</PageName>
+        )}
+
+        {isSuccess && users.data.length > 0 && (
           <>
-            <SearchContainer>
-              <OutlinedInput
-                onChange={handleTermSearch}
-                placeholder={translate('userList.search')}
-                startAdornment={
-                  <InputAdornment position="start">
-                    <SearchIcon />
-                  </InputAdornment>
-                }
-                fullWidth
-                size="small"
-              />
-              {sortingOrder === SORT_ORDER.DESC ? (
-                <IconButton size="large" onClick={handleChangeSorting}>
-                  <FormatLineSpacingIcon fontSize="large" />
-                </IconButton>
-              ) : (
-                <IconButton size="large" onClick={handleChangeSorting} sx={{ color: PRIMARY.main }}>
-                  <FormatLineSpacingIcon fontSize="large" />
-                </IconButton>
-              )}
-            </SearchContainer>
             <StyledStack mt={3}>
               <Table>
                 <TableHead>
@@ -207,8 +218,6 @@ export default function UserList(): JSX.Element | null {
               />
             </Stack>
           </>
-        ) : (
-          <PageName>{translate('userList.anyUsers')}</PageName>
         )}
 
         <Modal
@@ -221,11 +230,11 @@ export default function UserList(): JSX.Element | null {
 
             <Box display="flex" gap={2}>
               <StyledButton variant="contained" onClick={handleDeleteModalToggle}>
-                {translate('adminManagement.no')}
+                {translate('adminManagement.yes')}
               </StyledButton>
 
               <StyledButton variant="contained" color="error" onClick={handleDeleteUser}>
-                {translate('adminManagement.yes')}
+                {translate('adminManagement.no')}
               </StyledButton>
             </Box>
           </Box>

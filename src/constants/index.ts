@@ -14,6 +14,7 @@ export const AUTO_HIDEOUT_DELAY = 2000;
 export const DATE_FORMAT = 'MM/dd/yyyy';
 export const BACKEND_DATE_FORMAT = 'yyyy-MM-dd';
 export const UTC_BIAS = 'Z';
+export const UTC_TIMEZONE = 'UTC';
 
 export const CURRENT_DAY = new Date();
 export const DISPLAY_TIME_FORMAT = 'HH:mm';

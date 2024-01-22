@@ -2,12 +2,13 @@ import ContactEmergencyIcon from '@mui/icons-material/ContactEmergency';
 import HowToRegIcon from '@mui/icons-material/HowToReg';
 import PersonRemoveIcon from '@mui/icons-material/PersonRemove';
 import SignatureIcon from 'src/assets/icons/SignatureIcon';
-import { PRIMARY, SECONDARY } from 'src/theme/colors';
+import { PRIMARY, SECONDARY, TEXT_COLOR } from 'src/theme/colors';
 
 enum IconColor {
   main = 'main',
   navy = 'navy',
   red = 'red',
+  yellow = 'yellow',
 }
 
 const firstItemIndex = 1;
@@ -16,6 +17,7 @@ const colorMap = {
   main: PRIMARY.main,
   navy: PRIMARY.navy,
   red: SECONDARY.error,
+  yellow: TEXT_COLOR.pending,
 };
 
 const ICON_TYPE = {
@@ -25,6 +27,7 @@ const ICON_TYPE = {
   acceptAppointment: { icon: HowToRegIcon, color: IconColor.main },
   rejectVA: { icon: ContactEmergencyIcon, color: IconColor.red },
   rejectAppointment: { icon: PersonRemoveIcon, color: IconColor.red },
+  pausedAppointment: { icon: PersonRemoveIcon, color: IconColor.yellow },
 };
 
 const NOTIFICATION_STATUS = {
@@ -82,6 +85,14 @@ const NOTIFICATION_STATUS = {
     text: 'notifications.insufficientFirstHourPayment',
     icon: ICON_TYPE.rejectAppointment,
   },
+  PAUSED_APPOINTMENT: {
+    text: 'notifications.pausedAppointment',
+    icon: ICON_TYPE.pausedAppointment,
+  },
+  RESUME_APPOINTMENT: {
+    text: 'notifications.resumeAppointment',
+    icon: ICON_TYPE.acceptAppointment,
+  },
 };
 
-export { colorMap, IconColor, ICON_TYPE, NOTIFICATION_STATUS, firstItemIndex };
+export { ICON_TYPE, IconColor, NOTIFICATION_STATUS, colorMap, firstItemIndex };

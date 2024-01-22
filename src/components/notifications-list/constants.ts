@@ -10,6 +10,8 @@ enum IconColor {
   red = 'red',
 }
 
+const firstItemIndex = 1;
+
 const colorMap = {
   main: PRIMARY.main,
   navy: PRIMARY.navy,
@@ -76,6 +78,10 @@ const NOTIFICATION_STATUS = {
   },
   ACTIVITY_LOG_APPROVED: { text: 'notifications.activityLogApproved', icon: ICON_TYPE.sign },
   ACTIVITY_LOG_REJECTED: { text: 'notifications.activityLogRejected', icon: ICON_TYPE.signOff },
+  INSUFFICIENT_FIRST_HOUR_PAYMENT: {
+    text: 'notifications.insufficientFirstHourPayment',
+    icon: ICON_TYPE.rejectAppointment,
+  },
 };
 
-export { colorMap, IconColor, ICON_TYPE, NOTIFICATION_STATUS };
+export { colorMap, IconColor, ICON_TYPE, NOTIFICATION_STATUS, firstItemIndex };

@@ -54,6 +54,10 @@ export const StyledTabs = styled(Tabs)`
   max-width: 360px;
   background-color: ${PRIMARY.light_main};
   border-bottom: 1px solid ${SECONDARY.light_gray};
+
+  ${({ theme }): string => theme.breakpoints.down('sm')} {
+    max-width: 300px;
+  }
 `;
 
 export const StyledTab = styled(Tab)`

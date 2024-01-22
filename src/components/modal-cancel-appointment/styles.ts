@@ -47,6 +47,10 @@ const Box = styled('div')`
   transform: translate(-50%, -50%);
   background-color: ${PRIMARY.white};
   border-radius: 4px;
+
+  ${({ theme }): string => theme.breakpoints.down('sm')} {
+    width: 90%;
+  }
 `;
 
-export { ModalContent, ModalHeader, CloseButton, HeaderText, Text, Box };
+export { Box, CloseButton, HeaderText, ModalContent, ModalHeader, Text };

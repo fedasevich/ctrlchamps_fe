@@ -11,6 +11,17 @@ export interface Transaction {
   createdAt: string;
 }
 
+interface TransactionQuery {
+  offset?: number;
+  limit?: number;
+  userId: string;
+}
+
+export interface TransactionResponse {
+  data: Transaction[];
+  count: number;
+}
+
 export const transactionsApi = createApi({
   reducerPath: 'transactionsApi',
   baseQuery: fetchBaseQuery({
@@ -28,8 +39,10 @@ export const transactionsApi = createApi({
   }),
   tagTypes: ['Transactions'],
   endpoints: (builder) => ({
-    getTransactions: builder.query<Transaction[], string>({
-      query: (userId) => ({ url: `${route.transactions}/${userId}` }),
+    getTransactions: builder.query<TransactionResponse, TransactionQuery>({
+      query: ({ userId, limit, offset }) => ({
+        url: `${route.transactions}/${userId}?limit=${limit}&offset=${offset}`,
+      }),
       providesTags: ['Transactions'],
     }),
     updateBalance: builder.mutation<void, number>({

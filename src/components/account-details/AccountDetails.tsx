@@ -5,19 +5,19 @@ import {
   Button,
   FormControl,
   FormControlLabel,
-  Switch,
   IconButton,
   MenuItem,
-  TableHead,
-  TableBody,
-  Table,
-  SelectChangeEvent,
   Select,
+  SelectChangeEvent,
+  Switch,
+  Table,
+  TableBody,
+  TableHead,
 } from '@mui/material';
+import { format, parseISO } from 'date-fns';
 import { ChangeEvent, useState } from 'react';
 import { Controller, ControllerRenderProps, useForm } from 'react-hook-form';
 import { ReactElement } from 'react-markdown/lib/react-markdown';
-import { parseISO, format } from 'date-fns';
 
 import EditSquare from 'src/assets/icons/EditSquare';
 import Modal from 'src/components/reusable/modal/Modal';
@@ -30,8 +30,8 @@ import {
   USER_STATUS,
 } from 'src/constants';
 import { useLocales } from 'src/locales';
-import { User, useUpdateUserMutation, useUploadAvatarMutation } from 'src/redux/api/userApi';
 import { useGetTransactionsQuery } from 'src/redux/api/transactionsApi';
+import { User, useUpdateUserMutation, useUploadAvatarMutation } from 'src/redux/api/userApi';
 import { SECONDARY } from 'src/theme/colors';
 import { TYPOGRAPHY } from 'src/theme/fonts';
 
@@ -39,27 +39,27 @@ import AddressModal from './address-modal/AddressModal';
 import { MAX_FILE_SIZE_BYTES } from './constants';
 import PersonalInfoModal from './personal-info-modal/PersonalInfoModal';
 import { ErrorMessage } from './personal-info-modal/styles';
-import { AvatarValues } from './types';
-import UpdatePassword from './update-password-form/UpdatePassword';
-import { useAvatarSchema } from './validation';
 import {
   AvatarContainer,
   AvatarIconContainer,
   Background,
   Block,
+  ButtonContainer,
   Container,
   EditButton,
   Item,
   Label,
   List,
+  StatusBlock,
   StyledAvatar,
   Subtitle,
   Title,
   Value,
   VisuallyHiddenInput,
-  ButtonContainer,
-  StatusBlock,
 } from './styles';
+import { AvatarValues } from './types';
+import UpdatePassword from './update-password-form/UpdatePassword';
+import { useAvatarSchema } from './validation';
 
 import { StyledTableCell, StyledTableRow, TableHeader } from '../user-list/styles';
 
@@ -80,7 +80,7 @@ export default function AccountDetails({ user, isAdmin }: IProps): JSX.Element |
   const [addressUpdated, setAddressUpdated] = useState<boolean>(false);
   const [statusUpdated, setStatusUpdated] = useState<boolean>(false);
 
-  const { data: transactions = [] } = useGetTransactionsQuery(user.id);
+  const { data: transactions = { data: [] } } = useGetTransactionsQuery({ userId: user.id });
 
   const [uploadAvatar] = useUploadAvatarMutation();
   const [deleteAvatar] = useUpdateUserMutation();
@@ -276,7 +276,7 @@ export default function AccountDetails({ user, isAdmin }: IProps): JSX.Element |
             </StatusBlock>
             <Block>
               <Subtitle>{translate('userList.transactions')}</Subtitle>
-              {transactions.length > 0 ? (
+              {transactions.data.length > 0 ? (
                 <Table>
                   <TableHead>
                     <StyledTableRow>
@@ -286,7 +286,7 @@ export default function AccountDetails({ user, isAdmin }: IProps): JSX.Element |
                     </StyledTableRow>
                   </TableHead>
                   <TableBody>
-                    {transactions.map((transaction) => (
+                    {transactions.data.map((transaction) => (
                       <StyledTableRow key={transaction.id}>
                         <StyledTableCell>
                           {format(

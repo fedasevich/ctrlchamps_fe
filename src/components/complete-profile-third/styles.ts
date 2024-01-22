@@ -1,7 +1,7 @@
 import { Button, Typography, styled } from '@mui/material';
+import { PRIMARY, SECONDARY } from 'src/theme/colors';
 import { TYPOGRAPHY } from 'src/theme/fonts';
 import typography from 'src/theme/typography';
-import { SECONDARY, PRIMARY } from 'src/theme/colors';
 
 export const Wrapper = styled('div')`
   height: 100%;
@@ -10,6 +10,10 @@ export const Wrapper = styled('div')`
   gap: 24px;
   width: 400px;
   margin: 0 auto;
+
+  ${({ theme }): string => theme.breakpoints.down('sm')} {
+    width: 300px;
+  }
 `;
 
 export const StyledForm = styled('form')`

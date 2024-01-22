@@ -8,4 +8,10 @@ export const StepperWrapper = styled('div')`
 export const StyledStepper = styled(Stepper)`
   width: 60%;
   margin: 0 auto;
+
+  ${({ theme }): string => theme.breakpoints.down('md')} {
+    width: 90%;
+    overflow-x: scroll;
+    overflow-y: hidden;
+  }
 `;

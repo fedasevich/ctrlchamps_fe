@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from 'react';
 import { Typography } from '@mui/material';
-import { selectActivity } from 'src/redux/slices/healthQuestionnaireSlice';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from 'src/redux/rootReducer';
-import { useLocales } from 'src/locales';
 import {
   ToggleButtonGroupStyled,
   ToggleButtonStyled,
 } from 'src/components/health-questionnaire/styles';
+import { useLocales } from 'src/locales';
+import { RootState } from 'src/redux/rootReducer';
+import { selectActivity } from 'src/redux/slices/healthQuestionnaireSlice';
 
 type Activity = {
   id: string;

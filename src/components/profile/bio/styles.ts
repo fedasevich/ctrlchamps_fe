@@ -1,6 +1,6 @@
-import { Button, FormControl, IconButton, Typography, styled } from '@mui/material';
 import DoNotDisturbAltIcon from '@mui/icons-material/DoNotDisturbAlt';
 import VideocamOutlinedIcon from '@mui/icons-material/VideocamOutlined';
+import { Button, FormControl, IconButton, Typography, styled } from '@mui/material';
 
 import { PRIMARY, SECONDARY } from 'src/theme/colors';
 import { TYPOGRAPHY } from 'src/theme/fonts';
@@ -33,6 +33,10 @@ export const StyledForm = styled('form')`
   margin: 0 auto;
   font-size: ${TYPOGRAPHY.base}px;
   font-weight: ${typography.fontWeightMedium};
+
+  ${({ theme }): string => theme.breakpoints.down('sm')} {
+    width: 300px;
+  }
 `;
 
 export const MediaWrapper = styled('div')`

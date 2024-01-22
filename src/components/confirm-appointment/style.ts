@@ -15,12 +15,20 @@ const Container = styled('div')`
   margin: 24px 0;
   height: fit-content;
   box-shadow: 0px 1px 16px 0px ${SECONDARY.gray_shadow};
+
+  ${({ theme }): string => theme.breakpoints.down('sm')} {
+    width: clamp(280px, 90%, 500px);
+  }
 `;
 
 const InnerContainer = styled('div')`
   width: 560px;
   background: ${PRIMARY.white};
   border-radius: 4px;
+
+  ${({ theme }): string => theme.breakpoints.down('sm')} {
+    width: 100%;
+  }
 `;
 
 const Typography = styled('p')`
@@ -61,6 +69,7 @@ const Task = styled('div')`
   font-size: ${TYPOGRAPHY.base_sm}px;
   font-weight: ${typography.fontWeightMedium};
   cursor: pointer;
+
   &:not(:last-child) {
     border-bottom: 1px solid ${SECONDARY.light_gray};
   }
@@ -87,6 +96,10 @@ const ModalWrapper = styled('div')`
   background-color: ${PRIMARY.white};
   border-radius: 4px;
   box-shadow: 0px 4px 16px 0px ${SECONDARY.backdrop_background};
+
+  ${({ theme }): string => theme.breakpoints.down('sm')} {
+    width: clamp(280px, 90%, 500px);
+  }
 `;
 
 const ModalHeader = styled('div')`
@@ -171,13 +184,19 @@ const ConfirmModalContainer = styled('div')`
   width: 560px;
   max-height: 400px;
   overflow-y: scroll;
+
   &::-webkit-scrollbar {
     width: 4px;
     background: ${SECONDARY.light_gray};
   }
+
   &::-webkit-scrollbar-thumb {
     background: ${SECONDARY.gray_shadow};
     border-radius: 5px;
+  }
+
+  ${({ theme }): string => theme.breakpoints.down('sm')} {
+    width: 100%;
   }
 `;
 
@@ -213,6 +232,10 @@ const TasksBtns = styled('div')`
 
 const ModalContainer = styled('div')`
   width: 480px;
+
+  ${({ theme }): string => theme.breakpoints.down('sm')} {
+    width: 100%;
+  }
 `;
 
 const ModalContent = styled('div')`
@@ -233,7 +256,7 @@ const ChargeMessage = styled('p')`
   border-radius: 4px;
   svg {
     margin-top: 5px;
-    width: 24px;
+    min-width: 24px;
     height: 16px;
   }
 `;
@@ -243,35 +266,35 @@ const IconWrapper = styled('div')`
 `;
 
 export {
-  PageBackground,
-  Container,
+  BackDrop,
+  Background,
+  BtnContainer,
+  ButtonWrapper,
+  ChargeMessage,
+  CloseButton,
   ConfirmModalContainer,
-  InnerContainer,
-  Typography,
-  Name,
-  LinkToProfile,
-  SubTitle,
+  Container,
+  CustomTasksContainer,
+  EditButton,
   Header,
   HeaderTitle,
-  TasksWrapper,
-  Task,
-  TasksContainer,
-  Background,
-  BackDrop,
-  StyledForm,
-  StyledListItemButton,
-  StyledButton,
-  ModalWrapper,
-  ButtonWrapper,
-  BtnContainer,
-  EditButton,
-  CloseButton,
-  TasksBtns,
-  ModalHeader,
+  IconWrapper,
+  InnerContainer,
+  LinkToProfile,
   ModalContainer,
   ModalContent,
-  IconWrapper,
-  CustomTasksContainer,
+  ModalHeader,
+  ModalWrapper,
+  Name,
+  PageBackground,
+  StyledButton,
+  StyledForm,
+  StyledListItemButton,
+  SubTitle,
+  Task,
+  TasksBtns,
+  TasksContainer,
+  TasksWrapper,
   TextContainer,
-  ChargeMessage,
+  Typography,
 };

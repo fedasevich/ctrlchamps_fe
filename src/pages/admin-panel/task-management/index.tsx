@@ -1,11 +1,11 @@
-import { Stack } from '@mui/material';
 import Head from 'next/head';
 
+import TasksManagement from 'src/components/admin-management/tasks/TasksManagement';
 import AdminMenu from 'src/components/admin-menu/AdminMenu';
+import { AdminPageStyledStack } from 'src/components/admin-menu/styles';
 import { PrivateRoute } from 'src/components/private-route/PrivateRoute';
 import { USER_ROLE } from 'src/constants';
 import { useLocales } from 'src/locales';
-import TasksManagement from 'src/components/admin-management/tasks/TasksManagement';
 
 export default function TasksManagementPage(): JSX.Element {
   const { translate } = useLocales();
@@ -15,10 +15,10 @@ export default function TasksManagementPage(): JSX.Element {
       <Head>
         <title>{translate('adminManagement.title')}</title>
       </Head>
-      <Stack direction="row">
+      <AdminPageStyledStack direction="row">
         <AdminMenu />
         <TasksManagement />
-      </Stack>
+      </AdminPageStyledStack>
     </PrivateRoute>
   );
 }

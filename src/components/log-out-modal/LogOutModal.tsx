@@ -1,8 +1,8 @@
 import { useLocales } from 'src/locales';
-import { useAppDispatch } from 'src/redux/store';
 import { removeToken } from 'src/redux/slices/tokenSlice';
 import { removeUser } from 'src/redux/slices/userSlice';
-import { Container, SubTitle, DoubleButtonBox, StyledButton, CancelBtn } from './styles';
+import { useAppDispatch } from 'src/redux/store';
+import { CancelBtn, Container, DoubleButtonBox, StyledButton, SubTitle } from './styles';
 
 interface IProps {
   onClose: () => void;

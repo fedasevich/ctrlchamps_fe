@@ -4,7 +4,7 @@ import { TYPOGRAPHY } from 'src/theme/fonts';
 import typography from 'src/theme/typography';
 
 export const Container = styled('div')`
-  width: 430px;
+  max-width: 430px;
 `;
 
 export const SubTitle = styled('p')`
@@ -21,6 +21,10 @@ export const SubTitle = styled('p')`
 export const DoubleButtonBox = styled('div')`
   display: flex;
   gap: 16px;
+  height: 50px;
+  ${({ theme }): string => theme.breakpoints.down('sm')} {
+    height: 40px;
+  }
 `;
 
 export const CancelBtn = styled(Button)`
@@ -38,4 +42,7 @@ export const CancelBtn = styled(Button)`
 export const StyledButton = styled(Button)`
   border-radius: 4px;
   width: 100%;
+  ${({ theme }): string => theme.breakpoints.down('sm')} {
+    hline-height: 1.05;
+  }
 `;

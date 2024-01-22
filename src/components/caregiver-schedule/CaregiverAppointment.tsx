@@ -1,7 +1,7 @@
 import { Stack } from '@mui/material';
 import AccessTimeIcon from 'src/assets/icons/AccessTimeIcon';
 import AppointmentStatus from 'src/components/appointments/appointment-status/AppointmentStatus';
-import { DISPLAY_TIME_FORMAT, TINY_AVATAR_SIZE } from 'src/constants';
+import { APPOINTMENT_STATUS, DISPLAY_TIME_FORMAT, TINY_AVATAR_SIZE } from 'src/constants';
 import { useLocales } from 'src/locales';
 import { formatTimeToTimezone } from 'src/utils/formatTime';
 import {
@@ -31,7 +31,7 @@ export default function CaregiverAppointment({ appointmentDays, openDrawer }: Pr
       <HeaderText>{translate('appointments')}</HeaderText>
 
       {appointmentDays.map((appointment) => (
-        <Task key={appointment.id}>
+        <Task key={appointment.id} onClick={(): void => openDrawer(appointment.id)}>
           <AppointmentInfo>
             <AppointmentHeader>
               <TaskText>{appointment.name}</TaskText>
@@ -40,13 +40,24 @@ export default function CaregiverAppointment({ appointmentDays, openDrawer }: Pr
             <AppointmentDetails>
               <Details>
                 <AccessTimeIcon />
-                <Text>
-                  {formatTimeToTimezone(
-                    appointment.startDate,
-                    appointment.caregiverInfo.timeZone,
-                    DISPLAY_TIME_FORMAT
-                  )}
-                </Text>
+                {appointment.status === APPOINTMENT_STATUS.Virtual &&
+                appointment.virtualAssessment ? (
+                  <Text>
+                    {formatTimeToTimezone(
+                      `${appointment.virtualAssessment.assessmentDate} ${appointment.virtualAssessment.startTime}`,
+                      appointment.timezone,
+                      DISPLAY_TIME_FORMAT
+                    )}
+                  </Text>
+                ) : (
+                  <Text>
+                    {formatTimeToTimezone(
+                      appointment.startDate,
+                      appointment.timezone,
+                      DISPLAY_TIME_FORMAT
+                    )}
+                  </Text>
+                )}
               </Details>
               <Details>
                 <UserAvatar userId={appointment.user.id} size={TINY_AVATAR_SIZE} />
@@ -54,7 +65,7 @@ export default function CaregiverAppointment({ appointmentDays, openDrawer }: Pr
               </Details>
             </AppointmentDetails>
           </AppointmentInfo>
-          <Arrow onClick={(): void => openDrawer(appointment.id)} />
+          <Arrow />
         </Task>
       ))}
     </Stack>

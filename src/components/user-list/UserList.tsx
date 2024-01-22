@@ -26,9 +26,13 @@ import { useDebounce } from 'src/hooks/useDebounce';
 import { useGetFilteredUsersQuery, useUpdateUserMutation } from 'src/redux/api/userApi';
 import { PRIMARY } from 'src/theme/colors';
 
+import UpdateSuccess from 'src/components/reusable/update-success/UpdateSuccess';
+import { GreenSpan } from 'src/components/admin-management/styles';
+import Modal from 'src/components/reusable/modal/Modal';
 import { DEBOUNCE_DELAY, FIRST_PAGE, PAGINATION_USERS_LIMIT } from './constants';
 import {
   MainWrapper,
+  StyledStack,
   PageName,
   Cylinder,
   SearchContainer,
@@ -39,8 +43,6 @@ import {
   Title,
   StyledButton,
 } from './styles';
-import Modal from '../reusable/modal/Modal';
-import UpdateSuccess from '../reusable/update-success/UpdateSuccess';
 
 export default function UserList(): JSX.Element | null {
   const { translate } = useLocales();
@@ -151,7 +153,7 @@ export default function UserList(): JSX.Element | null {
                 </IconButton>
               )}
             </SearchContainer>
-            <Stack mt={3}>
+            <StyledStack mt={3}>
               <Table>
                 <TableHead>
                   <StyledTableRow>
@@ -167,7 +169,9 @@ export default function UserList(): JSX.Element | null {
                       <StyledTableCell>
                         {user.firstName} {user.lastName}
                       </StyledTableCell>
-                      <StyledTableCell>{user.role}</StyledTableCell>
+                      <StyledTableCell>
+                        <GreenSpan role={user.role}>{user.role}</GreenSpan>
+                      </StyledTableCell>
                       <StyledTableCell>
                         <Select
                           value={user.status}
@@ -194,7 +198,7 @@ export default function UserList(): JSX.Element | null {
                   ))}
                 </TableBody>
               </Table>
-            </Stack>
+            </StyledStack>
             <Stack display="flex" direction="row" justifyContent="center" mt={2}>
               <Pagination
                 count={Math.ceil(users!.count / PAGINATION_USERS_LIMIT)}

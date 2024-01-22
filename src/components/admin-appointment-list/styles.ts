@@ -6,6 +6,7 @@ import {
   Typography,
   styled,
 } from '@mui/material';
+import { Stack } from '@mui/system';
 import { APPOINTMENT_STATUS } from 'src/constants';
 
 import { PRIMARY, SECONDARY, TEXT_COLOR } from 'src/theme/colors';
@@ -14,12 +15,16 @@ import typography from 'src/theme/typography';
 
 export const MainWrapper = styled('div')`
   width: 100%;
+  overflow: hidden;
   margin: 40px 25px 40px 15px;
   padding-left: 20px;
   padding-top: 15px;
   background-color: ${SECONDARY.background_gray};
   font-weight: ${typography.fontWeightBold};
   font-size: ${TYPOGRAPHY.sm}px;
+  ${({ theme }): string => theme.breakpoints.down('sm')} {
+    margin: 40px 5px 40px 5px;
+  }
 `;
 
 export const ManagementWrapper = styled('div')`
@@ -129,4 +134,20 @@ export const StyledButton = styled(Button)`
   width: 100%;
   height: 40px;
   margin: 0 auto;
+`;
+
+export const StyledStack = styled(Stack)`
+  overflow-x: scroll;
+  &::-webkit-scrollbar {
+    height: 8px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: ${SECONDARY.light_gray};
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: ${SECONDARY.gray_shadow};
+    border-radius: 10px;
+  }
 `;

@@ -15,7 +15,7 @@ export default function AdminManagementPage(): JSX.Element {
       <Head>
         <title>{translate('adminManagement.title')}</title>
       </Head>
-      <AdminPageStyledStack>
+      <AdminPageStyledStack direction="row">
         <AdminMenu />
         <AdminManagement />
       </AdminPageStyledStack>

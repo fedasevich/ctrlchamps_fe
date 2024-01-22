@@ -1,4 +1,7 @@
-import { ChangeEvent, useEffect, useState } from 'react';
+import DeleteForeverOutlinedIcon from '@mui/icons-material/DeleteForeverOutlined';
+import FormatLineSpacingIcon from '@mui/icons-material/FormatLineSpacing';
+import SearchIcon from '@mui/icons-material/Search';
+import VisibilityIcon from '@mui/icons-material/Visibility';
 import {
   Box,
   InputAdornment,
@@ -10,39 +13,37 @@ import {
   TableHead,
   Typography,
 } from '@mui/material';
-import SearchIcon from '@mui/icons-material/Search';
-import FormatLineSpacingIcon from '@mui/icons-material/FormatLineSpacing';
-import DeleteForeverOutlinedIcon from '@mui/icons-material/DeleteForeverOutlined';
-import VisibilityIcon from '@mui/icons-material/Visibility';
+import { ChangeEvent, useEffect, useState } from 'react';
 
-import { useLocales } from 'src/locales';
-import Modal from 'src/components/reusable/modal/Modal';
-import { useDeleteAppointmentMutation } from 'src/redux/api/appointmentApi';
-import { useGetAllAppointmentsQuery } from 'src/redux/api/adminPanelAPI';
-import { useDebounce } from 'src/hooks/useDebounce';
-import { calculateDateDifference } from 'src/utils/calculateDateDifference';
 import { format } from 'date-fns';
+import Modal from 'src/components/reusable/modal/Modal';
 import { APPOINTMENT_STATUS, DATE_FORMAT, USER_ROLE } from 'src/constants';
 import { SortOrder } from 'src/constants/enums';
+import { useDebounce } from 'src/hooks/useDebounce';
+import { useLocales } from 'src/locales';
+import { ActivityLog, ActivityLogStatus } from 'src/redux/api/activityLogApi';
+import { useGetAllAppointmentsQuery } from 'src/redux/api/adminPanelAPI';
+import { useDeleteAppointmentMutation } from 'src/redux/api/appointmentApi';
 import { PRIMARY } from 'src/theme/colors';
+import { calculateDateDifference } from 'src/utils/calculateDateDifference';
+import AppointmentDrawer from '../appointments/appointment-drawer/AppointmentDrawer';
+import AppointmentStatus from '../appointments/appointment-status/AppointmentStatus';
+import { DEBOUNCE_DELAY, FIRST_PAGE, PAGINATION_APPOINTMENTS_LIMIT } from './constants';
 import {
   ActionBar,
-  Cylinder,
   ColorSpan,
+  Cylinder,
   IconButton,
   MainWrapper,
   ManagementWrapper,
   PageName,
   StyledButton,
+  StyledStack,
   TableCell,
   TableHeader,
   TableRow,
   Title,
-  StyledStack,
 } from './styles';
-import { DEBOUNCE_DELAY, FIRST_PAGE, PAGINATION_APPOINTMENTS_LIMIT } from './constants';
-import AppointmentDrawer from '../appointments/appointment-drawer/AppointmentDrawer';
-import AppointmentStatus from '../appointments/appointment-status/AppointmentStatus';
 
 function AdminAppointmentList(): JSX.Element | null {
   const { translate } = useLocales();
@@ -70,6 +71,17 @@ function AdminAppointmentList(): JSX.Element | null {
   });
 
   const [deleteAppointment] = useDeleteAppointmentMutation();
+
+  const calculateActivityLogsQuantity = (
+    activityLogs: ActivityLog[],
+    status: ActivityLogStatus
+  ): number => {
+    const filteredActivityLogs = activityLogs.filter(
+      (activityLog) => activityLog.status === status
+    );
+
+    return filteredActivityLogs.length;
+  };
 
   const toggleSort = (): void => {
     if (sort === SortOrder.ASC) {
@@ -168,6 +180,8 @@ function AdminAppointmentList(): JSX.Element | null {
                     <TableHeader>{translate('adminAppointmentList.creation_date')}</TableHeader>
                     <TableHeader>{translate('adminAppointmentList.end_date')}</TableHeader>
                     <TableHeader>{translate('adminAppointmentList.status')}</TableHeader>
+                    <TableHeader>{translate('adminAppointmentList.approved_logs')}</TableHeader>
+                    <TableHeader>{translate('adminAppointmentList.rejected_logs')}</TableHeader>
                     <TableHeader>{translate('adminAppointmentList.clientName')}</TableHeader>
                     <TableHeader>{translate('adminAppointmentList.caregiverName')}</TableHeader>
                     <TableHeader align="right">
@@ -191,6 +205,18 @@ function AdminAppointmentList(): JSX.Element | null {
                         </ColorSpan>
                       </TableCell>
                       <TableCell>
+                        {calculateActivityLogsQuantity(
+                          appointment.activityLog,
+                          ActivityLogStatus.Approved
+                        )}
+                      </TableCell>
+                      <TableCell>
+                        {calculateActivityLogsQuantity(
+                          appointment.activityLog,
+                          ActivityLogStatus.Rejected
+                        )}
+                      </TableCell>
+                      <TableCell>
                         {appointment.user.firstName} {appointment.user.lastName}
                       </TableCell>
                       <TableCell>
@@ -199,7 +225,7 @@ function AdminAppointmentList(): JSX.Element | null {
                       </TableCell>
                       <TableCell
                         align="right"
-                        sx={{ display: 'flex', justifyContent: 'space-evenly' }}
+                        sx={{ display: 'flex', justifyContent: 'space-evenly', height: '133px' }}
                       >
                         {appointment.status === APPOINTMENT_STATUS.Finished && (
                           <IconButton

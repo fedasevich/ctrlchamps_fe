@@ -56,6 +56,13 @@ export default function UserList(): JSX.Element | null {
   const [deleteUserId, setDeleteUserId] = useState<string>('');
   const [statusUpdated, setStatusUpdated] = useState<boolean>(false);
   const [userDeleted, setUserDeleted] = useState<boolean>(false);
+  const { currentPage } = router.query;
+
+  useEffect(() => {
+    if (currentPage) {
+      setPage(Number(currentPage));
+    }
+  }, [currentPage]);
 
   const debouncedSearchTerm = useDebounce(termSearch.trim(), DEBOUNCE_DELAY);
 
@@ -196,7 +203,10 @@ export default function UserList(): JSX.Element | null {
                       <StyledTableCell align="right">
                         <IconButton
                           onClick={(): Promise<boolean> =>
-                            router.push(`${ROUTES.adminAccountDetails}${user.id}`)
+                            router.push({
+                              pathname: `${ROUTES.adminAccountDetails}${user.id}`,
+                              query: { page },
+                            })
                           }
                         >
                           <ModeEditOutlineOutlinedIcon />

@@ -175,6 +175,7 @@ function AdminAppointmentList(): JSX.Element | null {
                 <TableHead>
                   <TableRow>
                     <TableHeader>{translate('adminAppointmentList.id')}</TableHeader>
+                    <TableHeader>{translate('adminAppointmentList.name')}</TableHeader>
                     <TableHeader>{translate('adminAppointmentList.type')}</TableHeader>
                     <TableHeader>{translate('adminAppointmentList.duration')}</TableHeader>
                     <TableHeader>{translate('adminAppointmentList.creation_date')}</TableHeader>
@@ -193,6 +194,7 @@ function AdminAppointmentList(): JSX.Element | null {
                   {appointments.appointments.map((appointment) => (
                     <TableRow key={appointment.id}>
                       <TableCell>{appointment.id}</TableCell>
+                      <TableCell>{appointment.name}</TableCell>
                       <TableCell>{appointment.type}</TableCell>
                       <TableCell>
                         {calculateDateDifference(appointment.startDate, appointment.endDate)}

@@ -940,6 +940,7 @@ const en = {
     title: 'Appointments',
     search: 'Search',
     id: 'Appointment ID',
+    name: 'Appointment name',
     type: 'Type',
     duration: 'Duration',
     creation_date: 'Date of creation',

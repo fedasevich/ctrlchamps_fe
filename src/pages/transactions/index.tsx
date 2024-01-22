@@ -5,7 +5,8 @@ import AppointmentDrawer from 'src/components/appointments/appointment-drawer/Ap
 import { Background } from 'src/components/appointments/styles';
 import MainHeader from 'src/components/reusable/header/MainHeader';
 import TransactionsModal from 'src/components/transactions/TransactionsModal';
-import { DEFAULT_REDIRECT_PATH } from 'src/constants';
+import { PAGINATION_LIMIT } from 'src/components/transactions/constants';
+import { DEFAULT_REDIRECT_PATH, FIRST_PAGE } from 'src/constants';
 import { useLocales } from 'src/locales';
 import { useGetTransactionsQuery } from 'src/redux/api/transactionsApi';
 import { UserRole } from 'src/redux/slices/userSlice';
@@ -16,6 +17,7 @@ const TransactionsModalPage = (): JSX.Element | null => {
   const { translate } = useLocales();
   const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(false);
   const [selectedAppointmentId, setSelectedAppointmentId] = useState<string>('');
+  const [page, setPage] = useState<number>(FIRST_PAGE);
 
   const user = useTypedSelector((state) => state.user.user);
 
@@ -26,7 +28,11 @@ const TransactionsModalPage = (): JSX.Element | null => {
   }, [user, router]);
 
   const { id, role } = user || { id: '', role: '' };
-  const { data: transactions } = useGetTransactionsQuery(id);
+  const { data: transactions } = useGetTransactionsQuery({
+    userId: id,
+    offset: (page - FIRST_PAGE) * PAGINATION_LIMIT,
+    limit: PAGINATION_LIMIT,
+  });
 
   if (!user) {
     return null;
@@ -50,6 +56,8 @@ const TransactionsModalPage = (): JSX.Element | null => {
           count={transactions?.count || 0}
           role={role as UserRole}
           openDrawer={openDrawer}
+          page={page}
+          setPage={setPage}
         />
         {selectedAppointmentId && (
           <AppointmentDrawer

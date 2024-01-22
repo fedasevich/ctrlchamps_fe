@@ -94,6 +94,9 @@ export const List = styled('ul')`
   row-gap: 16px;
   width: 100%;
   flex-wrap: wrap;
+  ${({ theme }): string => theme.breakpoints.down('sm')} {
+    gap: 5px;
+  }
 `;
 
 export const Item = styled('li')`

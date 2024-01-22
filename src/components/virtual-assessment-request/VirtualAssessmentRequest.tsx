@@ -13,7 +13,12 @@ import { AssessmentPurpose } from 'src/components/appointments/virtual-assessmen
 import UserAvatar from 'src/components/reusable/user-avatar/UserAvatar';
 import { FilledButton } from 'src/components/reusable';
 import FlowHeader from 'src/components/reusable/header/FlowHeader';
-import { SMALL_AVATAR_SIZE, USER_ROLE, VIRTUAL_ASSESSMENT_STATUS } from 'src/constants';
+import {
+  CURRENT_DAY,
+  SMALL_AVATAR_SIZE,
+  USER_ROLE,
+  VIRTUAL_ASSESSMENT_STATUS,
+} from 'src/constants';
 import { useLocales } from 'src/locales';
 import { virtualAssessmentApi } from 'src/redux/api/virtualAssessmentApi';
 import { useTypedSelector } from 'src/redux/store';
@@ -60,13 +65,6 @@ const VirtualAssessmentRequestModal = ({
     virtualAssessmentApi.useUpdateVirtualAssessmentStatusMutation();
 
   const userId = useMemo(() => decodeToken(token), [token]);
-
-  const virtualAssessmentTime =
-    appointment.virtualAssessment &&
-    setCustomTime(
-      appointment.virtualAssessment.assessmentDate,
-      appointment.virtualAssessment.startTime.slice(0, -3)
-    );
 
   const copyMeetingLink = (): void => {
     if (!appointment.virtualAssessment) return;
@@ -141,10 +139,10 @@ const VirtualAssessmentRequestModal = ({
             <AppointmentModalBlockParagraph>
               {translate('request_appointment.date_and_time')}
             </AppointmentModalBlockParagraph>
-            {virtualAssessmentTime &&
+            {appointment.virtualAssessment &&
               formatTimeToTimezone(
-                virtualAssessmentTime.toString(),
-                Intl.DateTimeFormat().resolvedOptions().timeZone,
+                `${appointment.virtualAssessment.assessmentDate} ${appointment.virtualAssessment.startTime}`,
+                appointment.timezone,
                 DRAWER_DATE_FORMAT
               )}
           </AppointmentModalBlock>
@@ -185,12 +183,46 @@ const VirtualAssessmentRequestModal = ({
                     variant="outlined"
                     color="primary"
                     fullWidth
+                    disabled={
+                      formatTimeToTimezone(
+                        appointment.startDate,
+                        appointment.timezone,
+                        DRAWER_DATE_FORMAT
+                      ) <
+                      formatTimeToTimezone(
+                        CURRENT_DAY.toString(),
+                        appointment.timezone,
+                        DRAWER_DATE_FORMAT
+                      )
+                    }
                     onClick={openReschedulingModal}
                   >
                     {translate('request_appointment.btns.reschedule')}
                   </Button>
                   <FilledButton
                     fullWidth
+                    disabled={
+                      formatTimeToTimezone(
+                        appointment.startDate,
+                        appointment.timezone,
+                        DRAWER_DATE_FORMAT
+                      ) <
+                        formatTimeToTimezone(
+                          CURRENT_DAY.toString(),
+                          appointment.timezone,
+                          DRAWER_DATE_FORMAT
+                        ) ||
+                      formatTimeToTimezone(
+                        appointment.virtualAssessment.assessmentDate.toString(),
+                        appointment.timezone,
+                        DRAWER_DATE_FORMAT
+                      ) <
+                        formatTimeToTimezone(
+                          CURRENT_DAY.toString(),
+                          appointment.timezone,
+                          DRAWER_DATE_FORMAT
+                        )
+                    }
                     onClick={async (): Promise<void> => {
                       await handleStatusChange(VIRTUAL_ASSESSMENT_STATUS.Accepted);
                     }}
@@ -233,7 +265,8 @@ const VirtualAssessmentRequestModal = ({
         purpose={AssessmentPurpose.reschedule}
         caregiverName={`${appointment?.caregiverInfo.user.firstName} ${appointment?.caregiverInfo.user.lastName}`}
         caregiverId={appointment.caregiverInfo.user.id}
-        appointmentId={appointment.id}
+        selectedAppointmentId={appointment.id}
+        appointment={appointment}
         onClose={closeReschedulingModal}
         isActive={reschedulingModalOpen && !appointment.virtualAssessment?.wasRescheduled}
         openVirtualAssessmentSuccess={openReschedulingSuccessModal}

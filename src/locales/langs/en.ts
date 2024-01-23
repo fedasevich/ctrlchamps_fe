@@ -956,6 +956,12 @@ const en = {
     yes: 'Yes',
     no: 'No',
   },
+  caregiverReview: {
+    title: 'Caregiver Review',
+    rate: 'Rate',
+    shareExperience: 'Feel free to share your experience',
+    reviewPlaceholder: 'Write a review',
+  }
 };
 
 export default en;

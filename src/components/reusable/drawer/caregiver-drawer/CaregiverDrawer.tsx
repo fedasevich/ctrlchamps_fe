@@ -17,6 +17,7 @@ import { useLocales } from 'src/locales';
 import { appointmentApi } from 'src/redux/api/appointmentApi';
 import { BIG_AVATAR_SIZE } from 'src/constants';
 
+import ReviewModal from 'src/components/review-modal/ReviewModal';
 import { FIRST_SELECTED_TAB } from './constants';
 import { formatWorkExperienceDateRange, formatWorkExperienceDateRangeTenure } from './helpers';
 import {
@@ -51,6 +52,10 @@ export default function CaregiverDrawer({
   const { translate, currentLang } = useLocales();
 
   const [selectedTab, setSelectedTab] = useState<string>(FIRST_SELECTED_TAB);
+  const [isReviewCaregiverModalActive, setIsReviewCaregiverModalActive] = useState<boolean>(true);
+
+  const handleReviewCaregiverModal = (): void =>
+    setIsReviewCaregiverModalActive(!isReviewCaregiverModalActive);
 
   const { data: selectedCaregiver, isLoading } =
     appointmentApi.useGetCaregiverDetailsQuery(caregiverId);
@@ -101,6 +106,7 @@ export default function CaregiverDrawer({
           <StyledTab label={translate('createAppointmentFourth.tabs.qualification')} value="2" />
           <StyledTab label={translate('createAppointmentFourth.tabs.workExperience')} value="3" />
           <StyledTab label={translate('createAppointmentFourth.tabs.services')} value="4" />
+          <StyledTab label="ReviewModal" value="5" />
         </StyledTabs>
         <DrawerBody>
           <StyledTabPanel value="1">
@@ -185,6 +191,19 @@ export default function CaregiverDrawer({
                   <li key={service}>{service}</li>
                 ))}
               </StyledUnorderedList>
+            </DrawerItem>
+          </StyledTabPanel>
+          <StyledTabPanel value="5">
+            <DrawerItem>
+              <button type="button" onClick={handleReviewCaregiverModal}>
+                ReviewModal
+              </button>
+              <ReviewModal
+                caregiverId={selectedCaregiver.id}
+                isReviewCaregiverModalActive={isReviewCaregiverModalActive}
+                handleReviewCaregiverModal={handleReviewCaregiverModal}
+                caregiverName={`${selectedCaregiver.firstName} ${selectedCaregiver.lastName}`}
+              />
             </DrawerItem>
           </StyledTabPanel>
         </DrawerBody>

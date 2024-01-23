@@ -80,7 +80,11 @@ export default function AccountDetails({ user, isAdmin }: IProps): JSX.Element |
   const [addressUpdated, setAddressUpdated] = useState<boolean>(false);
   const [statusUpdated, setStatusUpdated] = useState<boolean>(false);
 
-  const { data: transactions = { data: [] } } = useGetTransactionsQuery({ userId: user.id });
+  const { data: transactions } = useGetTransactionsQuery({
+    userId: user.id,
+    limit: 10,
+    offset: 0,
+  });
 
   const [uploadAvatar] = useUploadAvatarMutation();
   const [deleteAvatar] = useUpdateUserMutation();
@@ -276,7 +280,7 @@ export default function AccountDetails({ user, isAdmin }: IProps): JSX.Element |
             </StatusBlock>
             <Block>
               <Subtitle>{translate('userList.transactions')}</Subtitle>
-              {transactions.data.length > 0 ? (
+              {transactions && transactions.data.length > 0 ? (
                 <Table>
                   <TableHead>
                     <StyledTableRow>

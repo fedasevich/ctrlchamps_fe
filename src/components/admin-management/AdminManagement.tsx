@@ -199,11 +199,11 @@ function AdminManagement(): JSX.Element | null {
                 <Title>{translate('adminManagement.deleteWarning')}</Title>
 
                 <Box display="flex" gap={2}>
-                  <StyledButton variant="contained" onClick={handleDeleteModalToggle}>
+                  <StyledButton variant="contained" onClick={handleDeleteUser}>
                     {translate('adminManagement.yes')}
                   </StyledButton>
 
-                  <StyledButton variant="contained" color="error" onClick={handleDeleteUser}>
+                  <StyledButton variant="contained" color="error" onClick={handleDeleteModalToggle}>
                     {translate('adminManagement.no')}
                   </StyledButton>
                 </Box>

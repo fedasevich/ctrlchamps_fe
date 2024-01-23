@@ -2,12 +2,12 @@ import { IconButton } from '@mui/material';
 import { useEffect, useState } from 'react';
 
 import RightAction from 'src/assets/icons/RightAction';
-import { useLocales } from 'src/locales';
-import { PRIMARY } from 'src/theme/colors';
-import { useTypedSelector } from 'src/redux/store';
-import { NotificationStatus } from 'src/redux/api/notificationsApi';
 import AppointmentDrawer from 'src/components/appointments/appointment-drawer/AppointmentDrawer';
+import { NotificationStatus } from 'src/redux/api/notificationsApi';
+import { useTypedSelector } from 'src/redux/store';
+import { PRIMARY } from 'src/theme/colors';
 
+import { Trans, useTranslation } from 'react-i18next';
 import CaregiverDrawer from 'src/components/reusable/drawer/caregiver-drawer/CaregiverDrawer';
 import { useGetAppointmentQuery } from 'src/redux/api/appointmentApi';
 import { NOTIFICATION_STATUS } from './constants';
@@ -20,7 +20,7 @@ type Props = {
 };
 
 export default function NotificationItem({ status, username, appointmentId }: Props): JSX.Element {
-  const { translate } = useLocales();
+  const { t: translate } = useTranslation();
   const user = useTypedSelector((state) => state.user.user);
   const appointmentInfo = useGetAppointmentQuery(appointmentId);
 
@@ -51,7 +51,9 @@ export default function NotificationItem({ status, username, appointmentId }: Pr
           <icon.icon sx={{ color: PRIMARY.white }} />
         </IconBackground>
         <BaseText>
-          <BoldText>{username}</BoldText> {translate(text)}
+          <Trans i18nKey={text} values={{ username }}>
+            <BoldText /> {translate(text)}
+          </Trans>
         </BaseText>
         <IconButton
           edge="end"

@@ -1,6 +1,6 @@
 import { format, getHours, getMinutes, isToday, isWithinInterval, parseISO } from 'date-fns';
 import { utcToZonedTime } from 'date-fns-tz';
-import { APPOINTMENT_STATUS, APPOINTMENT_TYPE, USER_ROLE } from 'src/constants';
+import { APPOINTMENT_STATUS, APPOINTMENT_TYPE, USER_ROLE, UTC_TIMEZONE } from 'src/constants';
 import { ActivityLogStatus } from 'src/redux/api/activityLogApi';
 import { DetailedAppointment } from 'src/redux/api/appointmentApi';
 import { UserRole } from 'src/redux/slices/userSlice';
@@ -39,7 +39,7 @@ const isWithinAppointmentInterval = (now: Date, startDate: string, endDate: stri
  * @returns {boolean} True if the activity log should be shown, false otherwise.
  */
 export const isActivityLogShown = (appointment: DetailedAppointment): boolean => {
-  const { startDate, endDate, status, timezone, type, weekday } = appointment;
+  const { startDate, endDate, status, type, weekday } = appointment;
   if (
     type === APPOINTMENT_TYPE.OneTime &&
     [APPOINTMENT_STATUS.Completed, APPOINTMENT_STATUS.Finished].includes(status)
@@ -54,7 +54,7 @@ export const isActivityLogShown = (appointment: DetailedAppointment): boolean =>
   ].includes(status);
 
   if (type === APPOINTMENT_TYPE.Recurring && isAppointmentStatusAboutFinished) {
-    const now = utcToZonedTime(new Date(), timezone);
+    const now = utcToZonedTime(new Date(), UTC_TIMEZONE);
     const { isWorkingDay, hasPassedStartTime, hasPassedEndTime } = calculateDateInfo(
       now,
       startDate,
@@ -124,7 +124,7 @@ export const isActivityLogReviewedShown = (
   appointment: DetailedAppointment,
   role: UserRole
 ): boolean => {
-  const { activityLog, type, status, startDate, endDate, timezone, weekday } = appointment;
+  const { activityLog, type, status, startDate, endDate, weekday } = appointment;
 
   if (
     activityLog.length &&
@@ -135,7 +135,7 @@ export const isActivityLogReviewedShown = (
     return true;
   }
 
-  const now = utcToZonedTime(new Date(), timezone);
+  const now = utcToZonedTime(new Date(), UTC_TIMEZONE);
 
   if (
     role === USER_ROLE.Seeker &&
@@ -158,7 +158,7 @@ export const isActivityLogReviewedShown = (
     )
   ) {
     return (
-      activityLog.some((item) => isToday(parseISO(item.createdAt))) &&
+      activityLog.some((item) => isToday(parseISO(getISODateWithoutUTC(item.createdAt)))) &&
       isRecurringWorkingDay(now, weekday as string[])
     );
   }

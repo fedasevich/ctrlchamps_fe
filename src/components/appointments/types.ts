@@ -1,3 +1,5 @@
+import { ActivityLog } from 'src/redux/api/activityLogApi';
+
 export type Appointment = {
   id: string;
   userId: string;
@@ -16,6 +18,7 @@ export type Appointment = {
   weekdays?: string[];
   payment?: number;
   signingDate: string | null;
+  activityLog: ActivityLog[];
 };
 
 export type AppointmentsProps = {

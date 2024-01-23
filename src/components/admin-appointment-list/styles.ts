@@ -15,6 +15,7 @@ import typography from 'src/theme/typography';
 
 export const MainWrapper = styled('div')`
   width: 100%;
+  overflow: hidden;
   margin: 40px 25px 40px 15px;
   padding-left: 20px;
   padding-top: 15px;
@@ -135,4 +136,16 @@ export const StyledButton = styled(Button)`
 
 export const StyledStack = styled(Stack)`
   overflow-x: scroll;
+  &::-webkit-scrollbar {
+    height: 8px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: ${SECONDARY.light_gray};
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: ${SECONDARY.gray_shadow};
+    border-radius: 10px;
+  }
 `;

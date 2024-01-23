@@ -670,6 +670,8 @@ const en = {
     invalid_time:
       'Appointment cannot be ended before the start. Please choose another value in End Time field.',
     equal_time_error: 'You cannot choose identical time',
+    invalid_assessment_date:
+      'The virtual assessment should be scheduled to occur before the appointment.',
     server_error: 'Something went wrong',
     btns: {
       reschedule: 'Reschedule',
@@ -938,11 +940,14 @@ const en = {
     title: 'Appointments',
     search: 'Search',
     id: 'Appointment ID',
+    name: 'Appointment name',
     type: 'Type',
     duration: 'Duration',
     creation_date: 'Date of creation',
     end_date: 'End date',
     status: 'Appointment status',
+    approved_logs: 'Approved activity logs',
+    rejected_logs: 'Rejected activity logs',
     clientName: 'Client name',
     caregiverName: 'Caregiver name',
     actions: 'Actions',

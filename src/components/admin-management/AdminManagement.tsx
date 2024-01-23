@@ -10,6 +10,7 @@ import {
   Table,
   TableBody,
   TableHead,
+  Typography,
 } from '@mui/material';
 import { format, parseISO } from 'date-fns';
 import { useRouter } from 'next/router';
@@ -136,72 +137,80 @@ function AdminManagement(): JSX.Element | null {
           size="small"
         />
 
-        <StyledStack mt={3}>
-          <Table>
-            <TableHead>
-              <TableRow>
-                <TableHeader>{translate('adminManagement.name')}</TableHeader>
-                <TableHeader>{translate('adminManagement.email')}</TableHeader>
-                <TableHeader>{translate('adminManagement.typeUser')}</TableHeader>
-                <TableHeader>{translate('adminManagement.phone')}</TableHeader>
-                <TableHeader>{translate('adminManagement.date')}</TableHeader>
-                <TableHeader align="right">{translate('adminManagement.action')}</TableHeader>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {isSuccess &&
-                admins.data.map((admin) => (
-                  <TableRow key={admin.id}>
-                    <TableCell>
-                      {admin.firstName} {admin.lastName}
-                    </TableCell>
-                    <TableCell>{admin.email}</TableCell>
-                    <TableCell>
-                      <GreenSpan>{admin.role}</GreenSpan>
-                    </TableCell>
-                    <TableCell>{admin.phoneNumber}</TableCell>
-                    <TableCell>{format(parseISO(admin.updatedAt), DATE_FORMAT)}</TableCell>
-                    <TableCell align="right">
-                      <IconButton onClick={(): void => handleEditAdminClick(admin.id)}>
-                        <ModeEditOutlineOutlinedIcon />
-                      </IconButton>
-                      <IconButton onClick={(): void => handleCloseModalAndSetUserId(admin.id)}>
-                        <DeleteForeverOutlinedIcon />
-                      </IconButton>
-                    </TableCell>
+        {isSuccess && termSearch && !admins.data.length && (
+          <Typography color="GrayText" mt={2}>
+            {translate('no_results_match')}
+          </Typography>
+        )}
+
+        {isSuccess && admins.data.length > 0 && (
+          <>
+            <StyledStack mt={3}>
+              <Table>
+                <TableHead>
+                  <TableRow>
+                    <TableHeader>{translate('adminManagement.name')}</TableHeader>
+                    <TableHeader>{translate('adminManagement.email')}</TableHeader>
+                    <TableHeader>{translate('adminManagement.typeUser')}</TableHeader>
+                    <TableHeader>{translate('adminManagement.phone')}</TableHeader>
+                    <TableHeader>{translate('adminManagement.date')}</TableHeader>
+                    <TableHeader align="right">{translate('adminManagement.action')}</TableHeader>
                   </TableRow>
-                ))}
-            </TableBody>
-          </Table>
-        </StyledStack>
+                </TableHead>
+                <TableBody>
+                  {isSuccess &&
+                    admins.data.map((admin) => (
+                      <TableRow key={admin.id}>
+                        <TableCell>
+                          {admin.firstName} {admin.lastName}
+                        </TableCell>
+                        <TableCell>{admin.email}</TableCell>
+                        <TableCell>
+                          <GreenSpan>{admin.role}</GreenSpan>
+                        </TableCell>
+                        <TableCell>{admin.phoneNumber}</TableCell>
+                        <TableCell>{format(parseISO(admin.updatedAt), DATE_FORMAT)}</TableCell>
+                        <TableCell align="right">
+                          <IconButton onClick={(): void => handleEditAdminClick(admin.id)}>
+                            <ModeEditOutlineOutlinedIcon />
+                          </IconButton>
+                          <IconButton onClick={(): void => handleCloseModalAndSetUserId(admin.id)}>
+                            <DeleteForeverOutlinedIcon />
+                          </IconButton>
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                </TableBody>
+              </Table>
+            </StyledStack>
+            <Stack display="flex" direction="row" justifyContent="center" mt={2}>
+              <Pagination
+                count={Math.ceil(admins!.count / PAGINATION_ADMINS_LIMIT)}
+                page={page}
+                onChange={handlePageChange}
+              />
+            </Stack>
+            <Modal
+              isActive={isDeleteModalActive}
+              onClose={handleDeleteModalToggle}
+              title={translate('adminManagement.deleteUser')}
+            >
+              <Box display="flex" flexDirection="column">
+                <Title>{translate('adminManagement.deleteWarning')}</Title>
 
-        <Stack display="flex" direction="row" justifyContent="center" mt={2}>
-          <Pagination
-            count={Math.ceil(admins!.count / PAGINATION_ADMINS_LIMIT)}
-            page={page}
-            onChange={handlePageChange}
-          />
-        </Stack>
+                <Box display="flex" gap={2}>
+                  <StyledButton variant="contained" onClick={handleDeleteModalToggle}>
+                    {translate('adminManagement.yes')}
+                  </StyledButton>
 
-        <Modal
-          isActive={isDeleteModalActive}
-          onClose={handleDeleteModalToggle}
-          title={translate('adminManagement.deleteUser')}
-        >
-          <Box display="flex" flexDirection="column">
-            <Title>{translate('adminManagement.deleteWarning')}</Title>
-
-            <Box display="flex" gap={2}>
-              <StyledButton variant="contained" onClick={handleDeleteModalToggle}>
-                {translate('adminManagement.yes')}
-              </StyledButton>
-
-              <StyledButton variant="contained" color="error" onClick={handleDeleteUser}>
-                {translate('adminManagement.no')}
-              </StyledButton>
-            </Box>
-          </Box>
-        </Modal>
+                  <StyledButton variant="contained" color="error" onClick={handleDeleteUser}>
+                    {translate('adminManagement.no')}
+                  </StyledButton>
+                </Box>
+              </Box>
+            </Modal>
+          </>
+        )}
       </ManagementWrapper>
       <UpdateSuccess
         dataUpdated={userDeleted}

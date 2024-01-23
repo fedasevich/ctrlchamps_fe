@@ -36,7 +36,7 @@ export const SearchContainer = styled('div')`
 `;
 
 export const StyledStack = styled(Stack)`
-  overflow-x: scroll;
+  overflow-x: auto;
 `;
 
 export const StyledTableRow = styled(TableRow)`

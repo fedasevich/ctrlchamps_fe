@@ -79,7 +79,7 @@ export const APPOINTMENT_TYPE = {
   Recurring: 'Recurring',
 };
 
-export const HELP_EMAIL = 'help@ctrlchamps@gmail.com';
+export const HELP_EMAIL = 'ctrlchamps@gmail.com';
 export const TRANSACTION_EXAMPLE = 100;
 
 export const USER_STATUS = {

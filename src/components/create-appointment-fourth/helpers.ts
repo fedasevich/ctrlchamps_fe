@@ -54,7 +54,7 @@ export const serializeCaregiverFilterStateToQueryString = (
     return params;
   }, new URLSearchParams());
   services.forEach((item) => searchParams.append('services', item));
-  ratings.forEach((item) => searchParams.append('ratings', `${item}`));
+  ratings.forEach((item) => searchParams.append('ratings', item));
 
   return searchParams;
 };

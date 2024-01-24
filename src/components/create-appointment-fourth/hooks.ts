@@ -35,7 +35,7 @@ export function useCaregiverFilter(): CaregiverFilterReturnType {
     setCaregiverFilter((prev) => ({
       ...prev,
       ratings: prev.ratings.map((rating) =>
-        value === `${rating.label}` ? { ...rating, checked } : rating
+        value === rating.label ? { ...rating, checked } : rating
       ),
     }));
   };

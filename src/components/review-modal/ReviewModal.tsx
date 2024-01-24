@@ -43,7 +43,6 @@ export default function ReviewModal({
   const {
     handleSubmit,
     register,
-    watch,
     setValue,
     trigger,
     reset,
@@ -57,8 +56,8 @@ export default function ReviewModal({
   const { name, ref } = register('rating');
 
   const handleReviewCaregiverModal = (): void => {
-    setIsReviewCaregiverModalActive(!isReviewCaregiverModalActive);
     reset();
+    setIsReviewCaregiverModalActive(!isReviewCaregiverModalActive);
   };
 
   const handleRatingChange = (

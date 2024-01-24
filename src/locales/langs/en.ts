@@ -406,12 +406,16 @@ const en = {
     },
     bookAppointment: 'Book Appointment',
     numberOfAppointments: 'Appts.',
+    rating: 'Rating',
     rate: 'Rate',
+    sortingDate: 'Sort by date',
+    sortingRating: 'Sort by rating',
     tabs: {
       bio: 'Bio',
       qualification: 'Qualification',
       workExperience: 'Work Experience',
       services: 'Services',
+      reviews: 'Reviews',
     },
     period: 'Period',
     present: 'Present',
@@ -964,6 +968,7 @@ const en = {
     reviewPlaceholder: 'Write a review',
     leaveReview: 'Leave a Review',
     reviewMaxLengthError: `Review must be at most ${MAX_REVIEW_LENGTH} characters`,
+    reviewCaregiver: 'Review Caregiver',
   },
 };
 

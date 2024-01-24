@@ -5,11 +5,10 @@ import { TYPOGRAPHY } from 'src/theme/fonts';
 import typography from 'src/theme/typography';
 
 export const CaregiverInfo = styled('div')`
-  width: 375px;
-  margin-top: -10px;
   background-color: ${PRIMARY.white};
   padding-inline: 15px;
   margin-inline: -16px;
+  margin-top: -10px;
   padding-bottom: 5px;
 `;
 
@@ -69,22 +68,24 @@ export const StyledFormControl = styled(FormControl)`
   display: flex;
   justify-content: center;
   background-color: ${PRIMARY.white};
-  width: 375px;
   margin-inline: -16px;
   padding: 12px 15px;
   border-block: 1px solid ${SECONDARY.light_gray};
 `;
 
-export const StyledSubmitButton = styled(Button)`
+export const StyledButton = styled(Button)`
   border-radius: 4px;
   width: 100%;
   height: 40px;
 `;
 
 export const ButtonWrapper = styled('div')`
-  width: 375px;
   margin: 110px -16px -20px -16px;
   padding: 12px 15px;
   background-color: ${PRIMARY.white};
   border-top: 1px solid ${SECONDARY.light_gray};
+`;
+
+export const StyledForm = styled('form')`
+  width: 325px;
 `;

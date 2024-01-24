@@ -14,7 +14,7 @@ import { ROUTES } from 'src/routes';
 export default function AccountDetailsPageId(): JSX.Element | null {
   const { translate } = useLocales();
   const router = useRouter();
-  const { id } = router.query;
+  const { id, page } = router.query;
 
   const { data: user, isLoading, isSuccess } = useGetUserInfoQuery(id);
 
@@ -30,7 +30,12 @@ export default function AccountDetailsPageId(): JSX.Element | null {
         <MainWrapper>
           <BackButton
             variant="text"
-            onClick={(): Promise<boolean> => router.push(ROUTES.adminPanel)}
+            onClick={(): Promise<boolean> =>
+              router.push({
+                pathname: `${ROUTES.adminPanel}`,
+                query: { currentPage: page },
+              })
+            }
           >
             <ArrowBackFilled />
             {translate('userList.title')}

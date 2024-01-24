@@ -12,9 +12,10 @@ import {
   RatingWrapper,
   StyledFormControl,
   StyledRating,
-  StyledSubmitButton,
+  StyledButton,
   SubTitle,
   UserRole,
+  StyledForm,
 } from 'src/components/review-modal/styles';
 import { SMALL_AVATAR_SIZE } from 'src/constants';
 import { useLocales } from 'src/locales';
@@ -79,7 +80,7 @@ export default function ReviewModal({
       onClose={handleReviewCaregiverModal}
       backgroundColor={SECONDARY.drawer_background}
     >
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <StyledForm onSubmit={handleSubmit(onSubmit)}>
         <CaregiverInfo>
           <UserRole>Caregiver</UserRole>
           <Stack direction="row" alignItems="center">
@@ -109,11 +110,11 @@ export default function ReviewModal({
         {errors?.review && <ErrorMessage variant="caption">{errors.review?.message}</ErrorMessage>}
 
         <ButtonWrapper>
-          <StyledSubmitButton disabled={!isValid} variant="contained" type="submit">
+          <StyledButton disabled={!isValid} variant="contained" type="submit">
             {translate('caregiverReview.leaveReview')}
-          </StyledSubmitButton>
+          </StyledButton>
         </ButtonWrapper>
-      </form>
+      </StyledForm>
     </Modal>
   );
 }

@@ -1,9 +1,11 @@
 import { TabPanel } from '@mui/lab';
-import { Button, Grid, List, Stack, Tab, Tabs, Typography, styled } from '@mui/material';
+import { Box, Button, Grid, List, Stack, Tab, Tabs, Typography, styled } from '@mui/material';
+import SortIcon from '@mui/icons-material/Sort';
 import Link from 'next/link';
 import { PRIMARY, SECONDARY } from 'src/theme/colors';
 import { TYPOGRAPHY } from 'src/theme/fonts';
 import typography from 'src/theme/typography';
+import { StyledButton } from 'src/components/review-modal/styles';
 
 export const BookButton = styled(Button)`
   width: 100%;
@@ -97,4 +99,27 @@ export const StyledStack = styled(Stack)`
   flex-direction: row;
   justify-content: space-evenly;
   width: 100%;
+`;
+
+export const ReviewHeader = styled(Box)`
+  display: flex;
+  gap: 16px;
+`;
+
+export const SortButton = styled(Button)`
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: ${PRIMARY.black};
+`;
+
+export const StyledSortIcon = styled(SortIcon)`
+  color: ${PRIMARY.main};
+`;
+
+export const ReviewButton = styled(StyledButton)`
+  position: fixed;
+  bottom: 10px;
+  width: 320px;
+  right: 22px;
 `;

@@ -14,6 +14,7 @@ import {
 } from 'src/components/appointments/virtual-assessment-modal/constants';
 import { CONFIRM_NOTE_MAX_LENGTH } from 'src/components/confirm-appointment/constants';
 import { MAX_CHARACTERS_LENGTH, MIN_PASSWORD_LENGTH } from 'src/constants';
+import { MAX_REVIEW_LENGTH } from 'src/components/review-modal/constants';
 
 const en = {
   app_title: 'CtrlChamps',
@@ -961,7 +962,9 @@ const en = {
     rate: 'Rate',
     shareExperience: 'Feel free to share your experience',
     reviewPlaceholder: 'Write a review',
-  }
+    leaveReview: 'Leave a Review',
+    reviewMaxLengthError: `Review must be at most ${MAX_REVIEW_LENGTH} characters`,
+  },
 };
 
 export default en;

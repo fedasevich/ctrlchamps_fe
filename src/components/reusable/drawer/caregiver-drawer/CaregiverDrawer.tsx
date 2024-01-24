@@ -201,7 +201,7 @@ export default function CaregiverDrawer({
               <ReviewModal
                 caregiverId={selectedCaregiver.id}
                 isReviewCaregiverModalActive={isReviewCaregiverModalActive}
-                handleReviewCaregiverModal={handleReviewCaregiverModal}
+                setIsReviewCaregiverModalActive={setIsReviewCaregiverModalActive}
                 caregiverName={`${selectedCaregiver.firstName} ${selectedCaregiver.lastName}`}
               />
             </DrawerItem>

@@ -36,9 +36,7 @@ export const RatingWrapper = styled('div')`
   display: flex;
   justify-content: center;
   background-color: ${PRIMARY.white};
-  padding-inline: 15px;
-  padding-top: 15px;
-  padding-bottom: 30px;
+  padding: 15px 15px 30px 15px;
   margin-inline: -16px;
   border-block: 1px solid ${SECONDARY.light_gray};
 
@@ -68,19 +66,25 @@ export const ErrorMessage = styled(Typography)`
 `;
 
 export const StyledFormControl = styled(FormControl)`
-display: flex;
-justify-content: center;
-background-color: ${PRIMARY.white};
-width: 375px;
-padding-inline: 15px;
-margin-inline: -16px;
-padding-block: 12px;
-border-block: 1px solid ${SECONDARY.light_gray};
-`
+  display: flex;
+  justify-content: center;
+  background-color: ${PRIMARY.white};
+  width: 375px;
+  margin-inline: -16px;
+  padding: 12px 15px;
+  border-block: 1px solid ${SECONDARY.light_gray};
+`;
 
 export const StyledSubmitButton = styled(Button)`
   border-radius: 4px;
   width: 100%;
   height: 40px;
-  margin-top: 100px;
+`;
+
+export const ButtonWrapper = styled('div')`
+  width: 375px;
+  margin: 110px -16px -20px -16px;
+  padding: 12px 15px;
+  background-color: ${PRIMARY.white};
+  border-top: 1px solid ${SECONDARY.light_gray};
 `;

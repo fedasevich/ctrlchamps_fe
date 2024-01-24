@@ -1,5 +1,5 @@
-import { parseISO } from 'date-fns';
 import { CaregiverFilterState } from 'src/components/create-appointment-fourth/types';
+import { APPOINTMENT_TYPE } from 'src/constants';
 import { AppointmentI } from 'src/redux/slices/appointmentSlice';
 
 export const getCaregiverFilterInitialState = (
@@ -25,14 +25,17 @@ export const getCaregiverFilterInitialState = (
     { label: 'socialActivities', checked: false },
   ],
   startDate:
-    appointment.appointmentType === 'Recurring'
+    appointment.appointmentType === APPOINTMENT_TYPE.Recurring
       ? (appointment.recurringDate.startDate as Date)
       : (appointment.oneTimeDate.startTime as Date),
   endDate:
-    appointment.appointmentType === 'Recurring'
+    appointment.appointmentType === APPOINTMENT_TYPE.Recurring
       ? (appointment.recurringDate.endDate as Date)
       : (appointment.oneTimeDate.endTime as Date),
-  weekdays: appointment.appointmentType === 'Recurring' ? appointment.recurringDate.weekDays : null,
+  weekdays:
+    appointment.appointmentType === APPOINTMENT_TYPE.Recurring
+      ? appointment.recurringDate.weekDays
+      : null,
 });
 
 export const serializeCaregiverFilterStateToQueryString = (

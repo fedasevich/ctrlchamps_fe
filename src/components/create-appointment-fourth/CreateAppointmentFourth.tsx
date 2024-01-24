@@ -38,8 +38,13 @@ export default function CreateAppointmentFourth({
 
   const { handleDrawerClose, handleDrawerOpen, isDrawerOpen, selectedCaregiverId } =
     useCreateAppointmentFourth();
-  const { caregiverFilter, handleLocationChange, handleServicesChange, handleSwitchChange } =
-    useCaregiverFilter();
+  const {
+    caregiverFilter,
+    handleLocationChange,
+    handleServicesChange,
+    handleRatingsChange,
+    handleSwitchChange,
+  } = useCaregiverFilter();
 
   const [getFilteredCaregivers, { data: filteredCaregivers }] =
     appointmentApi.useLazyGetFilteredCaregiversQuery();
@@ -54,6 +59,7 @@ export default function CreateAppointmentFourth({
         caregiverFilter={caregiverFilter}
         handleLocationChange={handleLocationChange}
         handleServicesChange={handleServicesChange}
+        handleRatingsChange={handleRatingsChange}
         handleSwitchChange={handleSwitchChange}
         onBack={onBack}
       />

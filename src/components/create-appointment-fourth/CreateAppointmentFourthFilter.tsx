@@ -32,6 +32,7 @@ interface CreateAppointmentFourthFilterProps {
   handleLocationChange: (newLocation: AutocompletedLocation) => void;
   handleSwitchChange: (event: ChangeEvent<HTMLInputElement>) => void;
   handleServicesChange: (event: ChangeEvent<HTMLInputElement>) => void;
+  handleRatingsChange: (event: ChangeEvent<HTMLInputElement>) => void;
   onBack: () => void;
 }
 
@@ -39,6 +40,7 @@ export default function CreateAppointmentFourthFilter({
   caregiverFilter,
   handleLocationChange,
   handleServicesChange,
+  handleRatingsChange,
   handleSwitchChange,
   onBack,
 }: CreateAppointmentFourthFilterProps): JSX.Element {
@@ -101,12 +103,24 @@ export default function CreateAppointmentFourthFilter({
         </FormGroup>
         <BaseText>{translate('createAppointmentFourth.rating')}</BaseText>
         <FormGroup>
-          {starsArray.map((ratingItem) => (
-            <RatingWrapper key={ratingItem}>
-              <Checkbox name="rating" value={ratingItem} />
-              {ratingItem}
-              <Rating name="read-only" value={ratingItem} size="small" readOnly />
-            </RatingWrapper>
+          {caregiverFilter.ratings.map((rating) => (
+            <StyledFormControlLabel
+              key={rating.label}
+              control={
+                <Checkbox
+                  checked={rating.checked}
+                  onChange={handleRatingsChange}
+                  name="ratings"
+                  value={rating.label}
+                />
+              }
+              label={
+                <RatingWrapper>
+                  <Typography>{rating.label}</Typography>
+                  <Rating name="read-only" value={Number(rating.label)} size="small" readOnly />
+                </RatingWrapper>
+              }
+            />
           ))}
         </FormGroup>
         <StyledNextButton variant="outlined" onClick={onBack}>

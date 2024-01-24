@@ -5,10 +5,16 @@ export type CaregiverFilterState = {
   isShowAvailableCaregivers: boolean;
   isOpenToSeekerHomeLiving: boolean;
   services: CaregiverFilterService[];
+  ratings: CaregiverFilterRating[];
 };
 
 export type CaregiverFilterService = {
   label: CaregiverService;
+  checked: boolean;
+};
+
+export type CaregiverFilterRating = {
+  label: string;
   checked: boolean;
 };
 

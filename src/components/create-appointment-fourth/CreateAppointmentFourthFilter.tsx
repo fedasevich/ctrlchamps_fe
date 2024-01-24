@@ -23,7 +23,6 @@ import {
 } from 'src/components/create-appointment-fourth/styles';
 import Drawer from 'src/components/reusable/drawer/Drawer';
 import { DrawerBody, DrawerHeader, DrawerTitle } from 'src/components/reusable/drawer/styles';
-import { STARS_NUMBER } from 'src/constants';
 import { DrawerItem } from '../reusable/drawer/caregiver-drawer/styles';
 import { AutocompletedLocation, CaregiverFilterState } from './types';
 
@@ -50,7 +49,6 @@ export default function CreateAppointmentFourthFilter({
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.up('md'));
   const Container = isSmallScreen ? FilterContainer : FilterDrawer;
-  const starsArray = Array.from({ length: STARS_NUMBER }, (_, index) => index + 1);
 
   const handleFilterTriggerClick = (): void => {
     setIsFilterDrawerOpen(true);

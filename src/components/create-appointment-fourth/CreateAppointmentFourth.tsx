@@ -31,12 +31,13 @@ export default function CreateAppointmentFourth({
 }: CreateAppointmentFourthProps): JSX.Element {
   const { t: translate } = useTranslation();
 
+  const appointment = useTypedSelector((state) => state.appointment);
   const seekerLocation = useTypedSelector((state) => state.location.location);
 
   const { handleDrawerClose, handleDrawerOpen, isDrawerOpen, selectedCaregiverId } =
     useCreateAppointmentFourth();
   const { caregiverFilter, handleLocationChange, handleServicesChange, handleSwitchChange } =
-    useCaregiverFilter();
+    useCaregiverFilter(appointment);
 
   const [getFilteredCaregivers, { data: filteredCaregivers }] =
     appointmentApi.useLazyGetFilteredCaregiversQuery();

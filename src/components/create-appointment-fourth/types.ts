@@ -1,3 +1,4 @@
+import { daySelectedType } from 'src/constants/types';
 import { Caregiver, CaregiverInfo } from 'src/types/Caregiver.type';
 
 export type CaregiverFilterState = {
@@ -5,6 +6,9 @@ export type CaregiverFilterState = {
   isShowAvailableCaregivers: boolean;
   isOpenToSeekerHomeLiving: boolean;
   services: CaregiverFilterService[];
+  startDate: Date;
+  endDate: Date;
+  weekdays: daySelectedType[] | null;
 };
 
 export type CaregiverFilterService = {

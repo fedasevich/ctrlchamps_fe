@@ -1,12 +1,12 @@
 import {
   Button,
-  TableRow as MuiTableRow,
-  styled,
-  TableCell as MuiTableCell,
   IconButton as MuiIconButton,
+  TableCell as MuiTableCell,
+  TableRow as MuiTableRow,
   Typography,
-  Stack,
+  styled,
 } from '@mui/material';
+import { Stack } from '@mui/system';
 import { APPOINTMENT_STATUS } from 'src/constants';
 
 import { PRIMARY, SECONDARY, TEXT_COLOR } from 'src/theme/colors';
@@ -80,6 +80,7 @@ export const ColorSpan = styled('span')<{ status: string }>`
       [APPOINTMENT_STATUS.Pending]: TEXT_COLOR.pending,
       [APPOINTMENT_STATUS.Accepted]: TEXT_COLOR.active,
       [APPOINTMENT_STATUS.Active]: TEXT_COLOR.active,
+      [APPOINTMENT_STATUS.Paused]: TEXT_COLOR.pending,
       [APPOINTMENT_STATUS.Completed]: TEXT_COLOR.active,
       [APPOINTMENT_STATUS.Finished]: TEXT_COLOR.active,
       [APPOINTMENT_STATUS.Ongoing]: TEXT_COLOR.active,
@@ -96,6 +97,7 @@ export const ColorSpan = styled('span')<{ status: string }>`
       [APPOINTMENT_STATUS.Pending]: SECONDARY.light_yellow,
       [APPOINTMENT_STATUS.Accepted]: SECONDARY.light_green,
       [APPOINTMENT_STATUS.Active]: SECONDARY.light_green,
+      [APPOINTMENT_STATUS.Paused]: SECONDARY.light_yellow,
       [APPOINTMENT_STATUS.Completed]: SECONDARY.light_green,
       [APPOINTMENT_STATUS.Finished]: SECONDARY.light_green,
       [APPOINTMENT_STATUS.Ongoing]: SECONDARY.light_green,

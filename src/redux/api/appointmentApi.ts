@@ -1,4 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { AppointmentDebtStatus } from 'src/components/appointments/enums';
 import { Appointment } from 'src/components/appointments/types';
 import { CaregiverAppointmentI } from 'src/components/caregiver-schedule/types';
 import { PreviewCaregiver } from 'src/components/create-appointment-fourth/types';
@@ -111,6 +112,8 @@ export interface DetailedAppointment {
   virtualAssessment: VirtualAssessment | null;
   activityLog: ActivityLog[];
   createdAt: string;
+  debtStatus: AppointmentDebtStatus;
+  seekerDebt: number;
 }
 
 export const appointmentApi = createApi({

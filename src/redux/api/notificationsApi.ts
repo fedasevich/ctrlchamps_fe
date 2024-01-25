@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import type { RootState } from 'src/redux/rootReducer';
 import { route } from 'src/redux/api/routes';
+import type { RootState } from 'src/redux/rootReducer';
 
 export type NotificationStatus =
   | 'REQUEST_ACCEPTED'
@@ -15,7 +15,9 @@ export type NotificationStatus =
   | 'ACTIVITY_LOG_REVIEW'
   | 'ACTIVITY_LOG_APPROVED'
   | 'ACTIVITY_LOG_REJECTED'
-  | 'INSUFFICIENT_FIRST_HOUR_PAYMENT';
+  | 'INSUFFICIENT_FIRST_HOUR_PAYMENT'
+  | 'PAUSED_APPOINTMENT'
+  | 'RESUME_APPOINTMENT';
 
 export type Notification = {
   id: string;

@@ -22,7 +22,7 @@ import {
 } from 'src/components/admin-management/styles';
 
 import { StyledStack } from 'src/components/user-list/styles';
-import { PAGINATION_LIMIT } from 'src/constants';
+import { DEFAULT_OFFSET, PAGINATION_LIMIT } from 'src/constants';
 import { useDebounce } from 'src/hooks/useDebounce';
 import { useLocales } from 'src/locales';
 import { useGetAllTasksQuery } from 'src/redux/api/tasksApi';
@@ -48,7 +48,7 @@ export default function TasksManagement(): JSX.Element {
     refetch,
   } = useGetAllTasksQuery({
     search: debouncedSearchTerm,
-    offset: (page - FIRST_PAGE) * PAGINATION_LIMIT,
+    offset: !debouncedSearchTerm ? (page - FIRST_PAGE) * PAGINATION_LIMIT : DEFAULT_OFFSET,
     limit: PAGINATION_LIMIT,
   });
 

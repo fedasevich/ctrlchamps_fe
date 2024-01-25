@@ -11,6 +11,7 @@ import {
   Pagination,
   Box,
   SelectChangeEvent,
+  Typography,
 } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import FormatLineSpacingIcon from '@mui/icons-material/FormatLineSpacing';
@@ -20,7 +21,7 @@ import { ChangeEvent, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 
 import { useLocales } from 'src/locales';
-import { SORT_ORDER, USER_STATUS } from 'src/constants';
+import { DEFAULT_OFFSET, SORT_ORDER, USER_STATUS } from 'src/constants';
 import { ROUTES } from 'src/routes';
 import { useDebounce } from 'src/hooks/useDebounce';
 import { useGetFilteredUsersQuery, useUpdateUserMutation } from 'src/redux/api/userApi';
@@ -55,6 +56,13 @@ export default function UserList(): JSX.Element | null {
   const [deleteUserId, setDeleteUserId] = useState<string>('');
   const [statusUpdated, setStatusUpdated] = useState<boolean>(false);
   const [userDeleted, setUserDeleted] = useState<boolean>(false);
+  const { currentPage } = router.query;
+
+  useEffect(() => {
+    if (currentPage) {
+      setPage(Number(currentPage));
+    }
+  }, [currentPage]);
 
   const debouncedSearchTerm = useDebounce(termSearch.trim(), DEBOUNCE_DELAY);
 
@@ -65,7 +73,7 @@ export default function UserList(): JSX.Element | null {
     refetch,
   } = useGetFilteredUsersQuery({
     search: debouncedSearchTerm,
-    offset: (page - FIRST_PAGE) * PAGINATION_USERS_LIMIT,
+    offset: !debouncedSearchTerm ? (page - FIRST_PAGE) * PAGINATION_USERS_LIMIT : DEFAULT_OFFSET,
     sort: sortingOrder,
   });
 
@@ -128,31 +136,41 @@ export default function UserList(): JSX.Element | null {
             {translate('userList.title')}
           </PageName>
         </Stack>
+        <SearchContainer>
+          <OutlinedInput
+            onChange={handleTermSearch}
+            placeholder={translate('userList.search')}
+            startAdornment={
+              <InputAdornment position="start">
+                <SearchIcon />
+              </InputAdornment>
+            }
+            fullWidth
+            size="small"
+          />
+          {sortingOrder === SORT_ORDER.DESC ? (
+            <IconButton size="large" onClick={handleChangeSorting}>
+              <FormatLineSpacingIcon fontSize="large" />
+            </IconButton>
+          ) : (
+            <IconButton size="large" onClick={handleChangeSorting} sx={{ color: PRIMARY.main }}>
+              <FormatLineSpacingIcon fontSize="large" />
+            </IconButton>
+          )}
+        </SearchContainer>
 
-        {isSuccess && users.data.length > 0 ? (
+        {isSuccess && termSearch && users.data.length <= 0 && (
+          <Typography color="GrayText" mt={2}>
+            {translate('no_results_match')}
+          </Typography>
+        )}
+
+        {isSuccess && !termSearch && users.data.length <= 0 && (
+          <PageName>{translate('userList.anyUsers')}</PageName>
+        )}
+
+        {isSuccess && users.data.length > 0 && (
           <>
-            <SearchContainer>
-              <OutlinedInput
-                onChange={handleTermSearch}
-                placeholder={translate('userList.search')}
-                startAdornment={
-                  <InputAdornment position="start">
-                    <SearchIcon />
-                  </InputAdornment>
-                }
-                fullWidth
-                size="small"
-              />
-              {sortingOrder === SORT_ORDER.DESC ? (
-                <IconButton size="large" onClick={handleChangeSorting}>
-                  <FormatLineSpacingIcon fontSize="large" />
-                </IconButton>
-              ) : (
-                <IconButton size="large" onClick={handleChangeSorting} sx={{ color: PRIMARY.main }}>
-                  <FormatLineSpacingIcon fontSize="large" />
-                </IconButton>
-              )}
-            </SearchContainer>
             <StyledStack mt={3}>
               <Table>
                 <TableHead>
@@ -185,7 +203,10 @@ export default function UserList(): JSX.Element | null {
                       <StyledTableCell align="right">
                         <IconButton
                           onClick={(): Promise<boolean> =>
-                            router.push(`${ROUTES.adminAccountDetails}${user.id}`)
+                            router.push({
+                              pathname: `${ROUTES.adminAccountDetails}${user.id}`,
+                              query: { page },
+                            })
                           }
                         >
                           <ModeEditOutlineOutlinedIcon />
@@ -207,8 +228,6 @@ export default function UserList(): JSX.Element | null {
               />
             </Stack>
           </>
-        ) : (
-          <PageName>{translate('userList.anyUsers')}</PageName>
         )}
 
         <Modal
@@ -220,12 +239,12 @@ export default function UserList(): JSX.Element | null {
             <Title>{translate('adminManagement.deleteWarning')}</Title>
 
             <Box display="flex" gap={2}>
-              <StyledButton variant="contained" onClick={handleDeleteModalToggle}>
-                {translate('adminManagement.no')}
+              <StyledButton variant="contained" onClick={handleDeleteUser}>
+                {translate('adminManagement.yes')}
               </StyledButton>
 
-              <StyledButton variant="contained" color="error" onClick={handleDeleteUser}>
-                {translate('adminManagement.yes')}
+              <StyledButton variant="contained" color="error" onClick={handleDeleteModalToggle}>
+                {translate('adminManagement.no')}
               </StyledButton>
             </Box>
           </Box>

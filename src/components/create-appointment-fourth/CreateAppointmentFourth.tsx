@@ -28,6 +28,8 @@ interface CreateAppointmentFourthProps {
   onBack: () => void;
 }
 
+const EMPTY_RATING = '0.0';
+
 export default function CreateAppointmentFourth({
   onNext,
   onBack,
@@ -89,7 +91,12 @@ export default function CreateAppointmentFourth({
                   primary={`${caregiver.firstName} ${caregiver.lastName}`}
                   secondary={
                     <IconsWrapper>
-                      <StarRateIcon htmlColor={SECONDARY.yellow} /> 4,2
+                      <StarRateIcon
+                        htmlColor={
+                          caregiver.averageRating !== EMPTY_RATING ? SECONDARY.yellow : undefined
+                        }
+                      />
+                      {caregiver.averageRating}
                       <MonetizationOn />
                       {translate('createAppointmentFourth.hourRate', {
                         rate: caregiver.hourlyRate,

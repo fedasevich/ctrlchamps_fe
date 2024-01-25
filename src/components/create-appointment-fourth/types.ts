@@ -22,7 +22,7 @@ export type CaregiverFilterRating = {
   checked: boolean;
 };
 
-export type PreviewCaregiver = Pick<Caregiver, 'id' | 'lastName' | 'firstName'> &
+export type PreviewCaregiver = Pick<Caregiver, 'id' | 'lastName' | 'firstName' | 'averageRating'> &
   Pick<CaregiverInfo, 'hourlyRate'>;
 
 export type CaregiverService =

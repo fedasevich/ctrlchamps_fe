@@ -5,16 +5,17 @@ import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import OneTimeIcon from 'src/assets/icons/OneTimeIcon';
+import { ErrorText } from 'src/components/reusable';
 import AppointmentBtn from 'src/components/reusable/appointment-btn/AppointmentBtn';
 import { CURRENT_DAY, DATE_FORMAT, FULL_WEEKDAY_FORMAT, weekDays } from 'src/constants';
+import useChooseTime from 'src/hooks/useChooseTime';
 import { setRecurringAppointmentTime } from 'src/redux/slices/appointmentSlice';
 import { useAppDispatch, useTypedSelector } from 'src/redux/store';
 import { setCustomTime } from 'src/utils/defineCustomTime';
 import { extractTimeFromDate } from 'src/utils/extractTimeFromDate';
 import { getWeekDaysRange } from 'src/utils/getWeekDaysRange';
-import { ErrorText } from 'src/components/reusable';
-import useChooseTime from 'src/hooks/useChooseTime';
 
+import { daySelectedType } from 'src/constants/types';
 import { isTimeAfterNow } from 'src/utils/checkTime';
 import {
   FIRST_WEEK_DAY_IDX,
@@ -141,7 +142,7 @@ export default function RecurringAppointment({ onNext, onBack }: Props): JSX.Ele
       setRecurringAppointmentTime({
         startDate: setCustomTime(startDate, startTime),
         endDate: setCustomTime(endDate, endTime),
-        weekDays: appointmentDays,
+        weekDays: appointmentDays as daySelectedType[],
       })
     );
     onNext();

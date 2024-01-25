@@ -37,7 +37,7 @@ import {
 } from 'src/components/admin-management/styles';
 import Modal from 'src/components/reusable/modal/Modal';
 import UpdateSuccess from 'src/components/reusable/update-success/UpdateSuccess';
-import { DATE_FORMAT } from 'src/constants';
+import { DATE_FORMAT, DEFAULT_OFFSET } from 'src/constants';
 import { useDebounce } from 'src/hooks/useDebounce';
 import { useLocales } from 'src/locales';
 import { useGetFilteredAdminsQuery } from 'src/redux/api/adminPanelAPI';
@@ -63,7 +63,7 @@ function AdminManagement(): JSX.Element | null {
     refetch,
   } = useGetFilteredAdminsQuery({
     search: debouncedSearchTerm,
-    offset: (page - FIRST_PAGE) * PAGINATION_ADMINS_LIMIT,
+    offset: !debouncedSearchTerm ? (page - FIRST_PAGE) * PAGINATION_ADMINS_LIMIT : DEFAULT_OFFSET,
   });
 
   const [deleteUser] = useDeleteUserMutation();

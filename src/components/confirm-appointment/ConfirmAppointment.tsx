@@ -17,6 +17,7 @@ import UserAvatar from 'src/components/reusable/user-avatar/UserAvatar';
 import { cancelAppointment as resetAppointmentInfo } from 'src/redux/slices/appointmentSlice';
 import { resetAllInfo } from 'src/redux/slices/healthQuestionnaireSlice';
 
+import { zonedTimeToUtc } from 'date-fns-tz';
 import { CONFIRM_NOTE_MAX_LENGTH } from './constants';
 import {
   Container,
@@ -71,12 +72,12 @@ export default function ConfirmAppointment({ onBack }: { onBack: () => void }): 
         capabilityNote: healthQuestionnaire.notes.CAPABILITIES,
         startDate:
           appointment.appointmentType === Appointment.oneTime
-            ? appointment.oneTimeDate.startTime
-            : appointment.recurringDate.startDate,
+            ? zonedTimeToUtc(appointment.oneTimeDate.startTime as Date, location.timezone)
+            : zonedTimeToUtc(appointment.recurringDate.startDate as Date, location.timezone),
         endDate:
           appointment.appointmentType === Appointment.oneTime
-            ? appointment.oneTimeDate.endTime
-            : appointment.recurringDate.endDate,
+            ? zonedTimeToUtc(appointment.oneTimeDate.endTime as Date, location.timezone)
+            : zonedTimeToUtc(appointment.recurringDate.endDate as Date, location.timezone),
         timezone: location.timezone,
         weekdays:
           appointment.appointmentType !== Appointment.oneTime

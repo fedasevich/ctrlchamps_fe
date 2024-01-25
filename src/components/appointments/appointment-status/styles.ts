@@ -15,6 +15,7 @@ export const StatusWrapper = styled.p<{ status: string }>`
       [APPOINTMENT_STATUS.Pending]: TEXT_COLOR.pending,
       [APPOINTMENT_STATUS.Accepted]: TEXT_COLOR.active,
       [APPOINTMENT_STATUS.Active]: TEXT_COLOR.active,
+      [APPOINTMENT_STATUS.Paused]: TEXT_COLOR.pending,
       [APPOINTMENT_STATUS.Completed]: TEXT_COLOR.active,
       [APPOINTMENT_STATUS.Finished]: TEXT_COLOR.active,
       [APPOINTMENT_STATUS.Ongoing]: TEXT_COLOR.active,

@@ -25,6 +25,7 @@ const route = {
   activityLog: '/activity-log',
   transactions: '/transactions',
   notifications: '/notifications',
+  unread: '/unread',
   adminPanel: '/admin-panel',
   admins: '/admins',
   tasks: '/default-seeker-task',

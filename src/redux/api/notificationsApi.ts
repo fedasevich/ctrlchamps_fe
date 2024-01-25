@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import type { RootState } from 'src/redux/rootReducer';
 import { route } from 'src/redux/api/routes';
+import type { RootState } from 'src/redux/rootReducer';
 
 export type NotificationStatus =
   | 'REQUEST_ACCEPTED'
@@ -15,16 +15,24 @@ export type NotificationStatus =
   | 'ACTIVITY_LOG_REVIEW'
   | 'ACTIVITY_LOG_APPROVED'
   | 'ACTIVITY_LOG_REJECTED'
-  | 'INSUFFICIENT_FIRST_HOUR_PAYMENT';
+  | 'INSUFFICIENT_FIRST_HOUR_PAYMENT'
+  | 'PAUSED_APPOINTMENT'
+  | 'RESUME_APPOINTMENT';
 
 export type Notification = {
   id: string;
   appointmentId: string;
   status: NotificationStatus;
   user: string;
+  isRead: boolean;
 };
 
-export interface NotificationRespose {
+export type UnreadNotification = {
+  data: Notification[];
+  count: number;
+};
+
+export interface NotificationResponse {
   data: Notification[];
   count: number;
 }
@@ -45,15 +53,30 @@ export const notificationsApi = createApi({
     },
   }),
   refetchOnFocus: true,
-  tagTypes: ['Notifications'],
+  tagTypes: ['Notifications', 'UnreadNotifications'],
   endpoints: (builder) => ({
-    fetchNotifications: builder.query<NotificationRespose, string>({
+    fetchNotifications: builder.query<NotificationResponse, string>({
       query: (userId) => ({ url: `${route.notifications}/${userId}` }),
       providesTags: ['Notifications'],
+    }),
+    fetchUnreadNotifications: builder.query<UnreadNotification, string>({
+      query: (userId) => ({ url: `${route.notifications}${route.unread}/${userId}` }),
+      providesTags: ['UnreadNotifications'],
+    }),
+    updateNotificationsToRead: builder.mutation<void, string>({
+      query: (userId) => ({
+        url: `${route.notifications}${route.unread}/${userId}`,
+        method: 'PATCH',
+      }),
+      invalidatesTags: ['UnreadNotifications'],
     }),
   }),
 });
 
-export const { useFetchNotificationsQuery } = notificationsApi;
+export const {
+  useFetchNotificationsQuery,
+  useFetchUnreadNotificationsQuery,
+  useUpdateNotificationsToReadMutation,
+} = notificationsApi;
 
 export default notificationsApi;

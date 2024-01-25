@@ -5,19 +5,21 @@ import {
   Button,
   FormControl,
   FormControlLabel,
-  Switch,
   IconButton,
   MenuItem,
-  TableHead,
-  TableBody,
-  Table,
-  SelectChangeEvent,
+  Pagination,
   Select,
+  SelectChangeEvent,
+  Stack,
+  Switch,
+  Table,
+  TableBody,
+  TableHead,
 } from '@mui/material';
+import { format, parseISO } from 'date-fns';
 import { ChangeEvent, useState } from 'react';
 import { Controller, ControllerRenderProps, useForm } from 'react-hook-form';
 import { ReactElement } from 'react-markdown/lib/react-markdown';
-import { parseISO, format } from 'date-fns';
 
 import EditSquare from 'src/assets/icons/EditSquare';
 import Modal from 'src/components/reusable/modal/Modal';
@@ -25,41 +27,42 @@ import UpdateSuccess from 'src/components/reusable/update-success/UpdateSuccess'
 import {
   DATE_FORMAT,
   DISPLAY_TIME_FORMAT,
+  FIRST_PAGE,
   TRANSACTION_TYPE,
   USER_ROLE,
   USER_STATUS,
 } from 'src/constants';
 import { useLocales } from 'src/locales';
-import { User, useUpdateUserMutation, useUploadAvatarMutation } from 'src/redux/api/userApi';
 import { useGetTransactionsQuery } from 'src/redux/api/transactionsApi';
+import { User, useUpdateUserMutation, useUploadAvatarMutation } from 'src/redux/api/userApi';
 import { SECONDARY } from 'src/theme/colors';
 import { TYPOGRAPHY } from 'src/theme/fonts';
 
 import AddressModal from './address-modal/AddressModal';
-import { MAX_FILE_SIZE_BYTES } from './constants';
+import { MAX_FILE_SIZE_BYTES, PAGINATION_LIMIT } from './constants';
 import PersonalInfoModal from './personal-info-modal/PersonalInfoModal';
 import { ErrorMessage } from './personal-info-modal/styles';
-import { AvatarValues } from './types';
-import UpdatePassword from './update-password-form/UpdatePassword';
-import { useAvatarSchema } from './validation';
 import {
   AvatarContainer,
   AvatarIconContainer,
   Background,
   Block,
+  ButtonContainer,
   Container,
   EditButton,
   Item,
   Label,
   List,
+  StatusBlock,
   StyledAvatar,
   Subtitle,
   Title,
   Value,
   VisuallyHiddenInput,
-  ButtonContainer,
-  StatusBlock,
 } from './styles';
+import { AvatarValues } from './types';
+import UpdatePassword from './update-password-form/UpdatePassword';
+import { useAvatarSchema } from './validation';
 
 import { StyledTableCell, StyledTableRow, TableHeader } from '../user-list/styles';
 
@@ -79,8 +82,13 @@ export default function AccountDetails({ user, isAdmin }: IProps): JSX.Element |
   const [personalInfoUpdated, setPersonalInfoUpdated] = useState<boolean>(false);
   const [addressUpdated, setAddressUpdated] = useState<boolean>(false);
   const [statusUpdated, setStatusUpdated] = useState<boolean>(false);
+  const [page, setPage] = useState<number>(FIRST_PAGE);
 
-  const { data: transactions = [] } = useGetTransactionsQuery(user.id);
+  const { data: transactions } = useGetTransactionsQuery({
+    userId: user.id,
+    offset: (page - FIRST_PAGE) * PAGINATION_LIMIT,
+    limit: PAGINATION_LIMIT,
+  });
 
   const [uploadAvatar] = useUploadAvatarMutation();
   const [deleteAvatar] = useUpdateUserMutation();
@@ -148,6 +156,10 @@ export default function AccountDetails({ user, isAdmin }: IProps): JSX.Element |
     } catch (error) {
       throw new Error(error);
     }
+  };
+
+  const handlePageChange = (event: ChangeEvent<unknown>, value: number): void => {
+    setPage(value);
   };
 
   return (
@@ -276,34 +288,43 @@ export default function AccountDetails({ user, isAdmin }: IProps): JSX.Element |
             </StatusBlock>
             <Block>
               <Subtitle>{translate('userList.transactions')}</Subtitle>
-              {transactions.length > 0 ? (
-                <Table>
-                  <TableHead>
-                    <StyledTableRow>
-                      <TableHeader>{translate('userList.date')}</TableHeader>
-                      <TableHeader>{translate('userList.type')}</TableHeader>
-                      <TableHeader>{translate('userList.amount')}</TableHeader>
-                    </StyledTableRow>
-                  </TableHead>
-                  <TableBody>
-                    {transactions.map((transaction) => (
-                      <StyledTableRow key={transaction.id}>
-                        <StyledTableCell>
-                          {format(
-                            parseISO(transaction.createdAt),
-                            `${DATE_FORMAT} ${DISPLAY_TIME_FORMAT}`
-                          )}
-                        </StyledTableCell>
-                        <StyledTableCell>
-                          {transaction.type === TRANSACTION_TYPE.Income
-                            ? translate('userList.replenishment')
-                            : translate('userList.withdrawal')}
-                        </StyledTableCell>
-                        <StyledTableCell>{transaction.amount}$</StyledTableCell>
+              {transactions && transactions.data.length > 0 ? (
+                <>
+                  <Table>
+                    <TableHead>
+                      <StyledTableRow>
+                        <TableHeader>{translate('userList.date')}</TableHeader>
+                        <TableHeader>{translate('userList.type')}</TableHeader>
+                        <TableHeader>{translate('userList.amount')}</TableHeader>
                       </StyledTableRow>
-                    ))}
-                  </TableBody>
-                </Table>
+                    </TableHead>
+                    <TableBody>
+                      {transactions.data.map((transaction) => (
+                        <StyledTableRow key={transaction.id}>
+                          <StyledTableCell>
+                            {format(
+                              parseISO(transaction.createdAt),
+                              `${DATE_FORMAT} ${DISPLAY_TIME_FORMAT}`
+                            )}
+                          </StyledTableCell>
+                          <StyledTableCell>
+                            {transaction.type === TRANSACTION_TYPE.Income
+                              ? translate('userList.replenishment')
+                              : translate('userList.withdrawal')}
+                          </StyledTableCell>
+                          <StyledTableCell>{transaction.amount}$</StyledTableCell>
+                        </StyledTableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                  <Stack display="flex" direction="row" justifyContent="center" mt={2}>
+                    <Pagination
+                      count={Math.ceil(transactions.count / PAGINATION_LIMIT)}
+                      page={page}
+                      onChange={handlePageChange}
+                    />
+                  </Stack>
+                </>
               ) : (
                 <Value>{translate('userList.anyTransactions')}</Value>
               )}

@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
 import { Button, Menu, MenuItem } from '@mui/material';
+import { styled as muiStyled } from '@mui/material/styles';
 import Link from 'next/link';
 import { PRIMARY, SECONDARY } from 'src/theme/colors';
 import { TYPOGRAPHY } from 'src/theme/fonts';
@@ -60,7 +61,7 @@ const LogOutButton = styled(Button)`
   text-decoration: underline;
 `;
 
-const MainHeaderWrapper = styled.header`
+const MainHeaderWrapper = muiStyled('header')`
   position: absolute;
   width: 100%;
   background-color: ${PRIMARY.white};
@@ -75,7 +76,7 @@ const MainHeaderWrapper = styled.header`
   }
 `;
 
-const LogoSection = styled.div`
+const LogoSection = muiStyled('div')`
   display: flex;
   align-items: center;
   ${({ theme }): string => theme.breakpoints.down('sm')} {
@@ -89,7 +90,7 @@ const LogoName = styled.p`
   font-weight: ${typography.fontWeightMedium};
 `;
 
-const AppointmentsText = styled.p`
+const AppointmentsText = muiStyled('p')`
   color: ${PRIMARY.navy};
   text-align: center;
   font-size: ${TYPOGRAPHY.xs}px;
@@ -131,7 +132,7 @@ const ChatText = styled.p`
   cursor: pointer;
 `;
 
-const Logo = styled(Link)`
+const Logo = muiStyled(Link)`
   display: flex;
   align-items: center;
   text-decoration: none;
@@ -156,7 +157,7 @@ const SecondPart = styled.p`
   font-weight: ${typography.fontWeightMedium};
 `;
 
-const MenuSection = styled.div`
+const MenuSection = muiStyled('div')`
   display: flex;
   align-items: center;
   gap: 20px;
@@ -165,7 +166,7 @@ const MenuSection = styled.div`
   }
 `;
 
-const ProfileSection = styled.div`
+const ProfileSection = muiStyled('div')`
   display: flex;
   align-items: center;
   cursor: pointer;
@@ -174,7 +175,7 @@ const ProfileSection = styled.div`
   }
 `;
 
-const ProfileName = styled.p`
+const ProfileName = muiStyled('p')`
   color: ${PRIMARY.black};
   font-size: ${TYPOGRAPHY.base}px;
   font-weight: ${typography.fontWeightMedium};
@@ -186,7 +187,7 @@ const ProfileName = styled.p`
   cursor: pointer;
 `;
 
-const AvatarWrapper = styled.div`
+const AvatarWrapper = muiStyled('div')`
   height: 32px;
   width: 32px;
   display: flex;
@@ -217,6 +218,7 @@ const Arrow = styled.div`
   color: ${SECONDARY.semi_gray};
   &.active {
     transform: rotate(180deg);
+  }
 `;
 
 const StyledMenu = styled(Menu)`
@@ -281,7 +283,7 @@ const MenuListItem = styled.div`
   align-items: center;
 `;
 
-const StyledButton = styled(Button)`
+const StyledButton = muiStyled(Button)`
   padding: 15px;
   ${({ theme }): string => theme.breakpoints.down('sm')} {
     min-width: 0;
@@ -289,37 +291,37 @@ const StyledButton = styled(Button)`
 `;
 
 export {
-  Header,
-  Container,
-  Text,
-  Icon,
-  InfoButton,
-  ButtonContainer,
-  LogOutButton,
-  MainHeaderWrapper,
-  LogoSection,
-  MenuSection,
-  LogoName,
-  Logo,
-  FirstPart,
-  SecondPart,
   AppointmentsSection,
   AppointmentsText,
-  ChatText,
-  ChatSection,
-  ProfileSection,
-  ProfileName,
-  IconWrapper,
-  AvatarWrapper,
   Arrow,
+  AvatarWrapper,
+  BalanceAmount,
+  BalanceBlock,
+  BalanceParagraph,
+  BalanceTitle,
+  ButtonContainer,
+  ChatSection,
+  ChatText,
+  Container,
+  FirstPart,
+  HalfVisibleParagraph,
+  Header,
+  Icon,
+  IconWrapper,
+  InfoButton,
+  LogOutButton,
+  Logo,
+  LogoName,
+  LogoSection,
+  MainHeaderWrapper,
   MenuItemStyled,
   MenuListItem,
-  BalanceBlock,
-  BalanceTitle,
-  BalanceAmount,
-  BalanceParagraph,
+  MenuSection,
   OperationButton,
-  HalfVisibleParagraph,
-  StyledMenu,
+  ProfileName,
+  ProfileSection,
+  SecondPart,
   StyledButton,
+  StyledMenu,
+  Text,
 };

@@ -8,6 +8,7 @@ import {
   useGetCapabilityQuery,
   useGetDiagnosisQuery,
 } from 'src/redux/api/healthQuestionnaireApi';
+import { PAGE_START_COORD } from './constants';
 
 const STEPS = {
   STEP_1: 'DIAGNOSIS',
@@ -28,10 +29,12 @@ const HealthQuestionnaire = ({ onNext, onBack }: Props): JSX.Element => {
 
   const handleNext = (): void => {
     setCurrentStep(currentStep === STEPS.STEP_1 ? STEPS.STEP_2 : STEPS.STEP_3);
+    window.scrollTo(PAGE_START_COORD, PAGE_START_COORD);
   };
 
   const handleBack = (): void => {
     setCurrentStep(currentStep === STEPS.STEP_3 ? STEPS.STEP_2 : STEPS.STEP_1);
+    window.scrollTo(PAGE_START_COORD, PAGE_START_COORD);
   };
 
   const handleSubmit = (): void => {

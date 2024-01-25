@@ -4,6 +4,7 @@ import {
   AutocompletedLocation,
   CaregiverFilterState,
 } from 'src/components/create-appointment-fourth/types';
+import { AppointmentI } from 'src/redux/slices/appointmentSlice';
 
 type CaregiverFilterReturnType = {
   caregiverFilter: CaregiverFilterState;
@@ -13,9 +14,9 @@ type CaregiverFilterReturnType = {
   handleLocationChange: (newLocation: AutocompletedLocation) => void;
 };
 
-export function useCaregiverFilter(): CaregiverFilterReturnType {
+export function useCaregiverFilter(appointment: AppointmentI): CaregiverFilterReturnType {
   const [caregiverFilter, setCaregiverFilter] = useState<CaregiverFilterState>(
-    getCaregiverFilterInitialState()
+    getCaregiverFilterInitialState(appointment)
   );
 
   const handleServicesChange = (event: ChangeEvent<HTMLInputElement>): void => {

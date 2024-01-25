@@ -1,3 +1,6 @@
+import { ActivityLog } from 'src/redux/api/activityLogApi';
+import { AppointmentDebtStatus } from './enums';
+
 export type Appointment = {
   id: string;
   userId: string;
@@ -16,6 +19,9 @@ export type Appointment = {
   weekdays?: string[];
   payment?: number;
   signingDate: string | null;
+  activityLog: ActivityLog[];
+  debtStatus: AppointmentDebtStatus;
+  seekerDebt: number;
 };
 
 export type AppointmentsProps = {

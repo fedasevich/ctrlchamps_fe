@@ -1,14 +1,15 @@
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import NotificationsIcon from '@mui/icons-material/Notifications';
-import { Avatar } from '@mui/material';
+import { Avatar, Badge } from '@mui/material';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import AppointmentsIcon from 'src/assets/icons/AppointmentsIcon';
 import { USER_ROLE } from 'src/constants';
 import { useLocales } from 'src/locales';
-import { useGetUserInfoQuery } from 'src/redux/api/userApi';
 import { useTypedSelector } from 'src/redux/store';
 import { ROUTES } from 'src/routes';
+import { useGetUserInfoQuery } from 'src/redux/api/userApi';
+import { useFetchUnreadNotificationsQuery } from 'src/redux/api/notificationsApi';
 import MenuDropdown from './Menu';
 import {
   AppointmentsSection,
@@ -29,14 +30,18 @@ export default function MainHeader(): JSX.Element | null {
   const { translate } = useLocales();
   const { push, route } = useRouter();
 
-  const userId = useTypedSelector((state) => state.user.user?.id);
+  const user = useTypedSelector((state) => state.user.user);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
-  const { data: user } = useGetUserInfoQuery(userId);
+  const { id } = user || { id: '' };
 
-  if (!user) return null;
+  const { data: userInfo } = useGetUserInfoQuery(id);
 
-  const { role, firstName, lastName } = user;
+  const { data: unreadNotifications } = useFetchUnreadNotificationsQuery(id);
+
+  if (!userInfo) return null;
+
+  const { role, firstName, lastName, avatar } = userInfo;
 
   const viewNotifications = (): void => {
     if (route !== ROUTES.notifications) push(ROUTES.notifications);
@@ -73,11 +78,17 @@ export default function MainHeader(): JSX.Element | null {
           onClick={viewNotifications}
           className={route === ROUTES.notifications ? 'active' : ''}
         >
-          <NotificationsIcon />
+          {unreadNotifications && unreadNotifications.count > 0 ? (
+            <Badge badgeContent={unreadNotifications.count} color="primary" max={99}>
+              <NotificationsIcon />
+            </Badge>
+          ) : (
+            <NotificationsIcon />
+          )}
         </IconWrapper>
         <ProfileSection onClick={(e): void => toggleMenu(e)}>
           <AvatarWrapper>
-            <Avatar src={user.avatar} />
+            <Avatar src={avatar} />
           </AvatarWrapper>
           <ProfileName>{`${firstName} ${lastName}`}</ProfileName>
           <MenuDropdown anchorEl={anchorEl} setAnchorEl={setAnchorEl}>

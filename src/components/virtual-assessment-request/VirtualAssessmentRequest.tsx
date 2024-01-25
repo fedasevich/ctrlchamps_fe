@@ -2,9 +2,9 @@ import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import NotificationsNoneOutlinedIcon from '@mui/icons-material/NotificationsNoneOutlined';
 import { Button, IconButton, List, ListItemText, Typography } from '@mui/material';
-import { format } from 'date-fns';
 import jwt_decode from 'jwt-decode';
 import { useMemo, useState } from 'react';
+import utcToZonedTime from 'date-fns-tz/utcToZonedTime';
 
 import { DRAWER_DATE_FORMAT } from 'src/components/appointments/constants';
 import VirtualAssessmentSuccess from 'src/components/appointments/request-sent-modal/VirtualAssessmentSuccess';
@@ -13,11 +13,17 @@ import { AssessmentPurpose } from 'src/components/appointments/virtual-assessmen
 import UserAvatar from 'src/components/reusable/user-avatar/UserAvatar';
 import { FilledButton } from 'src/components/reusable';
 import FlowHeader from 'src/components/reusable/header/FlowHeader';
-import { SMALL_AVATAR_SIZE, USER_ROLE, VIRTUAL_ASSESSMENT_STATUS } from 'src/constants';
+import {
+  CURRENT_DAY,
+  SMALL_AVATAR_SIZE,
+  TIMEZONE_FORMAT,
+  USER_ROLE,
+  UTC_TIMEZONE,
+  VIRTUAL_ASSESSMENT_STATUS,
+} from 'src/constants';
 import { useLocales } from 'src/locales';
 import { virtualAssessmentApi } from 'src/redux/api/virtualAssessmentApi';
 import { useTypedSelector } from 'src/redux/store';
-import { setCustomTime } from 'src/utils/defineCustomTime';
 
 import {
   AppointmentModal,
@@ -32,6 +38,7 @@ import {
   NotificationMessage,
 } from './styles';
 import { VirtualAssessmentRequestModalProps } from './types';
+import { formatTimeToTimezone } from '../../utils/formatTime';
 
 const decodeToken = (tokenToDecode: string): string => {
   const decoded: { id: string } = jwt_decode(tokenToDecode);
@@ -59,13 +66,6 @@ const VirtualAssessmentRequestModal = ({
     virtualAssessmentApi.useUpdateVirtualAssessmentStatusMutation();
 
   const userId = useMemo(() => decodeToken(token), [token]);
-
-  const virtualAssessmentTime =
-    appointment.virtualAssessment &&
-    setCustomTime(
-      appointment.virtualAssessment.assessmentDate,
-      appointment.virtualAssessment.startTime.slice(0, -3)
-    );
 
   const copyMeetingLink = (): void => {
     if (!appointment.virtualAssessment) return;
@@ -140,7 +140,12 @@ const VirtualAssessmentRequestModal = ({
             <AppointmentModalBlockParagraph>
               {translate('request_appointment.date_and_time')}
             </AppointmentModalBlockParagraph>
-            {virtualAssessmentTime && format(new Date(virtualAssessmentTime), DRAWER_DATE_FORMAT)}
+            {appointment.virtualAssessment &&
+              formatTimeToTimezone(
+                `${appointment.virtualAssessment.assessmentDate} ${appointment.virtualAssessment.startTime}`,
+                TIMEZONE_FORMAT,
+                DRAWER_DATE_FORMAT
+              )}
           </AppointmentModalBlock>
           {userId === appointment.caregiverInfo.user.id && (
             <AppointmentModalBlock>
@@ -179,12 +184,24 @@ const VirtualAssessmentRequestModal = ({
                     variant="outlined"
                     color="primary"
                     fullWidth
+                    disabled={
+                      utcToZonedTime(appointment.startDate, UTC_TIMEZONE) <
+                      utcToZonedTime(CURRENT_DAY, UTC_TIMEZONE)
+                    }
                     onClick={openReschedulingModal}
                   >
                     {translate('request_appointment.btns.reschedule')}
                   </Button>
                   <FilledButton
                     fullWidth
+                    disabled={
+                      utcToZonedTime(appointment.startDate, UTC_TIMEZONE) <
+                        utcToZonedTime(CURRENT_DAY, UTC_TIMEZONE) ||
+                      utcToZonedTime(
+                        `${appointment.virtualAssessment.assessmentDate} ${appointment.virtualAssessment.startTime}`,
+                        UTC_TIMEZONE
+                      ) < utcToZonedTime(CURRENT_DAY, UTC_TIMEZONE)
+                    }
                     onClick={async (): Promise<void> => {
                       await handleStatusChange(VIRTUAL_ASSESSMENT_STATUS.Accepted);
                     }}
@@ -227,7 +244,8 @@ const VirtualAssessmentRequestModal = ({
         purpose={AssessmentPurpose.reschedule}
         caregiverName={`${appointment?.caregiverInfo.user.firstName} ${appointment?.caregiverInfo.user.lastName}`}
         caregiverId={appointment.caregiverInfo.user.id}
-        appointmentId={appointment.id}
+        selectedAppointmentId={appointment.id}
+        appointment={appointment}
         onClose={closeReschedulingModal}
         isActive={reschedulingModalOpen && !appointment.virtualAssessment?.wasRescheduled}
         openVirtualAssessmentSuccess={openReschedulingSuccessModal}

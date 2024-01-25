@@ -14,6 +14,7 @@ export const AUTO_HIDEOUT_DELAY = 2000;
 export const DATE_FORMAT = 'MM/dd/yyyy';
 export const BACKEND_DATE_FORMAT = 'yyyy-MM-dd';
 export const UTC_BIAS = 'Z';
+export const UTC_TIMEZONE = 'UTC';
 
 export const CURRENT_DAY = new Date();
 export const DISPLAY_TIME_FORMAT = 'HH:mm';
@@ -61,6 +62,7 @@ export const APPOINTMENT_STATUS = {
   SignedCaregiver: 'Signed by caregiver',
   SignedSeeker: 'Signed by seeker',
   Active: 'Active',
+  Paused: 'Paused',
   Ongoing: 'Ongoing',
   Completed: 'Completed',
   Finished: 'Finished',
@@ -78,7 +80,7 @@ export const APPOINTMENT_TYPE = {
   Recurring: 'Recurring',
 };
 
-export const HELP_EMAIL = 'help@ctrlchamps@gmail.com';
+export const HELP_EMAIL = 'ctrlchamps@gmail.com';
 export const TRANSACTION_EXAMPLE = 100;
 
 export const USER_STATUS = {
@@ -105,3 +107,5 @@ export const PAGINATION_LIMIT = 10;
 
 export const ASCI_LETTERS_START = 33;
 export const ASCI_LETTERS_RANGE = 94;
+
+export const DEFAULT_OFFSET = 0;

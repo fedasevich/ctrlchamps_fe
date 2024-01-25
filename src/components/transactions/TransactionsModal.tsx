@@ -1,25 +1,27 @@
-import React, { ChangeEvent, useState } from 'react';
 import { ChevronRight } from '@mui/icons-material';
 import { Button, Pagination, Stack } from '@mui/material';
+import { ChangeEvent, Dispatch, SetStateAction } from 'react';
 
-import { useLocales } from 'src/locales';
 import { USER_ROLE } from 'src/constants';
+import { useLocales } from 'src/locales';
 import { Transaction } from 'src/redux/api/transactionsApi';
 
 import { InlineBlock } from '../appointment-request-modal/styles';
+import { PAGINATION_LIMIT } from './constants';
+import { getTransactionColor, getTransactionIcon, getTransactionTitle } from './helpers';
 import {
   IconWrapper,
   TransactionModalTitle,
   TransactionParagraph,
   TransactionsModalWrapper,
 } from './styles';
-import { getTransactionColor, getTransactionIcon, getTransactionTitle } from './helpers';
-import { FIRST_PAGE, PAGINATION_LIMIT } from './constants';
 
 type TransactionsModalProps = {
   role: (typeof USER_ROLE)[keyof typeof USER_ROLE];
   transactions: Transaction[];
   count: number;
+  page: number;
+  setPage: Dispatch<SetStateAction<number>>;
   openDrawer: (appointmentId: string) => void;
 };
 
@@ -28,9 +30,10 @@ const TransactionsModal = ({
   transactions,
   openDrawer,
   count,
+  page,
+  setPage,
 }: TransactionsModalProps): JSX.Element => {
   const { translate } = useLocales();
-  const [page, setPage] = useState<number>(FIRST_PAGE);
 
   const handlePageChange = (event: ChangeEvent<unknown>, value: number): void => {
     setPage(value);

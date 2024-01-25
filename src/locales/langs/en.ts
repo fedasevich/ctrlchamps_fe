@@ -815,7 +815,6 @@ const en = {
     transactions: 'Transactions',
     acc_details: 'Account Details',
     caregiver_profile: 'Caregiver profile',
-    settings: 'Settings',
     faq: 'F.A.Q',
     get_help: 'Get Help',
     log_out: 'Log Out',

@@ -31,6 +31,7 @@ type Props = {
   caregiverId: string;
   caregiverInfoId: string;
   caregiverName: string;
+  refetchCaregiverInfo: () => void;
 };
 
 export default function ReviewModal({
@@ -39,6 +40,7 @@ export default function ReviewModal({
   caregiverId,
   caregiverInfoId,
   caregiverName,
+  refetchCaregiverInfo,
 }: Props): JSX.Element {
   const { translate } = useLocales();
 
@@ -76,7 +78,9 @@ export default function ReviewModal({
 
   const onSubmit: SubmitHandler<ReviewFormValues> = async (review) => {
     try {
-      await createReview({ caregiverInfoId, ...review });
+      await createReview({ caregiverInfoId, ...review }).unwrap();
+      handleReviewCaregiverModal();
+      refetchCaregiverInfo()
     } catch (error) {
       throw new Error(error);
     }

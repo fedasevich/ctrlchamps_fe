@@ -1,5 +1,14 @@
 import { PreferredDay } from 'src/constants/enums';
 
+export type Review = {
+  id: string;
+  caregiverInfoId: string;
+  rating: number | null;
+  review?: string;
+  createdAt: Date;
+  userId: string
+};
+
 export type Caregiver = {
   id: string;
   isOpenToSeekerHomeLiving: boolean;
@@ -9,6 +18,7 @@ export type Caregiver = {
   caregiverInfo: CaregiverInfo;
   qualifications: Certificate[];
   workExperiences: WorkExperiences[];
+  seekerReviews: Review[]
 };
 
 export type CaregiverInfo = {

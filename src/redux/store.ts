@@ -34,6 +34,7 @@ import adminPanelApi from 'src/redux/api/adminPanelAPI';
 import tasksApi from 'src/redux/api/tasksApi';
 import { setupListeners } from '@reduxjs/toolkit/dist/query';
 import { forbiddenErrorMiddleware } from 'src/redux/forbiddenErrorMiddleware';
+import reviewApi from 'src/redux/api/reviewApi';
 
 const persistConfig = {
   key: 'root',
@@ -72,6 +73,7 @@ const store = configureStore({
     [notificationsApi.reducerPath]: notificationsApi.reducer,
     [adminPanelApi.reducerPath]: adminPanelApi.reducer,
     [tasksApi.reducerPath]: tasksApi.reducer,
+    [reviewApi.reducerPath]: reviewApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
@@ -92,6 +94,7 @@ const store = configureStore({
       notificationsApi.middleware,
       adminPanelApi.middleware,
       tasksApi.middleware,
+      reviewApi.middleware,
     ]),
 });
 

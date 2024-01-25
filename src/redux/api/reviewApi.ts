@@ -1,4 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+
 import { route } from 'src/redux/api/routes';
 import { RootState } from 'src/redux/rootReducer';
 
@@ -8,8 +9,8 @@ type Review = {
   review?: string;
 };
 
-export const appointmentApi = createApi({
-  reducerPath: 'appointmentApi',
+export const reviewApi = createApi({
+  reducerPath: 'reviewApi',
   baseQuery: fetchBaseQuery({
     baseUrl: `${process.env.NEXT_PUBLIC_API_URL}`,
     prepareHeaders: (headers, { getState }) => {
@@ -34,6 +35,6 @@ export const appointmentApi = createApi({
   }),
 });
 
-export const { useCreateReviewMutation } = appointmentApi;
+export const { useCreateReviewMutation } = reviewApi;
 
-export default appointmentApi;
+export default reviewApi;

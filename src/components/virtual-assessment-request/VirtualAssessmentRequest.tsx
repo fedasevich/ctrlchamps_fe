@@ -16,6 +16,7 @@ import FlowHeader from 'src/components/reusable/header/FlowHeader';
 import {
   CURRENT_DAY,
   SMALL_AVATAR_SIZE,
+  TIMEZONE_FORMAT,
   USER_ROLE,
   UTC_TIMEZONE,
   VIRTUAL_ASSESSMENT_STATUS,
@@ -142,7 +143,7 @@ const VirtualAssessmentRequestModal = ({
             {appointment.virtualAssessment &&
               formatTimeToTimezone(
                 `${appointment.virtualAssessment.assessmentDate} ${appointment.virtualAssessment.startTime}`,
-                appointment.timezone,
+                TIMEZONE_FORMAT,
                 DRAWER_DATE_FORMAT
               )}
           </AppointmentModalBlock>

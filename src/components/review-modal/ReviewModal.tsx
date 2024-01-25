@@ -23,11 +23,13 @@ import { SECONDARY } from 'src/theme/colors';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { ReviewFormValues, useReviewSchema } from 'src/components/review-modal/validation';
 import { DEFAULT_REVIEW_VALUES } from 'src/components/review-modal/constants';
+import { useCreateReviewMutation } from 'src/redux/api/reviewApi';
 
 type Props = {
   isReviewCaregiverModalActive: boolean;
   setIsReviewCaregiverModalActive: Dispatch<SetStateAction<boolean>>;
   caregiverId: string;
+  caregiverInfoId: string;
   caregiverName: string;
 };
 
@@ -35,9 +37,12 @@ export default function ReviewModal({
   isReviewCaregiverModalActive,
   setIsReviewCaregiverModalActive,
   caregiverId,
+  caregiverInfoId,
   caregiverName,
 }: Props): JSX.Element {
   const { translate } = useLocales();
+
+  const [createReview] = useCreateReviewMutation();
 
   const reviewSchema = useReviewSchema();
 
@@ -69,8 +74,12 @@ export default function ReviewModal({
     trigger(name);
   };
 
-  const onSubmit: SubmitHandler<ReviewFormValues> = async (values) => {
-    console.log(values);
+  const onSubmit: SubmitHandler<ReviewFormValues> = async (review) => {
+    try {
+      await createReview({ caregiverInfoId, ...review });
+    } catch (error) {
+      throw new Error(error);
+    }
   };
 
   return (

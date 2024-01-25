@@ -17,7 +17,7 @@ import { ChangeEvent, useEffect, useState } from 'react';
 
 import { format } from 'date-fns';
 import Modal from 'src/components/reusable/modal/Modal';
-import { APPOINTMENT_STATUS, DATE_FORMAT, USER_ROLE } from 'src/constants';
+import { APPOINTMENT_STATUS, DATE_FORMAT, DEFAULT_OFFSET, USER_ROLE } from 'src/constants';
 import { SortOrder } from 'src/constants/enums';
 import { useDebounce } from 'src/hooks/useDebounce';
 import { useLocales } from 'src/locales';
@@ -65,7 +65,9 @@ function AdminAppointmentList(): JSX.Element | null {
     refetch,
   } = useGetAllAppointmentsQuery({
     name: debouncedSearchTerm,
-    offset: (page - FIRST_PAGE) * PAGINATION_APPOINTMENTS_LIMIT,
+    offset: !debouncedSearchTerm
+      ? (page - FIRST_PAGE) * PAGINATION_APPOINTMENTS_LIMIT
+      : DEFAULT_OFFSET,
     limit: PAGINATION_APPOINTMENTS_LIMIT,
     sort,
   });

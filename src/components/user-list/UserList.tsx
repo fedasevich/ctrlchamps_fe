@@ -21,7 +21,7 @@ import { ChangeEvent, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 
 import { useLocales } from 'src/locales';
-import { SORT_ORDER, USER_STATUS } from 'src/constants';
+import { DEFAULT_OFFSET, SORT_ORDER, USER_STATUS } from 'src/constants';
 import { ROUTES } from 'src/routes';
 import { useDebounce } from 'src/hooks/useDebounce';
 import { useGetFilteredUsersQuery, useUpdateUserMutation } from 'src/redux/api/userApi';
@@ -73,7 +73,7 @@ export default function UserList(): JSX.Element | null {
     refetch,
   } = useGetFilteredUsersQuery({
     search: debouncedSearchTerm,
-    offset: (page - FIRST_PAGE) * PAGINATION_USERS_LIMIT,
+    offset: !debouncedSearchTerm ? (page - FIRST_PAGE) * PAGINATION_USERS_LIMIT : DEFAULT_OFFSET,
     sort: sortingOrder,
   });
 

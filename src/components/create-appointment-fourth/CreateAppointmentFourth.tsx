@@ -45,7 +45,7 @@ export default function CreateAppointmentFourth({
     handleServicesChange,
     handleRatingsChange,
     handleSwitchChange,
-  } = useCaregiverFilter();
+  } = useCaregiverFilter(appointment);
 
   const [getFilteredCaregivers, { data: filteredCaregivers }] =
     appointmentApi.useLazyGetFilteredCaregiversQuery();

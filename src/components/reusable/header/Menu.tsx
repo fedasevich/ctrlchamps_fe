@@ -98,6 +98,7 @@ const MenuDropdown: React.FC<MenuDropdownProps> = ({
       if (userInfo && !isLoading) {
         const newBalance = userInfo.balance - amount;
         setBalance(newBalance);
+        handleClose();
         await updateBalance(newBalance);
         refetch();
       }
@@ -115,6 +116,7 @@ const MenuDropdown: React.FC<MenuDropdownProps> = ({
       if (userInfo && !isLoading) {
         const newBalance = userInfo.balance + amount;
         setBalance(newBalance);
+        handleClose();
         await updateBalance(newBalance)
           .unwrap()
           .then(() => dispatch(appointmentApi.util.invalidateTags(['Appointments'])));
@@ -183,13 +185,6 @@ const MenuDropdown: React.FC<MenuDropdownProps> = ({
             </MenuListItem>
           </MenuItemStyled>
         )}
-        <MenuItemStyled onClick={handleClose}>
-          <SettingsOutlinedIcon />
-          <MenuListItem>
-            <div>{translate('menu.settings')}</div>
-            <ChevronRightOutlinedIcon />
-          </MenuListItem>
-        </MenuItemStyled>
         <MenuItemStyled onClick={handleClose}>
           <InfoOutlinedIcon />
           <MenuListItem onClick={(): Promise<boolean> => router.push(ROUTES.faq)}>

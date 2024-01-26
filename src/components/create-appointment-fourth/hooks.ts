@@ -10,6 +10,7 @@ type CaregiverFilterReturnType = {
   caregiverFilter: CaregiverFilterState;
   handleSwitchChange: (event: ChangeEvent<HTMLInputElement>) => void;
   handleServicesChange: (event: ChangeEvent<HTMLInputElement>) => void;
+  handleRatingsChange: (event: ChangeEvent<HTMLInputElement>) => void;
   handleLocationChange: (newLocation: AutocompletedLocation) => void;
 };
 
@@ -29,6 +30,17 @@ export function useCaregiverFilter(appointment: AppointmentI): CaregiverFilterRe
     }));
   };
 
+  const handleRatingsChange = (event: ChangeEvent<HTMLInputElement>): void => {
+    const { value, checked } = event.target;
+
+    setCaregiverFilter((prev) => ({
+      ...prev,
+      ratings: prev.ratings.map((rating) =>
+        value === rating.label ? { ...rating, checked } : rating
+      ),
+    }));
+  };
+
   const handleSwitchChange = (event: ChangeEvent<HTMLInputElement>): void => {
     const { name, checked } = event.target;
     setCaregiverFilter((prev) => ({ ...prev, [name]: checked }));
@@ -42,6 +54,7 @@ export function useCaregiverFilter(appointment: AppointmentI): CaregiverFilterRe
     caregiverFilter,
     handleSwitchChange,
     handleServicesChange,
+    handleRatingsChange,
     handleLocationChange,
   };
 }

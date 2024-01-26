@@ -17,6 +17,7 @@ import { getWeekDaysRange } from 'src/utils/getWeekDaysRange';
 
 import { daySelectedType } from 'src/constants/types';
 import { isTimeAfterNow } from 'src/utils/checkTime';
+import { daySelectedType } from 'src/constants/types';
 import {
   FIRST_WEEK_DAY_IDX,
   LAST_WEEK_DAY_IDX,
@@ -50,7 +51,7 @@ export default function RecurringAppointment({ onNext, onBack }: Props): JSX.Ele
   const [endDate, setEndDate] = useState<Date | null>(recurringDate.endDate);
   const [startTime, setStartTime] = useState<string>('');
   const [endTime, setEndTime] = useState<string>('');
-  const [appointmentDays, setAppointmentDays] = useState<string[]>(recurringDate.weekDays);
+  const [appointmentDays, setAppointmentDays] = useState<daySelectedType[]>(recurringDate.weekDays);
   const [invalidWeekDaysRange, setInvalidWeekDaysRange] = useState<boolean>(false);
 
   const { hours, minutes, isDurationSet, minValidDuration } = useShowDuration(startTime, endTime);
@@ -72,7 +73,7 @@ export default function RecurringAppointment({ onNext, onBack }: Props): JSX.Ele
     isSameDay(startDate, endDate) ||
     (isBefore(startDate, CURRENT_DAY) && !isSameDay(startDate, CURRENT_DAY)) ||
     (!isTimeAfterNow(startTime) &&
-      appointmentDays.includes(format(startDate, FULL_WEEKDAY_FORMAT)) &&
+      appointmentDays.some((day) => day === format(startDate, FULL_WEEKDAY_FORMAT)) &&
       isToday(startDate));
 
   const isAppointmentDurationShown =
@@ -113,7 +114,7 @@ export default function RecurringAppointment({ onNext, onBack }: Props): JSX.Ele
     checkDaysValidityRange(availableDaysToChoose);
   };
 
-  const chooseDay = (value: string): void => {
+  const chooseDay = (value: daySelectedType): void => {
     if (!startDate || !endDate) return;
 
     const dayAlreadyChosen = appointmentDays.find((day: string) => day === value);
@@ -230,7 +231,7 @@ export default function RecurringAppointment({ onNext, onBack }: Props): JSX.Ele
           {startDate &&
             isToday(startDate) &&
             !isTimeAfterNow(startTime) &&
-            appointmentDays.includes(format(startDate, FULL_WEEKDAY_FORMAT)) && (
+            appointmentDays.some((day) => day === format(startDate, FULL_WEEKDAY_FORMAT)) && (
               <ErrorText> {translate('create_appointment.errors.invalid_today_time')}</ErrorText>
             )}
           {invalidWeekDaysRange && (

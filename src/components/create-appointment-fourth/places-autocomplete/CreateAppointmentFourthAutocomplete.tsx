@@ -1,6 +1,7 @@
 import { Autocomplete, AutocompleteRenderInputParams, Grid, TextField } from '@mui/material';
 import { useLoadScript } from '@react-google-maps/api';
 import { format } from 'date-fns';
+
 import { HTMLAttributes, SyntheticEvent, useState } from 'react';
 import Location from 'src/assets/icons/Location';
 import {
@@ -18,8 +19,12 @@ import {
 import { AutocompletedLocation } from 'src/components/create-appointment-fourth/types';
 import { useLocales } from 'src/locales';
 import { timezoneApi } from 'src/redux/api/timezoneApi';
-import { setLocation as setSeekerLocation, setTimezone } from 'src/redux/slices/locationSlice';
-import { useAppDispatch } from 'src/redux/store';
+import {
+  setPrediction,
+  setLocation as setSeekerLocation,
+  setTimezone,
+} from 'src/redux/slices/locationSlice';
+import { useAppDispatch, useTypedSelector } from 'src/redux/store';
 import usePlacesAutocomplete from 'use-places-autocomplete';
 
 interface CreateAppointmentFourthAutocompleteProps {
@@ -48,6 +53,9 @@ function PlacesAutocomplete({
 }: CreateAppointmentFourthAutocompleteProps): JSX.Element {
   const { translate, currentLang } = useLocales();
   const dispatch = useAppDispatch();
+
+  const defaultSeekerPrediction = useTypedSelector((state) => state.location.prediction);
+
   const {
     value: location,
     setValue: setLocation,
@@ -58,7 +66,7 @@ function PlacesAutocomplete({
   });
 
   const [autocompleteValue, setAutocompleteValue] =
-    useState<google.maps.places.AutocompletePrediction | null>(null);
+    useState<google.maps.places.AutocompletePrediction | null>(defaultSeekerPrediction || null);
   const [autocompleteError, setAutocompleteError] = useState<string | null>(null);
 
   const [getTimeZone] = timezoneApi.useLazyGetTimezoneQuery();
@@ -72,6 +80,7 @@ function PlacesAutocomplete({
     if (newValue === null) {
       dispatch(setTimezone(''));
       dispatch(setSeekerLocation(''));
+      dispatch(setPrediction(null));
 
       return;
     }
@@ -79,6 +88,8 @@ function PlacesAutocomplete({
     if (!newValue) {
       return;
     }
+
+    dispatch(setPrediction(newValue));
 
     const { place_id: placeId, description } = newValue;
 

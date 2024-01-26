@@ -6,6 +6,7 @@ export type CaregiverFilterState = {
   isShowAvailableCaregivers: boolean;
   isOpenToSeekerHomeLiving: boolean;
   services: CaregiverFilterService[];
+  ratings: CaregiverFilterRating[];
   startDate: Date;
   endDate: Date;
   weekdays: daySelectedType[] | null;
@@ -16,7 +17,12 @@ export type CaregiverFilterService = {
   checked: boolean;
 };
 
-export type PreviewCaregiver = Pick<Caregiver, 'id' | 'lastName' | 'firstName'> &
+export type CaregiverFilterRating = {
+  label: string;
+  checked: boolean;
+};
+
+export type PreviewCaregiver = Pick<Caregiver, 'id' | 'lastName' | 'firstName' | 'averageRating'> &
   Pick<CaregiverInfo, 'hourlyRate'>;
 
 export type CaregiverService =

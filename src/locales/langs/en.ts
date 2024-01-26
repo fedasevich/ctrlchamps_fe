@@ -384,6 +384,7 @@ const en = {
   },
   createAppointmentFourth: {
     location: 'Location',
+    rating: 'Rating',
     area: 'Area',
     availability: 'Availability',
     showAvailableCaregivers: 'Show available caregivers only',
@@ -815,7 +816,6 @@ const en = {
     transactions: 'Transactions',
     acc_details: 'Account Details',
     caregiver_profile: 'Caregiver profile',
-    settings: 'Settings',
     faq: 'F.A.Q',
     get_help: 'Get Help',
     log_out: 'Log Out',

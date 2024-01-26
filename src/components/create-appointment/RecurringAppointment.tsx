@@ -15,7 +15,6 @@ import { setCustomTime } from 'src/utils/defineCustomTime';
 import { extractTimeFromDate } from 'src/utils/extractTimeFromDate';
 import { getWeekDaysRange } from 'src/utils/getWeekDaysRange';
 
-import { daySelectedType } from 'src/constants/types';
 import { isTimeAfterNow } from 'src/utils/checkTime';
 import { daySelectedType } from 'src/constants/types';
 import {

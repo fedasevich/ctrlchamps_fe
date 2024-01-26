@@ -57,6 +57,18 @@ export const StyledListItemText = styled(ListItemText)`
   }
 `;
 
+export const IconsWrapper = styled('div')`
+  display: flex;
+  align-items: center;
+  gap: 5px;
+`;
+
+export const RatingWrapper = styled('div')`
+  display: flex;
+  gap: 5px;
+  align-items: center;
+`;
+
 export const StyledNextButton = styled(NextButton)`
   margin-top: auto;
 `;

@@ -384,6 +384,7 @@ const en = {
   },
   createAppointmentFourth: {
     location: 'Location',
+    rating: 'Rating',
     area: 'Area',
     availability: 'Availability',
     showAvailableCaregivers: 'Show available caregivers only',

@@ -9,6 +9,7 @@ export type Caregiver = {
   caregiverInfo: CaregiverInfo;
   qualifications: Certificate[];
   workExperiences: WorkExperiences[];
+  averageRating: string;
 };
 
 export type CaregiverInfo = {
@@ -18,6 +19,7 @@ export type CaregiverInfo = {
   description: string;
   videoLink: string;
   availability: TimeSlot[];
+  averageRating?: number;
 };
 
 export type WorkExperiences = {

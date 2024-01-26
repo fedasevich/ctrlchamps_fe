@@ -36,6 +36,13 @@ export const getCaregiverFilterInitialState = (
     appointment.appointmentType === APPOINTMENT_TYPE.Recurring
       ? appointment.recurringDate.weekDays
       : null,
+  ratings: [
+    { label: '1', checked: false },
+    { label: '2', checked: false },
+    { label: '3', checked: false },
+    { label: '4', checked: false },
+    { label: '5', checked: false },
+  ],
 });
 
 export const serializeCaregiverFilterStateToQueryString = (
@@ -46,6 +53,10 @@ export const serializeCaregiverFilterStateToQueryString = (
     .filter((service) => service.checked)
     .map((service) => translate(translate(`createAppointmentFourth.services.${service.label}`)));
   const { weekdays } = filterState;
+
+  const ratings = filterState.ratings
+    .filter((rating) => rating.checked)
+    .map((rating) => rating.label);
 
   const dataToSerialize = {
     isOpenToSeekerHomeLiving: filterState.isOpenToSeekerHomeLiving,
@@ -62,6 +73,7 @@ export const serializeCaregiverFilterStateToQueryString = (
     return params;
   }, new URLSearchParams());
   services.forEach((item) => searchParams.append('services', item));
+  ratings.forEach((item) => searchParams.append('ratings', item));
   if (weekdays) {
     weekdays.forEach((item) => searchParams.append('weekdays', item));
   }

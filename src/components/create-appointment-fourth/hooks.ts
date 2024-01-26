@@ -4,17 +4,19 @@ import {
   AutocompletedLocation,
   CaregiverFilterState,
 } from 'src/components/create-appointment-fourth/types';
+import { AppointmentI } from 'src/redux/slices/appointmentSlice';
 
 type CaregiverFilterReturnType = {
   caregiverFilter: CaregiverFilterState;
   handleSwitchChange: (event: ChangeEvent<HTMLInputElement>) => void;
   handleServicesChange: (event: ChangeEvent<HTMLInputElement>) => void;
+  handleRatingsChange: (event: ChangeEvent<HTMLInputElement>) => void;
   handleLocationChange: (newLocation: AutocompletedLocation) => void;
 };
 
-export function useCaregiverFilter(): CaregiverFilterReturnType {
+export function useCaregiverFilter(appointment: AppointmentI): CaregiverFilterReturnType {
   const [caregiverFilter, setCaregiverFilter] = useState<CaregiverFilterState>(
-    getCaregiverFilterInitialState()
+    getCaregiverFilterInitialState(appointment)
   );
 
   const handleServicesChange = (event: ChangeEvent<HTMLInputElement>): void => {
@@ -24,6 +26,17 @@ export function useCaregiverFilter(): CaregiverFilterReturnType {
       ...prev,
       services: prev.services.map((service) =>
         value === service.label ? { ...service, checked } : service
+      ),
+    }));
+  };
+
+  const handleRatingsChange = (event: ChangeEvent<HTMLInputElement>): void => {
+    const { value, checked } = event.target;
+
+    setCaregiverFilter((prev) => ({
+      ...prev,
+      ratings: prev.ratings.map((rating) =>
+        value === rating.label ? { ...rating, checked } : rating
       ),
     }));
   };
@@ -41,6 +54,7 @@ export function useCaregiverFilter(): CaregiverFilterReturnType {
     caregiverFilter,
     handleSwitchChange,
     handleServicesChange,
+    handleRatingsChange,
     handleLocationChange,
   };
 }

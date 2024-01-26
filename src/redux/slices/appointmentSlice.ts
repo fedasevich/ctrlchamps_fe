@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { AppointmentType } from 'src/constants/types';
+import { AppointmentType, daySelectedType } from 'src/constants/types';
 
 type OneTimeDateType = {
   startTime: Date | null;
@@ -9,10 +9,10 @@ type OneTimeDateType = {
 type RecurringDateType = {
   startDate: Date | null;
   endDate: Date | null;
-  weekDays: string[];
+  weekDays: daySelectedType[];
 };
 
-interface AppointmentI {
+export interface AppointmentI {
   appointmentName: string;
   appointmentType: AppointmentType;
   oneTimeDate: OneTimeDateType;

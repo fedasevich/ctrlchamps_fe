@@ -1,10 +1,14 @@
 import { TabContext } from '@mui/lab';
 import { Avatar, Box, IconButton, Rating, Stack } from '@mui/material';
 import { SyntheticEvent, useEffect, useState } from 'react';
+import StarRateIcon from '@mui/icons-material/StarRate';
+import { addDays, parseISO, format } from 'date-fns';
+import { utcToZonedTime } from 'date-fns-tz';
 
 import ArrowBackFilled from 'src/assets/icons/ArrowBackFilled';
 import FreeCancellation from 'src/assets/icons/FreeCancellation';
 import MonetizationOn from 'src/assets/icons/MonetizationOn';
+import { SECONDARY } from 'src/theme/colors';
 import Drawer from 'src/components/reusable/drawer/Drawer';
 import UserAvatar from 'src/components/reusable/user-avatar/UserAvatar';
 import {
@@ -21,12 +25,12 @@ import {
   ONE_DAY,
   SORT_ORDER,
   UTC_TIMEZONE,
+  DATE_FORMAT,
 } from 'src/constants';
-import Grade from 'src/assets/icons/Grade';
 import ReviewModal from 'src/components/review-modal/ReviewModal';
-import { addDays, parseISO } from 'date-fns';
-import { utcToZonedTime } from 'date-fns-tz';
-import { FIRST_SELECTED_TAB } from './constants';
+import { SeekerReview } from 'src/types/Caregiver.type';
+
+import { FIRST_SELECTED_TAB, EMPTY_RATING, ORDER_TYPE } from './constants';
 import { formatWorkExperienceDateRange, formatWorkExperienceDateRangeTenure } from './helpers';
 import {
   DrawerDateTenure,
@@ -55,49 +59,6 @@ interface CaregiverDrawerProps {
   footer?: React.ReactNode;
   selectedAppointmentId: string;
 }
-
-const mockedReviews = [
-  {
-    id: 1,
-    rate: 4,
-    avatar: null,
-    name: 'James Bean',
-    text: 'Everything was good',
-    date: '27/11/2022',
-  },
-  {
-    id: 2,
-    rate: 5,
-    avatar: null,
-    name: 'Ricardo Bean',
-    text: 'Everything was good',
-    date: '29/11/2022',
-  },
-  {
-    id: 3,
-    rate: 3,
-    avatar: null,
-    name: 'Bruce Wayne',
-    text: 'Everything was good',
-    date: '27/12/2022',
-  },
-  {
-    id: 4,
-    rate: 5,
-    avatar: null,
-    name: 'Gabriel Mane',
-    text: 'Everything was good',
-    date: '27/12/2023',
-  },
-  {
-    id: 5,
-    rate: 5,
-    avatar: null,
-    name: 'Carl Mane',
-    text: 'Everything was good',
-    date: '29/12/2023',
-  },
-];
 
 export default function CaregiverDrawer({
   open,
@@ -134,8 +95,9 @@ export default function CaregiverDrawer({
     isOneDayAfterAppointment && isAppointmentStatusFinished && !isCaregiverHasReview
   );
 
-  const [sortingOrderRate, setSortingOrderRate] = useState<string>(SORT_ORDER.DESC);
-  const [sortingOrderDate, setSortingOrderDate] = useState<string>('');
+  const [sortingOrderRate, setSortingOrderRate] = useState<string>('');
+  const [sortingOrderDate, setSortingOrderDate] = useState<string>(SORT_ORDER.DESC);
+  const [sortedReviews, setSortedReviews] = useState<SeekerReview[] | []>([]);
 
   useEffect(() => {
     setIsReviewButtonActive(
@@ -146,6 +108,12 @@ export default function CaregiverDrawer({
   const handleReviewCaregiverModal = (): void =>
     setIsReviewCaregiverModalActive(!isReviewCaregiverModalActive);
 
+  useEffect(() => {
+    const reviews = [...(selectedCaregiver?.seekerReviews || [])];
+    reviews.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+    setSortedReviews(reviews);
+  }, [selectedCaregiver?.seekerReviews]);
+
   if (isLoading) return null;
   if (!selectedCaregiver) return null;
 
@@ -153,29 +121,40 @@ export default function CaregiverDrawer({
     setSelectedTab(newValue);
   };
 
-  const handleChangeSortingRate = (): void => {
-    if (sortingOrderRate === SORT_ORDER.ASC || !sortingOrderRate) {
-      setSortingOrderRate(SORT_ORDER.DESC);
+  const handleSortingChange = (orderType: string): void => {
+    const reviews = [...selectedCaregiver.seekerReviews];
+    if (orderType === ORDER_TYPE.rate) {
+      const newSortingOrderRate =
+        sortingOrderRate === SORT_ORDER.DESC ? SORT_ORDER.ASC : SORT_ORDER.DESC;
+
+      setSortingOrderRate(newSortingOrderRate);
       setSortingOrderDate('');
-    } else {
-      setSortingOrderRate(SORT_ORDER.ASC);
-      setSortingOrderDate('');
+      reviews.sort((a, b) =>
+        newSortingOrderRate === SORT_ORDER.ASC ? a.rating - b.rating : b.rating - a.rating
+      );
+      setSortedReviews(reviews);
+    } else if (orderType === ORDER_TYPE.date) {
+      const newSortingOrderDate =
+        sortingOrderDate === SORT_ORDER.DESC ? SORT_ORDER.ASC : SORT_ORDER.DESC;
+
+      setSortingOrderDate(newSortingOrderDate);
+      setSortingOrderRate('');
+      reviews.sort((a, b) =>
+        newSortingOrderDate === SORT_ORDER.ASC
+          ? new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
+          : new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+      );
+      setSortedReviews(reviews);
     }
+  };
+
+  const handleChangeSortingRate = (): void => {
+    handleSortingChange(ORDER_TYPE.rate);
   };
 
   const handleChangeSortingDate = (): void => {
-    if (sortingOrderDate === SORT_ORDER.ASC || !sortingOrderDate) {
-      setSortingOrderDate(SORT_ORDER.DESC);
-      setSortingOrderRate('');
-    } else {
-      setSortingOrderDate(SORT_ORDER.ASC);
-      setSortingOrderRate('');
-    }
+    handleSortingChange(ORDER_TYPE.date);
   };
-
-  const averageRate =
-    mockedReviews.map((review) => review.rate).reduce((sum, rate) => sum + rate, 0) /
-    mockedReviews.length;
 
   return (
     <Drawer open={open} onClose={onClose}>
@@ -191,9 +170,15 @@ export default function CaregiverDrawer({
         <UserAvatar userId={selectedCaregiver.id} size={BIG_AVATAR_SIZE} />
         <StyledStack>
           <Stack flexDirection="column" alignItems="center">
-            <Grade />
+            <StarRateIcon
+              htmlColor={
+                selectedCaregiver.averageRating !== EMPTY_RATING
+                  ? SECONDARY.yellow
+                  : SECONDARY.lg_gray
+              }
+            />
             <DrawerTextTitle>{translate('createAppointmentFourth.rating')}</DrawerTextTitle>
-            <DrawerTextValue>{averageRate.toFixed(1)}</DrawerTextValue>
+            <DrawerTextValue>{selectedCaregiver.averageRating}</DrawerTextValue>
           </Stack>
           <Stack flexDirection="column" alignItems="center">
             <FreeCancellation />
@@ -328,20 +313,22 @@ export default function CaregiverDrawer({
               </SortButton>
             </StyledStack>
 
-            {mockedReviews.map((review) => (
+            {sortedReviews.map((review) => (
               <DrawerItem key={review.id}>
                 <Box display="flex" justifyContent="space-between">
                   <ReviewHeader>
-                    <Avatar src={review.avatar || undefined} />
+                    <Avatar src={review.user.avatar || undefined} />
                     <Box>
-                      <DrawerTextHeading>{review.name}</DrawerTextHeading>
-                      <Rating name="read-only" value={review.rate} readOnly size="small" />
+                      <DrawerTextHeading>{`${review.user.firstName} ${review.user.lastName}`}</DrawerTextHeading>
+                      <Rating name="read-only" value={review.rating} readOnly size="small" />
                     </Box>
                   </ReviewHeader>
-                  <DrawerTextValue>{review.date}</DrawerTextValue>
+                  <DrawerTextValue>
+                    {format(new Date(review.createdAt), DATE_FORMAT)}
+                  </DrawerTextValue>
                 </Box>
                 <Box>
-                  <DrawerTextValue>{review.text}</DrawerTextValue>
+                  <DrawerTextValue>{review.review}</DrawerTextValue>
                 </Box>
               </DrawerItem>
             ))}

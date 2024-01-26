@@ -1,5 +1,7 @@
 import Head from 'next/head';
+import { useRouter } from 'next/router';
 import { useState } from 'react';
+import { AppointmentDebtStatus } from 'src/components/appointments/enums';
 import ConfirmAppointment from 'src/components/confirm-appointment/ConfirmAppointment';
 import CreateAppointmentFourth from 'src/components/create-appointment-fourth/CreateAppointmentFourth';
 import AppointmentScheduling from 'src/components/create-appointment/AppointmentScheduling';
@@ -13,16 +15,43 @@ import { PrivateRoute } from 'src/components/private-route/PrivateRoute';
 import { Step } from 'src/components/profile/profile-qualification/types';
 import FlowHeader from 'src/components/reusable/header/FlowHeader';
 import HorizontalStepper from 'src/components/reusable/horizontal-stepper/HorizontalStepper';
-import { FIRST_STEP_INDEX, SECOND_STEP_INDEX, USER_ROLE } from 'src/constants';
+import { APPOINTMENT_STATUS, FIRST_STEP_INDEX, SECOND_STEP_INDEX, USER_ROLE } from 'src/constants';
 import { useLocales } from 'src/locales';
+import { useGetAllAppointmentsQuery } from 'src/redux/api/appointmentApi';
+import { ROUTES } from 'src/routes';
 import { PRIMARY } from 'src/theme/colors';
 
-export default function CreateAppointmentPage(): JSX.Element {
+export default function CreateAppointmentPage(): JSX.Element | null {
   const { translate } = useLocales();
+  const router = useRouter();
 
   const [activeStepIndex, setActiveStepIndex] = useState<number>(FIRST_STEP_INDEX);
   const [completed, setCompleted] = useState<Record<string, boolean>>({});
   const { modalOpen, setModalOpen, handleOpen } = useCancelAppointmentModal();
+
+  const { data: appointments, isSuccess, isLoading, isFetching } = useGetAllAppointmentsQuery();
+
+  if (isLoading || isFetching) {
+    return null;
+  }
+
+  if (!appointments || !isSuccess) {
+    router.push(ROUTES.home);
+
+    return null;
+  }
+
+  const hasDebtAppointments = appointments.some(
+    (appointment) =>
+      appointment.debtStatus === AppointmentDebtStatus.NotAccrued ||
+      appointment.status === APPOINTMENT_STATUS.Paused
+  );
+
+  if (hasDebtAppointments) {
+    router.push(ROUTES.home);
+
+    return null;
+  }
 
   const handleNext = (): void => {
     setCompleted({ ...completed, [activeStepIndex]: true });

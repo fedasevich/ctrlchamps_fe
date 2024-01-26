@@ -21,7 +21,7 @@ import { ChangeEvent, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 
 import { useLocales } from 'src/locales';
-import { SORT_ORDER, USER_STATUS } from 'src/constants';
+import { DEFAULT_OFFSET, SORT_ORDER, USER_STATUS } from 'src/constants';
 import { ROUTES } from 'src/routes';
 import { useDebounce } from 'src/hooks/useDebounce';
 import { useGetFilteredUsersQuery, useUpdateUserMutation } from 'src/redux/api/userApi';
@@ -73,7 +73,7 @@ export default function UserList(): JSX.Element | null {
     refetch,
   } = useGetFilteredUsersQuery({
     search: debouncedSearchTerm,
-    offset: (page - FIRST_PAGE) * PAGINATION_USERS_LIMIT,
+    offset: !debouncedSearchTerm ? (page - FIRST_PAGE) * PAGINATION_USERS_LIMIT : DEFAULT_OFFSET,
     sort: sortingOrder,
   });
 
@@ -239,11 +239,11 @@ export default function UserList(): JSX.Element | null {
             <Title>{translate('adminManagement.deleteWarning')}</Title>
 
             <Box display="flex" gap={2}>
-              <StyledButton variant="contained" onClick={handleDeleteModalToggle}>
+              <StyledButton variant="contained" onClick={handleDeleteUser}>
                 {translate('adminManagement.yes')}
               </StyledButton>
 
-              <StyledButton variant="contained" color="error" onClick={handleDeleteUser}>
+              <StyledButton variant="contained" color="error" onClick={handleDeleteModalToggle}>
                 {translate('adminManagement.no')}
               </StyledButton>
             </Box>

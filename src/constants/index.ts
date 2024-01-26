@@ -62,10 +62,10 @@ export const APPOINTMENT_STATUS = {
   SignedCaregiver: 'Signed by caregiver',
   SignedSeeker: 'Signed by seeker',
   Active: 'Active',
+  Paused: 'Paused',
   Ongoing: 'Ongoing',
   Completed: 'Completed',
   Finished: 'Finished',
-  Paused: 'Paused',
 };
 
 export const VIRTUAL_ASSESSMENT_STATUS = {
@@ -80,7 +80,7 @@ export const APPOINTMENT_TYPE = {
   Recurring: 'Recurring',
 };
 
-export const HELP_EMAIL = 'help@ctrlchamps@gmail.com';
+export const HELP_EMAIL = 'ctrlchamps@gmail.com';
 export const TRANSACTION_EXAMPLE = 100;
 
 export const USER_STATUS = {
@@ -107,3 +107,5 @@ export const PAGINATION_LIMIT = 10;
 
 export const ASCI_LETTERS_START = 33;
 export const ASCI_LETTERS_RANGE = 94;
+
+export const DEFAULT_OFFSET = 0;

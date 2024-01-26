@@ -48,7 +48,7 @@ const TransactionsModalPage = (): JSX.Element | null => {
   return (
     <PrivateRoute>
       <Head>
-        <title>{translate('app_title')}</title>
+        <title>{translate('transactions.transactions')}</title>
       </Head>
       <MainHeader />
       <Background>

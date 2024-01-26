@@ -37,7 +37,7 @@ export default function NotificationsPage(): JSX.Element | null {
   return (
     <PrivateRoute>
       <Head>
-        <title>{translate('app_title')}</title>
+        <title>{translate('notifications.title')}</title>
       </Head>
       <MainHeader />
       <Background>

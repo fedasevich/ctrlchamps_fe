@@ -13,7 +13,7 @@ export default function FaqPage(): JSX.Element | null {
   return (
     <PrivateRoute>
       <Head>
-        <title>{translate('app_title')}</title>
+        <title>{translate('faq.title')}</title>
       </Head>
       <MainHeader />
       <Background>

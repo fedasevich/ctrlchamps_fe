@@ -60,7 +60,7 @@ export default function CaregiverDrawer({
   const [selectedTab, setSelectedTab] = useState<string>(FIRST_SELECTED_TAB);
   const [sortingOrderRate, setSortingOrderRate] = useState<string>('');
   const [sortingOrderDate, setSortingOrderDate] = useState<string>(SORT_ORDER.DESC);
-  const [sortedReviews, setSortedReviews] = useState<SeekerReview[] | []>([]);
+  const [sortedReviews, setSortedReviews] = useState<SeekerReview[]>([]);
 
   const { data: selectedCaregiver, isLoading } =
     appointmentApi.useGetCaregiverDetailsQuery(caregiverId);

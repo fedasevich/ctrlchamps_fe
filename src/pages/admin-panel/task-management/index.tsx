@@ -13,7 +13,7 @@ export default function TasksManagementPage(): JSX.Element {
   return (
     <PrivateRoute allowedRoles={[USER_ROLE.SuperAdmin, USER_ROLE.Admin]}>
       <Head>
-        <title>{translate('adminManagement.title')}</title>
+        <title>{translate('adminMenu.taskManagement')}</title>
       </Head>
       <AdminPageStyledStack direction="row">
         <AdminMenu />

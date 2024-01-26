@@ -1,3 +1,4 @@
+import Head from 'next/head';
 import React, { useState } from 'react';
 
 import { useTranslation } from 'react-i18next';
@@ -22,6 +23,9 @@ const AccountVerification: React.FC<AccountVerificationProps> = (): JSX.Element 
 
   return (
     <PrivateRoute>
+      <Head>
+        <title>{t('account_verification.account_verification')}</title>
+      </Head>
       <FlowHeader text={t('account_verification.account_verification')} infoButton />
       {isSubmitted ? <SuccessfulVerification /> : <OTPMessageField onSubmit={onSubmit} />}
     </PrivateRoute>

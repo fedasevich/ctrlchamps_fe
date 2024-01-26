@@ -20,6 +20,7 @@ export type CaregiverInfo = {
   description: string;
   videoLink: string;
   availability: TimeSlot[];
+  averageRating?: number;
 };
 
 export type WorkExperiences = {

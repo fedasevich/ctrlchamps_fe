@@ -13,6 +13,7 @@ export default function AppointmentStatus({ status }: IProps): JSX.Element {
     [APPOINTMENT_STATUS.Pending]: translate('appointments_page.status.pending'),
     [APPOINTMENT_STATUS.Accepted]: translate(`appointments_page.status.accepted`),
     [APPOINTMENT_STATUS.Active]: translate('appointments_page.status.active'),
+    [APPOINTMENT_STATUS.Paused]: translate('appointments_page.status.paused'),
     [APPOINTMENT_STATUS.Completed]: translate('appointments_page.status.completed'),
     [APPOINTMENT_STATUS.Ongoing]: translate('appointments_page.status.ongoing'),
     [APPOINTMENT_STATUS.Virtual]: translate('appointments_page.status.virtual'),

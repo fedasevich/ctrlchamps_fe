@@ -10,7 +10,6 @@ import {
   Table,
   TableBody,
   TableHead,
-  Typography,
 } from '@mui/material';
 import { format, parseISO } from 'date-fns';
 import { useRouter } from 'next/router';
@@ -38,7 +37,7 @@ import {
 } from 'src/components/admin-management/styles';
 import Modal from 'src/components/reusable/modal/Modal';
 import UpdateSuccess from 'src/components/reusable/update-success/UpdateSuccess';
-import { DATE_FORMAT } from 'src/constants';
+import { DATE_FORMAT, DEFAULT_OFFSET } from 'src/constants';
 import { useDebounce } from 'src/hooks/useDebounce';
 import { useLocales } from 'src/locales';
 import { useGetFilteredAdminsQuery } from 'src/redux/api/adminPanelAPI';
@@ -64,7 +63,7 @@ function AdminManagement(): JSX.Element | null {
     refetch,
   } = useGetFilteredAdminsQuery({
     search: debouncedSearchTerm,
-    offset: (page - FIRST_PAGE) * PAGINATION_ADMINS_LIMIT,
+    offset: !debouncedSearchTerm ? (page - FIRST_PAGE) * PAGINATION_ADMINS_LIMIT : DEFAULT_OFFSET,
   });
 
   const [deleteUser] = useDeleteUserMutation();
@@ -137,80 +136,72 @@ function AdminManagement(): JSX.Element | null {
           size="small"
         />
 
-        {isSuccess && termSearch && !admins.data.length && (
-          <Typography color="GrayText" mt={2}>
-            {translate('no_results_match')}
-          </Typography>
-        )}
-
-        {isSuccess && admins.data.length > 0 && (
-          <>
-            <StyledStack mt={3}>
-              <Table>
-                <TableHead>
-                  <TableRow>
-                    <TableHeader>{translate('adminManagement.name')}</TableHeader>
-                    <TableHeader>{translate('adminManagement.email')}</TableHeader>
-                    <TableHeader>{translate('adminManagement.typeUser')}</TableHeader>
-                    <TableHeader>{translate('adminManagement.phone')}</TableHeader>
-                    <TableHeader>{translate('adminManagement.date')}</TableHeader>
-                    <TableHeader align="right">{translate('adminManagement.action')}</TableHeader>
+        <StyledStack mt={3}>
+          <Table>
+            <TableHead>
+              <TableRow>
+                <TableHeader>{translate('adminManagement.name')}</TableHeader>
+                <TableHeader>{translate('adminManagement.email')}</TableHeader>
+                <TableHeader>{translate('adminManagement.typeUser')}</TableHeader>
+                <TableHeader>{translate('adminManagement.phone')}</TableHeader>
+                <TableHeader>{translate('adminManagement.date')}</TableHeader>
+                <TableHeader align="right">{translate('adminManagement.action')}</TableHeader>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {isSuccess &&
+                admins.data.map((admin) => (
+                  <TableRow key={admin.id}>
+                    <TableCell>
+                      {admin.firstName} {admin.lastName}
+                    </TableCell>
+                    <TableCell>{admin.email}</TableCell>
+                    <TableCell>
+                      <GreenSpan>{admin.role}</GreenSpan>
+                    </TableCell>
+                    <TableCell>{admin.phoneNumber}</TableCell>
+                    <TableCell>{format(parseISO(admin.updatedAt), DATE_FORMAT)}</TableCell>
+                    <TableCell align="right">
+                      <IconButton onClick={(): void => handleEditAdminClick(admin.id)}>
+                        <ModeEditOutlineOutlinedIcon />
+                      </IconButton>
+                      <IconButton onClick={(): void => handleCloseModalAndSetUserId(admin.id)}>
+                        <DeleteForeverOutlinedIcon />
+                      </IconButton>
+                    </TableCell>
                   </TableRow>
-                </TableHead>
-                <TableBody>
-                  {isSuccess &&
-                    admins.data.map((admin) => (
-                      <TableRow key={admin.id}>
-                        <TableCell>
-                          {admin.firstName} {admin.lastName}
-                        </TableCell>
-                        <TableCell>{admin.email}</TableCell>
-                        <TableCell>
-                          <GreenSpan>{admin.role}</GreenSpan>
-                        </TableCell>
-                        <TableCell>{admin.phoneNumber}</TableCell>
-                        <TableCell>{format(parseISO(admin.updatedAt), DATE_FORMAT)}</TableCell>
-                        <TableCell align="right">
-                          <IconButton onClick={(): void => handleEditAdminClick(admin.id)}>
-                            <ModeEditOutlineOutlinedIcon />
-                          </IconButton>
-                          <IconButton onClick={(): void => handleCloseModalAndSetUserId(admin.id)}>
-                            <DeleteForeverOutlinedIcon />
-                          </IconButton>
-                        </TableCell>
-                      </TableRow>
-                    ))}
-                </TableBody>
-              </Table>
-            </StyledStack>
-            <Stack display="flex" direction="row" justifyContent="center" mt={2}>
-              <Pagination
-                count={Math.ceil(admins!.count / PAGINATION_ADMINS_LIMIT)}
-                page={page}
-                onChange={handlePageChange}
-              />
-            </Stack>
-            <Modal
-              isActive={isDeleteModalActive}
-              onClose={handleDeleteModalToggle}
-              title={translate('adminManagement.deleteUser')}
-            >
-              <Box display="flex" flexDirection="column">
-                <Title>{translate('adminManagement.deleteWarning')}</Title>
+                ))}
+            </TableBody>
+          </Table>
+        </StyledStack>
 
-                <Box display="flex" gap={2}>
-                  <StyledButton variant="contained" onClick={handleDeleteModalToggle}>
-                    {translate('adminManagement.yes')}
-                  </StyledButton>
+        <Stack display="flex" direction="row" justifyContent="center" mt={2}>
+          <Pagination
+            count={Math.ceil(admins!.count / PAGINATION_ADMINS_LIMIT)}
+            page={page}
+            onChange={handlePageChange}
+          />
+        </Stack>
 
-                  <StyledButton variant="contained" color="error" onClick={handleDeleteUser}>
-                    {translate('adminManagement.no')}
-                  </StyledButton>
-                </Box>
-              </Box>
-            </Modal>
-          </>
-        )}
+        <Modal
+          isActive={isDeleteModalActive}
+          onClose={handleDeleteModalToggle}
+          title={translate('adminManagement.deleteUser')}
+        >
+          <Box display="flex" flexDirection="column">
+            <Title>{translate('adminManagement.deleteWarning')}</Title>
+
+            <Box display="flex" gap={2}>
+              <StyledButton variant="contained" onClick={handleDeleteModalToggle}>
+                {translate('adminManagement.no')}
+              </StyledButton>
+
+              <StyledButton variant="contained" color="error" onClick={handleDeleteUser}>
+                {translate('adminManagement.yes')}
+              </StyledButton>
+            </Box>
+          </Box>
+        </Modal>
       </ManagementWrapper>
       <UpdateSuccess
         dataUpdated={userDeleted}

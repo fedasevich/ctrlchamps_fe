@@ -61,7 +61,7 @@ const Step2 = ({ onNext, onBack, stepKey, activities }: Step2Props): JSX.Element
         />
       </QuestionnaireContainerContent>
       <AppointmentBtn
-        nextText={translate('health_questionnaire.submit')}
+        nextText={translate('btn_next')}
         backText={translate('profileQualification.back')}
         disabled={!questionsCompleted}
         onClick={handleSubmit}

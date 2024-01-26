@@ -18,6 +18,7 @@ import { cancelAppointment as resetAppointmentInfo } from 'src/redux/slices/appo
 import { resetAllInfo } from 'src/redux/slices/healthQuestionnaireSlice';
 
 import { zonedTimeToUtc } from 'date-fns-tz';
+import { resetLocationSlice } from 'src/redux/slices/locationSlice';
 import { CONFIRM_NOTE_MAX_LENGTH } from './constants';
 import {
   Container,
@@ -91,6 +92,7 @@ export default function ConfirmAppointment({ onBack }: { onBack: () => void }): 
       router.push(ROUTES.home);
       dispatch(resetAppointmentInfo());
       dispatch(resetAllInfo());
+      dispatch(resetLocationSlice());
     } catch (err) {
       throw new Error(err);
     }

@@ -1,4 +1,5 @@
 import { PreferredDay } from 'src/constants/enums';
+import { User } from 'src/redux/slices/userSlice';
 
 export type Caregiver = {
   id: string;
@@ -9,6 +10,16 @@ export type Caregiver = {
   caregiverInfo: CaregiverInfo;
   qualifications: Certificate[];
   workExperiences: WorkExperiences[];
+  seekerReviews?: SeekerReviews[];
+};
+
+export type SeekerReviews = {
+  id: string;
+  createdAt: string;
+  caregiverInfoId: string;
+  rating: string;
+  review?: string;
+  user: User;
 };
 
 export type CaregiverInfo = {

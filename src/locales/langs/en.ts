@@ -923,6 +923,7 @@ const en = {
   },
   userList: {
     title: 'Users',
+    reviews: 'Reviews',
     search: 'Search',
     userName: 'User Name',
     role: 'Role',

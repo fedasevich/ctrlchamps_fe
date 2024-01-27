@@ -2,12 +2,14 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import PhotoCameraOutlinedIcon from '@mui/icons-material/PhotoCameraOutlined';
 import {
+  Avatar,
   Button,
   FormControl,
   FormControlLabel,
   IconButton,
   MenuItem,
   Pagination,
+  Rating,
   Select,
   SelectChangeEvent,
   Stack,
@@ -38,6 +40,7 @@ import { User, useUpdateUserMutation, useUploadAvatarMutation } from 'src/redux/
 import { SECONDARY } from 'src/theme/colors';
 import { TYPOGRAPHY } from 'src/theme/fonts';
 
+import { useGetCaregiverDetailsQuery } from 'src/redux/api/appointmentApi';
 import AddressModal from './address-modal/AddressModal';
 import { MAX_FILE_SIZE_BYTES, PAGINATION_LIMIT } from './constants';
 import PersonalInfoModal from './personal-info-modal/PersonalInfoModal';
@@ -53,6 +56,11 @@ import {
   Item,
   Label,
   List,
+  ReviewDate,
+  ReviewDescription,
+  ReviewHeader,
+  ReviewName,
+  ReviewUserBlock,
   StatusBlock,
   StyledAvatar,
   Subtitle,
@@ -89,6 +97,33 @@ export default function AccountDetails({ user, isAdmin }: IProps): JSX.Element |
     offset: (page - FIRST_PAGE) * PAGINATION_LIMIT,
     limit: PAGINATION_LIMIT,
   });
+  const { data: caregiverInfo } = useGetCaregiverDetailsQuery(user.id);
+  const seekerReviews = [
+    {
+      id: '1',
+      caregiverInfoId: 'string',
+      rating: 4.0,
+      review:
+        'Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit deleniti laudantium quis earum ab perferendis voluptates? Distinctio non modi voluptatibus reiciendis reprehenderit vero recusandae, facere assumenda, ea porro voluptate molestias.',
+      createdAt: new Date().toISOString(),
+      user: {
+        firstName: 'Oleh',
+        lastName: 'Tarnachuk',
+      },
+    },
+    {
+      id: '2',
+      caregiverInfoId: 'string',
+      rating: 5.0,
+      review: 'string',
+      createdAt: new Date().toISOString(),
+      user: {
+        firstName: 'Max',
+        lastName: 'Volovo',
+      },
+    },
+  ];
+  // caregiverInfo?.seekerReviews;
 
   const [uploadAvatar] = useUploadAvatarMutation();
   const [deleteAvatar] = useUpdateUserMutation();
@@ -347,6 +382,34 @@ export default function AccountDetails({ user, isAdmin }: IProps): JSX.Element |
                 onSuccess={(): void => setPasswordUpdated(true)}
               />
             )}
+          </Block>
+        )}
+        {seekerReviews && seekerReviews.length > 0 && (
+          <Block>
+            <Subtitle>{translate('userList.reviews')}</Subtitle>
+            {seekerReviews.map((review) => (
+              <div key={review.id}>
+                <ReviewHeader>
+                  <ReviewUserBlock>
+                    <Avatar />
+                    <div>
+                      <ReviewName>
+                        {review.user.firstName} {review.user.lastName}
+                      </ReviewName>
+                      <Rating
+                        name="read-only"
+                        value={Number(review.rating)}
+                        size="small"
+                        readOnly
+                      />
+                    </div>
+                  </ReviewUserBlock>
+
+                  <ReviewDate>{format(parseISO(review.createdAt), DATE_FORMAT)}</ReviewDate>
+                </ReviewHeader>
+                <ReviewDescription>{review.review}</ReviewDescription>
+              </div>
+            ))}
           </Block>
         )}
       </Container>

@@ -82,8 +82,10 @@ export default function CaregiverDrawer({
     isSuccess &&
     utcToZonedTime(new Date(), UTC_TIMEZONE) >= addDays(parseISO(appointment.endDate), ONE_DAY);
 
-  const isAppointmentStatusFinished =
-    isSuccess && appointment.status === APPOINTMENT_STATUS.Finished;
+  const isAppointmentCompleted =
+    isSuccess &&
+    (appointment.status === APPOINTMENT_STATUS.Finished ||
+      appointment.status === APPOINTMENT_STATUS.Completed);
 
   const isCaregiverHasReview =
     isSelectedCaregiverLoaded &&
@@ -92,7 +94,7 @@ export default function CaregiverDrawer({
   const [selectedTab, setSelectedTab] = useState<string>(FIRST_SELECTED_TAB);
   const [isReviewCaregiverModalActive, setIsReviewCaregiverModalActive] = useState<boolean>(false);
   const [isReviewButtonActive, setIsReviewButtonActive] = useState<boolean>(
-    isOneDayAfterAppointment && isAppointmentStatusFinished && !isCaregiverHasReview
+    isOneDayAfterAppointment && isAppointmentCompleted && !isCaregiverHasReview
   );
 
   const [sortingOrderRate, setSortingOrderRate] = useState<string>('');
@@ -101,9 +103,9 @@ export default function CaregiverDrawer({
 
   useEffect(() => {
     setIsReviewButtonActive(
-      isOneDayAfterAppointment && isAppointmentStatusFinished && !isCaregiverHasReview
+      isOneDayAfterAppointment && isAppointmentCompleted && !isCaregiverHasReview
     );
-  }, [isOneDayAfterAppointment, isAppointmentStatusFinished, isCaregiverHasReview]);
+  }, [isOneDayAfterAppointment, isAppointmentCompleted, isCaregiverHasReview]);
 
   const handleReviewCaregiverModal = (): void =>
     setIsReviewCaregiverModalActive(!isReviewCaregiverModalActive);

@@ -27,6 +27,7 @@ export const SECONDARY = {
   light_yellow: '#f0d0023b',
   light_red: '#ff000021',
   green: '#5cb25c',
+  yellow: '#f8c11d',
   background_gray: '#ecf4f3',
 };
 

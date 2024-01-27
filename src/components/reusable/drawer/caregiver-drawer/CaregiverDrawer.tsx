@@ -1,10 +1,13 @@
 import { TabContext } from '@mui/lab';
-import { Box, IconButton, Stack } from '@mui/material';
-import { SyntheticEvent, useState } from 'react';
+import { Avatar, Box, IconButton, Rating, Stack } from '@mui/material';
+import StarRateIcon from '@mui/icons-material/StarRate';
+import { SyntheticEvent, useEffect, useState } from 'react';
+import { format } from 'date-fns';
+
 import ArrowBackFilled from 'src/assets/icons/ArrowBackFilled';
 import FreeCancellation from 'src/assets/icons/FreeCancellation';
 import MonetizationOn from 'src/assets/icons/MonetizationOn';
-
+import { SECONDARY } from 'src/theme/colors';
 import Drawer from 'src/components/reusable/drawer/Drawer';
 import UserAvatar from 'src/components/reusable/user-avatar/UserAvatar';
 import {
@@ -15,9 +18,10 @@ import {
 } from 'src/components/reusable/drawer/styles';
 import { useLocales } from 'src/locales';
 import { appointmentApi } from 'src/redux/api/appointmentApi';
-import { BIG_AVATAR_SIZE } from 'src/constants';
+import { BIG_AVATAR_SIZE, DATE_FORMAT, SORT_ORDER } from 'src/constants';
+import { SeekerReview } from 'src/types/Caregiver.type';
 
-import { FIRST_SELECTED_TAB } from './constants';
+import { FIRST_SELECTED_TAB, EMPTY_RATING, ORDER_TYPE } from './constants';
 import { formatWorkExperienceDateRange, formatWorkExperienceDateRangeTenure } from './helpers';
 import {
   DrawerDateTenure,
@@ -26,7 +30,10 @@ import {
   DrawerTextHeading,
   DrawerTextTitle,
   DrawerTextValue,
+  ReviewHeader,
+  SortButton,
   StyledLink,
+  StyledSortIcon,
   StyledStack,
   StyledTab,
   StyledTabPanel,
@@ -51,15 +58,59 @@ export default function CaregiverDrawer({
   const { translate, currentLang } = useLocales();
 
   const [selectedTab, setSelectedTab] = useState<string>(FIRST_SELECTED_TAB);
+  const [sortingOrderRate, setSortingOrderRate] = useState<string>('');
+  const [sortingOrderDate, setSortingOrderDate] = useState<string>(SORT_ORDER.DESC);
+  const [sortedReviews, setSortedReviews] = useState<SeekerReview[]>([]);
 
   const { data: selectedCaregiver, isLoading } =
     appointmentApi.useGetCaregiverDetailsQuery(caregiverId);
+
+  useEffect(() => {
+    const reviews = [...(selectedCaregiver?.seekerReviews || [])];
+    reviews.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+    setSortedReviews(reviews);
+  }, [selectedCaregiver?.seekerReviews]);
 
   if (isLoading) return null;
   if (!selectedCaregiver) return null;
 
   const handleTabClick = (_event: SyntheticEvent<Element, Event>, newValue: string): void => {
     setSelectedTab(newValue);
+  };
+
+  const handleSortingChange = (orderType: string): void => {
+    const reviews = [...selectedCaregiver.seekerReviews];
+    if (orderType === ORDER_TYPE.rate) {
+      const newSortingOrderRate =
+        sortingOrderRate === SORT_ORDER.DESC ? SORT_ORDER.ASC : SORT_ORDER.DESC;
+
+      setSortingOrderRate(newSortingOrderRate);
+      setSortingOrderDate('');
+      reviews.sort((a, b) =>
+        newSortingOrderRate === SORT_ORDER.ASC ? a.rating - b.rating : b.rating - a.rating
+      );
+      setSortedReviews(reviews);
+    } else if (orderType === ORDER_TYPE.date) {
+      const newSortingOrderDate =
+        sortingOrderDate === SORT_ORDER.DESC ? SORT_ORDER.ASC : SORT_ORDER.DESC;
+
+      setSortingOrderDate(newSortingOrderDate);
+      setSortingOrderRate('');
+      reviews.sort((a, b) =>
+        newSortingOrderDate === SORT_ORDER.ASC
+          ? new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
+          : new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+      );
+      setSortedReviews(reviews);
+    }
+  };
+
+  const handleChangeSortingRate = (): void => {
+    handleSortingChange(ORDER_TYPE.rate);
+  };
+
+  const handleChangeSortingDate = (): void => {
+    handleSortingChange(ORDER_TYPE.date);
   };
 
   return (
@@ -75,6 +126,17 @@ export default function CaregiverDrawer({
       <DrawerStats flexDirection="row">
         <UserAvatar userId={selectedCaregiver.id} size={BIG_AVATAR_SIZE} />
         <StyledStack>
+          <Stack flexDirection="column" alignItems="center">
+            <StarRateIcon
+              htmlColor={
+                selectedCaregiver.averageRating !== EMPTY_RATING
+                  ? SECONDARY.yellow
+                  : SECONDARY.lg_gray
+              }
+            />
+            <DrawerTextTitle>{translate('createAppointmentFourth.rating')}</DrawerTextTitle>
+            <DrawerTextValue>{selectedCaregiver.averageRating}</DrawerTextValue>
+          </Stack>
           <Stack flexDirection="column" alignItems="center">
             <FreeCancellation />
             <DrawerTextTitle>
@@ -101,6 +163,7 @@ export default function CaregiverDrawer({
           <StyledTab label={translate('createAppointmentFourth.tabs.qualification')} value="2" />
           <StyledTab label={translate('createAppointmentFourth.tabs.workExperience')} value="3" />
           <StyledTab label={translate('createAppointmentFourth.tabs.services')} value="4" />
+          <StyledTab label={translate('createAppointmentFourth.tabs.reviews')} value="5" />
         </StyledTabs>
         <DrawerBody>
           <StyledTabPanel value="1">
@@ -186,6 +249,46 @@ export default function CaregiverDrawer({
                 ))}
               </StyledUnorderedList>
             </DrawerItem>
+          </StyledTabPanel>
+          <StyledTabPanel value="5">
+            <StyledStack>
+              <SortButton onClick={handleChangeSortingDate}>
+                {translate('createAppointmentFourth.sortingDate')}
+                {sortingOrderDate === SORT_ORDER.DESC || !sortingOrderDate ? (
+                  <StyledSortIcon />
+                ) : (
+                  <StyledSortIcon sx={{ transform: 'rotate(180deg)' }} />
+                )}
+              </SortButton>
+              <SortButton onClick={handleChangeSortingRate}>
+                {translate('createAppointmentFourth.sortingRating')}
+                {sortingOrderRate === SORT_ORDER.DESC || !sortingOrderRate ? (
+                  <StyledSortIcon />
+                ) : (
+                  <StyledSortIcon sx={{ transform: 'rotate(180deg)' }} />
+                )}
+              </SortButton>
+            </StyledStack>
+
+            {sortedReviews.map((review) => (
+              <DrawerItem key={review.id}>
+                <Box display="flex" justifyContent="space-between">
+                  <ReviewHeader>
+                    <Avatar src={review.user.avatar || undefined} />
+                    <Box>
+                      <DrawerTextHeading>{`${review.user.firstName} ${review.user.lastName}`}</DrawerTextHeading>
+                      <Rating name="read-only" value={review.rating} readOnly size="small" />
+                    </Box>
+                  </ReviewHeader>
+                  <DrawerTextValue>
+                    {format(new Date(review.createdAt), DATE_FORMAT)}
+                  </DrawerTextValue>
+                </Box>
+                <Box>
+                  <DrawerTextValue>{review.review}</DrawerTextValue>
+                </Box>
+              </DrawerItem>
+            ))}
           </StyledTabPanel>
         </DrawerBody>
       </TabContext>

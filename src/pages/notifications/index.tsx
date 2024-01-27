@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import { Background } from 'src/components/appointments/styles';
 import NotificationsList from 'src/components/notifications-list/NotificationsList';
+import { PrivateRoute } from 'src/components/private-route/PrivateRoute';
 import MainHeader from 'src/components/reusable/header/MainHeader';
 import { DEFAULT_REDIRECT_PATH } from 'src/constants';
 import { useLocales } from 'src/locales';
@@ -34,9 +35,9 @@ export default function NotificationsPage(): JSX.Element | null {
   }
 
   return (
-    <>
+    <PrivateRoute>
       <Head>
-        <title>{translate('app_title')}</title>
+        <title>{translate('notifications.title')}</title>
       </Head>
       <MainHeader />
       <Background>
@@ -46,6 +47,6 @@ export default function NotificationsPage(): JSX.Element | null {
           count={notifications?.count}
         />
       </Background>
-    </>
+    </PrivateRoute>
   );
 }

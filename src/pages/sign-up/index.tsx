@@ -18,6 +18,7 @@ import SignUpSecondForm from 'src/components/sign-up-second';
 import SignUpThirdForm from 'src/components/sign-up-third';
 import { UserRole } from 'src/redux/slices/userSlice';
 import { ROUTES } from 'src/routes';
+import Head from 'next/head';
 
 const STEPS = {
   first: 1,
@@ -77,6 +78,9 @@ function SignUp(): JSX.Element {
 
   return (
     <>
+      <Head>
+        <title>{t('SignUp')}</title>
+      </Head>
       <FlowHeader text={t('SignUp')} callback={handleBackStep} infoButton iconType="back" />
       <SignUpWrapper>
         <>

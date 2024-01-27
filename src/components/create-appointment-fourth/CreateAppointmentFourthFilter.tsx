@@ -1,5 +1,13 @@
 import TuneIcon from '@mui/icons-material/Tune';
-import { Checkbox, FormGroup, IconButton, Switch, Typography, useMediaQuery } from '@mui/material';
+import {
+  Checkbox,
+  FormGroup,
+  IconButton,
+  Rating,
+  Switch,
+  Typography,
+  useMediaQuery,
+} from '@mui/material';
 import { useTheme } from '@mui/system';
 import { ChangeEvent, Dispatch, SetStateAction, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -8,6 +16,7 @@ import CreateAppointmentFourthAutocomplete from 'src/components/create-appointme
 import {
   BaseText,
   FilterContainer,
+  RatingWrapper,
   StyledDrawerTrigger,
   StyledFormControlLabel,
   StyledNextButton,
@@ -22,6 +31,7 @@ interface CreateAppointmentFourthFilterProps {
   handleLocationChange: (newLocation: AutocompletedLocation) => void;
   handleSwitchChange: (event: ChangeEvent<HTMLInputElement>) => void;
   handleServicesChange: (event: ChangeEvent<HTMLInputElement>) => void;
+  handleRatingsChange: (event: ChangeEvent<HTMLInputElement>) => void;
   onBack: () => void;
 }
 
@@ -29,6 +39,7 @@ export default function CreateAppointmentFourthFilter({
   caregiverFilter,
   handleLocationChange,
   handleServicesChange,
+  handleRatingsChange,
   handleSwitchChange,
   onBack,
 }: CreateAppointmentFourthFilterProps): JSX.Element {
@@ -85,6 +96,28 @@ export default function CreateAppointmentFourthFilter({
                 />
               }
               label={translate(`createAppointmentFourth.services.${service.label}`)}
+            />
+          ))}
+        </FormGroup>
+        <BaseText>{translate('createAppointmentFourth.rating')}</BaseText>
+        <FormGroup>
+          {caregiverFilter.ratings.map((rating) => (
+            <StyledFormControlLabel
+              key={rating.label}
+              control={
+                <Checkbox
+                  checked={rating.checked}
+                  onChange={handleRatingsChange}
+                  name="ratings"
+                  value={rating.label}
+                />
+              }
+              label={
+                <RatingWrapper>
+                  <Typography>{rating.label}</Typography>
+                  <Rating name="read-only" value={Number(rating.label)} size="small" readOnly />
+                </RatingWrapper>
+              }
             />
           ))}
         </FormGroup>

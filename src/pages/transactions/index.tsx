@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import AppointmentDrawer from 'src/components/appointments/appointment-drawer/AppointmentDrawer';
 import { Background } from 'src/components/appointments/styles';
+import { PrivateRoute } from 'src/components/private-route/PrivateRoute';
 import MainHeader from 'src/components/reusable/header/MainHeader';
 import TransactionsModal from 'src/components/transactions/TransactionsModal';
 import { PAGINATION_LIMIT } from 'src/components/transactions/constants';
@@ -45,9 +46,9 @@ const TransactionsModalPage = (): JSX.Element | null => {
   const closeDrawer = (): void => setIsDrawerOpen(false);
 
   return (
-    <>
+    <PrivateRoute>
       <Head>
-        <title>{translate('app_title')}</title>
+        <title>{translate('transactions.transactions')}</title>
       </Head>
       <MainHeader />
       <Background>
@@ -69,7 +70,7 @@ const TransactionsModalPage = (): JSX.Element | null => {
           />
         )}
       </Background>
-    </>
+    </PrivateRoute>
   );
 };
 

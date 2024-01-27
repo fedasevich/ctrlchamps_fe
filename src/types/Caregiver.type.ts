@@ -11,6 +11,7 @@ export type Caregiver = {
   qualifications: Certificate[];
   workExperiences: WorkExperiences[];
   seekerReviews?: SeekerReviews[];
+  averageRating: string;
 };
 
 export type SeekerReviews = {
@@ -29,6 +30,7 @@ export type CaregiverInfo = {
   description: string;
   videoLink: string;
   availability: TimeSlot[];
+  averageRating?: number;
 };
 
 export type WorkExperiences = {
@@ -52,4 +54,18 @@ export type TimeSlot = {
   day: PreferredDay;
   startTime: string;
   endTime: string;
+};
+
+export type SeekerReview = {
+  id: string;
+  rating: number;
+  review?: string;
+  createdAt: string;
+  caregiverInfoId: string;
+  userId: string;
+  user: {
+    avatar?: string;
+    firstName: string;
+    lastName: string;
+  };
 };

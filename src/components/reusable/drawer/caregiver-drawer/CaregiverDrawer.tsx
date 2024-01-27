@@ -97,7 +97,7 @@ export default function CaregiverDrawer({
 
   const [sortingOrderRate, setSortingOrderRate] = useState<string>('');
   const [sortingOrderDate, setSortingOrderDate] = useState<string>(SORT_ORDER.DESC);
-  const [sortedReviews, setSortedReviews] = useState<SeekerReview[] | []>([]);
+  const [sortedReviews, setSortedReviews] = useState<SeekerReview[]>([]);
 
   useEffect(() => {
     setIsReviewButtonActive(

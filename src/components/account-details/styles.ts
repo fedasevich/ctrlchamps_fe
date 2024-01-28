@@ -151,6 +151,11 @@ export const StatusBlock = styled('div')`
   width: 100%;
 `;
 
+export const ReviewBlock = styled('div')`
+  padding-bottom: 5px;
+  border-bottom: 1px solid ${SECONDARY.light_gray};
+`;
+
 export const ReviewHeader = styled('div')`
   display: flex;
   justify-content: space-between;

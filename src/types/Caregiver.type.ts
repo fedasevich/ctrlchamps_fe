@@ -1,5 +1,5 @@
 import { PreferredDay } from 'src/constants/enums';
-import { User } from 'src/redux/slices/userSlice';
+import { SeekerReview } from 'src/redux/api/reviewsApi';
 
 export type Caregiver = {
   id: string;
@@ -10,17 +10,8 @@ export type Caregiver = {
   caregiverInfo: CaregiverInfo;
   qualifications: Certificate[];
   workExperiences: WorkExperiences[];
-  seekerReviews?: SeekerReviews[];
+  seekerReviews: SeekerReview[];
   averageRating: string;
-};
-
-export type SeekerReviews = {
-  id: string;
-  createdAt: string;
-  caregiverInfoId: string;
-  rating: string;
-  review?: string;
-  user: User;
 };
 
 export type CaregiverInfo = {
@@ -54,18 +45,4 @@ export type TimeSlot = {
   day: PreferredDay;
   startTime: string;
   endTime: string;
-};
-
-export type SeekerReview = {
-  id: string;
-  rating: number;
-  review?: string;
-  createdAt: string;
-  caregiverInfoId: string;
-  userId: string;
-  user: {
-    avatar?: string;
-    firstName: string;
-    lastName: string;
-  };
 };

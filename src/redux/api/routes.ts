@@ -32,6 +32,7 @@ const route = {
   admin: '/admin',
   updatePassword: '/update-password',
   appointments: '/appointments',
+  reviews: '/seeker-review',
 };
 
 export { route };

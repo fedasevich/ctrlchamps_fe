@@ -31,6 +31,7 @@ import transactionsApi from 'src/redux/api/transactionsApi';
 import notificationsApi from 'src/redux/api/notificationsApi';
 import { RootState } from 'src/redux/rootReducer';
 import adminPanelApi from 'src/redux/api/adminPanelAPI';
+import reviewsApi from 'src/redux/api/reviewsApi';
 import tasksApi from 'src/redux/api/tasksApi';
 import { setupListeners } from '@reduxjs/toolkit/dist/query';
 import { forbiddenErrorMiddleware } from 'src/redux/forbiddenErrorMiddleware';
@@ -72,6 +73,7 @@ const store = configureStore({
     [notificationsApi.reducerPath]: notificationsApi.reducer,
     [adminPanelApi.reducerPath]: adminPanelApi.reducer,
     [tasksApi.reducerPath]: tasksApi.reducer,
+    [reviewsApi.reducerPath]: reviewsApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
@@ -92,6 +94,7 @@ const store = configureStore({
       notificationsApi.middleware,
       adminPanelApi.middleware,
       tasksApi.middleware,
+      reviewsApi.middleware,
     ]),
 });
 

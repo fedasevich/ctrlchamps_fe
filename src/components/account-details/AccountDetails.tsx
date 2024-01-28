@@ -40,9 +40,9 @@ import { User, useUpdateUserMutation, useUploadAvatarMutation } from 'src/redux/
 import { SECONDARY } from 'src/theme/colors';
 import { TYPOGRAPHY } from 'src/theme/fonts';
 
-import { useGetCaregiverDetailsQuery } from 'src/redux/api/appointmentApi';
+import { useGetReviewsQuery } from 'src/redux/api/reviewsApi';
 import AddressModal from './address-modal/AddressModal';
-import { MAX_FILE_SIZE_BYTES, PAGINATION_LIMIT } from './constants';
+import { MAX_FILE_SIZE_BYTES, PAGINATION_LIMIT, REVIEWS_PAGINATION_LIMIT } from './constants';
 import PersonalInfoModal from './personal-info-modal/PersonalInfoModal';
 import { ErrorMessage } from './personal-info-modal/styles';
 import {
@@ -56,6 +56,7 @@ import {
   Item,
   Label,
   List,
+  ReviewBlock,
   ReviewDate,
   ReviewDescription,
   ReviewHeader,
@@ -90,40 +91,20 @@ export default function AccountDetails({ user, isAdmin }: IProps): JSX.Element |
   const [personalInfoUpdated, setPersonalInfoUpdated] = useState<boolean>(false);
   const [addressUpdated, setAddressUpdated] = useState<boolean>(false);
   const [statusUpdated, setStatusUpdated] = useState<boolean>(false);
-  const [page, setPage] = useState<number>(FIRST_PAGE);
+  const [transactionsPage, setTransactionsPage] = useState<number>(FIRST_PAGE);
+  const [reviewsPage, setReviewsPage] = useState<number>(FIRST_PAGE);
 
   const { data: transactions } = useGetTransactionsQuery({
     userId: user.id,
-    offset: (page - FIRST_PAGE) * PAGINATION_LIMIT,
+    offset: (transactionsPage - FIRST_PAGE) * PAGINATION_LIMIT,
     limit: PAGINATION_LIMIT,
   });
-  const { data: caregiverInfo } = useGetCaregiverDetailsQuery(user.id);
-  const seekerReviews = [
-    {
-      id: '1',
-      caregiverInfoId: 'string',
-      rating: 4.0,
-      review:
-        'Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit deleniti laudantium quis earum ab perferendis voluptates? Distinctio non modi voluptatibus reiciendis reprehenderit vero recusandae, facere assumenda, ea porro voluptate molestias.',
-      createdAt: new Date().toISOString(),
-      user: {
-        firstName: 'Oleh',
-        lastName: 'Tarnachuk',
-      },
-    },
-    {
-      id: '2',
-      caregiverInfoId: 'string',
-      rating: 5.0,
-      review: 'string',
-      createdAt: new Date().toISOString(),
-      user: {
-        firstName: 'Max',
-        lastName: 'Volovo',
-      },
-    },
-  ];
-  // caregiverInfo?.seekerReviews;
+
+  const { data: seekerReviews } = useGetReviewsQuery({
+    userId: user.id,
+    offset: (reviewsPage - FIRST_PAGE) * REVIEWS_PAGINATION_LIMIT,
+    limit: REVIEWS_PAGINATION_LIMIT,
+  });
 
   const [uploadAvatar] = useUploadAvatarMutation();
   const [deleteAvatar] = useUpdateUserMutation();
@@ -193,8 +174,12 @@ export default function AccountDetails({ user, isAdmin }: IProps): JSX.Element |
     }
   };
 
-  const handlePageChange = (event: ChangeEvent<unknown>, value: number): void => {
-    setPage(value);
+  const handleTransactionsPageChange = (event: ChangeEvent<unknown>, value: number): void => {
+    setTransactionsPage(value);
+  };
+
+  const handleReviewsPageChange = (event: ChangeEvent<unknown>, value: number): void => {
+    setReviewsPage(value);
   };
 
   return (
@@ -355,8 +340,8 @@ export default function AccountDetails({ user, isAdmin }: IProps): JSX.Element |
                   <Stack display="flex" direction="row" justifyContent="center" mt={2}>
                     <Pagination
                       count={Math.ceil(transactions.count / PAGINATION_LIMIT)}
-                      page={page}
-                      onChange={handlePageChange}
+                      page={transactionsPage}
+                      onChange={handleTransactionsPageChange}
                     />
                   </Stack>
                 </>
@@ -384,34 +369,46 @@ export default function AccountDetails({ user, isAdmin }: IProps): JSX.Element |
             )}
           </Block>
         )}
-        {seekerReviews && seekerReviews.length > 0 && (
-          <Block>
-            <Subtitle>{translate('userList.reviews')}</Subtitle>
-            {seekerReviews.map((review) => (
-              <div key={review.id}>
-                <ReviewHeader>
-                  <ReviewUserBlock>
-                    <Avatar />
-                    <div>
-                      <ReviewName>
-                        {review.user.firstName} {review.user.lastName}
-                      </ReviewName>
-                      <Rating
-                        name="read-only"
-                        value={Number(review.rating)}
-                        size="small"
-                        readOnly
-                      />
-                    </div>
-                  </ReviewUserBlock>
+        <Block>
+          <Subtitle>{translate('userList.reviews')}</Subtitle>
+          {seekerReviews && seekerReviews.data.length > 0 ? (
+            <>
+              {seekerReviews.data.map((review) => (
+                <ReviewBlock key={review.id}>
+                  <ReviewHeader>
+                    <ReviewUserBlock>
+                      <Avatar />
+                      <div>
+                        <ReviewName>
+                          {review.user.firstName} {review.user.lastName}
+                        </ReviewName>
+                        <Rating
+                          name="read-only"
+                          value={Number(review.rating)}
+                          size="small"
+                          readOnly
+                        />
+                      </div>
+                    </ReviewUserBlock>
 
-                  <ReviewDate>{format(parseISO(review.createdAt), DATE_FORMAT)}</ReviewDate>
-                </ReviewHeader>
-                <ReviewDescription>{review.review}</ReviewDescription>
-              </div>
-            ))}
-          </Block>
-        )}
+                    <ReviewDate>{format(parseISO(review.createdAt), DATE_FORMAT)}</ReviewDate>
+                  </ReviewHeader>
+                  <ReviewDescription>{review.review}</ReviewDescription>
+                </ReviewBlock>
+              ))}
+
+              <Stack display="flex" direction="row" justifyContent="center" mt={2}>
+                <Pagination
+                  count={Math.ceil(seekerReviews.count / REVIEWS_PAGINATION_LIMIT)}
+                  page={reviewsPage}
+                  onChange={handleReviewsPageChange}
+                />
+              </Stack>
+            </>
+          ) : (
+            <Value>{translate('userList.anyReviews')}</Value>
+          )}
+        </Block>
       </Container>
       <Modal
         onClose={(): void => setIsPersonalInfoModalOpen(false)}

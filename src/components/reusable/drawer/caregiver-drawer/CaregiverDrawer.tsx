@@ -1,8 +1,9 @@
 import { TabContext } from '@mui/lab';
 import { Avatar, Box, IconButton, Rating, Stack } from '@mui/material';
-import StarRateIcon from '@mui/icons-material/StarRate';
 import { SyntheticEvent, useEffect, useState } from 'react';
-import { format } from 'date-fns';
+import StarRateIcon from '@mui/icons-material/StarRate';
+import { addDays, parseISO, format } from 'date-fns';
+import { utcToZonedTime } from 'date-fns-tz';
 
 import ArrowBackFilled from 'src/assets/icons/ArrowBackFilled';
 import FreeCancellation from 'src/assets/icons/FreeCancellation';
@@ -17,8 +18,16 @@ import {
   DrawerTitle,
 } from 'src/components/reusable/drawer/styles';
 import { useLocales } from 'src/locales';
-import { appointmentApi } from 'src/redux/api/appointmentApi';
-import { BIG_AVATAR_SIZE, DATE_FORMAT, SORT_ORDER } from 'src/constants';
+import { appointmentApi, useGetAppointmentQuery } from 'src/redux/api/appointmentApi';
+import {
+  APPOINTMENT_STATUS,
+  BIG_AVATAR_SIZE,
+  ONE_DAY,
+  SORT_ORDER,
+  UTC_TIMEZONE,
+  DATE_FORMAT,
+} from 'src/constants';
+import ReviewModal from 'src/components/review-modal/ReviewModal';
 import { SeekerReview } from 'src/types/Caregiver.type';
 
 import { FIRST_SELECTED_TAB, EMPTY_RATING, ORDER_TYPE } from './constants';
@@ -30,6 +39,7 @@ import {
   DrawerTextHeading,
   DrawerTextTitle,
   DrawerTextValue,
+  ReviewButton,
   ReviewHeader,
   SortButton,
   StyledLink,
@@ -47,6 +57,7 @@ interface CaregiverDrawerProps {
   onClose: () => void;
   caregiverId: string;
   footer?: React.ReactNode;
+  selectedAppointmentId: string;
 }
 
 export default function CaregiverDrawer({
@@ -54,16 +65,50 @@ export default function CaregiverDrawer({
   onClose,
   caregiverId,
   footer,
+  selectedAppointmentId,
 }: CaregiverDrawerProps): JSX.Element | null {
   const { translate, currentLang } = useLocales();
 
+  const { data: appointment, isSuccess } = useGetAppointmentQuery(selectedAppointmentId);
+
+  const {
+    data: selectedCaregiver,
+    isLoading,
+    isSuccess: isSelectedCaregiverLoaded,
+    refetch,
+  } = appointmentApi.useGetCaregiverDetailsQuery(caregiverId);
+
+  const isOneDayAfterAppointment =
+    isSuccess &&
+    utcToZonedTime(new Date(), UTC_TIMEZONE) >= addDays(parseISO(appointment.endDate), ONE_DAY);
+
+  const isAppointmentCompleted =
+    isSuccess &&
+    (appointment.status === APPOINTMENT_STATUS.Finished ||
+      appointment.status === APPOINTMENT_STATUS.Completed);
+
+  const isCaregiverHasReview =
+    isSelectedCaregiverLoaded &&
+    selectedCaregiver.seekerReviews.some((review) => review.userId === appointment?.userId);
+
   const [selectedTab, setSelectedTab] = useState<string>(FIRST_SELECTED_TAB);
+  const [isReviewCaregiverModalActive, setIsReviewCaregiverModalActive] = useState<boolean>(false);
+  const [isReviewButtonActive, setIsReviewButtonActive] = useState<boolean>(
+    isOneDayAfterAppointment && isAppointmentCompleted && !isCaregiverHasReview
+  );
+
   const [sortingOrderRate, setSortingOrderRate] = useState<string>('');
   const [sortingOrderDate, setSortingOrderDate] = useState<string>(SORT_ORDER.DESC);
   const [sortedReviews, setSortedReviews] = useState<SeekerReview[]>([]);
 
-  const { data: selectedCaregiver, isLoading } =
-    appointmentApi.useGetCaregiverDetailsQuery(caregiverId);
+  useEffect(() => {
+    setIsReviewButtonActive(
+      isOneDayAfterAppointment && isAppointmentCompleted && !isCaregiverHasReview
+    );
+  }, [isOneDayAfterAppointment, isAppointmentCompleted, isCaregiverHasReview]);
+
+  const handleReviewCaregiverModal = (): void =>
+    setIsReviewCaregiverModalActive(!isReviewCaregiverModalActive);
 
   useEffect(() => {
     const reviews = [...(selectedCaregiver?.seekerReviews || [])];
@@ -290,7 +335,21 @@ export default function CaregiverDrawer({
               </DrawerItem>
             ))}
           </StyledTabPanel>
+
+          {isReviewButtonActive && (
+            <ReviewButton variant="contained" onClick={handleReviewCaregiverModal}>
+              {translate('caregiverReview.reviewCaregiver')}
+            </ReviewButton>
+          )}
         </DrawerBody>
+        <ReviewModal
+          caregiverId={selectedCaregiver.id}
+          caregiverInfoId={selectedCaregiver.caregiverInfo.id}
+          isReviewCaregiverModalActive={isReviewCaregiverModalActive}
+          setIsReviewCaregiverModalActive={setIsReviewCaregiverModalActive}
+          caregiverName={`${selectedCaregiver.firstName} ${selectedCaregiver.lastName}`}
+          refetchCaregiverInfo={refetch}
+        />
       </TabContext>
       {!!footer && <DrawerFooter>{footer}</DrawerFooter>}
     </Drawer>

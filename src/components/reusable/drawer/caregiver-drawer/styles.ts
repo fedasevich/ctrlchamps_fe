@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { PRIMARY, SECONDARY } from 'src/theme/colors';
 import { TYPOGRAPHY } from 'src/theme/fonts';
 import typography from 'src/theme/typography';
+import { StyledButton } from 'src/components/review-modal/styles';
 
 export const BookButton = styled(Button)`
   width: 100%;
@@ -114,4 +115,11 @@ export const SortButton = styled(Button)`
 
 export const StyledSortIcon = styled(SortIcon)`
   color: ${PRIMARY.main};
+`;
+
+export const ReviewButton = styled(StyledButton)`
+  position: fixed;
+  bottom: 10px;
+  width: 320px;
+  right: 22px;
 `;

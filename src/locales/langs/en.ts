@@ -14,6 +14,7 @@ import {
 } from 'src/components/appointments/virtual-assessment-modal/constants';
 import { CONFIRM_NOTE_MAX_LENGTH } from 'src/components/confirm-appointment/constants';
 import { MAX_CHARACTERS_LENGTH, MIN_PASSWORD_LENGTH } from 'src/constants';
+import { MAX_REVIEW_LENGTH } from 'src/components/review-modal/constants';
 
 const en = {
   app_title: 'CtrlChamps',
@@ -963,6 +964,15 @@ const en = {
     deleteWarning: 'Are you sure you want to delete this appointment?',
     yes: 'Yes',
     no: 'No',
+  },
+  caregiverReview: {
+    title: 'Caregiver Review',
+    rate: 'Rate',
+    shareExperience: 'Feel free to share your experience',
+    reviewPlaceholder: 'Write a review',
+    leaveReview: 'Leave a Review',
+    reviewMaxLengthError: `Review must be at most ${MAX_REVIEW_LENGTH} characters`,
+    reviewCaregiver: 'Review Caregiver',
   },
   appointmentDebtModal: {
     title: 'Complete payment to Create new appointment',

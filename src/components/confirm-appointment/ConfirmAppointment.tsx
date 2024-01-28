@@ -1,6 +1,8 @@
 import CloseIcon from '@mui/icons-material/Close';
+import { Stack } from '@mui/material';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
+import { zonedTimeToUtc } from 'date-fns-tz';
 
 import ArrowForward from 'src/assets/icons/ArrowForward';
 import TasksList from 'src/components/confirm-appointment/TasksList';
@@ -16,9 +18,10 @@ import CaregiverDrawer from 'src/components/reusable/drawer/caregiver-drawer/Car
 import UserAvatar from 'src/components/reusable/user-avatar/UserAvatar';
 import { cancelAppointment as resetAppointmentInfo } from 'src/redux/slices/appointmentSlice';
 import { resetAllInfo } from 'src/redux/slices/healthQuestionnaireSlice';
-
-import { zonedTimeToUtc } from 'date-fns-tz';
 import { resetLocationSlice } from 'src/redux/slices/locationSlice';
+import { useGetUserInfoQuery } from 'src/redux/api/userApi';
+import PaymentNotification from 'src/components/create-appointment/PaymentNotification';
+
 import { CONFIRM_NOTE_MAX_LENGTH } from './constants';
 import {
   Container,
@@ -37,6 +40,7 @@ export default function ConfirmAppointment({ onBack }: { onBack: () => void }): 
   const { translate } = useLocales();
   const router = useRouter();
   const dispatch = useAppDispatch();
+  const user = useTypedSelector((state) => state.user.user);
   const caregiver = useTypedSelector((state) => state.caregiver.selectedCaregiver);
   const appointment = useTypedSelector((state) => state.appointment);
   const location = useTypedSelector((state) => state.location);
@@ -46,6 +50,9 @@ export default function ConfirmAppointment({ onBack }: { onBack: () => void }): 
   const [details, setDetails] = useState<string>('');
   const [isModalActive, setIsModalActive] = useState<boolean>(false);
   const [isCaregiverDrawerOpen, setIsCaregiverDrawerOpen] = useState<boolean>(false);
+  const [insuficientBalance, setInsuficientBalance] = useState<boolean>(false);
+
+  const { data: userInfo } = useGetUserInfoQuery(user?.id);
   const [createAppointment, { isLoading }] = useCreateAppointmentMutation();
 
   const onOpenModal = (): void => setIsModalActive(true);
@@ -61,6 +68,14 @@ export default function ConfirmAppointment({ onBack }: { onBack: () => void }): 
 
   const confirmAppointment = async (): Promise<void> => {
     try {
+      if (
+        appointment.isAppointmentSetSixHoursBefore &&
+        userInfo!.balance < caregiver!.caregiverInfo.hourlyRate
+      ) {
+        setInsuficientBalance(true);
+
+        return;
+      }
       await createAppointment({
         caregiverInfoId: caregiver?.caregiverInfo.id,
         name: appointment.appointmentName,
@@ -131,10 +146,20 @@ export default function ConfirmAppointment({ onBack }: { onBack: () => void }): 
               isModalActive={isModalActive}
             />
           </TasksWrapper>
+          {insuficientBalance && (
+            <Stack sx={{ padding: '0 16px 16px' }}>
+              <PaymentNotification confirmationStep />
+            </Stack>
+          )}
           <AppointmentBtn
             nextText={translate('confirm_appointment.confirm')}
             backText={translate('profileQualification.back')}
-            disabled={!tasks.length || details.length > CONFIRM_NOTE_MAX_LENGTH || isLoading}
+            disabled={
+              !tasks.length ||
+              details.length > CONFIRM_NOTE_MAX_LENGTH ||
+              isLoading ||
+              insuficientBalance
+            }
             onClick={confirmAppointment}
             onBack={onBack}
           />

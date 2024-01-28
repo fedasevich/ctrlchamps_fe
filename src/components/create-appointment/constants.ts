@@ -8,6 +8,7 @@ const ONE_HOUR_INTERVAL_INDEX = 4;
 const MIN_APPOINTMENT_HOUR_DURATION = 1;
 const FIRST_WEEK_DAY_IDX = 0;
 const LAST_WEEK_DAY_IDX = -1;
+const MIN_HOURS_BEFORE_APPOINTMENT = 6;
 
 const selectTimeOptions = generateTimeWithInterval('00:00', '23:45', MINUTES_INTERVAL);
 
@@ -19,5 +20,6 @@ export {
   ONE_HOUR_INTERVAL_INDEX,
   FIRST_WEEK_DAY_IDX,
   LAST_WEEK_DAY_IDX,
+  MIN_HOURS_BEFORE_APPOINTMENT,
   selectTimeOptions,
 };

@@ -59,33 +59,33 @@ export function useAppointmentDrawer({
   const [isVirtualAssessmentSuccessOpen, setIsVirtualAssessmentSuccessOpen] =
     useState<boolean>(false);
   const [isTermsAccepted, setIsTermsAccepted] = useState<boolean>(false);
-  
+
   const { data: appointment, isLoading } = useGetAppointmentQuery(selectedAppointmentId);
-  
-  const [actualAppointmentDate, setActualAppointmentDate] = useState<string | undefined>(appointment?.startDate);
+
+  const [actualAppointmentDate, setActualAppointmentDate] = useState<string | undefined>(
+    appointment?.startDate
+  );
 
   useEffect(() => {
-    let startDate: string | undefined;
-
-    if (chosenDay && appointment) {
-      const parsedStartDate = parseISO(appointment.startDate);
-
-      let updatedStartDate = setMonth(parsedStartDate, chosenDay.getMonth());
-      updatedStartDate = setDate(parsedStartDate, chosenDay.getDate());
-
-      startDate = updatedStartDate.toISOString();
+    if (!chosenDay || !appointment || !appointment.startDate || !appointment.timezone) {
+      return;
     }
 
-    const formattedStartDate =
-      appointment &&
-      formatTimeToTimezone(
-        startDate ?? appointment.startDate,
-        appointment.timezone,
-        DRAWER_DATE_FORMAT_WITH_TIMEZONE
-      );
+    const parsedStartDate = parseISO(appointment.startDate);
+    const updatedStartDate = setDate(
+      setMonth(parsedStartDate, chosenDay.getMonth()),
+      chosenDay.getDate()
+    );
+    const startDate = updatedStartDate.toISOString();
 
-      setActualAppointmentDate(formattedStartDate)
-  },[chosenDay, appointment]);
+    const formattedStartDate = formatTimeToTimezone(
+      startDate,
+      appointment.timezone,
+      DRAWER_DATE_FORMAT_WITH_TIMEZONE
+    );
+
+    setActualAppointmentDate(formattedStartDate);
+  }, [chosenDay, appointment]);
 
   const virtualAssessmentDrawerShown =
     appointment?.virtualAssessment?.wasRescheduled || role === USER_ROLE.Caregiver;

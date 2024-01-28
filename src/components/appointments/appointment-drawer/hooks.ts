@@ -1,13 +1,15 @@
-import { Dispatch, SetStateAction, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { USER_ROLE } from 'src/constants';
 import { DetailedAppointment, useGetAppointmentQuery } from 'src/redux/api/appointmentApi';
 import { formatTimeToTimezone } from 'src/utils/formatTime';
+import { parseISO, setDate, setMonth } from 'date-fns';
 import { DRAWER_DATE_FORMAT_WITH_TIMEZONE } from '../constants';
 
 interface IProps {
   role: string;
   setIsDrawerOpen: Dispatch<SetStateAction<boolean>>;
   selectedAppointmentId: string;
+  chosenDay?: Date;
 }
 
 type ReturnType = {
@@ -21,7 +23,7 @@ type ReturnType = {
   isTermsAccepted: boolean;
   isLoading: boolean;
   appointment: DetailedAppointment | undefined;
-  formattedStartDate: string | undefined;
+  actualAppointmentDate: string | undefined;
   handleCancelModalOpen: () => void;
   handleCancelModalClose: () => void;
   handleCompleteModalOpen: () => void;
@@ -46,6 +48,7 @@ export function useAppointmentDrawer({
   role,
   setIsDrawerOpen,
   selectedAppointmentId,
+  chosenDay,
 }: IProps): ReturnType {
   const [isCancelModalOpen, setIsCancelModalOpen] = useState<boolean>(false);
   const [isCompleteModalOpen, setIsCompleteModalOpen] = useState<boolean>(false);
@@ -56,16 +59,33 @@ export function useAppointmentDrawer({
   const [isVirtualAssessmentSuccessOpen, setIsVirtualAssessmentSuccessOpen] =
     useState<boolean>(false);
   const [isTermsAccepted, setIsTermsAccepted] = useState<boolean>(false);
-
+  
   const { data: appointment, isLoading } = useGetAppointmentQuery(selectedAppointmentId);
+  
+  const [actualAppointmentDate, setActualAppointmentDate] = useState<string | undefined>(appointment?.startDate);
 
-  const formattedStartDate =
-    appointment &&
-    formatTimeToTimezone(
-      appointment?.startDate,
-      appointment?.timezone,
-      DRAWER_DATE_FORMAT_WITH_TIMEZONE
-    );
+  useEffect(() => {
+    let startDate: string | undefined;
+
+    if (chosenDay && appointment) {
+      const parsedStartDate = parseISO(appointment.startDate);
+
+      let updatedStartDate = setMonth(parsedStartDate, chosenDay.getMonth());
+      updatedStartDate = setDate(parsedStartDate, chosenDay.getDate());
+
+      startDate = updatedStartDate.toISOString();
+    }
+
+    const formattedStartDate =
+      appointment &&
+      formatTimeToTimezone(
+        startDate ?? appointment.startDate,
+        appointment.timezone,
+        DRAWER_DATE_FORMAT_WITH_TIMEZONE
+      );
+
+      setActualAppointmentDate(formattedStartDate)
+  },[chosenDay, appointment]);
 
   const virtualAssessmentDrawerShown =
     appointment?.virtualAssessment?.wasRescheduled || role === USER_ROLE.Caregiver;
@@ -155,7 +175,7 @@ export function useAppointmentDrawer({
     isTermsAccepted,
     isLoading,
     appointment,
-    formattedStartDate,
+    actualAppointmentDate,
     handleActivityLogModalOpen,
     handleActivityLogModalClose,
     handleReviewActivityLogModalOpen,

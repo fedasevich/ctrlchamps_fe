@@ -138,7 +138,7 @@ export const appointmentApi = createApi({
       query: () => ({ url: `${route.appointment}` }),
       providesTags: ['Appointments'],
     }),
-    getAppointment: builder.query<DetailedAppointment, string>({
+    getAppointment: builder.query<DetailedAppointment, string | undefined>({
       query: (id) => ({ url: `${route.appointment}/${id}` }),
       providesTags: (result, error, id) => [{ type: 'Appointments', id }],
     }),

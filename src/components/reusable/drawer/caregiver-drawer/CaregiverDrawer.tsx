@@ -28,7 +28,7 @@ import {
   DATE_FORMAT,
 } from 'src/constants';
 import ReviewModal from 'src/components/review-modal/ReviewModal';
-import { SeekerReview } from 'src/types/Caregiver.type';
+import { SeekerReview } from 'src/redux/api/reviewsApi';
 
 import { FIRST_SELECTED_TAB, EMPTY_RATING, ORDER_TYPE } from './constants';
 import { formatWorkExperienceDateRange, formatWorkExperienceDateRangeTenure } from './helpers';
@@ -57,7 +57,7 @@ interface CaregiverDrawerProps {
   onClose: () => void;
   caregiverId: string;
   footer?: React.ReactNode;
-  selectedAppointmentId: string;
+  selectedAppointmentId?: string;
 }
 
 export default function CaregiverDrawer({

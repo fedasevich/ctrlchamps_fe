@@ -358,7 +358,7 @@ export default function AppointmentDrawer({
             </Block>
           )}
 
-          {role === USER_ROLE.Caregiver && (
+          {appointment && role === USER_ROLE.Caregiver && (
             <AppointmentModalBlock>
               <AppointmentModalBlockParagraph>
                 {translate('request_appointment.health_questionnaire')}

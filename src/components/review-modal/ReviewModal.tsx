@@ -23,7 +23,7 @@ import { SECONDARY } from 'src/theme/colors';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { ReviewFormValues, useReviewSchema } from 'src/components/review-modal/validation';
 import { DEFAULT_REVIEW_VALUES } from 'src/components/review-modal/constants';
-import { useCreateReviewMutation } from 'src/redux/api/reviewApi';
+import { useCreateReviewMutation } from 'src/redux/api/reviewsApi';
 
 type Props = {
   isReviewCaregiverModalActive: boolean;
@@ -80,7 +80,7 @@ export default function ReviewModal({
     try {
       await createReview({ caregiverInfoId, ...review }).unwrap();
       handleReviewCaregiverModal();
-      refetchCaregiverInfo()
+      refetchCaregiverInfo();
     } catch (error) {
       throw new Error(error);
     }

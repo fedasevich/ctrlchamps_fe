@@ -407,7 +407,6 @@ const en = {
     },
     bookAppointment: 'Book Appointment',
     numberOfAppointments: 'Appts.',
-    rating: 'Rating',
     rate: 'Rate',
     sortingDate: 'Sort by date',
     sortingRating: 'Sort by rating',
@@ -929,6 +928,7 @@ const en = {
   },
   userList: {
     title: 'Users',
+    reviews: 'Reviews',
     search: 'Search',
     userName: 'User Name',
     role: 'Role',
@@ -942,6 +942,7 @@ const en = {
     replenishment: 'Replenishment',
     anyUsers: `You don't have any users yet`,
     anyTransactions: `User doesn't have any transactions yet`,
+    anyReviews: `User doesn't have any reviews yet`,
     statusSuccess: 'User status has been successfully changed!',
     userDeleted: 'User has been successfully deleted!',
   },

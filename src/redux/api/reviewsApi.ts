@@ -27,6 +27,12 @@ export interface ReviewsResponse {
   count: number;
 }
 
+type Review = {
+  caregiverInfoId: string;
+  rating: number | null;
+  review?: string;
+};
+
 export const reviewsApi = createApi({
   reducerPath: 'reviewsApi',
   baseQuery: fetchBaseQuery({
@@ -48,9 +54,16 @@ export const reviewsApi = createApi({
         url: `${route.reviews}/${userId}?limit=${limit}&offset=${offset}`,
       }),
     }),
+    createReview: builder.mutation<void, Review>({
+      query: (body) => ({
+        url: route.reviews,
+        method: 'POST',
+        body,
+      }),
+    }),
   }),
 });
 
-export const { useGetReviewsQuery } = reviewsApi;
+export const { useGetReviewsQuery, useCreateReviewMutation } = reviewsApi;
 
 export default reviewsApi;

@@ -71,6 +71,7 @@ export default function CaregiverSchedule(): JSX.Element | null {
                 isOpen={isDrawerOpen}
                 onClose={closeDrawer}
                 setIsDrawerOpen={setIsDrawerOpen}
+                chosenDay={chosenDay}
               />
             )}
             <CaregiverAppointment appointmentDays={appointments} openDrawer={openDrawer} />

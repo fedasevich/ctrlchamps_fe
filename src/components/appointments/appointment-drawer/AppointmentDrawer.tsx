@@ -75,6 +75,7 @@ interface AppointmentsDrawerProps {
   setIsCaregiverDrawerOpen?: Dispatch<SetStateAction<boolean>>;
   setCaregiverId?: Dispatch<SetStateAction<string>>;
   selectedAppointmentId: string;
+  chosenDay?: Date;
 }
 
 export default function AppointmentDrawer({
@@ -85,6 +86,7 @@ export default function AppointmentDrawer({
   setIsCaregiverDrawerOpen,
   setCaregiverId,
   selectedAppointmentId,
+  chosenDay,
 }: AppointmentsDrawerProps): JSX.Element | null {
   const { translate } = useLocales();
 
@@ -99,7 +101,7 @@ export default function AppointmentDrawer({
     isTermsAccepted,
     isLoading,
     appointment,
-    formattedStartDate,
+    actualAppointmentDate,
     handleCancelModalOpen,
     handleCancelModalClose,
     handleCompleteModalOpen,
@@ -118,7 +120,7 @@ export default function AppointmentDrawer({
     openOriginalAppointment,
     closeOriginalAppointment,
     virtualAssessmentDrawerShown,
-  } = useAppointmentDrawer({ role, setIsDrawerOpen, selectedAppointmentId });
+  } = useAppointmentDrawer({ role, setIsDrawerOpen, selectedAppointmentId, chosenDay });
 
   const [updateAppointment] = useUpdateAppointmentMutation();
 
@@ -255,6 +257,9 @@ export default function AppointmentDrawer({
     }
   };
 
+
+
+
   return (
     <>
       <Drawer open={isOpen} onClose={onClose}>
@@ -348,7 +353,7 @@ export default function AppointmentDrawer({
 
           <Block>
             <SubTitle>{translate('appointments_page.drawer.date')}</SubTitle>
-            <DateText>{formattedStartDate}</DateText>
+            <DateText>{actualAppointmentDate}</DateText>
           </Block>
 
           {appointment.status === APPOINTMENT_STATUS.Active && (

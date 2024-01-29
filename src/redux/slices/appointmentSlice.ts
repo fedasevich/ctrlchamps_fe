@@ -17,6 +17,7 @@ export interface AppointmentI {
   appointmentType: AppointmentType;
   oneTimeDate: OneTimeDateType;
   recurringDate: RecurringDateType;
+  isAppointmentSetSixHoursBefore: boolean;
 }
 
 const initialState: AppointmentI = {
@@ -31,6 +32,7 @@ const initialState: AppointmentI = {
     endDate: null,
     weekDays: [],
   },
+  isAppointmentSetSixHoursBefore: false,
 };
 
 const appointmentSlice = createSlice({
@@ -49,6 +51,9 @@ const appointmentSlice = createSlice({
     setRecurringAppointmentTime: (state, action: PayloadAction<RecurringDateType>) => {
       state.recurringDate = action.payload;
     },
+    setIsAppointmentSixHoursBeforeToTrue: (state) => {
+      state.isAppointmentSetSixHoursBefore = true;
+    },
     cancelAppointment: () => initialState,
   },
 });
@@ -58,6 +63,7 @@ export const {
   setAppointmentType,
   setOneAppointmentTime,
   setRecurringAppointmentTime,
+  setIsAppointmentSixHoursBeforeToTrue,
   cancelAppointment,
 } = appointmentSlice.actions;
 export const appointmentReducer = appointmentSlice.reducer;

@@ -15,7 +15,7 @@ type Props = {
 
 export default function AppointmentScheduling({ onNext, onBack }: Props): JSX.Element {
   const { appointmentType } = useTypedSelector((state) => state.appointment);
-  const { modalOpen, setModalOpen, handleOpen } = useCancelAppointmentModal();
+  const { modalOpen, setModalOpen } = useCancelAppointmentModal();
 
   return (
     <>

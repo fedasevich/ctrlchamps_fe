@@ -5,6 +5,10 @@ import { PRIMARY, SECONDARY } from 'src/theme/colors';
 import { TYPOGRAPHY } from 'src/theme/fonts';
 import typography from 'src/theme/typography';
 
+interface PaymentWarningBlockProps {
+  insufficientCost?: boolean;
+}
+
 const Background = styled('div')`
   background-color: ${PRIMARY.light_main};
   min-height: calc(100vh - ${HEADER.FLOW_HEIGHT}px);
@@ -123,11 +127,11 @@ const WeekSlot = styled('div')`
   aspect-ratio: 1;
   padding: 11px 13.7px;
   cursor: pointer;
-
-  &:nth-child(1),
-  &:nth-child(3) {
-    padding: 11px 12.7px;
-  }
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   &.active {
     background-color: ${PRIMARY.main};
@@ -156,6 +160,17 @@ const StyledForm = styled('form')`
   gap: 16px;
 `;
 
+const PaymentWarningBlock = styled('div')<PaymentWarningBlockProps>`
+  background-color: ${(props) =>
+    props.insufficientCost ? PRIMARY.light_error : PRIMARY.light_main};
+  line-height: 1.2;
+  color: ${PRIMARY.black};
+  font-weight: ${typography.fontWeightMedium};
+  font-size: ${TYPOGRAPHY.base_xs}px;
+  padding: 16px;
+  border-radius: 4px;
+`;
+
 export {
   AppointmentDuration,
   AppointmentTypeCard,
@@ -176,4 +191,5 @@ export {
   TextContainer,
   WeekSlot,
   WeekSlotContainer,
+  PaymentWarningBlock,
 };

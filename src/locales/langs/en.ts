@@ -4,6 +4,7 @@ import {
   MAX_APPOINTMENT_NAME_LENGTH,
   MIN_APPOINTMENT_HOUR_DURATION,
   MIN_APPOINTMENT_NAME_LENGTH,
+  MIN_HOURS_BEFORE_APPOINTMENT,
 } from 'src/components/create-appointment/constants';
 
 import { MAX_TASK_LENGTH, MIN_TASK_LENGTH } from 'src/components/admin-management/tasks/constants';
@@ -364,6 +365,8 @@ const en = {
         'The selected start date has already passed. Please choose a future date.',
       invalid_week_days:
         'According to the set date period, you can choose in range from {{dayFrom}} to {{dayTo}}',
+      payment_warning: `To schedule appointment in ${MIN_HOURS_BEFORE_APPOINTMENT} hours and less you should have enough costs to pay for first hour.`,
+      insufficient_balance: `To schedule appointment in ${MIN_HOURS_BEFORE_APPOINTMENT} hours and less you have to have enough costs to pay for first hour. Please top up your account first.`,
     },
   },
   confirm_appointment: {

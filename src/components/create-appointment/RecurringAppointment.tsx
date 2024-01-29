@@ -1,13 +1,31 @@
 import { Box, FormControl, InputLabel, MenuItem, Select, TextField } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import { addDays, format, isBefore, isSameDay, isToday } from 'date-fns';
+import {
+  addDays,
+  addHours,
+  format,
+  isBefore,
+  isSameDay,
+  isToday,
+  isWithinInterval,
+  parse,
+} from 'date-fns';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import OneTimeIcon from 'src/assets/icons/OneTimeIcon';
 import AppointmentBtn from 'src/components/reusable/appointment-btn/AppointmentBtn';
-import { CURRENT_DAY, DATE_FORMAT, FULL_WEEKDAY_FORMAT, weekDays } from 'src/constants';
-import { setRecurringAppointmentTime } from 'src/redux/slices/appointmentSlice';
+import {
+  CURRENT_DAY,
+  DATE_FORMAT,
+  DISPLAY_TIME_FORMAT,
+  FULL_WEEKDAY_FORMAT,
+  weekDays,
+} from 'src/constants';
+import {
+  setIsAppointmentSixHoursBeforeToTrue,
+  setRecurringAppointmentTime,
+} from 'src/redux/slices/appointmentSlice';
 import { useAppDispatch, useTypedSelector } from 'src/redux/store';
 import { setCustomTime } from 'src/utils/defineCustomTime';
 import { extractTimeFromDate } from 'src/utils/extractTimeFromDate';
@@ -20,6 +38,7 @@ import { daySelectedType } from 'src/constants/types';
 import {
   FIRST_WEEK_DAY_IDX,
   LAST_WEEK_DAY_IDX,
+  MIN_HOURS_BEFORE_APPOINTMENT,
   ONE_DAY,
   ONE_HOUR_INTERVAL_INDEX,
   selectTimeOptions,
@@ -35,6 +54,7 @@ import {
   WeekSlotContainer,
 } from './styles';
 import useShowDuration from './useShowDuration';
+import PaymentNotification from './PaymentNotification';
 
 type Props = {
   onNext: () => void;
@@ -52,6 +72,7 @@ export default function RecurringAppointment({ onNext, onBack }: Props): JSX.Ele
   const [endTime, setEndTime] = useState<string>('');
   const [appointmentDays, setAppointmentDays] = useState<daySelectedType[]>(recurringDate.weekDays);
   const [invalidWeekDaysRange, setInvalidWeekDaysRange] = useState<boolean>(false);
+  const [paymentWarningVisible, setPaymentWarningVisible] = useState<boolean>(false);
 
   const { hours, minutes, isDurationSet, minValidDuration } = useShowDuration(startTime, endTime);
   const { chooseStartTime, chooseEndTime } = useChooseTime(
@@ -102,6 +123,8 @@ export default function RecurringAppointment({ onNext, onBack }: Props): JSX.Ele
     if (!startDate || !endDate) return;
     const availableDaysToChoose = getWeekDaysRange(value, endDate);
     checkDaysValidityRange(availableDaysToChoose);
+
+    checkIfAppointment6HoursBefore(startTime, value);
   };
 
   const chooseEndDate = (value: Date | null): void => {
@@ -136,6 +159,28 @@ export default function RecurringAppointment({ onNext, onBack }: Props): JSX.Ele
     setAppointmentDays((prev) => [...prev, value]);
   };
 
+  const chooseAppointmentStartTime = (value: string): void => {
+    chooseStartTime(value);
+    checkIfAppointment6HoursBefore(value, startDate);
+  };
+
+  const checkIfAppointment6HoursBefore = (time: string, date: Date | null): void => {
+    const chosenDateTime = parse(time, DISPLAY_TIME_FORMAT, CURRENT_DAY);
+    const futureDate = addHours(CURRENT_DAY, MIN_HOURS_BEFORE_APPOINTMENT);
+    const interval = {
+      start: CURRENT_DAY,
+      end: futureDate,
+    };
+
+    const isTimeWithinInterval = isWithinInterval(chosenDateTime, interval);
+
+    if (date && isToday(date) && isTimeWithinInterval) {
+      setPaymentWarningVisible(true);
+    } else {
+      setPaymentWarningVisible(false);
+    }
+  };
+
   const goNext = (): void => {
     if (!startDate || !endDate) return;
     dispatch(
@@ -145,6 +190,9 @@ export default function RecurringAppointment({ onNext, onBack }: Props): JSX.Ele
         weekDays: appointmentDays,
       })
     );
+    if (paymentWarningVisible) {
+      dispatch(setIsAppointmentSixHoursBeforeToTrue());
+    }
     onNext();
   };
 
@@ -193,7 +241,10 @@ export default function RecurringAppointment({ onNext, onBack }: Props): JSX.Ele
           <SelectContainer>
             <FormControl fullWidth variant="standard">
               <InputLabel>{translate('create_appointment.start_time')}</InputLabel>
-              <Select value={startTime} onChange={(e): void => chooseStartTime(e.target.value)}>
+              <Select
+                value={startTime}
+                onChange={(e): void => chooseAppointmentStartTime(e.target.value)}
+              >
                 {selectTimeOptions.map((option) => (
                   <MenuItem key={option} value={option}>
                     {option}
@@ -244,6 +295,7 @@ export default function RecurringAppointment({ onNext, onBack }: Props): JSX.Ele
           {startTime && endTime && isDurationSet && !minValidDuration && (
             <ErrorText>{translate('create_appointment.errors.min_appointment_duration')}</ErrorText>
           )}
+          {paymentWarningVisible && <PaymentNotification confirmationStep={false} />}
           {isAppointmentDurationShown && (
             <AppointmentDuration>
               <OneTimeIcon />

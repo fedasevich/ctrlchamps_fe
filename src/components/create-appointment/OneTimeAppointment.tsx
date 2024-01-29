@@ -1,21 +1,29 @@
 import { Box } from '@mui/material';
-import { isBefore, isSameDay, isToday } from 'date-fns';
+import { addHours, isBefore, isSameDay, isToday, isWithinInterval, parse } from 'date-fns';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import OneTimeIcon from 'src/assets/icons/OneTimeIcon';
 import { ErrorText } from 'src/components/reusable';
 import AppointmentBtn from 'src/components/reusable/appointment-btn/AppointmentBtn';
-import { CURRENT_DAY } from 'src/constants';
+import { CURRENT_DAY, DISPLAY_TIME_FORMAT } from 'src/constants';
 import useChooseTime from 'src/hooks/useChooseTime';
-import { setOneAppointmentTime } from 'src/redux/slices/appointmentSlice';
+import {
+  setIsAppointmentSixHoursBeforeToTrue,
+  setOneAppointmentTime,
+} from 'src/redux/slices/appointmentSlice';
 import { useAppDispatch, useTypedSelector } from 'src/redux/store';
 import { setCustomTime } from 'src/utils/defineCustomTime';
 import { extractTimeFromDate } from 'src/utils/extractTimeFromDate';
 
 import { isTimeAfterNow } from 'src/utils/checkTime';
 import Appointment from './Appointment';
-import { ONE_HOUR_INTERVAL_INDEX, selectTimeOptions } from './constants';
+import PaymentNotification from './PaymentNotification';
+import {
+  MIN_HOURS_BEFORE_APPOINTMENT,
+  ONE_HOUR_INTERVAL_INDEX,
+  selectTimeOptions,
+} from './constants';
 import { AppointmentDuration, Container, ContentContainer } from './styles';
 import useShowDuration from './useShowDuration';
 
@@ -34,6 +42,7 @@ export default function OneTimeAppointment({ onNext, onBack }: Props): JSX.Eleme
   const [endTime, setEndTime] = useState<string>('');
   const [identicalTime, setIdenticalTime] = useState<boolean>(false);
   const [invalidTime, setInvalidTime] = useState<boolean>(false);
+  const [paymentWarningVisible, setPaymentWarningVisible] = useState<boolean>(false);
 
   const { hours, minutes, isDurationSet, minValidDuration } = useShowDuration(startTime, endTime);
   const { chooseStartTime, chooseEndTime } = useChooseTime(
@@ -69,7 +78,24 @@ export default function OneTimeAppointment({ onNext, onBack }: Props): JSX.Eleme
     } else {
       setInvalidTime(false);
     }
-  }, [startTime, endTime]);
+
+    if (startTime && date && isToday(date)) {
+      const chosenDateTime = parse(startTime, DISPLAY_TIME_FORMAT, CURRENT_DAY);
+      const futureDate = addHours(CURRENT_DAY, MIN_HOURS_BEFORE_APPOINTMENT);
+      const interval = {
+        start: CURRENT_DAY,
+        end: futureDate,
+      };
+
+      const isTimeWithinInterval = isWithinInterval(chosenDateTime, interval);
+
+      if (isToday(date) && isTimeWithinInterval) {
+        setPaymentWarningVisible(true);
+      } else {
+        setPaymentWarningVisible(false);
+      }
+    }
+  }, [startTime, endTime, date]);
 
   const chooseDate = (value: Date | null): void => setDate(value);
 
@@ -81,6 +107,9 @@ export default function OneTimeAppointment({ onNext, onBack }: Props): JSX.Eleme
         endTime: setCustomTime(date, endTime),
       })
     );
+    if (paymentWarningVisible) {
+      dispatch(setIsAppointmentSixHoursBeforeToTrue());
+    }
     onNext();
   };
 
@@ -112,6 +141,7 @@ export default function OneTimeAppointment({ onNext, onBack }: Props): JSX.Eleme
           {date && isToday(date) && !isTimeAfterNow(startTime) && (
             <ErrorText> {translate('create_appointment.errors.invalid_today_time')}</ErrorText>
           )}
+          {paymentWarningVisible && <PaymentNotification confirmationStep={false} />}
           {startTime && endTime && date && minValidDuration && !identicalTime && !invalidTime && (
             <AppointmentDuration>
               <OneTimeIcon />

@@ -50,6 +50,10 @@ export function formatTimeToTimezone(
   return formattedDateTime;
 }
 
+// function to format UTC time to specified timezone and time format
+// @param dateTime - '2023-12-14T18:00:00.000Z'
+// @param timeFormat - 'yyyy-MM-dd HH:mm:ss'
+// @return - '2023-12-14 12:00:00'
 export function formatUTCToTimezone(dateTime: string, timeFormat: string): string {
   const inputDateTime = new Date(dateTime);
   const adjustedDateTime = zonedTimeToUtc(inputDateTime, UTC_TIMEZONE);

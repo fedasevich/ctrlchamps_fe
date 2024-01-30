@@ -67,19 +67,24 @@ export function useAppointmentDrawer({
   );
 
   useEffect(() => {
-    if (!chosenDay || !appointment || !appointment.startDate || !appointment.timezone) {
+    if (!appointment || !appointment.startDate || !appointment.timezone) {
       return;
     }
 
-    const parsedStartDate = parseISO(appointment.startDate);
-    const updatedStartDate = setDate(
-      setMonth(parsedStartDate, chosenDay.getMonth()),
-      chosenDay.getDate()
-    );
-    const startDate = updatedStartDate.toISOString();
+    let startDate: string = '';
+
+    if (chosenDay) {
+      const parsedStartDate = parseISO(appointment.startDate);
+      const updatedStartDate = setDate(
+        setMonth(parsedStartDate, chosenDay.getMonth()),
+        chosenDay.getDate()
+      );
+
+      startDate = updatedStartDate.toISOString();
+    }
 
     const formattedStartDate = formatTimeToTimezone(
-      startDate,
+      startDate || appointment.startDate,
       appointment.timezone,
       DRAWER_DATE_FORMAT_WITH_TIMEZONE
     );

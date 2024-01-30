@@ -27,6 +27,7 @@ import authApi from 'src/redux/api/authApi';
 import questionnaireApi from 'src/redux/api/healthQuestionnaireApi';
 import notificationsApi from 'src/redux/api/notificationsApi';
 import profileApi from 'src/redux/api/profileCompleteApi';
+import reviewsApi from 'src/redux/api/reviewsApi';
 import tasksApi from 'src/redux/api/tasksApi';
 import timezoneApi from 'src/redux/api/timezoneApi';
 import transactionsApi from 'src/redux/api/transactionsApi';
@@ -72,6 +73,7 @@ const store = configureStore({
     [notificationsApi.reducerPath]: notificationsApi.reducer,
     [adminPanelApi.reducerPath]: adminPanelApi.reducer,
     [tasksApi.reducerPath]: tasksApi.reducer,
+    [reviewsApi.reducerPath]: reviewsApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
@@ -92,6 +94,7 @@ const store = configureStore({
       notificationsApi.middleware,
       adminPanelApi.middleware,
       tasksApi.middleware,
+      reviewsApi.middleware,
     ]),
 });
 

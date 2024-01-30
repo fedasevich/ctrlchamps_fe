@@ -4,6 +4,7 @@ export const PRIMARY = {
   main: '#08BCB8',
   dark_main: '#089C99',
   light_main: 'rgba(8, 188, 184, 0.12)',
+  light_error: '#ff3b0024',
   white: '#fff',
   black: '#000',
 };

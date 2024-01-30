@@ -71,6 +71,7 @@ export default function AppointmentsList({ appointments }: AppointmentsProps): J
           open={isCaregiverDrawerOpen}
           onClose={handleCaregiverDrawerClose}
           caregiverId={caregiverId}
+          selectedAppointmentId={selectedAppointmentId}
         />
       )}
     </>

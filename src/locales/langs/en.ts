@@ -4,6 +4,7 @@ import {
   MAX_APPOINTMENT_NAME_LENGTH,
   MIN_APPOINTMENT_HOUR_DURATION,
   MIN_APPOINTMENT_NAME_LENGTH,
+  MIN_HOURS_BEFORE_APPOINTMENT,
 } from 'src/components/create-appointment/constants';
 
 import { MAX_TASK_LENGTH, MIN_TASK_LENGTH } from 'src/components/admin-management/tasks/constants';
@@ -14,6 +15,7 @@ import {
 } from 'src/components/appointments/virtual-assessment-modal/constants';
 import { CONFIRM_NOTE_MAX_LENGTH } from 'src/components/confirm-appointment/constants';
 import { MAX_CHARACTERS_LENGTH, MIN_PASSWORD_LENGTH } from 'src/constants';
+import { MAX_REVIEW_LENGTH } from 'src/components/review-modal/constants';
 
 const en = {
   app_title: 'CtrlChamps',
@@ -363,6 +365,8 @@ const en = {
         'The selected start date has already passed. Please choose a future date.',
       invalid_week_days:
         'According to the set date period, you can choose in range from {{dayFrom}} to {{dayTo}}',
+      payment_warning: `To schedule appointment in ${MIN_HOURS_BEFORE_APPOINTMENT} hours and less you should have enough costs to pay for first hour.`,
+      insufficient_balance: `To schedule appointment in ${MIN_HOURS_BEFORE_APPOINTMENT} hours and less you have to have enough costs to pay for first hour. Please top up your account first.`,
     },
   },
   confirm_appointment: {
@@ -407,11 +411,14 @@ const en = {
     bookAppointment: 'Book Appointment',
     numberOfAppointments: 'Appts.',
     rate: 'Rate',
+    sortingDate: 'Sort by date',
+    sortingRating: 'Sort by rating',
     tabs: {
       bio: 'Bio',
       qualification: 'Qualification',
       workExperience: 'Work Experience',
       services: 'Services',
+      reviews: 'Reviews',
     },
     period: 'Period',
     present: 'Present',
@@ -924,6 +931,7 @@ const en = {
   },
   userList: {
     title: 'Users',
+    reviews: 'Reviews',
     search: 'Search',
     userName: 'User Name',
     role: 'Role',
@@ -937,6 +945,7 @@ const en = {
     replenishment: 'Replenishment',
     anyUsers: `You don't have any users yet`,
     anyTransactions: `User doesn't have any transactions yet`,
+    anyReviews: `User doesn't have any reviews yet`,
     statusSuccess: 'User status has been successfully changed!',
     userDeleted: 'User has been successfully deleted!',
   },
@@ -959,6 +968,15 @@ const en = {
     deleteWarning: 'Are you sure you want to delete this appointment?',
     yes: 'Yes',
     no: 'No',
+  },
+  caregiverReview: {
+    title: 'Caregiver Review',
+    rate: 'Rate',
+    shareExperience: 'Feel free to share your experience',
+    reviewPlaceholder: 'Write a review',
+    leaveReview: 'Leave a Review',
+    reviewMaxLengthError: `Review must be at most ${MAX_REVIEW_LENGTH} characters`,
+    reviewCaregiver: 'Review Caregiver',
   },
   appointmentDebtModal: {
     title: 'Complete payment to Create new appointment',

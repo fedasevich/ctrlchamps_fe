@@ -28,7 +28,7 @@ export default function AppointmentType({ onNext }: { onNext: () => void }): JSX
   const { translate } = useLocales();
   const dispatch = useAppDispatch();
   const { appointmentName, appointmentType } = useTypedSelector((state) => state.appointment);
-  const { modalOpen, setModalOpen, handleOpen } = useCancelAppointmentModal();
+  const { modalOpen, setModalOpen } = useCancelAppointmentModal();
 
   const [name, setName] = useState<string>(appointmentName);
   const [type, setType] = useState<AppointmentTypeI>(appointmentType);

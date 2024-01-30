@@ -150,3 +150,36 @@ export const StatusBlock = styled('div')`
   gap: 16px;
   width: 100%;
 `;
+
+export const ReviewBlock = styled('div')`
+  padding-bottom: 5px;
+  border-bottom: 1px solid ${SECONDARY.light_gray};
+`;
+
+export const ReviewHeader = styled('div')`
+  display: flex;
+  justify-content: space-between;
+  max-width: 500px;
+  align-items: center;
+`;
+
+export const ReviewName = styled('div')`
+  font-size: ${TYPOGRAPHY.base_sm}px;
+  padding-bottom: 5px;
+`;
+
+export const ReviewUserBlock = styled('div')`
+  display: flex;
+  gap: 15px;
+`;
+
+export const ReviewDate = styled('div')`
+  font-size: ${TYPOGRAPHY.base}px;
+`;
+
+export const ReviewDescription = styled('div')`
+  font-size: ${TYPOGRAPHY.base}px;
+  font-weight: ${typography.fontWeightMedium};
+  max-width: 500px;
+  padding: 5px;
+`;

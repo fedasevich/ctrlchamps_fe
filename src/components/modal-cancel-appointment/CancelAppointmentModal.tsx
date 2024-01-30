@@ -7,6 +7,8 @@ import { cancelAppointment } from 'src/redux/slices/appointmentSlice';
 import { ROUTES } from 'src/routes';
 import Cross from 'src/assets/icons/Cross';
 import { FilledButton } from 'src/components/reusable';
+import { resetAllInfo } from 'src/redux/slices/healthQuestionnaireSlice';
+import { resetLocationSlice } from 'src/redux/slices/locationSlice';
 import { Box, CloseButton, HeaderText, ModalContent, ModalHeader, Text } from './styles';
 
 export function CancelAppointmentModal({
@@ -24,6 +26,8 @@ export function CancelAppointmentModal({
 
   const cancelThisAppointment = (): void => {
     dispatch(cancelAppointment());
+    dispatch(resetAllInfo());
+    dispatch(resetLocationSlice());
     setOpen(false);
     push(ROUTES.home);
   };

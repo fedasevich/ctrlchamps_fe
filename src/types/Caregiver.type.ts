@@ -1,4 +1,5 @@
 import { PreferredDay } from 'src/constants/enums';
+import { SeekerReview } from 'src/redux/api/reviewsApi';
 
 export type Caregiver = {
   id: string;
@@ -9,6 +10,7 @@ export type Caregiver = {
   caregiverInfo: CaregiverInfo;
   qualifications: Certificate[];
   workExperiences: WorkExperiences[];
+  seekerReviews: SeekerReview[];
   averageRating: string;
 };
 

@@ -20,6 +20,7 @@ export const CURRENT_DAY = new Date();
 export const DISPLAY_TIME_FORMAT = 'HH:mm';
 export const FULL_WEEKDAY_FORMAT = 'EEEE';
 export const ONE_DAY = 1;
+export const ONE_HOUR = 60;
 
 export const TIMEZONE_FORMAT = Intl.DateTimeFormat().resolvedOptions().timeZone;
 export const URL_PATTERN =

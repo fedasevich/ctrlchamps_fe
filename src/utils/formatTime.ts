@@ -1,5 +1,6 @@
 import { format, getTime, formatDistanceToNow } from 'date-fns';
-import { utcToZonedTime, format as formatTz } from 'date-fns-tz';
+import { utcToZonedTime, format as formatTz, zonedTimeToUtc } from 'date-fns-tz';
+import { UTC_TIMEZONE } from 'src/constants';
 // ----------------------------------------------------------------------
 
 type InputValue = Date | string | number | null;
@@ -34,7 +35,6 @@ export function fToNow(date: InputValue) {
 //  @param targetTimezone - 'America/New_York'
 //  @param timeFormat - 'yyyy-MM-dd HH:mm:ss'
 //  @return - '2023-12-14 12:00:00'
-
 export function formatTimeToTimezone(
   dateTime: string,
   targetTimezone: string,
@@ -46,6 +46,15 @@ export function formatTimeToTimezone(
   const formattedDateTime = formatTz(adjustedDateTime, timeFormat, {
     timeZone: targetTimezone,
   });
+
+  return formattedDateTime;
+}
+
+export function formatUTCToTimezone(dateTime: string, timeFormat: string): string {
+  const inputDateTime = new Date(dateTime);
+  const adjustedDateTime = zonedTimeToUtc(inputDateTime, UTC_TIMEZONE);
+
+  const formattedDateTime = formatTz(adjustedDateTime, timeFormat);
 
   return formattedDateTime;
 }

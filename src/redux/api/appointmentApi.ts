@@ -102,7 +102,7 @@ export interface DetailedAppointment {
   startDate: string;
   endDate: string;
   timezone: string;
-  weekday?: string[];
+  weekday?: string;
   caregiverInfo: AppointmentCaregiverInfo;
   user: AppointmentUser;
   seekerActivities: SeekerActivity[];

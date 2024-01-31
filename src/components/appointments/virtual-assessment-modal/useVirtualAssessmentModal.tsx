@@ -186,8 +186,8 @@ export default function useVirtualAssessmentModal(
 
       await rescheduleVirtualAssessment({
         reason: reschedulingReason,
-        startTime,
-        endTime,
+        startTime: convertLocalTimeToUTC(startTime),
+        endTime: convertLocalTimeToUTC(endTime),
         assessmentDate: format(date, BACKEND_DATE_FORMAT),
         meetingLink,
         appointmentId,

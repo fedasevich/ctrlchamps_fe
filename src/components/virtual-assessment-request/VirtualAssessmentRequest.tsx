@@ -38,7 +38,7 @@ import {
   NotificationMessage,
 } from './styles';
 import { VirtualAssessmentRequestModalProps } from './types';
-import { formatTimeToTimezone } from '../../utils/formatTime';
+import { formatUTCToTimezone } from '../../utils/formatTime';
 
 const decodeToken = (tokenToDecode: string): string => {
   const decoded: { id: string } = jwt_decode(tokenToDecode);
@@ -141,9 +141,9 @@ const VirtualAssessmentRequestModal = ({
               {translate('request_appointment.date_and_time')}
             </AppointmentModalBlockParagraph>
             {appointment.virtualAssessment &&
-              formatTimeToTimezone(
+              formatUTCToTimezone(
                 `${appointment.virtualAssessment.assessmentDate} ${appointment.virtualAssessment.startTime}`,
-                TIMEZONE_FORMAT,
+
                 DRAWER_DATE_FORMAT
               )}
           </AppointmentModalBlock>

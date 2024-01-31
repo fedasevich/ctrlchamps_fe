@@ -8,9 +8,9 @@ import {
   MILEAGE_PRICE,
   RENT_PRICE,
 } from 'src/components/appointments/constants';
-import { getHoursForWeek } from 'src/components/appointments/helpers';
 
 import { Container, SubTitle, Text, Span, TaskList, Task } from './styles';
+import { countHoursPerWeek } from './helpers';
 
 interface IProps {
   appointment?: DetailedAppointment;
@@ -23,7 +23,8 @@ export default function AgreementModal({ appointment }: IProps): JSX.Element | n
 
   const hoursPerWeek =
     appointment.type === APPOINTMENT_TYPE.Recurring &&
-    getHoursForWeek(appointment.endDate, appointment.startDate) * appointment.weekday!.length;
+    appointment.weekday &&
+    countHoursPerWeek(appointment.startDate, appointment.endDate, JSON.parse(appointment.weekday));
 
   return (
     <Container>

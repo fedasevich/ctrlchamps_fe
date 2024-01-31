@@ -39,7 +39,8 @@ const isWithinAppointmentInterval = (now: Date, startDate: string, endDate: stri
  * @returns {boolean} True if the activity log should be shown, false otherwise.
  */
 export const isActivityLogShown = (appointment: DetailedAppointment): boolean => {
-  const { startDate, endDate, status, type, weekday } = appointment;
+  const { startDate, endDate, status, type, weekday: rawWeekday } = appointment;
+
   if (
     type === APPOINTMENT_TYPE.OneTime &&
     [APPOINTMENT_STATUS.Completed, APPOINTMENT_STATUS.Finished].includes(status)
@@ -54,12 +55,14 @@ export const isActivityLogShown = (appointment: DetailedAppointment): boolean =>
   ].includes(status);
 
   if (type === APPOINTMENT_TYPE.Recurring && isAppointmentStatusAboutFinished) {
+    const weekday: string[] = JSON.parse(rawWeekday as string);
+
     const now = utcToZonedTime(new Date(), UTC_TIMEZONE);
     const { isWorkingDay, hasPassedStartTime, hasPassedEndTime } = calculateDateInfo(
       now,
       startDate,
       endDate,
-      weekday as string[]
+      weekday
     );
 
     return (
@@ -124,7 +127,7 @@ export const isActivityLogReviewedShown = (
   appointment: DetailedAppointment,
   role: UserRole
 ): boolean => {
-  const { activityLog, type, status, startDate, endDate, weekday } = appointment;
+  const { activityLog, type, status, startDate, endDate, weekday: rawWeekday } = appointment;
 
   if (
     activityLog.length &&
@@ -157,9 +160,11 @@ export const isActivityLogReviewedShown = (
       status
     )
   ) {
+    const weekday: string[] = JSON.parse(rawWeekday as string);
+
     return (
       activityLog.some((item) => isToday(parseISO(getISODateWithoutUTC(item.createdAt)))) &&
-      isRecurringWorkingDay(now, weekday as string[])
+      isRecurringWorkingDay(now, weekday)
     );
   }
 

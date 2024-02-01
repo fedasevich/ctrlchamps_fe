@@ -1,9 +1,16 @@
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
-import { USER_ROLE } from 'src/constants';
+import {
+  APPOINTMENT_STATUS,
+  BACKEND_DATE_FORMAT,
+  DISPLAY_TIME_FORMAT,
+  USER_ROLE,
+  UTC_TIMEZONE,
+} from 'src/constants';
 import { DetailedAppointment, useGetAppointmentQuery } from 'src/redux/api/appointmentApi';
 import { formatTimeToTimezone } from 'src/utils/formatTime';
-import { parseISO, setDate, setMonth } from 'date-fns';
-import { DRAWER_DATE_FORMAT_WITH_TIMEZONE } from '../constants';
+import { format, set, setMonth } from 'date-fns';
+import utcToZonedTime from 'date-fns-tz/utcToZonedTime';
+import { DRAWER_DATE_FORMAT, SECONDS_AND_MILISECONDS } from '../constants';
 
 interface IProps {
   role: string;
@@ -71,24 +78,40 @@ export function useAppointmentDrawer({
       return;
     }
 
-    let startDate: string = '';
+    let { startDate } = appointment;
 
     if (chosenDay) {
-      const parsedStartDate = parseISO(appointment.startDate);
-      const updatedStartDate = setDate(
-        setMonth(parsedStartDate, chosenDay.getMonth()),
-        chosenDay.getDate()
-      );
+      const currentDate = new Date();
+      const isSameDayAndMonth =
+        chosenDay.getDate() === currentDate.getDate() &&
+        chosenDay.getMonth() === currentDate.getMonth();
+      const updatedStartDate = set(setMonth(chosenDay, chosenDay.getMonth()), {
+        date: chosenDay.getDate(),
+      });
 
-      startDate = updatedStartDate.toISOString();
+      if (isSameDayAndMonth && appointment.status === APPOINTMENT_STATUS.Pending) {
+        startDate = `${format(new Date(startDate), BACKEND_DATE_FORMAT)}T${format(
+          utcToZonedTime(new Date(startDate), appointment.timezone),
+          DISPLAY_TIME_FORMAT
+        )}:${SECONDS_AND_MILISECONDS}`;
+      } else if (appointment.status === APPOINTMENT_STATUS.Virtual) {
+        startDate = `${format(new Date(appointment.startDate), BACKEND_DATE_FORMAT)}T${format(
+          utcToZonedTime(new Date(startDate), appointment.timezone),
+          DISPLAY_TIME_FORMAT
+        )}:${SECONDS_AND_MILISECONDS}`;
+      } else {
+        startDate = `${format(updatedStartDate, BACKEND_DATE_FORMAT)}T${format(
+          utcToZonedTime(new Date(startDate), appointment.timezone),
+          DISPLAY_TIME_FORMAT
+        )}:${SECONDS_AND_MILISECONDS}`;
+      }
+    } else {
+      startDate = `${format(new Date(startDate), BACKEND_DATE_FORMAT)}T${format(
+        utcToZonedTime(new Date(startDate), appointment.timezone),
+        DISPLAY_TIME_FORMAT
+      )}:${SECONDS_AND_MILISECONDS}`;
     }
-
-    const formattedStartDate = formatTimeToTimezone(
-      startDate || appointment.startDate,
-      appointment.timezone,
-      DRAWER_DATE_FORMAT_WITH_TIMEZONE
-    );
-
+    const formattedStartDate = formatTimeToTimezone(startDate, UTC_TIMEZONE, DRAWER_DATE_FORMAT);
     setActualAppointmentDate(formattedStartDate);
   }, [chosenDay, appointment]);
 

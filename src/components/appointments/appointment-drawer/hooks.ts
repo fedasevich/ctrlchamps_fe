@@ -88,8 +88,14 @@ export function useAppointmentDrawer({
       const updatedStartDate = set(setMonth(chosenDay, chosenDay.getMonth()), {
         date: chosenDay.getDate(),
       });
+
       if (isSameDayAndMonth && appointment.status === APPOINTMENT_STATUS.Pending) {
         startDate = `${format(new Date(startDate), BACKEND_DATE_FORMAT)}T${format(
+          utcToZonedTime(new Date(startDate), appointment.timezone),
+          DISPLAY_TIME_FORMAT
+        )}:${SECONDS_AND_MILISECONDS}`;
+      } else if (appointment.status === APPOINTMENT_STATUS.Virtual) {
+        startDate = `${format(new Date(appointment.startDate), BACKEND_DATE_FORMAT)}T${format(
           utcToZonedTime(new Date(startDate), appointment.timezone),
           DISPLAY_TIME_FORMAT
         )}:${SECONDS_AND_MILISECONDS}`;

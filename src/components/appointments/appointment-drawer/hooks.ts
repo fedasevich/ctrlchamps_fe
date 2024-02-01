@@ -1,5 +1,11 @@
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
-import { BACKEND_DATE_FORMAT, DISPLAY_TIME_FORMAT, USER_ROLE, UTC_TIMEZONE } from 'src/constants';
+import {
+  APPOINTMENT_STATUS,
+  BACKEND_DATE_FORMAT,
+  DISPLAY_TIME_FORMAT,
+  USER_ROLE,
+  UTC_TIMEZONE,
+} from 'src/constants';
 import { DetailedAppointment, useGetAppointmentQuery } from 'src/redux/api/appointmentApi';
 import { formatTimeToTimezone } from 'src/utils/formatTime';
 import { format, set, setMonth } from 'date-fns';
@@ -75,23 +81,31 @@ export function useAppointmentDrawer({
     let { startDate } = appointment;
 
     if (chosenDay) {
+      const currentDate = new Date();
+      const isSameDayAndMonth =
+        chosenDay.getDate() === currentDate.getDate() &&
+        chosenDay.getMonth() === currentDate.getMonth();
       const updatedStartDate = set(setMonth(chosenDay, chosenDay.getMonth()), {
         date: chosenDay.getDate(),
       });
-
-      startDate = `${format(updatedStartDate, BACKEND_DATE_FORMAT)}T${format(
-        utcToZonedTime(new Date(startDate), appointment.timezone),
-        DISPLAY_TIME_FORMAT
-      )}:${SECONDS_AND_MILISECONDS}`;
+      if (isSameDayAndMonth && appointment.status === APPOINTMENT_STATUS.Pending) {
+        startDate = `${format(new Date(startDate), BACKEND_DATE_FORMAT)}T${format(
+          utcToZonedTime(new Date(startDate), appointment.timezone),
+          DISPLAY_TIME_FORMAT
+        )}:${SECONDS_AND_MILISECONDS}`;
+      } else {
+        startDate = `${format(updatedStartDate, BACKEND_DATE_FORMAT)}T${format(
+          utcToZonedTime(new Date(startDate), appointment.timezone),
+          DISPLAY_TIME_FORMAT
+        )}:${SECONDS_AND_MILISECONDS}`;
+      }
     } else {
       startDate = `${format(new Date(startDate), BACKEND_DATE_FORMAT)}T${format(
         utcToZonedTime(new Date(startDate), appointment.timezone),
         DISPLAY_TIME_FORMAT
       )}:${SECONDS_AND_MILISECONDS}`;
     }
-
     const formattedStartDate = formatTimeToTimezone(startDate, UTC_TIMEZONE, DRAWER_DATE_FORMAT);
-
     setActualAppointmentDate(formattedStartDate);
   }, [chosenDay, appointment]);
 

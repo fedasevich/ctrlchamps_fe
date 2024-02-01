@@ -89,3 +89,9 @@ export const PageName = styled('div')`
   font-weight: ${typography.fontWeightBold};
   font-size: ${TYPOGRAPHY.sm}px;
 `;
+
+export const NameButton = styled(Button)`
+  color: ${PRIMARY.black};
+  font-weight: ${typography.fontWeightSemiBold};
+  font-size: ${TYPOGRAPHY.base}px;
+`;

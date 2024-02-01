@@ -159,7 +159,6 @@ export const ReviewBlock = styled('div')`
 export const ReviewHeader = styled('div')`
   display: flex;
   justify-content: space-between;
-  max-width: 500px;
   align-items: center;
 `;
 
@@ -170,6 +169,7 @@ export const ReviewName = styled('div')`
 
 export const ReviewUserBlock = styled('div')`
   display: flex;
+  min-width: 200px;
   gap: 15px;
 `;
 

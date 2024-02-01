@@ -1,24 +1,7 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import PhotoCameraOutlinedIcon from '@mui/icons-material/PhotoCameraOutlined';
-import {
-  Avatar,
-  Button,
-  FormControl,
-  FormControlLabel,
-  IconButton,
-  MenuItem,
-  Pagination,
-  Rating,
-  Select,
-  SelectChangeEvent,
-  Stack,
-  Switch,
-  Table,
-  TableBody,
-  TableHead,
-} from '@mui/material';
-import { format, parseISO } from 'date-fns';
+import { Button, FormControl, FormControlLabel, IconButton, Switch } from '@mui/material';
 import { ChangeEvent, useState } from 'react';
 import { Controller, ControllerRenderProps, useForm } from 'react-hook-form';
 import { ReactElement } from 'react-markdown/lib/react-markdown';
@@ -26,23 +9,14 @@ import { ReactElement } from 'react-markdown/lib/react-markdown';
 import EditSquare from 'src/assets/icons/EditSquare';
 import Modal from 'src/components/reusable/modal/Modal';
 import UpdateSuccess from 'src/components/reusable/update-success/UpdateSuccess';
-import {
-  DATE_FORMAT,
-  DISPLAY_TIME_FORMAT,
-  FIRST_PAGE,
-  TRANSACTION_TYPE,
-  USER_ROLE,
-  USER_STATUS,
-} from 'src/constants';
+import { USER_ROLE } from 'src/constants';
 import { useLocales } from 'src/locales';
-import { useGetTransactionsQuery } from 'src/redux/api/transactionsApi';
 import { User, useUpdateUserMutation, useUploadAvatarMutation } from 'src/redux/api/userApi';
 import { SECONDARY } from 'src/theme/colors';
 import { TYPOGRAPHY } from 'src/theme/fonts';
 
-import { useGetReviewsQuery } from 'src/redux/api/reviewsApi';
 import AddressModal from './address-modal/AddressModal';
-import { MAX_FILE_SIZE_BYTES, PAGINATION_LIMIT, REVIEWS_PAGINATION_LIMIT } from './constants';
+import { MAX_FILE_SIZE_BYTES } from './constants';
 import PersonalInfoModal from './personal-info-modal/PersonalInfoModal';
 import { ErrorMessage } from './personal-info-modal/styles';
 import {
@@ -56,13 +30,6 @@ import {
   Item,
   Label,
   List,
-  ReviewBlock,
-  ReviewDate,
-  ReviewDescription,
-  ReviewHeader,
-  ReviewName,
-  ReviewUserBlock,
-  StatusBlock,
   StyledAvatar,
   Subtitle,
   Title,
@@ -73,7 +40,8 @@ import { AvatarValues } from './types';
 import UpdatePassword from './update-password-form/UpdatePassword';
 import { useAvatarSchema } from './validation';
 
-import { StyledTableCell, StyledTableRow, TableHeader } from '../user-list/styles';
+import AccountReviews from './AccountReviews';
+import AccountTransactions from './AccountTransactions';
 
 interface IProps {
   user: User;
@@ -90,25 +58,9 @@ export default function AccountDetails({ user, isAdmin }: IProps): JSX.Element |
   const [avatarUpdated, setAvatarUpdated] = useState<boolean>(false);
   const [personalInfoUpdated, setPersonalInfoUpdated] = useState<boolean>(false);
   const [addressUpdated, setAddressUpdated] = useState<boolean>(false);
-  const [statusUpdated, setStatusUpdated] = useState<boolean>(false);
-  const [transactionsPage, setTransactionsPage] = useState<number>(FIRST_PAGE);
-  const [reviewsPage, setReviewsPage] = useState<number>(FIRST_PAGE);
-
-  const { data: transactions } = useGetTransactionsQuery({
-    userId: user.id,
-    offset: (transactionsPage - FIRST_PAGE) * PAGINATION_LIMIT,
-    limit: PAGINATION_LIMIT,
-  });
-
-  const { data: seekerReviews } = useGetReviewsQuery({
-    userId: user.id,
-    offset: (reviewsPage - FIRST_PAGE) * REVIEWS_PAGINATION_LIMIT,
-    limit: REVIEWS_PAGINATION_LIMIT,
-  });
 
   const [uploadAvatar] = useUploadAvatarMutation();
   const [deleteAvatar] = useUpdateUserMutation();
-  const [updateUser] = useUpdateUserMutation();
 
   const schema = useAvatarSchema();
 
@@ -164,24 +116,6 @@ export default function AccountDetails({ user, isAdmin }: IProps): JSX.Element |
   const openPasswordBlock = (): void => setIsPasswordBlockVisible(!isPasswordBlockVisible);
   const closePasswordBlock = (): void => setIsPasswordBlockVisible(false);
 
-  const handleChangeStatus = async (event: SelectChangeEvent, id: string): Promise<void> => {
-    try {
-      await updateUser({ id, status: event.target.value })
-        .unwrap()
-        .then(() => setStatusUpdated(true));
-    } catch (error) {
-      throw new Error(error);
-    }
-  };
-
-  const handleTransactionsPageChange = (event: ChangeEvent<unknown>, value: number): void => {
-    setTransactionsPage(value);
-  };
-
-  const handleReviewsPageChange = (event: ChangeEvent<unknown>, value: number): void => {
-    setReviewsPage(value);
-  };
-
   return (
     <Background isAdmin={isAdmin}>
       <Container isAdmin={isAdmin}>
@@ -192,7 +126,6 @@ export default function AccountDetails({ user, isAdmin }: IProps): JSX.Element |
         ) : (
           <Title>{translate('accountDetails.title')}</Title>
         )}
-
         <AvatarContainer>
           {user.avatar || avatar ? (
             <StyledAvatar src={avatarURL} alt="avatar" />
@@ -295,64 +228,8 @@ export default function AccountDetails({ user, isAdmin }: IProps): JSX.Element |
         </Block>
         {isAdmin ? (
           <>
-            <StatusBlock>
-              <Subtitle>{translate('userList.status')}:</Subtitle>
-              <Select
-                value={user.status}
-                sx={{ width: 200, height: 40 }}
-                onChange={(event): Promise<void> => handleChangeStatus(event, user.id)}
-              >
-                <MenuItem value={USER_STATUS.Active}>{USER_STATUS.Active}</MenuItem>
-                <MenuItem value={USER_STATUS.Inactive}>{USER_STATUS.Inactive}</MenuItem>
-              </Select>
-            </StatusBlock>
-            <Block>
-              <Subtitle>{translate('userList.transactions')}</Subtitle>
-              {transactions && transactions.data.length > 0 ? (
-                <>
-                  <Table>
-                    <TableHead>
-                      <StyledTableRow>
-                        <TableHeader>{translate('userList.date')}</TableHeader>
-                        <TableHeader>{translate('userList.type')}</TableHeader>
-                        <TableHeader>{translate('userList.amount')}</TableHeader>
-                      </StyledTableRow>
-                    </TableHead>
-                    <TableBody>
-                      {transactions.data.map((transaction) => (
-                        <StyledTableRow key={transaction.id}>
-                          <StyledTableCell>
-                            {format(
-                              parseISO(transaction.createdAt),
-                              `${DATE_FORMAT} ${DISPLAY_TIME_FORMAT}`
-                            )}
-                          </StyledTableCell>
-                          <StyledTableCell>
-                            {transaction.type === TRANSACTION_TYPE.Income
-                              ? translate('userList.replenishment')
-                              : translate('userList.withdrawal')}
-                          </StyledTableCell>
-                          <StyledTableCell>{transaction.amount}$</StyledTableCell>
-                        </StyledTableRow>
-                      ))}
-                    </TableBody>
-                  </Table>
-                  <Stack display="flex" direction="row" justifyContent="center" mt={2}>
-                    <Pagination
-                      count={Math.ceil(transactions.count / PAGINATION_LIMIT)}
-                      page={transactionsPage}
-                      onChange={handleTransactionsPageChange}
-                    />
-                  </Stack>
-                </>
-              ) : (
-                <Value>{translate('userList.anyTransactions')}</Value>
-              )}
-            </Block>
-            <StatusBlock>
-              <Subtitle>{translate('userList.wallet')}:</Subtitle>
-              <Subtitle>{user.balance} $</Subtitle>
-            </StatusBlock>
+            <AccountTransactions user={user} />
+            {user.role === USER_ROLE.Caregiver && <AccountReviews user={user} />}
           </>
         ) : (
           <Block>
@@ -369,46 +246,6 @@ export default function AccountDetails({ user, isAdmin }: IProps): JSX.Element |
             )}
           </Block>
         )}
-        <Block>
-          <Subtitle>{translate('userList.reviews')}</Subtitle>
-          {seekerReviews && seekerReviews.data.length > 0 ? (
-            <>
-              {seekerReviews.data.map((review) => (
-                <ReviewBlock key={review.id}>
-                  <ReviewHeader>
-                    <ReviewUserBlock>
-                      <Avatar />
-                      <div>
-                        <ReviewName>
-                          {review.user.firstName} {review.user.lastName}
-                        </ReviewName>
-                        <Rating
-                          name="read-only"
-                          value={Number(review.rating)}
-                          size="small"
-                          readOnly
-                        />
-                      </div>
-                    </ReviewUserBlock>
-
-                    <ReviewDate>{format(parseISO(review.createdAt), DATE_FORMAT)}</ReviewDate>
-                  </ReviewHeader>
-                  <ReviewDescription>{review.review}</ReviewDescription>
-                </ReviewBlock>
-              ))}
-
-              <Stack display="flex" direction="row" justifyContent="center" mt={2}>
-                <Pagination
-                  count={Math.ceil(seekerReviews.count / REVIEWS_PAGINATION_LIMIT)}
-                  page={reviewsPage}
-                  onChange={handleReviewsPageChange}
-                />
-              </Stack>
-            </>
-          ) : (
-            <Value>{translate('userList.anyReviews')}</Value>
-          )}
-        </Block>
       </Container>
       <Modal
         onClose={(): void => setIsPersonalInfoModalOpen(false)}
@@ -454,11 +291,6 @@ export default function AccountDetails({ user, isAdmin }: IProps): JSX.Element |
         dataUpdated={addressUpdated}
         setDataUpdated={setAddressUpdated}
         message={translate('accountDetails.addressModal.success')}
-      />
-      <UpdateSuccess
-        dataUpdated={statusUpdated}
-        setDataUpdated={setStatusUpdated}
-        message={translate('userList.statusSuccess')}
       />
     </Background>
   );

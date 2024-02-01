@@ -43,6 +43,7 @@ import {
   ManagementWrapper,
   Title,
   StyledButton,
+  NameButton,
 } from './styles';
 
 export default function UserList(): JSX.Element | null {
@@ -185,7 +186,16 @@ export default function UserList(): JSX.Element | null {
                   {users.data.map((user) => (
                     <StyledTableRow key={user.id}>
                       <StyledTableCell>
-                        {user.firstName} {user.lastName}
+                        <NameButton
+                          onClick={(): Promise<boolean> =>
+                            router.push({
+                              pathname: `${ROUTES.adminAccountDetails}${user.id}`,
+                              query: { page },
+                            })
+                          }
+                        >
+                          {user.firstName} {user.lastName}
+                        </NameButton>
                       </StyledTableCell>
                       <StyledTableCell>
                         <GreenSpan role={user.role}>{user.role}</GreenSpan>

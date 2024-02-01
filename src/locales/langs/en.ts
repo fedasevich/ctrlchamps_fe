@@ -752,6 +752,7 @@ const en = {
       success: 'Your address has been successfully changed!',
     },
     avatarSuccess: 'Your avatar has been successfully changed!',
+    reviewDeletedSuccess: 'Review has been successfully deleted!',
   },
   caregiverProfile: {
     title: 'Caregiver Profile',

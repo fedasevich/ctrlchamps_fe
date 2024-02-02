@@ -1,5 +1,7 @@
+import { format, parseISO } from 'date-fns';
+
 import { useLocales } from 'src/locales';
-import { APPOINTMENT_TYPE } from 'src/constants';
+import { APPOINTMENT_STATUS, APPOINTMENT_TYPE, DATE_FORMAT } from 'src/constants';
 
 import { DetailedAppointment } from 'src/redux/api/appointmentApi';
 import {
@@ -32,7 +34,14 @@ export default function AgreementModal({ appointment }: IProps): JSX.Element | n
         <SubTitle>{translate('appointments_page.terms.term_of_agreement_title')}</SubTitle>
         <Text>
           {translate('appointments_page.terms.term_of_agreement_text1')}
-          <Span>{CURRENT_DATE}</Span>
+          {appointment.status !==
+            (APPOINTMENT_STATUS.Virtual ||
+              APPOINTMENT_STATUS.SignedCaregiver ||
+              APPOINTMENT_STATUS.SignedSeeker) && appointment.signingDate ? (
+            <Span>{format(parseISO(appointment.signingDate), DATE_FORMAT)}</Span>
+          ) : (
+            <Span>{CURRENT_DATE}</Span>
+          )}
           {translate('appointments_page.terms.term_of_agreement_text2')}
         </Text>
       </div>

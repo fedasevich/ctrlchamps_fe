@@ -176,16 +176,6 @@ export default function AppointmentDrawer({
     }
   };
 
-  console.log(
-    isWithinInterval(utcToZonedTime(CURRENT_DAY, UTC_TIMEZONE), {
-      start: utcToZonedTime(appointment.startDate, UTC_TIMEZONE),
-      end: utcToZonedTime(appointment.endDate, UTC_TIMEZONE),
-    }),
-    utcToZonedTime(CURRENT_DAY, UTC_TIMEZONE),
-    utcToZonedTime(appointment.startDate, UTC_TIMEZONE),
-    utcToZonedTime(appointment.endDate, UTC_TIMEZONE)
-  );
-
   const DRAWER_FOOTERS = {
     [APPOINTMENT_STATUS.Pending]: (
       <>

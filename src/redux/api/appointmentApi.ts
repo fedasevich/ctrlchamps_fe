@@ -132,6 +132,7 @@ export const appointmentApi = createApi({
     },
   }),
   refetchOnFocus: true,
+  refetchOnMountOrArgChange: true,
   tagTypes: ['Appointments'],
   endpoints: (builder) => ({
     getAllAppointments: builder.query<Appointment[], void>({

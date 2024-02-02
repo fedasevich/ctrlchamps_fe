@@ -122,8 +122,13 @@ export function useAppointmentDrawer({
         DISPLAY_TIME_FORMAT
       )}:${SECONDS_AND_MILISECONDS}`;
     } else if (appointment.type === APPOINTMENT_TYPE.Recurring) {
+      const endDate =
+        appointment.status === APPOINTMENT_STATUS.Paused
+          ? appointment.pausedAt
+          : appointment.endDate;
+
       const nextAppointmentDay = findNextAppointmentDay(
-        utcToZonedTime(new Date(appointment.endDate), appointment.timezone),
+        utcToZonedTime(new Date(endDate!), appointment.timezone),
         appointment.weekday!,
         utcToZonedTime(new Date(), appointment.timezone)
       );

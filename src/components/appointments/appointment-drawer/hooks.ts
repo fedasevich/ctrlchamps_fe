@@ -90,12 +90,18 @@ export function useAppointmentDrawer({
       });
 
       if (isSameDayAndMonth && appointment.status === APPOINTMENT_STATUS.Pending) {
-        startDate = `${format(new Date(startDate), BACKEND_DATE_FORMAT)}T${format(
+        startDate = `${format(
+          utcToZonedTime(startDate, appointment.timezone),
+          BACKEND_DATE_FORMAT
+        )}T${format(
           utcToZonedTime(new Date(startDate), appointment.timezone),
           DISPLAY_TIME_FORMAT
         )}:${SECONDS_AND_MILISECONDS}`;
       } else if (appointment.status === APPOINTMENT_STATUS.Virtual) {
-        startDate = `${format(new Date(appointment.startDate), BACKEND_DATE_FORMAT)}T${format(
+        startDate = `${format(
+          utcToZonedTime(startDate, appointment.timezone),
+          BACKEND_DATE_FORMAT
+        )}T${format(
           utcToZonedTime(new Date(startDate), appointment.timezone),
           DISPLAY_TIME_FORMAT
         )}:${SECONDS_AND_MILISECONDS}`;
@@ -106,7 +112,10 @@ export function useAppointmentDrawer({
         )}:${SECONDS_AND_MILISECONDS}`;
       }
     } else {
-      startDate = `${format(new Date(startDate), BACKEND_DATE_FORMAT)}T${format(
+      startDate = `${format(
+        utcToZonedTime(startDate, appointment.timezone),
+        BACKEND_DATE_FORMAT
+      )}T${format(
         utcToZonedTime(new Date(startDate), appointment.timezone),
         DISPLAY_TIME_FORMAT
       )}:${SECONDS_AND_MILISECONDS}`;

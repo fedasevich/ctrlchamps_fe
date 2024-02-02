@@ -1,6 +1,7 @@
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import {
   APPOINTMENT_STATUS,
+  APPOINTMENT_TYPE,
   BACKEND_DATE_FORMAT,
   DISPLAY_TIME_FORMAT,
   USER_ROLE,
@@ -10,6 +11,7 @@ import { DetailedAppointment, useGetAppointmentQuery } from 'src/redux/api/appoi
 import { formatTimeToTimezone } from 'src/utils/formatTime';
 import { format, set, setMonth } from 'date-fns';
 import utcToZonedTime from 'date-fns-tz/utcToZonedTime';
+import { findNextAppointmentDay } from 'src/components/appointments/appointment-drawer/helpers';
 import { DRAWER_DATE_FORMAT, SECONDS_AND_MILISECONDS } from '../constants';
 
 interface IProps {
@@ -111,7 +113,7 @@ export function useAppointmentDrawer({
           DISPLAY_TIME_FORMAT
         )}:${SECONDS_AND_MILISECONDS}`;
       }
-    } else {
+    } else if (appointment.type === APPOINTMENT_TYPE.OneTime) {
       startDate = `${format(
         utcToZonedTime(startDate, appointment.timezone),
         BACKEND_DATE_FORMAT
@@ -119,7 +121,22 @@ export function useAppointmentDrawer({
         utcToZonedTime(new Date(startDate), appointment.timezone),
         DISPLAY_TIME_FORMAT
       )}:${SECONDS_AND_MILISECONDS}`;
+    } else if (appointment.type === APPOINTMENT_TYPE.Recurring) {
+      const nextAppointmentDay = findNextAppointmentDay(
+        utcToZonedTime(new Date(appointment.endDate), appointment.timezone),
+        appointment.weekday!,
+        utcToZonedTime(new Date(), appointment.timezone)
+      );
+
+      startDate = `${format(
+        utcToZonedTime(nextAppointmentDay, appointment.timezone),
+        BACKEND_DATE_FORMAT
+      )}T${format(
+        utcToZonedTime(new Date(startDate), appointment.timezone),
+        DISPLAY_TIME_FORMAT
+      )}:${SECONDS_AND_MILISECONDS}`;
     }
+
     const formattedStartDate = formatTimeToTimezone(startDate, UTC_TIMEZONE, DRAWER_DATE_FORMAT);
     setActualAppointmentDate(formattedStartDate);
   }, [chosenDay, appointment]);

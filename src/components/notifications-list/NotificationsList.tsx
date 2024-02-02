@@ -44,7 +44,7 @@ export default function NotificationsList({ isLoading, notifications, count }: P
           ) : (
             <NoNotificationText>{translate('notifications.no_notifications')}</NoNotificationText>
           )}
-          {count && count >= 0 && (
+          {!!count && (
             <Stack display="flex" direction="row" justifyContent="center" mt={2}>
               <Pagination
                 count={Math.ceil(count / PAGINATION_LIMIT)}

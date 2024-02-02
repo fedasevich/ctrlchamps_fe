@@ -1,6 +1,6 @@
 import { CheckCircle } from '@mui/icons-material';
 import { Button, Checkbox, FormControlLabel, Grid, IconButton } from '@mui/material';
-import { format, formatISO, parseISO } from 'date-fns';
+import { format, formatISO, isWithinInterval, parseISO } from 'date-fns';
 import { utcToZonedTime } from 'date-fns-tz';
 import { Dispatch, SetStateAction } from 'react';
 
@@ -16,6 +16,7 @@ import { DrawerFooter, DrawerHeader, DrawerTitle } from 'src/components/reusable
 import Modal from 'src/components/reusable/modal/Modal';
 import {
   APPOINTMENT_STATUS,
+  APPOINTMENT_TYPE,
   CURRENT_DAY,
   DATE_FORMAT,
   SMALL_AVATAR_SIZE,
@@ -175,6 +176,16 @@ export default function AppointmentDrawer({
     }
   };
 
+  console.log(
+    isWithinInterval(utcToZonedTime(CURRENT_DAY, UTC_TIMEZONE), {
+      start: utcToZonedTime(appointment.startDate, UTC_TIMEZONE),
+      end: utcToZonedTime(appointment.endDate, UTC_TIMEZONE),
+    }),
+    utcToZonedTime(CURRENT_DAY, UTC_TIMEZONE),
+    utcToZonedTime(appointment.startDate, UTC_TIMEZONE),
+    utcToZonedTime(appointment.endDate, UTC_TIMEZONE)
+  );
+
   const DRAWER_FOOTERS = {
     [APPOINTMENT_STATUS.Pending]: (
       <>
@@ -189,7 +200,12 @@ export default function AppointmentDrawer({
               onClick={handleAcceptAppointment}
               disabled={
                 utcToZonedTime(appointment.endDate, UTC_TIMEZONE) <
-                utcToZonedTime(CURRENT_DAY, UTC_TIMEZONE)
+                  utcToZonedTime(CURRENT_DAY, UTC_TIMEZONE) ||
+                (appointment.type === APPOINTMENT_TYPE.OneTime &&
+                  isWithinInterval(utcToZonedTime(CURRENT_DAY, UTC_TIMEZONE), {
+                    start: utcToZonedTime(appointment.startDate, UTC_TIMEZONE),
+                    end: utcToZonedTime(appointment.endDate, UTC_TIMEZONE),
+                  }))
               }
             >
               {translate('appointments_page.accept')}

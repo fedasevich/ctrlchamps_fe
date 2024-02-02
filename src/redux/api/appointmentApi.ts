@@ -112,6 +112,7 @@ export interface DetailedAppointment {
   virtualAssessment: VirtualAssessment | null;
   activityLog: ActivityLog[];
   createdAt: string;
+  pausedAt: string | null;
   debtStatus: AppointmentDebtStatus;
   seekerDebt: number;
 }

@@ -20,6 +20,7 @@ import {
   MIN_HOURS_BEFORE_APPOINTMENT,
   ONE_HOUR_INTERVAL_INDEX,
   borderlineHours,
+  lateStartHours,
   nextDayHours,
   selectTimeOptions,
 } from './constants';
@@ -61,7 +62,8 @@ export default function OneTimeAppointment({ onNext, onBack }: Props): JSX.Eleme
 
     if (startDateTime && endDateTime) {
       setStartTime(startDateTime);
-      setEndTime(endDateTime);
+      const endTimeValue = endDateTime === '23:59' ? '00:00' : endDateTime;
+      setEndTime(endTimeValue);
     }
   }, [oneTimeDate.startTime, oneTimeDate.endTime]);
 
@@ -80,13 +82,17 @@ export default function OneTimeAppointment({ onNext, onBack }: Props): JSX.Eleme
       setInvalidTime(false);
     }
 
-    if (nextDayHours.includes(endTime)) {
+    if (
+      lateStartHours.includes(startTime) ||
+      nextDayHours.includes(endTime) ||
+      (startTime === borderlineHours[0] && endTime !== borderlineHours.at(-1))
+    ) {
       setNextDayTime(true);
     } else {
       setNextDayTime(false);
     }
 
-    if (startTime && date) {
+    if (startTime && date && !lateStartHours.includes(startTime)) {
       const isTimeWithinInterval = checkIfTodayAppointmentWithinInterval(
         startTime,
         MIN_HOURS_BEFORE_APPOINTMENT

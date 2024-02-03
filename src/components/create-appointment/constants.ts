@@ -10,6 +10,9 @@ const FIRST_WEEK_DAY_IDX = 0;
 const LAST_WEEK_DAY_IDX = -1;
 const MIN_HOURS_BEFORE_APPOINTMENT = 6;
 
+const borderlineHours = generateTimeWithInterval('23:00', '00:00', MINUTES_INTERVAL);
+const nextDayHours = generateTimeWithInterval('00:15', '00:45', MINUTES_INTERVAL);
+
 const selectTimeOptions = generateTimeWithInterval('00:00', '23:45', MINUTES_INTERVAL);
 
 export {
@@ -22,4 +25,6 @@ export {
   LAST_WEEK_DAY_IDX,
   MIN_HOURS_BEFORE_APPOINTMENT,
   selectTimeOptions,
+  borderlineHours,
+  nextDayHours,
 };

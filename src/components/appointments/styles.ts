@@ -22,6 +22,7 @@ export const Container = styled('div')`
   border-radius: 4px;
   box-shadow: 0px 4px 4px 0px ${SECONDARY.gray_shadow};
   margin-top: 16px;
+  margin-bottom: 16px;
   padding: 16px;
 
   ${({ theme }): string => theme.breakpoints.down('sm')} {

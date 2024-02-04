@@ -39,6 +39,7 @@ export const ListItem = styled('div')`
   align-items: center;
   gap: 16px;
   padding: 12px 0;
+  cursor: pointer;
 
   &:not(:last-child) {
     border-bottom: 1px solid ${SECONDARY.light_gray};

@@ -28,6 +28,7 @@ const CalendarContainer = styled('div')`
   height: 400px;
   z-index: 100;
   box-shadow: 0px 4px 4px 0px ${SECONDARY.light_gray};
+  position: relative;
 
   .calendar-picker {
     width: 360px;
@@ -52,9 +53,9 @@ const CalendarBtn = styled(FilledButton)`
   padding: 8px 22px;
   font-weight: normal;
   text-transform: none;
-  display: block;
-  margin: 0 20px 0 auto;
-  text-align: right;
+  position: absolute;
+  right: 20px;
+  bottom: 20px;
 `;
 
 const NoAppointmentsContainer = styled('div')`

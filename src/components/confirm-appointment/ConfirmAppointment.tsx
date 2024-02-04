@@ -1,26 +1,30 @@
 import CloseIcon from '@mui/icons-material/Close';
 import { Stack } from '@mui/material';
+import { zonedTimeToUtc } from 'date-fns-tz';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
-import { zonedTimeToUtc } from 'date-fns-tz';
 
 import ArrowForward from 'src/assets/icons/ArrowForward';
 import TasksList from 'src/components/confirm-appointment/TasksList';
 import { Appointment } from 'src/components/create-appointment/enums';
 import AppointmentBtn from 'src/components/reusable/appointment-btn/AppointmentBtn';
-import { APPOINTMENT_STATUS, SMALL_AVATAR_SIZE } from 'src/constants';
+import { APPOINTMENT_STATUS, DISPLAY_TIME_FORMAT, SMALL_AVATAR_SIZE } from 'src/constants';
 import { useLocales } from 'src/locales';
 import { useCreateAppointmentMutation } from 'src/redux/api/appointmentApi';
 import { useAppDispatch, useTypedSelector } from 'src/redux/store';
 import { ROUTES } from 'src/routes';
 
+import PaymentNotification from 'src/components/create-appointment/PaymentNotification';
 import CaregiverDrawer from 'src/components/reusable/drawer/caregiver-drawer/CaregiverDrawer';
 import UserAvatar from 'src/components/reusable/user-avatar/UserAvatar';
+import { useGetUserInfoQuery } from 'src/redux/api/userApi';
 import { cancelAppointment as resetAppointmentInfo } from 'src/redux/slices/appointmentSlice';
 import { resetAllInfo } from 'src/redux/slices/healthQuestionnaireSlice';
 import { resetLocationSlice } from 'src/redux/slices/locationSlice';
-import { useGetUserInfoQuery } from 'src/redux/api/userApi';
-import PaymentNotification from 'src/components/create-appointment/PaymentNotification';
+
+import { format, isToday } from 'date-fns';
+import { MIN_HOURS_BEFORE_APPOINTMENT } from 'src/components/create-appointment/constants';
+import { checkIfTodayAppointmentWithinInterval } from 'src/components/create-appointment/helpers';
 
 import { CONFIRM_NOTE_MAX_LENGTH } from './constants';
 import {
@@ -50,7 +54,7 @@ export default function ConfirmAppointment({ onBack }: { onBack: () => void }): 
   const [details, setDetails] = useState<string>('');
   const [isModalActive, setIsModalActive] = useState<boolean>(false);
   const [isCaregiverDrawerOpen, setIsCaregiverDrawerOpen] = useState<boolean>(false);
-  const [insuficientBalance, setInsuficientBalance] = useState<boolean>(false);
+  const [paymentWarningVisible, setPaymentWarningVisible] = useState<boolean>(false);
 
   const { data: userInfo } = useGetUserInfoQuery(user?.id);
   const [createAppointment, { isLoading }] = useCreateAppointmentMutation();
@@ -68,14 +72,26 @@ export default function ConfirmAppointment({ onBack }: { onBack: () => void }): 
 
   const confirmAppointment = async (): Promise<void> => {
     try {
-      if (
-        appointment.isAppointmentSetSixHoursBefore &&
-        userInfo!.balance < caregiver!.caregiverInfo.hourlyRate
-      ) {
-        setInsuficientBalance(true);
+      const appointmentStartTime =
+        appointment.appointmentType === Appointment.oneTime
+          ? appointment.oneTimeDate.startTime!
+          : appointment.recurringDate.startDate!;
 
-        return;
+      const formattedTime = format(appointmentStartTime, DISPLAY_TIME_FORMAT);
+
+      const isTimeWithinInterval = checkIfTodayAppointmentWithinInterval(
+        formattedTime,
+        MIN_HOURS_BEFORE_APPOINTMENT
+      );
+
+      if (isToday(appointmentStartTime) && isTimeWithinInterval) {
+        setPaymentWarningVisible(true);
+
+        if (userInfo!.balance < caregiver!.caregiverInfo.hourlyRate) {
+          return;
+        }
       }
+
       await createAppointment({
         caregiverInfoId: caregiver?.caregiverInfo.id,
         name: appointment.appointmentName,
@@ -146,7 +162,7 @@ export default function ConfirmAppointment({ onBack }: { onBack: () => void }): 
               isModalActive={isModalActive}
             />
           </TasksWrapper>
-          {insuficientBalance && (
+          {paymentWarningVisible && (
             <Stack sx={{ padding: '0 16px 16px' }}>
               <PaymentNotification confirmationStep />
             </Stack>
@@ -158,7 +174,7 @@ export default function ConfirmAppointment({ onBack }: { onBack: () => void }): 
               !tasks.length ||
               details.length > CONFIRM_NOTE_MAX_LENGTH ||
               isLoading ||
-              insuficientBalance
+              paymentWarningVisible
             }
             onClick={confirmAppointment}
             onBack={onBack}

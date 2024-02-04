@@ -1,6 +1,6 @@
 import { CheckCircle } from '@mui/icons-material';
 import { Button, Checkbox, FormControlLabel, Grid, IconButton } from '@mui/material';
-import { format, formatISO, parseISO } from 'date-fns';
+import { format, formatISO, isWithinInterval, parseISO } from 'date-fns';
 import { utcToZonedTime } from 'date-fns-tz';
 import { Dispatch, SetStateAction } from 'react';
 
@@ -16,17 +16,20 @@ import { DrawerFooter, DrawerHeader, DrawerTitle } from 'src/components/reusable
 import Modal from 'src/components/reusable/modal/Modal';
 import {
   APPOINTMENT_STATUS,
+  APPOINTMENT_TYPE,
+  CURRENT_DAY,
   DATE_FORMAT,
-  USER_ROLE,
-  VIRTUAL_ASSESSMENT_STATUS,
   SMALL_AVATAR_SIZE,
+  USER_ROLE,
+  UTC_TIMEZONE,
+  VIRTUAL_ASSESSMENT_STATUS,
 } from 'src/constants';
 import { useLocales } from 'src/locales';
 
 import VirtualAssessmentSuccess from 'src/components/appointments/request-sent-modal/VirtualAssessmentSuccess';
 import VirtualAssessmentModal from 'src/components/appointments/virtual-assessment-modal/VirtualAssessmentModal';
-import VirtualAssessmentRequestModal from 'src/components/virtual-assessment-request/VirtualAssessmentRequest';
 import UserAvatar from 'src/components/reusable/user-avatar/UserAvatar';
+import VirtualAssessmentRequestModal from 'src/components/virtual-assessment-request/VirtualAssessmentRequest';
 import { useUpdateAppointmentMutation } from 'src/redux/api/appointmentApi';
 
 import { ChildModal } from 'src/components/appointment-request-modal/ChildModal';
@@ -47,6 +50,7 @@ import AppointmentDrawerLocation from './location/AppointmentDrawerLocation';
 import ReviewActivityLogModal from './review-activity-log-modal/ReviewActivityLogModal';
 import { getLatestPendingActivityLog } from './review-activity-log-modal/helpers';
 import {
+  AcceptRejectButtonsBox,
   ActivityLogBlock,
   AppointmentName,
   Block,
@@ -56,7 +60,6 @@ import {
   DateText,
   DisabledText,
   DoubleButtonBox,
-  AcceptRejectButtonsBox,
   DrawerBody,
   ModalFooter,
   StyledButton,
@@ -181,7 +184,20 @@ export default function AppointmentDrawer({
             <CancelBtn type="button" variant="outlined" onClick={handleCancelModalOpen}>
               {translate('appointments_page.reject')}
             </CancelBtn>
-            <StyledButton type="button" variant="contained" onClick={handleAcceptAppointment}>
+            <StyledButton
+              type="button"
+              variant="contained"
+              onClick={handleAcceptAppointment}
+              disabled={
+                utcToZonedTime(appointment.endDate, UTC_TIMEZONE) <
+                  utcToZonedTime(CURRENT_DAY, UTC_TIMEZONE) ||
+                (appointment.type === APPOINTMENT_TYPE.OneTime &&
+                  isWithinInterval(utcToZonedTime(CURRENT_DAY, UTC_TIMEZONE), {
+                    start: utcToZonedTime(appointment.startDate, UTC_TIMEZONE),
+                    end: utcToZonedTime(appointment.endDate, UTC_TIMEZONE),
+                  }))
+              }
+            >
               {translate('appointments_page.accept')}
             </StyledButton>
           </AcceptRejectButtonsBox>
@@ -256,9 +272,6 @@ export default function AppointmentDrawer({
       throw new Error(error);
     }
   };
-
-
-
 
   return (
     <>

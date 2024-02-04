@@ -356,6 +356,8 @@ const en = {
       min_type_char: `Appointment name should contain more than ${MIN_APPOINTMENT_NAME_LENGTH} characters`,
       max_type_char: `You cannot enter more than ${MAX_APPOINTMENT_NAME_LENGTH} characters`,
       min_appointment_duration: `An appointment should last for at least ${MIN_APPOINTMENT_HOUR_DURATION} hour.`,
+      next_day:
+        'The selected time range crosses over to the next day. Please ensure the end time is on the same day.',
       invalid_time:
         'Appointment cannot be ended before the start. Please choose another value in End Time field.',
       invalid_today_time: 'Please choose the time to be later than the current time.',
@@ -752,6 +754,7 @@ const en = {
       success: 'Your address has been successfully changed!',
     },
     avatarSuccess: 'Your avatar has been successfully changed!',
+    reviewDeletedSuccess: 'Review has been successfully deleted!',
   },
   caregiverProfile: {
     title: 'Caregiver Profile',

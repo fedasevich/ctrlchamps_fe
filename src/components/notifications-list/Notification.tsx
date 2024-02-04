@@ -46,7 +46,7 @@ export default function NotificationItem({ status, username, appointmentId }: Pr
 
   return (
     <>
-      <ListItem>
+      <ListItem onClick={handleDrawerOpen}>
         <IconBackground color={icon.color}>
           <icon.icon sx={{ color: PRIMARY.white }} />
         </IconBackground>
@@ -55,12 +55,7 @@ export default function NotificationItem({ status, username, appointmentId }: Pr
             <BoldText /> {translate(text)}
           </Trans>
         </BaseText>
-        <IconButton
-          edge="end"
-          aria-label="open-drawer"
-          sx={{ ml: 'auto' }}
-          onClick={handleDrawerOpen}
-        >
+        <IconButton edge="end" aria-label="open-drawer" sx={{ ml: 'auto' }}>
           <RightAction />
         </IconButton>
       </ListItem>

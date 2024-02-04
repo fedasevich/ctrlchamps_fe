@@ -1,33 +1,15 @@
 import { Box, FormControl, InputLabel, MenuItem, Select, TextField } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import {
-  addDays,
-  addHours,
-  format,
-  isBefore,
-  isSameDay,
-  isToday,
-  isWithinInterval,
-  parse,
-} from 'date-fns';
+import { addDays, format, isBefore, isSameDay, isToday } from 'date-fns';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import OneTimeIcon from 'src/assets/icons/OneTimeIcon';
 import { ErrorText } from 'src/components/reusable';
 import AppointmentBtn from 'src/components/reusable/appointment-btn/AppointmentBtn';
-import {
-  CURRENT_DAY,
-  DATE_FORMAT,
-  DISPLAY_TIME_FORMAT,
-  FULL_WEEKDAY_FORMAT,
-  weekDays,
-} from 'src/constants';
+import { CURRENT_DAY, DATE_FORMAT, FULL_WEEKDAY_FORMAT, weekDays } from 'src/constants';
 import useChooseTime from 'src/hooks/useChooseTime';
-import {
-  setIsAppointmentSixHoursBeforeToTrue,
-  setRecurringAppointmentTime,
-} from 'src/redux/slices/appointmentSlice';
+import { setRecurringAppointmentTime } from 'src/redux/slices/appointmentSlice';
 import { useAppDispatch, useTypedSelector } from 'src/redux/store';
 import { setCustomTime } from 'src/utils/defineCustomTime';
 import { extractTimeFromDate } from 'src/utils/extractTimeFromDate';
@@ -44,6 +26,7 @@ import {
   ONE_HOUR_INTERVAL_INDEX,
   selectTimeOptions,
 } from './constants';
+import { checkIfTodayAppointmentWithinInterval } from './helpers';
 import {
   AppointmentDuration,
   BaseBoldText,
@@ -165,14 +148,10 @@ export default function RecurringAppointment({ onNext, onBack }: Props): JSX.Ele
   };
 
   const checkIfAppointment6HoursBefore = (time: string, date: Date | null): void => {
-    const chosenDateTime = parse(time, DISPLAY_TIME_FORMAT, CURRENT_DAY);
-    const futureDate = addHours(CURRENT_DAY, MIN_HOURS_BEFORE_APPOINTMENT);
-    const interval = {
-      start: CURRENT_DAY,
-      end: futureDate,
-    };
-
-    const isTimeWithinInterval = isWithinInterval(chosenDateTime, interval);
+    const isTimeWithinInterval = checkIfTodayAppointmentWithinInterval(
+      time,
+      MIN_HOURS_BEFORE_APPOINTMENT
+    );
 
     if (date && isToday(date) && isTimeWithinInterval) {
       setPaymentWarningVisible(true);
@@ -190,9 +169,7 @@ export default function RecurringAppointment({ onNext, onBack }: Props): JSX.Ele
         weekDays: appointmentDays as daySelectedType[],
       })
     );
-    if (paymentWarningVisible) {
-      dispatch(setIsAppointmentSixHoursBeforeToTrue());
-    }
+
     onNext();
   };
 

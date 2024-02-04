@@ -112,6 +112,7 @@ export interface DetailedAppointment {
   virtualAssessment: VirtualAssessment | null;
   activityLog: ActivityLog[];
   createdAt: string;
+  pausedAt: string | null;
   debtStatus: AppointmentDebtStatus;
   seekerDebt: number;
 }
@@ -132,6 +133,7 @@ export const appointmentApi = createApi({
     },
   }),
   refetchOnFocus: true,
+  refetchOnMountOrArgChange: true,
   tagTypes: ['Appointments'],
   endpoints: (builder) => ({
     getAllAppointments: builder.query<Appointment[], void>({
